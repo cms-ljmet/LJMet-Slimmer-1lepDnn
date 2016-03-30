@@ -4,43 +4,43 @@ date
 
 echo "SUBMITTING nominal"
 
-python -u makeStep1condor.py nominal
+python -u runCondorSlimmerJobs.py nominal
 
 sleep 5
 
 echo "SUBMITTING JECup"
 
-python -u makeStep1condor.py JECup
+python -u runCondorSlimmerJobs.py JECup
 
 sleep 5
 
 echo "SUBMITTING JECdown"
 
-python -u makeStep1condor.py JECdown
+python -u runCondorSlimmerJobs.py JECdown
 
 sleep 5
 
 echo "SUBMITTING JERup"
 
-python -u makeStep1condor.py JERup
+python -u runCondorSlimmerJobs.py JERup
 
 sleep 5
 
 echo "SUBMITTING JERdown"
 
-python -u makeStep1condor.py JERdown
+python -u runCondorSlimmerJobs.py JERdown
 
 sleep 5
 
 echo "SUBMITTING BTAGup"
 
-python -u makeStep1condor.py BTAGup
+python -u runCondorSlimmerJobs.py BTAGup
 
 sleep 5
 
 echo "SUBMITTING BTAGdown"
 
-python -u makeStep1condor.py BTAGdown
+python -u runCondorSlimmerJobs.py BTAGdown
 
 sleep 5
 
