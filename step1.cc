@@ -469,9 +469,11 @@ void step1::Loop()
    
    Long64_t nentries = inputTree->GetEntriesFast();
 
+   Long64_t nbytes = 0, nb = 0;
    for (Long64_t jentry=0; jentry<nentries;jentry++) {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
+      nb = inputTree->GetEntry(jentry);   nbytes += nb;
       if (Cut(ientry) != 1) continue;
       
       //      if (ientry > 5000) continue;
