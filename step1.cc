@@ -1469,7 +1469,6 @@ void step1::Loop()
 	  int tag_JMS_JMR_tau0p6dn = (prunedMassSmeared > 65) && (prunedMassSmeared < 105) && (tau21 < 0.6);
  
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
-	  // For 0p6 central and up-shift scale factor, only care about > 1 case and "upgrading" tags
 	  if(tau0p6SF > 1){
 	    float mistagpercent = (1.0 - tau0p6SF) / (1.0 - (tau0p6SF/tau0p6Eff));
 	    if(tag_JMS_JMR_tau0p6 == 0 && coin < mistagpercent) tag_JMS_JMR_tau0p6 = 1;	    
@@ -1478,13 +1477,28 @@ void step1::Loop()
 	    if(tag_JMS_JMRup_tau0p6 == 0 && coin < mistagpercent) tag_JMS_JMRup_tau0p6 = 1;	    
 	    if(tag_JMS_JMRdn_tau0p6 == 0 && coin < mistagpercent) tag_JMS_JMRdn_tau0p6 = 1;	    
 	  }
+	  else if(tau0p6SF < 1){
+	    if(tag_JMS_JMR_tau0p6 == 1 && coin > tau0p6SF) tag_JMS_JMR_tau0p6 = 0;	    
+	    if(tag_JMSup_JMR_tau0p6 == 1 && coin > tau0p6SF) tag_JMSup_JMR_tau0p6 = 0;	    
+	    if(tag_JMSdn_JMR_tau0p6 == 1 && coin > tau0p6SF) tag_JMSdn_JMR_tau0p6 = 0;	    
+	    if(tag_JMS_JMRup_tau0p6 == 1 && coin > tau0p6SF) tag_JMS_JMRup_tau0p6 = 0;	    
+	    if(tag_JMS_JMRdn_tau0p6 == 1 && coin > tau0p6SF) tag_JMS_JMRdn_tau0p6 = 0;	    
+	  }
+
 	  if(tau0p6SFup > 1){
-	    float mistagpercent = (1.0 - tau0p6SF) / (1.0 - (tau0p6SF/tau0p6Eff));
+	    float mistagpercent = (1.0 - tau0p6SFup) / (1.0 - (tau0p6SFup/tau0p6Eff));
 	    if(tag_JMS_JMR_tau0p6up == 0 && coin < mistagpercent) tag_JMS_JMR_tau0p6up = 1;	    
 	  }
-	  // For 0p6 down-shifted scale factor, only care about < 1 case and "downgrading" tags
-	  if(tau0p6SFdn < 1){
-	    if(tag_JMS_JMR_tau0p6dn == 1 && coin > tau0p6SF) tag_JMS_JMR_tau0p6dn = 0;
+	  else if(tau0p6SFup < 1){
+	    if(tag_JMS_JMR_tau0p6up == 1 && coin > tau0p6SFup) tag_JMS_JMR_tau0p6up = 0;	    
+	  }
+
+	  if(tau0p6SFdn > 1){
+	    float mistagpercent = (1.0 - tau0p6SFdn) / (1.0 - (tau0p6SFdn/tau0p6Eff));
+	    if(tag_JMS_JMR_tau0p6dn == 0 && coin < mistagpercent) tag_JMS_JMR_tau0p6dn = 1;	    
+	  }
+	  else if(tau0p6SFdn < 1){
+	    if(tag_JMS_JMR_tau0p6dn == 1 && coin > tau0p6SFdn) tag_JMS_JMR_tau0p6dn = 0;
 	  }
 
 	  // Now increase the tag count in the right variable	  
