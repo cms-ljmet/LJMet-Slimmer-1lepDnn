@@ -30,6 +30,8 @@ public :
    Bool_t          isTOP;
    Bool_t          isMadgraphBkg;
    Bool_t          isMC;
+   Bool_t          isTT;
+   Bool_t          isST;
    Bool_t          isTTincMtt0to700;
    Bool_t          isTTincMtt700to1000;
    Bool_t          isTTincMtt1000toInf;
@@ -64,6 +66,7 @@ public :
    Float_t         TrigEffWeight;
    Float_t         isoSF;
    Float_t         lepIdSF;
+   Float_t         EGammaRecoSF;
    Float_t         JetSF_pTNbwflat;
    Float_t         JetSFup_pTNbwflat;
    Float_t         JetSFdn_pTNbwflat;
@@ -896,6 +899,8 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
   }
   isMadgraphBkg = inputFileName.Contains("WJetsToLNu_HT") || inputFileName.Contains("QCD");
   isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_") || inputFileName.Contains("TT_Tune"));
+  isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt") || inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_"));
+  isST = inputFileName.Contains("ST");
   isMC      = !inputFileName.Contains("Single");
   isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
   isTTincMtt700to1000 = outputFileName.Contains("Mtt700to1000");
