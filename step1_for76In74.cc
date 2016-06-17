@@ -285,6 +285,7 @@ void step1::Loop()
    outputTree->Branch("theJetAK8NjettinessTau1_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau1_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau2_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau2_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau3_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau3_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8MatchedPt_JetSubCalc_PtOrdered",&theJetAK8MatchedPt_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Wmatch_JetSubCalc_PtOrdered",&theJetAK8Wmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Tmatch_JetSubCalc_PtOrdered",&theJetAK8Tmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Zmatch_JetSubCalc_PtOrdered",&theJetAK8Zmatch_JetSubCalc_PtOrdered);
@@ -394,34 +395,156 @@ void step1::Loop()
    float jetPtCut=30;
 
    // W tagging efficiencies. Assumes each signal mass uses the same pT bins but has unique values.
-   std::vector<float> ptRangeTpTp, ptRangeTTbar;
-   float ptminTTbar[17] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 900, 1000, 1100, 1200};
-   for (int i=0;i<17;++i) ptRangeTTbar.push_back(ptminTTbar[i]);
+   std::vector<float> ptRangeTpTp, ptRangeBkg;
+   float ptminBkg[8] = {200,250,300,350,400,500,600,800};
+   for (int i=0;i<8;++i) ptRangeBkg.push_back(ptminBkg[i]);
    float ptminTpTp[20] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1800};
    for (int i=0;i<20;++i) ptRangeTpTp.push_back(ptminTpTp[i]);
 
-   float SignalEff[12][20] = {
-     {0.564508, 0.608000, 0.606345, 0.610230, 0.611723, 0.619561, 0.625576, 0.622267, 0.616639, 0.613650, 0.613298, 0.607818, 0.598630, 0.580504, 0.551724,0.557235,0.573113,0.483051,0.543478,0.384615},
-     {0.548629, 0.583188, 0.586383, 0.588656, 0.592233, 0.596651, 0.602861, 0.603671, 0.607767, 0.613201, 0.614011, 0.615429, 0.608499, 0.598631, 0.569672,0.563758,0.583679,0.543210,0.483333,0.450000},
-     {0.534358, 0.569013, 0.564901, 0.569156, 0.570370, 0.578915, 0.578805, 0.584476, 0.588793, 0.587046, 0.588409, 0.592822, 0.593446, 0.593232, 0.582446,0.619464,0.563874,0.525424,0.500000,0.450980},
-     {0.538454, 0.557137, 0.545319, 0.548106, 0.555391, 0.562675, 0.571853, 0.567900, 0.575301, 0.575040, 0.584643, 0.589661, 0.582756, 0.574006, 0.571275,0.582245,0.565997,0.532086,0.588000,0.517647},
-     {0.525286, 0.551142, 0.534871, 0.535766, 0.543462, 0.550923, 0.554155, 0.563145, 0.567262, 0.568506, 0.569613, 0.572914, 0.574414, 0.571416, 0.575626,0.577349,0.566807,0.567276,0.593052,0.523438},
-     {0.535650, 0.551255, 0.527912, 0.523938, 0.529138, 0.539762, 0.544520, 0.549281, 0.549178, 0.554746, 0.550871, 0.559603, 0.564062, 0.560952, 0.564291,0.557285,0.555885,0.554862,0.546512,0.542955},
-     {0.538705, 0.549720, 0.525772, 0.517480, 0.516984, 0.526490, 0.534243, 0.539233, 0.542263, 0.537705, 0.547191, 0.550480, 0.553255, 0.552288, 0.551672,0.565510,0.551236,0.559540,0.551724,0.561856},
-     {0.542911, 0.551923, 0.527378, 0.511120, 0.511213, 0.519235, 0.521617, 0.531310, 0.536900, 0.537253, 0.539322, 0.542000, 0.538708, 0.546960, 0.547060,0.552621,0.540629,0.541027,0.542459,0.503937},
-     {0.535188, 0.562270, 0.533453, 0.506059, 0.503329, 0.509019, 0.511890, 0.519123, 0.527211, 0.526664, 0.531581, 0.532783, 0.537525, 0.541424, 0.534916,0.542254,0.542909,0.543891,0.532174,0.540279},
-     {0.547503, 0.567619, 0.533486, 0.513874, 0.503044, 0.502185, 0.505648, 0.517570, 0.518406, 0.520316, 0.525227, 0.520015, 0.527185, 0.530408, 0.530671,0.526384,0.533087,0.529443,0.534278,0.539708},
-     {0.550201, 0.574215, 0.539318, 0.519348, 0.508372, 0.503091, 0.499538, 0.507907, 0.511284, 0.514325, 0.514122, 0.521448, 0.520427, 0.520246, 0.520341,0.526883,0.520512,0.517572,0.527374,0.539618},
-     {0.554137, 0.581898, 0.552245, 0.519768, 0.501204, 0.494958, 0.499119, 0.501657, 0.503040, 0.504813, 0.511540, 0.507806, 0.515420, 0.519994, 0.511150,0.514094,0.516915,0.521633,0.532456,0.520919},
-   };
-   float TTbarEff[17] = {0.685039,0.739539,0.706915,0.675907,0.658715,0.651691,0.644650,0.634328,0.626901,0.621236,0.625850,0.605793,0.590250,0.563380,0.504950,0.457627,0.531250};
-   float STEff[17] = {0.718269,0.796822,0.783475,0.762890,0.741929,0.722222,0.716766,0.702391,0.724490,0.709125,0.671554,0.752033,0.705202,0.691011,0.677966,0.661972,0.500000};
-   float WVEff[17] = {0.700646,0.775087,0.749880,0.717758,0.684090,0.656286,0.650381,0.613069,0.601344,0.602273,0.562660,0.581481,0.531977,0.604396,0.602151,0.546875,0.546875};
+   float TTbarEff[8] = {0.700253716612,0.735858801604,0.70625812012,0.678643390918,0.659573873169,0.644169509639,0.620657276995,0.579634464752};
+   float STEff[8]    = {0.744629253117,0.799957446809,0.783821138211,0.767389678384,0.735063161489,0.717488789238,0.70664928292,0.717703349282};
+   float WVEff[8]    = {0.738321081337,0.802567593853,0.771248688353,0.760325406758,0.692602040816,0.660225442834,0.625316455696,0.616541353383};
+   float TTVEff[8]   = {0.606083159671,0.624926383981,0.607676872289,0.614014391884,0.584572724981,0.561602671119,0.554231227652,0.519396551724};
 
-   // Pileup distributions
-   double puweight260627_72ub[50] = {4.40E-01,6.34E-01,1.07E+00,1.28E+00,1.46E+00,1.62E+00,1.02E+00,7.85E-01,9.08E-01,9.87E-01,1.02E+00,1.08E+00,1.15E+00,1.16E+00,1.08E+00,9.16E-01,7.20E-01,5.45E-01,4.32E-01,3.69E-01,2.85E-01,1.70E-01,7.83E-02,2.89E-02,9.14E-03,2.80E-03,9.80E-04,4.15E-04,2.03E-04,1.09E-04,6.21E-05,3.65E-05,2.15E-05,1.26E-05,7.46E-06,4.22E-06,2.29E-06,1.26E-06,7.00E-07,3.07E-07,1.49E-07,6.79E-08,2.21E-08,1.35E-08,3.82E-09,1.29E-09,5.28E-10,1.35E-10,0.00E+00,0.00E+00};
-   double puweight260627_69ub[50] = {5.22E-01,7.00E-01,1.16E+00,1.44E+00,1.78E+00,2.20E+00,1.59E+00,1.34E+00,1.34E+00,1.26E+00,1.19E+00,1.16E+00,1.10E+00,9.61E-01,7.58E-01,5.44E-01,3.74E-01,2.78E-01,2.46E-01,2.15E-01,1.40E-01,6.39E-02,2.18E-02,6.25E-03,1.77E-03,5.92E-04,2.42E-04,1.12E-04,5.62E-05,2.94E-05,1.57E-05,8.41E-06,4.42E-06,2.29E-06,1.18E-06,5.77E-07,2.68E-07,1.27E-07,5.99E-08,2.23E-08,9.12E-09,3.48E-09,9.44E-10,4.76E-10,1.12E-10,3.10E-11,1.03E-11,2.11E-12,0.00E+00,0.00E+00};
-   double puweight260627_65ub[50] = {6.11E-01,7.73E-01,1.26E+00,1.66E+00,2.24E+00,3.15E+00,2.67E+00,2.24E+00,1.87E+00,1.55E+00,1.33E+00,1.16E+00,9.51E-01,7.00E-01,4.58E-01,2.79E-01,1.83E-01,1.52E-01,1.40E-01,1.02E-01,4.95E-02,1.62E-02,4.25E-03,1.12E-03,3.61E-04,1.41E-04,6.21E-05,2.89E-05,1.38E-05,6.62E-06,3.14E-06,1.47E-06,6.67E-07,2.95E-07,1.29E-07,5.32E-08,2.07E-08,8.14E-09,3.19E-09,9.76E-10,3.27E-10,1.01E-10,2.22E-11,9.01E-12,1.69E-12,3.74E-13,9.37E-14,0.00E+00,0.00E+00,0.00E+00};
+   float SignalEff[12][20] = {
+     {0.564362,0.595195,0.605734,0.616076,0.620855,0.619341,0.624414,0.636167,0.621238,0.628476,0.616274,0.619338,0.599157,0.613008,0.570981,0.556962,0.549398,0.464000,0.500000,0.444444},
+     {0.550520,0.578234,0.581456,0.589163,0.593852,0.601994,0.600561,0.605891,0.614136,0.610989,0.610580,0.628654,0.601552,0.593311,0.583221,0.526854,0.536657,0.552083,0.461538,0.461538},
+     {0.540136,0.558664,0.559094,0.568173,0.572865,0.579169,0.583116,0.593172,0.596587,0.591830,0.598859,0.581350,0.605613,0.577993,0.591710,0.564895,0.544675,0.546948,0.503876,0.549020}, 
+     {0.535418,0.551400,0.549533,.553299,0.560319,0.570240,0.575282,0.578585,0.578413,0.573942,0.578360,0.588777,0.586921,0.580410,0.581461,0.561317,0.545999,0.551508,0.526119,0.510638},
+     {0.541217,0.549126,0.537577,0.538089,0.547366,0.558724,0.562852,0.558897,0.563743,0.571603,0.570828,0.570928,0.571899,0.582165,0.572083,0.556975,0.563297,0.518341,0.571765,0.546012},
+     {0.544115,0.542653,0.531677,0.527218,0.532174,0.545457,0.547256,0.551826,0.553769,0.554538,0.562171,0.561855,0.565009,0.560674,0.569159,0.559157,0.544729,0.557792,0.548343,0.472803},
+     {0.545385,0.543273,0.527082,0.520335,0.524297,0.536286,0.538533,0.541708,0.545848,0.546993,0.558074,0.557018,0.549634,0.555217,0.553481,0.559449,0.557888,0.578042,0.538339,0.561151},
+     {0.553875,0.544416,0.529178,0.513205,0.513226,0.525330,0.527450,0.535822,0.539204,0.539068,0.539316,0.537074,0.544298,0.538349,0.532772,0.535711,0.540141,0.532770,0.548757,0.514469},
+     {0.553968,0.563072,0.533421,0.520298,0.512156,0.511537,0.518096,0.528029,0.528761,0.529986,0.531137,0.535365,0.534897,0.530903,0.537272,0.539511,0.533499,0.540372,0.539497,0.522831},
+     {0.552875,0.565484,0.538594,0.518019,0.513014,0.509642,0.503748,0.522274,0.521907,0.522204,0.524194,0.524710,0.529642,0.529309,0.532254,0.529163,0.522999,0.538304,0.532873,0.527454},
+     {0.572483,0.564752,0.542383,0.522545,0.512296,0.499540,0.514530,0.509886,0.514668,0.520860,0.520528,0.522463,0.524472,0.522798,0.518751,0.518472,0.525727,0.525979,0.532578,0.562997},
+     {0.557697,0.569072,0.548493,0.525632,0.507551,0.505490,0.502435,0.503864,0.507316,0.513117,0.507892,0.517728,0.517302,0.512410,0.518558,0.516251,0.518883,0.523349,0.516987,0.531315}
+   };
+
+   //read CSC bad event filter file
+   vector <int> CSC_run;
+   vector <int> CSC_ls;
+   vector <int> CSC_event;
+   cout << "Reading CSC file" << std::endl;
+   ifstream infileCSCm( "csc2015_Dec01.txt" );
+   while (infileCSCm)
+   {
+     string s;
+     if (!getline( infileCSCm, s )) break;
+
+     istringstream ss( s );
+     vector <string> line;
+     while (ss)
+     {
+       string s;
+       if (!getline( ss, s, ':' )) break;
+       line.push_back( s );
+     }
+     CSC_run.push_back( std::atoi(line[0].c_str()) );
+     CSC_ls.push_back( std::atoi(line[1].c_str()) );
+     CSC_event.push_back( std::atoi(line[2].c_str()) );
+   }
+   if (!infileCSCm.eof())
+   {
+     cerr << "Error while reading CSC filter file!\n";
+   }
+   cout << "Done reading CSC file, testing vector size" << std::endl;
+   cout << "Nevents = " << CSC_run.size() << ", " << CSC_ls.size() << ", " << CSC_event.size() << std::endl;
+
+   //read bad ECAL SC filter file
+   vector <int> ECALSC_run;
+   vector <int> ECALSC_ls;
+   vector <int> ECALSC_event;
+   cout << "Reading ECAL SCN file" << std::endl;
+   ifstream infileCSCe( "ecalscn1043093_Dec01.txt" );
+   while (infileCSCe)
+   {
+     string s;
+     if (!getline( infileCSCe, s )) break;
+
+     istringstream ss( s );
+     vector <string> line;
+     while (ss)
+     {
+       string s;
+       if (!getline( ss, s, ':' )) break;
+       line.push_back( s );
+     }
+     ECALSC_run.push_back( std::atoi(line[0].c_str()) );
+     ECALSC_ls.push_back( std::atoi(line[1].c_str()) );
+     ECALSC_event.push_back( std::atoi(line[2].c_str()) );
+   }
+   if (!infileCSCe.eof())
+   {
+     cerr << "Error while reading ECAL SCN filter file!\n";
+   }
+   cout << "Done reading ECAL SCN file, testing vector size" << std::endl;
+   cout << "Nevents = " << ECALSC_run.size() << ", " << ECALSC_ls.size() << ", " << ECALSC_event.size() << std::endl;
+
+   //read bad resolution track filter file
+   vector <int> BRTk_run;
+   vector <int> BRTk_ls;
+   vector <int> BRTk_event;
+   cout << "Reading Bad Resolution Track file" << std::endl;
+   ifstream infileBRT( "badResolutionTrack_Jan13.txt" );
+   while (infileBRT)
+   {
+     string s;
+     if (!getline( infileBRT, s )) break;
+
+     istringstream ss( s );
+     vector <string> line;
+     while (ss)
+     {
+       string s;
+       if (!getline( ss, s, ':' )) break;
+       line.push_back( s );
+     }
+     BRTk_run.push_back( std::atoi(line[0].c_str()) );
+     BRTk_ls.push_back( std::atoi(line[1].c_str()) );
+     BRTk_event.push_back( std::atoi(line[2].c_str()) );
+   }
+   if (!infileBRT.eof())
+   {
+     cerr << "Error while reading Bad Resolution Track filter file!\n";
+   }
+   cout << "Done reading Bad Resolution Track file, testing vector size" << std::endl;
+   cout << "Nevents = " << BRTk_run.size() << ", " << BRTk_ls.size() << ", " << BRTk_event.size() << std::endl;
+
+   //read bad ECAL SC filter file
+   vector <int> BMTk_run;
+   vector <int> BMTk_ls;
+   vector <int> BMTk_event;
+   cout << "Reading Bad Muon Track file" << std::endl;
+   ifstream infileBMT( "muonBadTrack_Jan13.txt" );
+   while (infileBMT)
+   {
+     string s;
+     if (!getline( infileBMT, s )) break;
+
+     istringstream ss( s );
+     vector <string> line;
+     while (ss)
+     {
+       string s;
+       if (!getline( ss, s, ':' )) break;
+       line.push_back( s );
+     }
+     BMTk_run.push_back( std::atoi(line[0].c_str()) );
+     BMTk_ls.push_back( std::atoi(line[1].c_str()) );
+     BMTk_event.push_back( std::atoi(line[2].c_str()) );
+   }
+   if (!infileBMT.eof())
+   {
+     cerr << "Error while reading Bad Muon Track filter file!\n";
+   }
+   cout << "Done reading Bad Muon Track file, testing vector size" << std::endl;
+   cout << "Nevents = " << BMTk_run.size() << ", " << BMTk_ls.size() << ", " << BMTk_event.size() << std::endl;
+   
+   
+   double puweight260627_72ub[60] = {1.048445e+02, 1.417593e+02, 8.807366e+01, 3.236995e+01, 1.683957e+01, 2.831305e+00, 1.423759e+00, 1.612828e+00, 2.306693e+00, 2.473619e+00, 2.514170e+00, 2.546666e+00, 2.333108e+00, 1.836848e+00, 1.221869e+00, 6.836922e-01, 3.275329e-01, 1.432766e-01, 6.667120e-02, 3.763312e-02, 2.341225e-02, 1.359301e-02, 6.804618e-03, 2.922054e-03, 1.130104e-03, 4.448707e-04, 2.080687e-04, 1.239100e-04, 8.786009e-05, 6.837745e-05, 5.143024e-05, 3.476586e-05, 1.906542e-05, 9.115409e-06, 3.556074e-06, 1.447242e-06, 5.171527e-07, 1.940254e-07, 6.513423e-08, 2.309190e-08, 7.790329e-09, 2.199365e-09, 6.795396e-10, 1.624286e-10, 4.931596e-11, 1.298753e-11, 7.930341e-12, 2.315454e-12, 1.497868e-11, 2.172998e-12, 9.012326e-14, 1.094585e-14, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00};
+   double puweight260627_69ub[60] = {1.245238e+02, 1.562054e+02, 9.528614e+01, 3.645428e+01, 2.049345e+01, 3.843197e+00, 2.215886e+00, 2.747772e+00, 3.412640e+00, 3.156122e+00, 2.921218e+00, 2.709273e+00, 2.214740e+00, 1.509242e+00, 8.529270e-01, 4.047681e-01, 1.706805e-01, 7.408239e-02, 3.853898e-02, 2.208110e-02, 1.157933e-02, 5.111779e-03, 1.897273e-03, 6.326908e-04, 2.194698e-04, 9.396686e-05, 5.134064e-05, 3.356329e-05, 2.432826e-05, 1.843384e-05, 1.299881e-05, 8.002472e-06, 3.916437e-06, 1.648432e-06, 5.607770e-07, 1.975807e-07, 6.075239e-08, 1.950465e-08, 5.573450e-09, 1.673234e-09, 4.755563e-10, 1.125301e-10, 2.899281e-11, 5.749377e-12, 1.440875e-12, 3.115802e-13, 1.554955e-13, 3.630806e-14, 2.427227e-13, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00};
+   double puweight260627_65ub[60] = {1.458817e+02, 1.724645e+02, 1.043786e+02, 4.182011e+01, 2.579572e+01, 5.495080e+00, 3.731141e+00, 4.618505e+00, 4.765473e+00, 3.872168e+00, 3.259346e+00, 2.705177e+00, 1.908453e+00, 1.092269e+00, 5.137612e-01, 2.085454e-01, 8.454498e-02, 4.109705e-02, 2.206794e-02, 1.053976e-02, 4.084606e-03, 1.298473e-03, 3.698050e-04, 1.135070e-04, 4.460047e-05, 2.240654e-05, 1.319444e-05, 8.644198e-06, 5.969210e-06, 4.142850e-06, 2.600931e-06, 1.398830e-06, 5.905424e-07, 2.124612e-07, 6.132579e-08, 1.821361e-08, 4.691640e-09, 1.254258e-09, 2.966644e-10, 7.328361e-11, 1.703655e-11, 3.277952e-12, 6.826269e-13, 1.087907e-13, 2.182661e-14, 3.753385e-15, 1.408114e-15, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00};
 
    int npass_trigger      = 0;
    int npass_met          = 0;
@@ -469,6 +592,22 @@ void step1::Loop()
       if(outBZBH && !isBZBH_TpTpCalc) continue;
       if(outBZBZ && !isBZBZ_TpTpCalc) continue;
       if(outBHBH && !isBHBH_TpTpCalc) continue;
+
+      //CSC filter (aka muon halo filter) NOTE: filtering data sets by running both SE and SM CSC filters!
+      bool filterEvent = false;
+      for(unsigned int i=0; i < CSC_run.size(); i++){
+      	if(CSC_run[i]==run_CommonCalc && CSC_ls[i]==lumi_CommonCalc && CSC_event[i]==event_CommonCalc) filterEvent = true;
+      }
+      for(unsigned int i=0; i < ECALSC_run.size(); i++){
+      	if(ECALSC_run[i]==run_CommonCalc && ECALSC_ls[i]==lumi_CommonCalc && ECALSC_event[i]==event_CommonCalc) filterEvent = true;
+      }
+      for(unsigned int i=0; i < BRTk_run.size(); i++){
+      	if(BRTk_run[i]==run_CommonCalc && BRTk_ls[i]==lumi_CommonCalc && BRTk_event[i]==event_CommonCalc) filterEvent = true;
+      }
+      for(unsigned int i=0; i < BMTk_run.size(); i++){
+      	if(BMTk_run[i]==run_CommonCalc && BMTk_ls[i]==lumi_CommonCalc && BMTk_event[i]==event_CommonCalc) filterEvent = true;
+      }
+      if(filterEvent) continue;
      	     
       int isE = 0;
       int isM = 0;
@@ -500,90 +639,90 @@ void step1::Loop()
       if(isMC){ //MC triggers check
       	if(isE){
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WP75_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WP75_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WP75_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WP75_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMC = 1;
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMCAlt = 1;
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMCAlt = 1;
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMCAlt = 1;
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) isPastTrigMCAlt = 1;
 	  }
 
-          //EGamma Scale Factors from http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/moriond2016_76X/reco/eleRECO.txt.egamma_egammaPlots.pdf
+          //EGamma Scale Factors from http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/moriond2016_74X/reco/eleRECO.txt._egammaPlots.pdf
 	  if(lepeta > -2.5 && lepeta < -2.0){
-            if(leppt > 10. && leppt < 20.) egammasf = 1.006;
-            else if(leppt < 30.) egammasf= 1.027;
-            else if(leppt < 40.) egammasf= 1.024;
-            else if(leppt < 50.) egammasf= 1.023;
-            else egammasf= 1.019;
+            if(leppt > 10. && leppt < 20.) egammasf = 1.024;
+            else if(leppt < 30.) egammasf= 1.019;
+            else if(leppt < 40.) egammasf= 1.007;
+            else if(leppt < 50.) egammasf= 1.014;
+            else egammasf= 1.004;
           }
           else if(lepeta < -1.566){
-            if(leppt > 10. && leppt < 20.) egammasf= 1.024;
-            else if(leppt < 30.) egammasf= 0.999;
-            else if(leppt < 40.) egammasf= 0.999;
-            else if(leppt < 50.) egammasf= 1.000;
-            else egammasf= 0.990;
-          }
-          else if(lepeta < -1.444){
-            if(leppt > 10. && leppt < 20.) egammasf= 1.065;
-            else if(leppt < 30.) egammasf= 1.000;
-            else if(leppt < 40.) egammasf= 0.939;
-            else if(leppt < 50.) egammasf= 0.970;
-            else egammasf= 0.919;
-          }
-          else if(lepeta < -0.8){
-            if(leppt > 10. && leppt < 20.) egammasf= 1.028;
-            else if(leppt < 30.) egammasf= 1.000;
-            else if(leppt < 40.) egammasf= 0.994;
-            else if(leppt < 50.) egammasf= 0.995;
-            else egammasf= 0.989;
-          }
-          else if(lepeta < 0.0 ){
-            if(leppt > 10. && leppt < 20.) egammasf= 0.924;
-            else if(leppt < 30.) egammasf= 0.988;
-            else if(leppt < 40.) egammasf= 0.986;
+            if(leppt > 10. && leppt < 20.) egammasf= 1.009;
+            else if(leppt < 30.) egammasf= 0.997;
+            else if(leppt < 40.) egammasf= 0.988;
             else if(leppt < 50.) egammasf= 0.991;
-            else egammasf= 0.985;
-          }
-          else if(lepeta < 0.8){
-            if(leppt > 10. && leppt < 20.) egammasf= 0.924;
-            else if(leppt < 30.) egammasf= 0.992;
-            else if(leppt < 40.) egammasf= 0.989;
-            else if(leppt < 50.) egammasf= 0.993;
-            else egammasf= 0.990;
-          }
-          else if(lepeta < 1.444){
-            if(leppt > 10. && leppt < 20.) egammasf= 1.028;
-            else if(leppt < 30.) egammasf= 0.990;
-            else if(leppt < 40.) egammasf= 0.991;
-            else if(leppt < 50.) egammasf= 0.997;
             else egammasf= 0.987;
           }
-          else if(lepeta < 1.566){
-            if(leppt > 10. && leppt < 20.) egammasf= 1.065;
-            else if(leppt < 30.) egammasf= 0.929;
-            else if(leppt < 40.) egammasf= 0.954;
-            else if(leppt < 50.) egammasf= 0.952;
-            else egammasf= 0.944;
+          else if(lepeta < -1.444){
+            if(leppt > 10. && leppt < 20.) egammasf= 1.484;
+            else if(leppt < 30.) egammasf= 0.968;
+            else if(leppt < 40.) egammasf= 1.003;
+            else if(leppt < 50.) egammasf= 0.974;
+            else egammasf= 0.902;
           }
-          else if(lepeta < 2.0){
-            if(leppt > 10. && leppt < 20.) egammasf= 1.024;
-            else if(leppt < 30.) egammasf= 0.993;
-            else if(leppt < 40.) egammasf= 0.987;
-            else if(leppt < 50.) egammasf= 0.995;
+          else if(lepeta < -0.8){
+            if(leppt > 10. && leppt < 20.) egammasf= 1.002;
+            else if(leppt < 30.) egammasf= 0.991;
+            else if(leppt < 40.) egammasf= 0.990;
+            else if(leppt < 50.) egammasf= 0.992;
             else egammasf= 0.986;
           }
-          else if(lepeta < 2.5){
-            if(leppt > 10. && leppt < 20.) egammasf= 1.006;
-            else if(leppt < 30.) egammasf= 0.977;
-            else if(leppt < 40.) egammasf= 0.988;
+          else if(lepeta < 0.0 ){
+            if(leppt > 10. && leppt < 20.) egammasf= 0.934;
+            else if(leppt < 30.) egammasf= 0.980;
+            else if(leppt < 40.) egammasf= 0.985;
+            else if(leppt < 50.) egammasf= 0.987;
+            else egammasf= 0.981;
+          }
+          else if(lepeta < 0.8){
+            if(leppt > 10. && leppt < 20.) egammasf= 0.934;
+            else if(leppt < 30.) egammasf= 0.980;
+            else if(leppt < 40.) egammasf= 0.990;
             else if(leppt < 50.) egammasf= 0.989;
-            else egammasf= 0.984;
+            else egammasf= 0.986;
+          }
+          else if(lepeta < 1.444){
+            if(leppt > 10. && leppt < 20.) egammasf= 1.002;
+            else if(leppt < 30.) egammasf= 0.990;
+            else if(leppt < 40.) egammasf= 0.995;
+            else if(leppt < 50.) egammasf= 0.997;
+            else egammasf= 0.994;
+          }
+          else if(lepeta < 1.566){
+            if(leppt > 10. && leppt < 20.) egammasf= 1.484;
+            else if(leppt < 30.) egammasf= 0.993;
+            else if(leppt < 40.) egammasf= 0.954;
+            else if(leppt < 50.) egammasf= 0.960;
+            else egammasf= 0.904;
+          }
+          else if(lepeta < 2.0){
+            if(leppt > 10. && leppt < 20.) egammasf= 1.009;
+            else if(leppt < 30.) egammasf= 0.998;
+            else if(leppt < 40.) egammasf= 0.998;
+            else if(leppt < 50.) egammasf= 0.997;
+            else egammasf= 0.994;
+          }
+          else if(lepeta < 2.5){
+            if(leppt > 10. && leppt < 20.) egammasf= 1.024;
+            else if(leppt < 30.) egammasf= 0.992;
+            else if(leppt < 40.) egammasf= 1.005;
+            else if(leppt < 50.) egammasf= 1.000;
+            else egammasf= 0.995;
           }
           else egammasf= 1.0;
 
-	  // Ele45_PFJet200_PFJet50 -- leaving at 74X, 76X gave weird values
+	  // Ele45_PFJet200_PFJet50
 	  if(leppt <  45){
 	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.344; // 
 	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.350;
@@ -634,55 +773,50 @@ void step1::Loop()
 	    else TrigEffAltWeight = 1.034;
 	  }else{ TrigEffAltWeight = 1.000;}
 
-	  // Ele27_eta2p1 -- updated to 76X
-	  if(leppt <  35){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.9621; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.9483;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.8949;
-	    else TrigEffWeight = 0.8984;
-	  }else if(leppt < 40){
-            if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.9739; // 
-            else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.9755;
-            else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.9809;
-            else TrigEffAltWeight = 0.9488;
-          }else if(leppt < 45){
-            if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.9752; // 
-            else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.9803;
-            else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.9716;
-            else TrigEffAltWeight = 0.9596;
-          }else if(leppt < 50){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.9785; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.9847;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.9687;
-	    else TrigEffWeight = 0.9570;
+	  // Ele27_eta2p1
+	  if(leppt <  45){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.968; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.018;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 1.012;
+	    else TrigEffWeight = 0.955;
+	  }else if(leppt < 50){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.974; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.023;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.998;
+	    else TrigEffWeight = 0.952;
 	  }else if(leppt < 60){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.9773; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.9837;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.9830;
-	    else TrigEffWeight = 0.9565;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.980; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.010;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.986;
+	    else TrigEffWeight = 0.937;
 	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.9768; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.9817;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.9520;
-	    else TrigEffWeight = 0.9487;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.969; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.026;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 1.032;
+	    else TrigEffWeight = 0.946;
 	  }else if(leppt < 90){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.9763; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.9822;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.9730;
-	    else TrigEffWeight = 0.9598;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.979; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.012;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 1.081;
+	    else TrigEffWeight = 0.914;
 	  }else if(leppt < 130){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.9868; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.9766;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.9772;
-	    else TrigEffWeight = 0.9473;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 1.006; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.017;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.970;
+	    else TrigEffWeight = 0.936;
+	  }else if(leppt < 180){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 1.014; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.055;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.980;
+	    else TrigEffWeight = 0.898;
 	  }else{
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.9991; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.9905;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.9073;
-	    else TrigEffWeight = 0.9491;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 1.025; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 1.011;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.933;
+	    else TrigEffWeight = 0.934;
 	  }
 	  	
-	  //miniIso < 0.1 scale factors from https://indico.cern.ch/event/370512/contribution/1/attachments/1176496/1701148/2015_10_26_tnp.pdf (no update to 76 yet)
+	  //miniIso < 0.1 scale factors from https://indico.cern.ch/event/370512/contribution/1/attachments/1176496/1701148/2015_10_26_tnp.pdf
 	  if(fabs(lepeta) < 1.442){
 	    if(leppt > 10 && leppt < 20) isosf = 0.979; // +/-0.004 
 	    else if(leppt < 30) isosf = 0.988; // +/-0.002
@@ -706,7 +840,7 @@ void step1::Loop()
 	  }
 	  else isosf = 1.;
 	  
-	  //MVA-based ID scale factors (non-triggering) from Clint Richardson https://indico.cern.ch/event/459111/contribution/1/attachments/1180755/1709309/B2G_Meeting_11.03.2015.pdf (no update to 76 yet)
+	  //MVA-based ID scale factors (non-triggering) from Clint Richardson https://indico.cern.ch/event/459111/contribution/1/attachments/1180755/1709309/B2G_Meeting_11.03.2015.pdf
 	  if(lepeta > -2.5 && lepeta < -1.6){
 	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9880;
 	    else if(leppt < 50.) lepidsf= 0.9663; 
@@ -801,7 +935,7 @@ void step1::Loop()
 	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v4" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) isPastTrigMCAlt = 1;
 	  }
 
-	  // Mu45_eta2p1 eff -- I think this is already 76X, check with Julie if using
+	  // Mu45_eta2p1 eff
 	  if(leppt <  45){
 	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 1.601; // 
 	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 1.710;
@@ -839,40 +973,35 @@ void step1::Loop()
 	    else TrigEffAltWeight = 0.975;
 	  }else{ TrigEffAltWeight = 1.000;}
 
-	  // IsoMu20 || IsoTkMu20 Eff -- updated to 76X
-	  if(leppt < 25){
-	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.970; //0.982; // 
-	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.970; //0.983;
-	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.988; //1.001;
-	    else TrigEffWeight = 0.953; //1.005;
-	  }else if(leppt < 30){
-	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.979; //0.983; // 
-	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.976; //0.983;
-	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.991; //1.001;
-	    else TrigEffWeight = 0.984; //0.998;
-	  }else if(leppt < 40){
-	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.981; //0.983; // 
-	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.978; //0.983;
-	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.990; //1.001;
-	    else TrigEffWeight = 0.995; //0.998;
+	  // IsoMu20 || IsoTkMu20 Eff
+	  if(leppt < 45){
+	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.9920; //0.982; // 
+	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.9955; //0.983;
+	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.9889; //1.001;
+	    else TrigEffWeight = 1.0156; //1.005;
 	  }else if(leppt < 50){
-	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.982; //0.984; // 
-	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.979; //0.983;
-	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.991; //1.004;
-	    else TrigEffWeight = 0.999; //1.006;
-          }else if(leppt < 60){
-            if(fabs(lepeta) < 0.9) TrigEffWeight = 0.983; //0.984; // 
-            else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.977; //0.983;
-            else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.994; //1.004;
-            else TrigEffWeight = 0.997; //1.006;
-          }else{
-            if(fabs(lepeta) < 0.9) TrigEffWeight = 0.983; //0.984; // 
-            else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.976; //0.983;
-            else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.992; //1.004;
-            else TrigEffWeight = 1.001; //1.006;
-	  } 
-
-	  //Mini-iso < 0.2 SFs from SUSY TWiki (no update to 76X yet)
+	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.9894; //0.983; // 
+	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.9950; //0.983;
+	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.9891; //1.001;
+	    else TrigEffWeight = 1.0110; //0.998;
+	  }else if(leppt < 60){
+	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.9905; //0.983; // 
+	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.9984; //0.983;
+	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.9903; //1.001;
+	    else TrigEffWeight = 1.0170; //0.998;
+	  }else if(leppt < 120){
+	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.9902; //0.984; // 
+	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.9953; //0.983;
+	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.9882; //1.004;
+	    else TrigEffWeight = 1.0129; //1.006;
+	  }else{
+	    if(fabs(lepeta) < 0.9) TrigEffWeight = 1.0146;// 
+	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.9853;
+	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.9866;
+	    else TrigEffWeight = 1.0563;
+	  }
+ 
+	  //Mini-iso < 0.2 SFs from SUSY TWiki
 	  if(leppt < 40){
 	    if(fabs(lepeta) < 0.9) isosf= 1.000;
 	    else if(fabs(lepeta) <  1.2) isosf= 1.000;
@@ -898,38 +1027,66 @@ void step1::Loop()
 	    else if(fabs(lepeta) <  2.4) isosf= 1.000;
 	  }
 	  
-	  //Cut-based ID scale factors from POG TWiki in 76X
-	  if(fabs(lepeta) < 0.9){
-	    if(leppt < 20.) lepidsf= 0.9753;
-	    else if(leppt < 30.) lepidsf= 0.9828;
-	    else if(leppt < 40.) lepidsf= 0.9866;
-	    else if(leppt < 50.) lepidsf= 0.9873;
-            else if(leppt < 60.) lepidsf= 0.9822;
-            else lepidsf= 0.9856;
+	  //Cut-based ID scale factors from Clint Richardson https://indico.cern.ch/event/459111/contribution/1/attachments/1180755/1709309/B2G_Meeting_11.03.2015.pdf
+	  if(lepeta >= -2.4 && lepeta < -2.1){
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9812;
+	    else if(leppt < 60.) lepidsf= 0.9793;
+	    else if(leppt < 100.) lepidsf= 0.9600;
+	    else if(leppt < 1000.) lepidsf= 0.9738;
 	  } 
-	  else if(fabs(lepeta) < 1.2){ 
-	    if(leppt < 20.) lepidsf= 0.9777;
-            else if(leppt < 30.) lepidsf= 0.9761;
-            else if(leppt < 40.) lepidsf= 0.9803;
-	    else if(leppt < 50.) lepidsf= 0.9801;
-            else if(leppt < 60.) lepidsf= 0.9765;
-	    else lepidsf= 0.9843;
+	  else if(lepeta < -1.2){
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9910;
+	    else if(leppt < 60.) lepidsf= 0.9922;
+	    else if(leppt < 100.) lepidsf= 0.9923;
+	    else if(leppt < 1000.) lepidsf= 1.0039;
 	  }
-	  else if(fabs(lepeta) < 2.1){ 
-	    if(leppt < 20.) lepidsf= 0.9929;
-            else if(leppt < 30.) lepidsf= 0.9899;
-	    else if(leppt < 40.) lepidsf= 0.9923;
-	    else if(leppt < 50.) lepidsf= 0.9912;
-            else if(leppt < 60.) lepidsf= 0.9890;
-	    else lepidsf= 0.9906;
+	  else if(lepeta < -0.9){ 
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9828;
+	    else if(leppt < 60.) lepidsf= 0.9886;
+	    else if(leppt < 100.) lepidsf= 0.9873;
+	    else if(leppt < 1000.) lepidsf= 0.9876;
 	  }
-	  else if(fabs(lepeta) < 2.4){ 
-	    if(leppt < 20.) lepidsf= 0.9784;
-            else if(leppt < 30.) lepidsf= 0.9764;
-	    else if(leppt < 40.) lepidsf= 0.9783;
-	    else if(leppt < 50.) lepidsf= 0.9775;
-            else if(leppt < 60.) lepidsf= 0.9727;
-	    else lepidsf= 0.9640;
+	  else if(lepeta < -0.4){ 
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9909;
+	    else if(leppt < 60.) lepidsf= 0.9920; 
+	    else if(leppt < 100.) lepidsf= 0.9854;
+	    else if(leppt < 1000.) lepidsf= 0.9951;
+	  }
+	  else if(lepeta < 0.0){ 
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9878;
+	    else if(leppt < 60.) lepidsf= 0.9874;
+	    else if(leppt < 100.) lepidsf= 0.9885;
+	    else if(leppt < 1000.) lepidsf= 0.9985;
+	  }
+	  else if(lepeta < 0.4){
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9847;
+	    else if(leppt < 60.) lepidsf= 0.9877;
+	    else if(leppt < 100.) lepidsf= 0.9896;
+	    else if(leppt < 1000.) lepidsf= 1.0165;
+	  }
+	  else if(lepeta < 0.9){ 
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9869;
+	    else if(leppt < 60.) lepidsf= 0.9898;
+	    else if(leppt < 100.) lepidsf= 0.9875;
+	    else if(leppt < 1000.) lepidsf= 0.9754;
+	  }
+	  else if(lepeta < 1.2){ 
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9724;
+	    else if(leppt < 60.) lepidsf= 0.9746;
+	    else if(leppt < 100.) lepidsf= 0.9696;
+	    else if(leppt < 1000.) lepidsf= 0.9757;
+	  }
+	  else if(lepeta < 2.1){ 
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9929;
+	    else if(leppt < 60.) lepidsf= 0.9947;
+	    else if(leppt < 100.) lepidsf= 0.9929;
+	    else if(leppt < 1000.) lepidsf= 0.9987;
+	  }
+	  else if(lepeta < 2.4){ 
+	    if(leppt > 30. && leppt < 40.) lepidsf= 0.9818;
+	    else if(leppt < 60.) lepidsf= 0.9851;
+	    else if(leppt < 100.) lepidsf= 0.9724;
+	    else if(leppt < 1000.) lepidsf= 1.0028;
 	  }
 	  else{lepidsf= 1.0;} 
 	}
@@ -1333,30 +1490,35 @@ void step1::Loop()
 	}
       }
 
-      //8TeV Top Pt Reweighting
       float gen_tpt = -999;
       float gen_anti_tpt = -999;
-      for(unsigned int ijet=0; ijet < topPt_TTbarMassCalc->size(); ijet++){
-	if(gen_tpt < 0 && topID_TTbarMassCalc->at(ijet) == 6) gen_tpt = topPt_TTbarMassCalc->at(ijet);
-	if(gen_anti_tpt < 0 && topID_TTbarMassCalc->at(ijet) == -6) gen_anti_tpt = topPt_TTbarMassCalc->at(ijet);
+      float weight_toppt = 1;
+      float weightPast400_toppt = 1;
+      float weightHighPt_toppt = 1;
+      if(isTT){
+	//8TeV Top Pt Reweighting
+	for(unsigned int ijet=0; ijet < topPt_TTbarMassCalc->size(); ijet++){
+	  if(gen_tpt < 0 && topID_TTbarMassCalc->at(ijet) == 6) gen_tpt = topPt_TTbarMassCalc->at(ijet);
+	  if(gen_anti_tpt < 0 && topID_TTbarMassCalc->at(ijet) == -6) gen_anti_tpt = topPt_TTbarMassCalc->at(ijet);
+	}
+		
+	float toppt_temp = gen_tpt;
+	if(gen_tpt > 400) toppt_temp = 400;
+	float antitoppt_temp = gen_anti_tpt;
+	if(gen_anti_tpt > 400) antitoppt_temp = 400;
+	
+	float SFtop = TMath::Exp(0.156-0.00137*toppt_temp); // using 8TeV TopPtReweighting: https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting
+	float SFantitop = TMath::Exp(0.156-0.00137*antitoppt_temp);
+	weight_toppt = TMath::Sqrt(SFtop*SFantitop)/0.99277; //0.99277-->average weight
+	
+	float SFtopPast400 = TMath::Exp(0.156-0.00137*gen_tpt);
+	float SFantitopPast400 = TMath::Exp(0.156-0.00137*gen_anti_tpt);
+	weightPast400_toppt = TMath::Sqrt(SFtopPast400*SFantitopPast400)/0.9927;
+	
+	float SFtopHighPt = 0.98  - 0.00026*gen_tpt;  // 0.98 +- 0.24, 0.0026 +- 0.00039
+	float SFantitopHighPt = 0.98  - 0.00026*gen_anti_tpt;
+	weightHighPt_toppt = TMath::Sqrt(SFtopHighPt*SFantitopHighPt);
       }
-      
-      float toppt_temp = gen_tpt;
-      if(gen_tpt > 400) toppt_temp = 400;
-      float antitoppt_temp = gen_anti_tpt;
-      if(gen_anti_tpt > 400) antitoppt_temp = 400;
-      
-      float SFtop = TMath::Exp(0.156-0.00137*toppt_temp); // using 8TeV TopPtReweighting: https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting
-      float SFantitop = TMath::Exp(0.156-0.00137*antitoppt_temp);
-      float weight_toppt = TMath::Sqrt(SFtop*SFantitop)/0.99277; //0.99277-->average weight
-      
-      float SFtopPast400 = TMath::Exp(0.156-0.00137*gen_tpt);
-      float SFantitopPast400 = TMath::Exp(0.156-0.00137*gen_anti_tpt);
-      float weightPast400_toppt = TMath::Sqrt(SFtopPast400*SFantitopPast400)/0.9927;
-
-      float SFtopHighPt = 0.98  - 0.00026*gen_tpt;  // 0.98 +- 0.24, 0.0026 +- 0.00039
-      float SFantitopHighPt = 0.98  - 0.00026*gen_anti_tpt;
-      float weightHighPt_toppt = TMath::Sqrt(SFtopHighPt*SFantitopHighPt);
 
       //Calculate neutrino Pz with W constraint to the lepton
       double metpx = corr_met_singleLepCalc*cos(corr_met_phi_singleLepCalc);
@@ -1447,6 +1609,7 @@ void step1::Loop()
       deltaRlepWjet = -99;     deltaPhilepWjet = -99;	  
 
       NJetsWtagged_0p6_shifts.clear();
+      theJetAK8MatchedPt_JetSubCalc_PtOrdered.clear();
       theJetAK8Wmatch_JetSubCalc_PtOrdered.clear();
       theJetAK8Hmatch_JetSubCalc_PtOrdered.clear();
       theJetAK8Zmatch_JetSubCalc_PtOrdered.clear();
@@ -1500,9 +1663,9 @@ void step1::Loop()
 	//
 	//Pruned mass <m> for 76: 0.982 +/- 0.008
 	
-	float AK8massScale=0.982; //nominal
-	float AK8massScaleUp=0.990; //scale up
-	float AK8massScaleDn=0.974; //scale down
+	float AK8massScale=1.0; //nominal (scale factor is consistent with one)
+	float AK8massScaleUp=0.997; //scale up
+	float AK8massScaleDn=0.987; //scale down
 	float AK8massSmear=3.7; //nominal
 	float AK8massSmearUp=4.7; //1sigma up
 	float AK8massSmearDn=2.3; //1sigma down
@@ -1555,6 +1718,8 @@ void step1::Loop()
 	  if(minDR < 0.8 && matchedID == 23 && WallDsInJet) isZmatched = true;
 	  if(minDR < 0.8 && matchedID == 6 && TallDsInJet) isTmatched = true;
 
+	  if(isWmatched || isHmatched || isZmatched || isTmatched) theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(matchedPt);
+	  else theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(-99.9);
 	  theJetAK8Wmatch_JetSubCalc_PtOrdered.push_back(isWmatched);
 	  theJetAK8Hmatch_JetSubCalc_PtOrdered.push_back(isHmatched);
 	  theJetAK8Zmatch_JetSubCalc_PtOrdered.push_back(isZmatched);
@@ -1565,18 +1730,19 @@ void step1::Loop()
 	  // SCALE FACTOR ONLY USED ON MATCHED JETS
 	  double tau0p6Eff = 1.0;
 	  if(isWmatched){	    
-	    tau0p6SF = 0.979;
-	    tau0p6SFup = 1.007;
-	    tau0p6SFdn = 0.951;
+	    tau0p6SF = 1.03;
+	    tau0p6SFup = 1.16;
+	    tau0p6SFdn = 0.90;
 	  
 	    // Use matched W to find the efficiency -- calculated for TpTp and ttbar, EWK/QCD will almost never pass here (use ttbar eff when they do)
 	    if(isSig){
 	      int bin = (std::upper_bound(ptRangeTpTp.begin(), ptRangeTpTp.end(), matchedPt)-ptRangeTpTp.begin())-1;
 	      tau0p6Eff = SignalEff[SigMass][bin];
 	    }else{
-	      int bin = (std::upper_bound(ptRangeTTbar.begin(), ptRangeTTbar.end(), matchedPt)-ptRangeTTbar.begin())-1;
+	      int bin = (std::upper_bound(ptRangeBkg.begin(), ptRangeBkg.end(), matchedPt)-ptRangeBkg.begin())-1;
 	      if(isTT) tau0p6Eff = TTbarEff[bin]; // ttbar
 	      else if(isST) tau0p6Eff = STEff[bin]; // single top (s and t channel had 0 boosted tops)
+	      else if(isTTV) tau0p6Eff = TTVEff[bin]; // ttW, ttZ
 	      else tau0p6Eff = WVEff[bin]; // WW, WZ, etc. 
 	    }
 	  }

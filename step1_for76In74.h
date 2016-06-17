@@ -32,6 +32,7 @@ public :
    Bool_t          isMC;
    Bool_t          isTT;
    Bool_t          isST;
+   Bool_t          isTTV;
    Bool_t          isTTincMtt0to700;
    Bool_t          isTTincMtt700to1000;
    Bool_t          isTTincMtt1000toInf;
@@ -159,6 +160,7 @@ public :
    vector<double>  theJetAK8SoftDropMass_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8NjettinessTau3_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8MaxSubCSV_JetSubCalc_PtOrdered;
+   vector<double>  theJetAK8MatchedPt_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8Wmatch_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8Tmatch_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8Zmatch_JetSubCalc_PtOrdered;
@@ -899,8 +901,9 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
   }
   isMadgraphBkg = inputFileName.Contains("WJetsToLNu_HT") || inputFileName.Contains("QCD");
   isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_") || inputFileName.Contains("TT_Tune"));
-  isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt") || inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_"));
+  isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt"));
   isST = inputFileName.Contains("ST");
+  isTTV = (inputFileName.Contains("TTW_") || inputFileName.Contains("TTZ_"));
   isMC      = !inputFileName.Contains("Single");
   isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
   isTTincMtt700to1000 = outputFileName.Contains("Mtt700to1000");
