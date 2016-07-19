@@ -32,18 +32,6 @@ python -u runCondorSlimmerJobs.py JERdown
 
 sleep 5
 
-echo "SUBMITTING BTAGup"
-
-python -u runCondorSlimmerJobs.py BTAGup
-
-sleep 5
-
-echo "SUBMITTING BTAGdown"
-
-python -u runCondorSlimmerJobs.py BTAGdown
-
-sleep 5
-
 echo "DONE"
 
 date
