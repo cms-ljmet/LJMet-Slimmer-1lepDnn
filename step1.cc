@@ -576,56 +576,6 @@ void step1::Loop()
           }
           else egammasf= 1.0;
 
-	  // Ele45_PFJet200_PFJet50 -- leaving at 74X, 76X gave weird values
-	  if(leppt <  45){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.344; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.350;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.932;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 0.343;
-	    else TrigEffAltWeight = 0.058;
-	  }else if(leppt < 50){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.890; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.830;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.855;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 0.677;
-	    else TrigEffAltWeight = 0.461;
-	  }else if(leppt < 60){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.990; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.980;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 1.006;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 1.032;
-	    else TrigEffAltWeight = 0.980;
-	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.992; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 1.011;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.991;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 1.084;
-	    else TrigEffAltWeight = 1.023;
-	  }else if(leppt < 90){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.994; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 1.000; // non-convergent fit
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 1.120;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 1.058;
-	    else TrigEffAltWeight = 1.032;
-	  }else if(leppt < 130){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 1.001; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 1.012;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 1.061;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 1.034;
-	    else TrigEffAltWeight = 1.025;
-	  }else if(leppt < 180){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.997; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.988;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.943;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 1.016;
-	    else TrigEffAltWeight = 1.060;
-	  }else if(leppt < 250){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 1.001; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 1.001;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.974;
-	    else if(fabs(lepeta) < 2.0) TrigEffAltWeight = 1.044;
-	    else TrigEffAltWeight = 1.034;
-	  }else{ TrigEffAltWeight = 1.000;}
 
 	  // Ele27_eta2p1 -- 76X DATA EFFICIENCIES
 	  if(leppt < 45){
@@ -665,29 +615,32 @@ void step1::Loop()
 	    else TrigEffWeight = 0.844;
 	  }
 	  	
-	  //miniIso < 0.1 scale factors from https://indico.cern.ch/event/370512/contribution/1/attachments/1176496/1701148/2015_10_26_tnp.pdf (no update to 76 yet)
-	  if(fabs(lepeta) < 1.442){
-	    if(leppt > 10 && leppt < 20) isosf = 0.979; // +/-0.004 
-	    else if(leppt < 30) isosf = 0.988; // +/-0.002
-	    else if(leppt < 40) isosf = 0.995; // +/-0.022
-	    else if(leppt < 50) isosf = 0.995; // +/-0.011
-	    else if(leppt < 200) isosf = 0.995; // +/-0.000
+	  //miniIso < 0.1 scale factors from SUSYLepSF TWiki for 80X/ICHEP
+	  if(fabs(lepeta) < 0.8){
+	    if(leppt < 40) isosf = 0.979; // +/-0.022
+	    else if(leppt < 50) isosf = 0.979; // +/-0.011
+	    else isosf = 0.985; // +/-0.000
+	  }
+	  else if(fabs(lepeta) < 1.442){
+	    if(leppt < 40) isosf = 0.990; // +/-0.006
+	    else if(leppt < 50) isosf = 0.991; // +/-0.007
+	    else isosf = 0.998; // +/-0.014
 	  }
 	  else if(fabs(lepeta) < 1.566){
-	    if(leppt > 10 && leppt < 20) isosf = 0.909; // +/-0.05 
-	    else if(leppt < 30) isosf = 0.982; // +/-0.014
-	    else if(leppt < 40) isosf = 1.001; // +/-0.006
-	    else if(leppt < 50) isosf = 0.993; // +/-0.007
-	    else if(leppt < 200) isosf = 0.988; // +/-0.014
+	    if(leppt < 40) isosf = 1.023; // +/-0.006
+	    else if(leppt < 50) isosf = 1.011; // +/-0.007
+	    else isosf = 1.020; // +/-0.014
 	  }
-	  else if(fabs(lepeta) < 2.5){
-	    if(leppt > 10 && leppt < 20) isosf = 0.984; // +/-0.011
-	    else if(leppt < 30) isosf = 0.997; // +/-0.002
-	    else if(leppt < 40) isosf = 1.000; // +/-0.001
-	    else if(leppt < 50) isosf = 1.019; // +/-0.002
-	    else if(leppt < 200) isosf = 1.000; // +/-0.002
+	  else if(fabs(lepeta) < 2.0){
+	    if(leppt < 40) isosf = 1.012; // +/-0.006
+	    else if(leppt < 50) isosf = 1.006; // +/-0.007
+	    else isosf = 1.002; // +/-0.014
 	  }
-	  else isosf = 1.;
+	  else {
+	    if(leppt < 40) isosf = 1.042; // +/-0.001
+	    else if(leppt < 50) isosf = 1.033; // +/-0.002
+	    else isosf = 1.021; // +/-0.002
+	  }
 	  
 	  //MVA-based ID scale factors (non-triggering) from TWiki CMS/EgammaIDRecipesRun2
 	  if(run_CommonCalc < 273726){
@@ -798,44 +751,6 @@ void step1::Loop()
 	  isPastTrigMC = 1;
 	  isPastTrigMCAlt = 1;
 
-	  // Mu45_eta2p1 eff -- I think this is already 76X, check with Julie if using
-	  if(leppt <  45){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 1.601; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 1.710;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 1.738;
-	    else TrigEffAltWeight = 1.835;
-	  }else if(leppt < 50){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.958; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.952;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.960;
-	    else TrigEffAltWeight = 0.932;
-	  }else if(leppt < 60){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.975; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.975;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.987;
-	    else TrigEffAltWeight = 0.966;
-	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.978; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.974;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.993;
-	    else TrigEffAltWeight = 0.975;
-	  }else if(leppt < 90){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.977; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.975;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.990;
-	    else TrigEffAltWeight = 0.977;
-	  }else if(leppt < 130){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.974; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.965;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 1.015;
-	    else TrigEffAltWeight = 0.956;
-	  }else if(leppt < 180){
-	    if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.983; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.979;
-	    else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 1.000;
-	    else TrigEffAltWeight = 0.975;
-	  }else{ TrigEffAltWeight = 1.000;}
-
 	  // IsoMu20 || IsoTkMu20 Eff -- 76X DATA EFFICIENCIES
 	  if(leppt < 50){
 	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.947; //0.984; // 
@@ -854,12 +769,12 @@ void step1::Loop()
             else TrigEffWeight = 0.907; //1.006;
 	  } 
 
-	  //Mini-iso < 0.2 SFs from SUSY TWiki (no update to 76X yet)
+	  //Mini-iso < 0.2 SFs from SUSY TWiki for 80X/ICHEP
 	  if(leppt < 40){
-	    if(fabs(lepeta) < 0.9) isosf= 1.000;
+	    if(fabs(lepeta) < 0.9) isosf= 0.999;
 	    else if(fabs(lepeta) <  1.2) isosf= 1.000;
 	    else if(fabs(lepeta) <  2.1) isosf= 0.999;
-	    else if(fabs(lepeta) <  2.4) isosf= 0.999;
+	    else if(fabs(lepeta) <  2.4) isosf= 1.000;
 	  }
 	  else if(leppt < 50){
 	    if(fabs(lepeta) < 0.9) isosf= 1.000;
@@ -876,44 +791,35 @@ void step1::Loop()
 	  else{
 	    if(fabs(lepeta) < 0.9) isosf= 1.000;
 	    else if(fabs(lepeta) <  1.2) isosf= 0.999;
-	    else if(fabs(lepeta) <  2.1) isosf= 0.998;
-	    else if(fabs(lepeta) <  2.4) isosf= 1.000;
+	    else if(fabs(lepeta) <  2.1) isosf= 1.000;
+	    else if(fabs(lepeta) <  2.4) isosf= 0.999;
 	  }
 	  
-	  //Cut-based ID scale factors from POG TWiki in 76X
+	  //Cut-based ID scale factors from POG TWiki -- Prelim 80X 2.6/fb
 	  if(fabs(lepeta) < 0.9){
-	    if(leppt < 20.) lepidsf= 0.9753;
-	    else if(leppt < 30.) lepidsf= 0.9828;
-	    else if(leppt < 40.) lepidsf= 0.9866;
-	    else if(leppt < 50.) lepidsf= 0.9873;
-            else if(leppt < 60.) lepidsf= 0.9822;
-            else lepidsf= 0.9856;
+	    if(leppt < 40.) lepidsf= 0.9805;
+	    else if(leppt < 50.) lepidsf= 0.9793;
+            else if(leppt < 60.) lepidsf= 0.9789;
+            else lepidsf= 0.9791;
 	  } 
 	  else if(fabs(lepeta) < 1.2){ 
-	    if(leppt < 20.) lepidsf= 0.9777;
-            else if(leppt < 30.) lepidsf= 0.9761;
-            else if(leppt < 40.) lepidsf= 0.9803;
-	    else if(leppt < 50.) lepidsf= 0.9801;
-            else if(leppt < 60.) lepidsf= 0.9765;
-	    else lepidsf= 0.9843;
+            if(leppt < 40.) lepidsf= 0.9730;
+	    else if(leppt < 50.) lepidsf= 0.9728;
+            else if(leppt < 60.) lepidsf= 0.9720;
+	    else lepidsf= 0.9780;
 	  }
 	  else if(fabs(lepeta) < 2.1){ 
-	    if(leppt < 20.) lepidsf= 0.9929;
-            else if(leppt < 30.) lepidsf= 0.9899;
-	    else if(leppt < 40.) lepidsf= 0.9923;
-	    else if(leppt < 50.) lepidsf= 0.9912;
-            else if(leppt < 60.) lepidsf= 0.9890;
-	    else lepidsf= 0.9906;
+	    if(leppt < 40.) lepidsf= 0.9915;
+	    else if(leppt < 50.) lepidsf= 0.9928;
+            else if(leppt < 60.) lepidsf= 0.9945;
+	    else lepidsf= 0.9965;
 	  }
-	  else if(fabs(lepeta) < 2.4){ 
-	    if(leppt < 20.) lepidsf= 0.9784;
-            else if(leppt < 30.) lepidsf= 0.9764;
-	    else if(leppt < 40.) lepidsf= 0.9783;
-	    else if(leppt < 50.) lepidsf= 0.9775;
-            else if(leppt < 60.) lepidsf= 0.9727;
-	    else lepidsf= 0.9640;
+	  else{
+	    if(leppt < 40.) lepidsf= 0.9785;
+	    else if(leppt < 50.) lepidsf= 0.9782;
+            else if(leppt < 60.) lepidsf= 0.9786;
+	    else lepidsf= 0.9793;
 	  }
-	  else{lepidsf= 1.0;} 
 	}
       	isPastTrig = 1;
       	isPastTrigAlt = 1;
