@@ -16,10 +16,39 @@ using namespace std;
 
 bool comparepair( const std::pair<double,int> a, const std::pair<double,int> b) { return a.first > b.first; }
 
-TRandom * gRandom = new TRandom3();
+TRandom3 Rand;
 
 const double MTOP  = 173.5;
 const double MW    = 80.4; 
+
+bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
+  
+  bool newTag = isTagged;
+  if (tag_SF == 1) return newTag; //no correction needed 
+
+  //throw die
+  float coin = Rand.Uniform(1.);    
+
+  if(tag_SF > 1){  // use this if SF>1
+
+    if( !isTagged ) {
+
+      //fraction of jets that need to be upgraded
+      float mistagPercent = (1.0 - tag_SF) / (1.0 - (tag_SF/tag_eff) );
+
+      //upgrade to tagged
+      if( coin < mistagPercent ) {newTag = true;}
+    }
+
+  }else{  // use this if SF<1
+      
+    //downgrade tagged to untagged
+    if( isTagged && coin > tag_SF ) {newTag = false;}
+
+  }
+
+  return newTag;
+}
 
 void step1::Loop() 
 {
@@ -173,6 +202,7 @@ void step1::Loop()
    inputTree->SetBranchStatus("theJetAK8NjettinessTau2_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8NjettinessTau3_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedMass_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SoftDropMass_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedTau21Tag_JetSubCalc",1);
 
@@ -247,6 +277,7 @@ void step1::Loop()
    outputTree->Branch("isoSF",&isoSF,"isoSF/F");
    outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
    outputTree->Branch("EGammaRecoSF",&EGammaRecoSF,"EGammaRecoSF/F");
+   outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
 
    outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
    outputTree->Branch("corr_met_singleLepCalc",&corr_met_singleLepCalc,"corr_met_singleLepCalc/D");
@@ -280,6 +311,7 @@ void step1::Loop()
    outputTree->Branch("theJetAK8Phi_JetSubCalc_PtOrdered",&theJetAK8Phi_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Energy_JetSubCalc_PtOrdered",&theJetAK8Energy_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8PrunedMass_JetSubCalc_PtOrdered",&theJetAK8PrunedMass_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8SoftDropMass_JetSubCalc_PtOrdered",&theJetAK8SoftDropMass_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8MaxSubCSV_JetSubCalc_PtOrdered",&theJetAK8MaxSubCSV_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau1_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau1_JetSubCalc_PtOrdered);
@@ -290,9 +322,6 @@ void step1::Loop()
    outputTree->Branch("theJetAK8Zmatch_JetSubCalc_PtOrdered",&theJetAK8Zmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Hmatch_JetSubCalc_PtOrdered",&theJetAK8Hmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8MatchedPt_JetSubCalc_PtOrdered",&theJetAK8MatchedPt_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PrunedMassJMRSmeared_JetSubCalc",&theJetAK8PrunedMassJMRSmeared_JetSubCalc);
-   outputTree->Branch("theJetAK8PrunedMassJMRSmearedUp_JetSubCalc",&theJetAK8PrunedMassJMRSmearedUp_JetSubCalc);
-   outputTree->Branch("theJetAK8PrunedMassJMRSmearedDn_JetSubCalc",&theJetAK8PrunedMassJMRSmearedDn_JetSubCalc);
    outputTree->Branch("genJetPt_singleLepCalc",&genJetPt_singleLepCalc);
    outputTree->Branch("genJetEta_singleLepCalc",&genJetEta_singleLepCalc);
    outputTree->Branch("genJetPhi_singleLepCalc",&genJetPhi_singleLepCalc);
@@ -301,6 +330,8 @@ void step1::Loop()
    outputTree->Branch("BJetLeadPt_shifts",&BJetLeadPt_shifts);
    outputTree->Branch("WJetLeadPt",&WJetLeadPt,"WJetLeadPt/F");
    outputTree->Branch("WJetLeadPt_shifts",&WJetLeadPt_shifts);
+   outputTree->Branch("TJetLeadPt",&TJetLeadPt,"TJetLeadPt/F");
+   outputTree->Branch("TJetLeadPt_shifts",&TJetLeadPt_shifts);
    outputTree->Branch("AK4HTpMETpLepPt",&AK4HTpMETpLepPt,"AK4HTpMETpLepPt/F");
    outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
    outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
@@ -328,28 +359,20 @@ void step1::Loop()
    outputTree->Branch("deltaPhilepbJetInMinMlb_shifts",&deltaPhilepbJetInMinMlb_shifts);
    outputTree->Branch("deltaRtopWjet",&deltaRtopWjet,"deltaRtopWjet/F");
    outputTree->Branch("deltaRlepWjet",&deltaRlepWjet,"deltaRlepWjet/F");
+   outputTree->Branch("deltaRlepTjet",&deltaRlepTjet,"deltaRlepTjet/F");
    outputTree->Branch("deltaPhitopWjet",&deltaPhitopWjet,"deltaPhitopWjet/F");
    outputTree->Branch("deltaPhilepWjet",&deltaPhilepWjet,"deltaPhilepWjet/F");
+   outputTree->Branch("deltaPhilepTjet",&deltaPhilepTjet,"deltaPhilepTjet/F");
    outputTree->Branch("deltaRtopWjet_shifts",&deltaRtopWjet_shifts);
    outputTree->Branch("deltaRlepWjet_shifts",&deltaRlepWjet_shifts);
+   outputTree->Branch("deltaRlepTjet_shifts",&deltaRlepTjet_shifts);
    outputTree->Branch("deltaPhitopWjet_shifts",&deltaPhitopWjet_shifts);
    outputTree->Branch("deltaPhilepWjet_shifts",&deltaPhilepWjet_shifts);
-   outputTree->Branch("WJetTaggedPt",&WJetTaggedPt);
-   outputTree->Branch("WJetTaggedMass",&WJetTaggedMass);
-   outputTree->Branch("WJetTaggedPtJMRup",&WJetTaggedPtJMRup);
-   outputTree->Branch("WJetTaggedMassJMRup",&WJetTaggedMassJMRup);
-   outputTree->Branch("WJetTaggedPtJMRdn",&WJetTaggedPtJMRdn);
-   outputTree->Branch("WJetTaggedMassJMRdn",&WJetTaggedMassJMRdn);
-   outputTree->Branch("WJetTaggedPtJMSup",&WJetTaggedPtJMSup);
-   outputTree->Branch("WJetTaggedMassJMSup",&WJetTaggedMassJMSup);
-   outputTree->Branch("WJetTaggedPtJMSdn",&WJetTaggedPtJMSdn);
-   outputTree->Branch("WJetTaggedMassJMSdn",&WJetTaggedMassJMSdn);
-   outputTree->Branch("WJetTaggedPtTAUup",&WJetTaggedPtTAUup);
-   outputTree->Branch("WJetTaggedMassTAUup",&WJetTaggedMassTAUup);
-   outputTree->Branch("WJetTaggedPtTAUdn",&WJetTaggedPtTAUdn);
-   outputTree->Branch("WJetTaggedMassTAUdn",&WJetTaggedMassTAUdn);
+   outputTree->Branch("deltaPhilepTjet_shifts",&deltaPhilepTjet_shifts);
    outputTree->Branch("NJetsWtagged_0p6",&NJetsWtagged_0p6,"NJetsWtagged_0p6/I");
    outputTree->Branch("NJetsWtagged_0p6_shifts",&NJetsWtagged_0p6_shifts);
+   outputTree->Branch("NJetsTtagged_0p81",&NJetsTtagged_0p81,"NJetsTtagged_0p81/I");
+   outputTree->Branch("NJetsTtagged_0p81_shifts",&NJetsTtagged_0p81_shifts);
    outputTree->Branch("minDR_leadAK8otherAK8",&minDR_leadAK8otherAK8,"minDR_leadAK8otherAK8/F");
    outputTree->Branch("minDR_lepAK8",&minDR_lepAK8,"minDR_lepAK8/F");
    outputTree->Branch("minDR_lepJet",&minDR_lepJet,"minDR_lepJet/F");
@@ -380,6 +403,7 @@ void step1::Loop()
    TLorentzVector jet_lv;
    TLorentzVector bjet_lv;
    TLorentzVector wjet1_lv;
+   TLorentzVector tjet1_lv;
    TLorentzVector lepton_lv;
    TLorentzVector ak8_lv;
    
@@ -394,35 +418,68 @@ void step1::Loop()
    float ak8EtaCut=2.4;
    float jetPtCut=30;
 
+   // B tagging efficiencies. This will not be needed after 8/1/16 LJMet
+   std::vector<float> ptRangeSF, ptRangeEff;
+   float SFerr[7]  = {0.011629186570644379, 0.011501740664243698, 0.01121238712221384, 0.016118986532092094, 0.016830746084451675, 0.032492130994796753, 0.036446873098611832};
+   float ptmin16[7] = {30, 50, 70, 100, 140, 200, 300};
+   for (int i=0;i<7;++i) ptRangeSF.push_back(ptmin16[i]);
+   float ptminEff[19] = {30, 50, 70, 100, 140, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1400, 1600, 1800};
+   for (int i=0;i<19;++i) ptRangeEff.push_back(ptminEff[i]);
+   float BtagEff[19] = {0.598502,0.650253,0.675872,0.684356,0.681335,0.647372,0.607565,0.563892,0.536284,0.526137,0.511053,0.490886,0.482464,0.461109,0.447184,0.452516,0.455189,0.399306,0.367347};
+   float MistagEff[19] = {0.014675,0.012310,0.012179,0.012088,0.013761,0.015344,0.021110,0.023148,0.023755,0.028529,0.030575,0.030955,0.034016,0.037446,0.034907,0.043372,0.052239,0.049661,0.073034};
+
    // W tagging efficiencies. Assumes each signal mass uses the same pT bins but has unique values.
    std::vector<float> ptRangeTpTp, ptRangeTTbar;
-   float ptminTTbar[17] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 900, 1000, 1100, 1200};
-   for (int i=0;i<17;++i) ptRangeTTbar.push_back(ptminTTbar[i]);
-   float ptminTpTp[20] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1800};
-   for (int i=0;i<20;++i) ptRangeTpTp.push_back(ptminTpTp[i]);
+   float ptminTTbar[14] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<14;++i) ptRangeTTbar.push_back(ptminTTbar[i]);
+   float ptminTpTp[14] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<14;++i) ptRangeTpTp.push_back(ptminTpTp[i]);
 
-   float SignalEff[12][20] = {
-     {0.564508, 0.608000, 0.606345, 0.610230, 0.611723, 0.619561, 0.625576, 0.622267, 0.616639, 0.613650, 0.613298, 0.607818, 0.598630, 0.580504, 0.551724,0.557235,0.573113,0.483051,0.543478,0.384615},
-     {0.548629, 0.583188, 0.586383, 0.588656, 0.592233, 0.596651, 0.602861, 0.603671, 0.607767, 0.613201, 0.614011, 0.615429, 0.608499, 0.598631, 0.569672,0.563758,0.583679,0.543210,0.483333,0.450000},
-     {0.534358, 0.569013, 0.564901, 0.569156, 0.570370, 0.578915, 0.578805, 0.584476, 0.588793, 0.587046, 0.588409, 0.592822, 0.593446, 0.593232, 0.582446,0.619464,0.563874,0.525424,0.500000,0.450980},
-     {0.538454, 0.557137, 0.545319, 0.548106, 0.555391, 0.562675, 0.571853, 0.567900, 0.575301, 0.575040, 0.584643, 0.589661, 0.582756, 0.574006, 0.571275,0.582245,0.565997,0.532086,0.588000,0.517647},
-     {0.525286, 0.551142, 0.534871, 0.535766, 0.543462, 0.550923, 0.554155, 0.563145, 0.567262, 0.568506, 0.569613, 0.572914, 0.574414, 0.571416, 0.575626,0.577349,0.566807,0.567276,0.593052,0.523438},
-     {0.535650, 0.551255, 0.527912, 0.523938, 0.529138, 0.539762, 0.544520, 0.549281, 0.549178, 0.554746, 0.550871, 0.559603, 0.564062, 0.560952, 0.564291,0.557285,0.555885,0.554862,0.546512,0.542955},
-     {0.538705, 0.549720, 0.525772, 0.517480, 0.516984, 0.526490, 0.534243, 0.539233, 0.542263, 0.537705, 0.547191, 0.550480, 0.553255, 0.552288, 0.551672,0.565510,0.551236,0.559540,0.551724,0.561856},
-     {0.542911, 0.551923, 0.527378, 0.511120, 0.511213, 0.519235, 0.521617, 0.531310, 0.536900, 0.537253, 0.539322, 0.542000, 0.538708, 0.546960, 0.547060,0.552621,0.540629,0.541027,0.542459,0.503937},
-     {0.535188, 0.562270, 0.533453, 0.506059, 0.503329, 0.509019, 0.511890, 0.519123, 0.527211, 0.526664, 0.531581, 0.532783, 0.537525, 0.541424, 0.534916,0.542254,0.542909,0.543891,0.532174,0.540279},
-     {0.547503, 0.567619, 0.533486, 0.513874, 0.503044, 0.502185, 0.505648, 0.517570, 0.518406, 0.520316, 0.525227, 0.520015, 0.527185, 0.530408, 0.530671,0.526384,0.533087,0.529443,0.534278,0.539708},
-     {0.550201, 0.574215, 0.539318, 0.519348, 0.508372, 0.503091, 0.499538, 0.507907, 0.511284, 0.514325, 0.514122, 0.521448, 0.520427, 0.520246, 0.520341,0.526883,0.520512,0.517572,0.527374,0.539618},
-     {0.554137, 0.581898, 0.552245, 0.519768, 0.501204, 0.494958, 0.499119, 0.501657, 0.503040, 0.504813, 0.511540, 0.507806, 0.515420, 0.519994, 0.511150,0.514094,0.516915,0.521633,0.532456,0.520919},
+   float SignalEff[11][14] = {
+     {0.548356, 0.582139, 0.583056, 0.589624, 0.593879, 0.596037, 0.606139, 0.603989, 0.604075, 0.612769, 0.598276, 0.563951, 0.562433, 0.481481},
+     {0.537263, 0.566472, 0.563321, 0.566097, 0.569125, 0.578216, 0.579019, 0.585555, 0.589941, 0.589891, 0.590064, 0.591820, 0.566303, 0.476440},
+     {0.538521, 0.557660, 0.543946, 0.545865, 0.558151, 0.563405, 0.572813, 0.570846, 0.573461, 0.586819, 0.578804, 0.572940, 0.561443, 0.555556},
+     {0.530602, 0.550354, 0.538940, 0.536638, 0.544389, 0.550410, 0.554327, 0.562982, 0.568316, 0.567526, 0.576123, 0.575019, 0.560201, 0.550186},
+     {0.533944, 0.550041, 0.530723, 0.522086, 0.528805, 0.539058, 0.545445, 0.549327, 0.552455, 0.554668, 0.559353, 0.558860, 0.553680, 0.531915},
+     {0.538718, 0.549315, 0.523989, 0.518197, 0.516679, 0.527819, 0.534820, 0.540149, 0.540099, 0.549270, 0.550459, 0.557293, 0.545746, 0.559468},
+     {0.542657, 0.554109, 0.528772, 0.512938, 0.509910, 0.519070, 0.522395, 0.532678, 0.535456, 0.538611, 0.540082, 0.546394, 0.540544, 0.539807},
+     {0.539844, 0.566326, 0.531928, 0.506292, 0.502152, 0.510498, 0.513585, 0.520557, 0.527288, 0.534014, 0.538507, 0.537015, 0.535885, 0.540658},
+     {0.548628, 0.559869, 0.551592, 0.510941, 0.501727, 0.506774, 0.502805, 0.513068, 0.519535, 0.520095, 0.519365, 0.519234, 0.537919, 0.519135},
+     {0.549918, 0.577604, 0.540031, 0.518584, 0.507735, 0.504109, 0.500252, 0.506397, 0.513234, 0.518664, 0.521474, 0.520294, 0.518832, 0.532468},
+     {0.554463, 0.581864, 0.553090, 0.522106, 0.504654, 0.496037, 0.501408, 0.500636, 0.504387, 0.509833, 0.515884, 0.510956, 0.515713, 0.538008},
    };
-   float TTbarEff[17] = {0.685039,0.739539,0.706915,0.675907,0.658715,0.651691,0.644650,0.634328,0.626901,0.621236,0.625850,0.605793,0.590250,0.563380,0.504950,0.457627,0.531250};
-   float STEff[17] = {0.718269,0.796822,0.783475,0.762890,0.741929,0.722222,0.716766,0.702391,0.724490,0.709125,0.671554,0.752033,0.705202,0.691011,0.677966,0.661972,0.500000};
-   float WVEff[17] = {0.700646,0.775087,0.749880,0.717758,0.684090,0.656286,0.650381,0.613069,0.601344,0.602273,0.562660,0.581481,0.531977,0.604396,0.602151,0.546875,0.546875};
+   float TTbarEff[14] = {0.682439, 0.738105, 0.707007, 0.676506, 0.655480, 0.647157, 0.640495, 0.631280, 0.629425, 0.588845, 0.572383,  0.631179, 0.528302, 0.333333};
+   float STEff[14] = {0.721371, 0.799146, 0.782680, 0.762160, 0.743905, 0.729174, 0.727657, 0.709333, 0.724403, 0.717466, 0.690385,  0.666667, 0.483333, 0.600000};
+   float WVEff[14] = {0.712598, 0.791459, 0.756127, 0.723847, 0.705318, 0.674699, 0.718884, 0.626923, 0.662162, 0.656250, 0.564356,  0.454545, 0.285714, 0.285714};
+   float TTVEff[14] = {0.605128, 0.633895, 0.614585, 0.602014, 0.588748, 0.569500, 0.557702, 0.571873, 0.539608, 0.537893, 0.540462,  0.444444, 0.189189, 0.600000};
+
+   // Top tagging efficiencies
+   std::vector<float> ptRangeTpTpTop, ptRangeTTbarTop;
+   float ptminTTbarTop[10] = {400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<10;++i) ptRangeTTbarTop.push_back(ptminTTbarTop[i]);
+   float ptminTpTpTop[10] = {400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<10;++i) ptRangeTpTpTop.push_back(ptminTpTpTop[i]);
+   float TTbarEffTop[10] = {0.656721, 0.842644, 0.864036, 0.851990, 0.824271, 0.782050, 0.738981, 0.699812, 0.676243, 0.646388};
+   float SignalEffTop[11][10] = {
+     {0.611732, 0.780089, 0.804294, 0.810772, 0.799419, 0.780285, 0.757704, 0.712814, 0.647868, 0.658120}, 
+     {0.581438, 0.746973, 0.777896, 0.788666, 0.782500, 0.766847, 0.748906, 0.725802, 0.698985, 0.673077}, 
+     {0.559565, 0.718270, 0.750923, 0.766999, 0.757874, 0.751325, 0.737532, 0.718955, 0.700150, 0.679035}, 
+     {0.541422, 0.681966, 0.728139, 0.738110, 0.738715, 0.726217, 0.711723, 0.707830, 0.692991, 0.666259}, 
+     {0.522404, 0.666741, 0.702028, 0.713631, 0.718917, 0.715071, 0.701261, 0.698686, 0.692463, 0.678025}, 
+     {0.495974, 0.639434, 0.678278, 0.690605, 0.700150, 0.696724, 0.687981, 0.683291, 0.694443, 0.679642}, 
+     {0.491851, 0.625171, 0.657520, 0.672060, 0.678105, 0.680814, 0.674685, 0.671018, 0.672606, 0.687192}, 
+     {0.482352, 0.607627, 0.638979, 0.653509, 0.661607, 0.663634, 0.662143, 0.662867, 0.667102, 0.685247}, 
+     {0.474970, 0.611347, 0.612631, 0.644484, 0.641295, 0.656193, 0.649018, 0.645009, 0.665298, 0.674550}, 
+     {0.472171, 0.591681, 0.617293, 0.622990, 0.628382, 0.632128, 0.637580, 0.638157, 0.650723, 0.662004}, 
+     {0.470206, 0.584249, 0.607135, 0.604068, 0.614005, 0.621413, 0.624816, 0.626804, 0.639740, 0.659275},
+   }; 
 
    // Pileup distributions
-   double pileup_71300mb[40] = {8.446e-04, 7.527e-03, 1.129e-02, 2.534e-02, 4.204e-02, 3.838e-02, 4.979e-02, 2.754e-01, 5.848e-01, 6.689e-01, 6.987e-01, 8.628e-01, 1.196e+00, 1.611e+00, 1.993e+00, 2.038e+00, 1.900e+00, 1.921e+00, 1.698e+00, 1.597e+00, 1.204e+00, 9.219e-01, 7.490e-01, 6.001e-01, 4.247e-01, 3.230e-01, 1.955e-01, 1.287e-01, 6.994e-02, 4.072e-02, 2.233e-02, 1.219e-02, 8.711e-03, 5.919e-03, 5.998e-03, 9.109e-03, 2.150e-02, 4.643e-02, 0.000e+00, 0.000e+00};
-   double pileup_67735mb[40] = {1.242e-03, 8.530e-03, 1.420e-02, 2.959e-02, 4.947e-02, 4.348e-02, 9.419e-02, 5.241e-01, 7.498e-01, 7.964e-01, 8.872e-01, 1.189e+00, 1.697e+00, 2.193e+00, 2.527e+00, 2.403e+00, 2.085e+00, 1.949e+00, 1.596e+00, 1.399e+00, 9.835e-01, 6.957e-01, 5.143e-01, 3.690e-01, 2.312e-01, 1.549e-01, 8.270e-02, 4.824e-02, 2.335e-02, 1.219e-02, 6.048e-03, 3.053e-03, 2.141e-03, 1.622e-03, 2.177e-03, 4.772e-03, 1.514e-02, 3.869e-02, 0.000e+00, 0.000e+00};
-   double pileup_74865mb[40] = {5.248e-04, 6.697e-03, 9.126e-03, 2.162e-02, 3.659e-02, 3.318e-02, 3.588e-02, 1.305e-01, 4.046e-01, 5.691e-01, 5.765e-01, 6.640e-01, 8.634e-01, 1.163e+00, 1.513e+00, 1.654e+00, 1.646e+00, 1.777e+00, 1.687e+00, 1.700e+00, 1.365e+00, 1.114e+00, 9.713e-01, 8.461e-01, 6.602e-01, 5.597e-01, 3.797e-01, 2.804e-01, 1.703e-01, 1.103e-01, 6.695e-02, 4.021e-02, 3.127e-02, 2.247e-02, 2.246e-02, 2.955e-02, 5.230e-02, 8.101e-02, 0.000e+00, 0.000e+00};
+   double pileup_central[40] = {1.990e-04, 9.977e-03, 1.408e-02, 2.362e-02, 3.913e-02, 3.103e-02, 3.369e-02, 6.947e-02, 1.636e-01, 3.170e-01, 4.966e-01, 7.191e-01, 9.710e-01, 1.155e+00, 1.264e+00, 1.220e+00, 1.142e+00, 1.214e+00, 1.182e+00, 1.275e+00, 1.137e+00, 1.055e+00, 1.070e+00, 1.112e+00, 1.067e+00, 1.149e+00, 1.019e+00, 1.008e+00, 8.370e-01, 7.521e-01, 6.384e-01, 5.358e-01, 5.765e-01, 5.628e-01, 7.408e-01, 1.209e+00, 2.364e+00, 3.325e+00, 0.000e+00, 0.000e+00};
+
+   double pileup_down[40] =    {3.167e-04, 1.224e-02, 1.592e-02, 2.817e-02, 4.279e-02, 3.554e-02, 4.153e-02, 1.191e-01, 2.535e-01, 4.625e-01, 6.876e-01, 9.668e-01, 1.248e+00, 1.411e+00, 1.502e+00, 1.421e+00, 1.293e+00, 1.335e+00, 1.263e+00, 1.324e+00, 1.145e+00, 1.030e+00, 1.011e+00, 1.013e+00, 9.292e-01, 9.449e-01, 7.845e-01, 7.233e-01, 5.580e-01, 4.638e-01, 3.611e-01, 2.756e-01, 2.680e-01, 2.356e-01, 2.784e-01, 4.070e-01, 7.124e-01, 8.988e-01, 0.000e+00, 0.000e+00};
+
+   double pileup_up[40] =      {1.230e-04, 8.231e-03, 1.238e-02, 1.978e-02, 3.623e-02, 2.701e-02, 2.954e-02, 4.398e-02, 1.026e-01, 2.169e-01, 3.559e-01, 5.350e-01, 7.430e-01, 9.278e-01, 1.057e+00, 1.041e+00, 9.943e-01, 1.085e+00, 1.085e+00, 1.200e+00, 1.098e+00, 1.049e+00, 1.095e+00, 1.172e+00, 1.162e+00, 1.302e+00, 1.215e+00, 1.275e+00, 1.128e+00, 1.082e+00, 9.846e-01, 8.912e-01, 1.042e+00, 1.113e+00, 1.610e+00, 2.896e+00, 6.253e+00, 9.726e+00, 0.000e+00, 0.000e+00};
 
    int npass_trigger      = 0;
    int npass_met          = 0;
@@ -480,21 +537,24 @@ void step1::Loop()
       if(elPt_singleLepCalc->size()==0 && muPt_singleLepCalc->size()>0) {isE = 0; isM = 1;}
       if(isE==0 && isM==0){std::cout << "got no leptons, something wrong" << std::endl; continue;}
 
-      double puweight = pileup_71300mb[nTrueInteractions_singleLepCalc];
-      double puweightup = pileup_67735mb[nTrueInteractions_singleLepCalc];
-      double puweightdown = pileup_74865mb[nTrueInteractions_singleLepCalc];
+      if(nTrueInteractions_singleLepCalc > 39) nTrueInteractions_singleLepCalc = 39;
+      double puweight = pileup_central[nTrueInteractions_singleLepCalc];
+      double puweightup = pileup_down[nTrueInteractions_singleLepCalc];
+      double puweightdown = pileup_up[nTrueInteractions_singleLepCalc];
 
       int   isPastTrig = 0;
       int   isPastTrigAlt = 0;
       int   isPastTrigMC = 0;
       int   isPastTrigMCAlt = 0;
-      float TrigEffAlt = 1.0;
-      float TrigEff = 1.0;
+      TrigEffAltWeight = 1.0;
+      TrigEffWeight = 1.0;
       float isosf = 1.0;
       float lepidsf = 1.0;
-      float egammasf = 1.0;      
+      float egammasf = 1.0;  
+      float gsfsf = 1.0;
 
-      double leppt, lepeta;
+      double leppt = 0;
+      double lepeta = 0;
       if(isE){leppt = elPt_singleLepCalc->at(0); lepeta = elEta_singleLepCalc->at(0);}
       if(isM){leppt = muPt_singleLepCalc->at(0); lepeta = muEta_singleLepCalc->at(0);}
 
@@ -502,7 +562,37 @@ void step1::Loop()
       	if(isE){
 	  isPastTrigMC = 1;
 	  isPastTrigMCAlt = 1;
-
+	  
+	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/ichep2016_80X/resultsGsfID/egammaEffi.txt_egammaPlots.pdf
+	  if(lepeta < -2.4) gsfsf = 1.170;
+	  else if(lepeta < -2.3) gsfsf = 1.009;
+	  else if(lepeta < -2.2) gsfsf = 1.010;
+	  else if(lepeta < -2.0) gsfsf = 1.005;
+	  else if(lepeta < -1.8) gsfsf = 0.998;
+	  else if(lepeta < -1.65) gsfsf = 0.992;
+	  else if(lepeta < -1.566) gsfsf = 0.986;
+	  else if(lepeta < -1.4442) gsfsf = 0.962;
+	  else if(lepeta < -1.2) gsfsf = 0.987;
+	  else if(lepeta < -1.0) gsfsf = 0.978;
+	  else if(lepeta < -0.6) gsfsf = 0.969;
+	  else if(lepeta < -0.4) gsfsf = 0.966;
+	  else if(lepeta < -0.2) gsfsf = 0.963;
+	  else if(lepeta < 0.0) gsfsf = 0.960;
+	  else if(lepeta < 0.2) gsfsf = 0.966;
+	  else if(lepeta < 0.4) gsfsf = 0.980;
+	  else if(lepeta < 0.6) gsfsf = 0.977;
+	  else if(lepeta < 1.0) gsfsf = 0.981;
+	  else if(lepeta < 1.2) gsfsf = 0.987;
+	  else if(lepeta < 1.4442) gsfsf = 0.987;
+	  else if(lepeta < 1.566) gsfsf = 0.971;
+	  else if(lepeta < 1.65) gsfsf = 0.990;
+	  else if(lepeta < 1.8) gsfsf = 0.996;
+	  else if(lepeta < 2.0) gsfsf = 0.990;
+	  else if(lepeta < 2.2) gsfsf = 0.995;
+	  else if(lepeta < 2.3) gsfsf = 0.993;
+	  else if(lepeta < 2.4) gsfsf = 0.967;
+	  else gsfsf = 0.884;
+	  
           //EGamma Scale Factors from http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/moriond2016_76X/reco/eleRECO.txt.egamma_egammaPlots.pdf
 	  if(lepeta > -2.5 && lepeta < -2.0){
             if(leppt > 10. && leppt < 20.) egammasf = 1.006;
@@ -575,201 +665,178 @@ void step1::Loop()
             else egammasf= 0.984;
           }
           else egammasf= 1.0;
+	  
 
-
-	  // Ele27_eta2p1 -- 76X DATA EFFICIENCIES
+	  // Ele27_eta2p1 -- 80X DATA EFFICIENCIES
 	  if(leppt < 45){
-            if(fabs(lepeta) < 0.8) TrigEffAltWeight = 0.843; // 
-            else if(fabs(lepeta) < 1.442) TrigEffAltWeight = 0.829;
-            else if(fabs(lepeta) < 1.566) TrigEffAltWeight = 0.750;
-            else TrigEffAltWeight = 0.815;
+            if(fabs(lepeta) < 0.8) TrigEffWeight = 0.811; // 
+            else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.832;
+            else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.758;
+            else TrigEffWeight = 0.772;
           }else if(leppt < 50){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.866; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.856;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.777;
-	    else TrigEffWeight = 0.829;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.844; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.860;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.776;
+	    else TrigEffWeight = 0.789;
 	  }else if(leppt < 60){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.881; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.871;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.792;
-	    else TrigEffWeight = 0.834;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.861; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.873;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.782;
+	    else TrigEffWeight = 0.796;
 	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.891; // 
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.877; // 
 	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.885;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.789;
-	    else TrigEffWeight = 0.838;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.779;
+	    else TrigEffWeight = 0.798;
 	  }else if(leppt < 90){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.901; // 
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.887; // 
 	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.893;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.809;
-	    else TrigEffWeight = 0.846;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.750;
+	    else TrigEffWeight = 0.799;
 	  }else if(leppt < 130){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.919; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.910;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.820;
-	    else TrigEffWeight = 0.845;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.900; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.901;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.774;
+	    else TrigEffWeight = 0.809;
 	  }else{
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.922; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.925;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.837;
-	    else TrigEffWeight = 0.844;
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.909; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.912;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.797;
+	    else TrigEffWeight = 0.816;
 	  }
 	  	
-	  //miniIso < 0.1 scale factors from SUSYLepSF TWiki for 80X/ICHEP
+	  //miniIso < 0.1 scale factors from SUSYLepSF: http://tomc.web.cern.ch/tomc/tagAndProbe/20160726/output/scaleFactors.root
 	  if(fabs(lepeta) < 0.8){
-	    if(leppt < 40) isosf = 0.979; // +/-0.022
-	    else if(leppt < 50) isosf = 0.979; // +/-0.011
-	    else isosf = 0.985; // +/-0.000
+	    if(leppt < 30) isosf = 0.991;
+	    else if(leppt < 40) isosf = 0.993;
+	    else if(leppt < 50) isosf = 0.996;
+	    else if(leppt < 100) isosf = 0.996;
+	    else isosf = 0.996;
 	  }
-	  else if(fabs(lepeta) < 1.442){
-	    if(leppt < 40) isosf = 0.990; // +/-0.006
-	    else if(leppt < 50) isosf = 0.991; // +/-0.007
-	    else isosf = 0.998; // +/-0.014
+	  else if(fabs(lepeta) < 1.4442){
+	    if(leppt < 30) isosf = 0.989;
+	    else if(leppt < 40) isosf = 0.993;
+	    else if(leppt < 50) isosf = 0.995;
+	    else if(leppt < 100) isosf = 0.996;
+	    else isosf = 0.998;
 	  }
 	  else if(fabs(lepeta) < 1.566){
-	    if(leppt < 40) isosf = 1.023; // +/-0.006
-	    else if(leppt < 50) isosf = 1.011; // +/-0.007
-	    else isosf = 1.020; // +/-0.014
+	    if(leppt < 30) isosf = 1.007;
+	    else if(leppt < 40) isosf = 0.998;
+	    else if(leppt < 50) isosf = 0.995;
+	    else if(leppt < 100) isosf = 1.004;
+	    else isosf = 0.988;
 	  }
 	  else if(fabs(lepeta) < 2.0){
-	    if(leppt < 40) isosf = 1.012; // +/-0.006
-	    else if(leppt < 50) isosf = 1.006; // +/-0.007
-	    else isosf = 1.002; // +/-0.014
+	    if(leppt < 30) isosf = 0.990;
+	    else if(leppt < 40) isosf = 0.999;
+	    else if(leppt < 50) isosf = 0.998;
+	    else if(leppt < 100) isosf = 0.999;
+	    else isosf = 1.000;
 	  }
 	  else {
-	    if(leppt < 40) isosf = 1.042; // +/-0.001
-	    else if(leppt < 50) isosf = 1.033; // +/-0.002
-	    else isosf = 1.021; // +/-0.002
+	    if(leppt < 30) isosf = 0.978;
+	    else if(leppt < 40) isosf = 0.991;
+	    else if(leppt < 50) isosf = 0.995;
+	    else if(leppt < 100) isosf = 0.999;
+	    else isosf = 1.001;
 	  }
 	  
-	  //MVA-based ID scale factors (non-triggering) from TWiki CMS/EgammaIDRecipesRun2
-	  if(run_CommonCalc < 273726){
-	    if(lepeta < -2.0){
-	      if(leppt < 40.) lepidsf= 0.840;
-	      else if(leppt < 50.) lepidsf= 0.856; 
-	      else lepidsf= 0.886;
-	    } 
-	    else if(lepeta < -1.566){
-	      if(leppt < 40.) lepidsf= 0.813;
-	      else if(leppt < 50.) lepidsf= 0.851; 
-	      else lepidsf= 0.867;
-	    } 
-	    else if(lepeta < -1.442){
-	      if(leppt < 40.) lepidsf= 0.826;
-	      else if(leppt < 50.) lepidsf= 0.861; 
-	      else lepidsf= 0.902;
-	    } 
-	    else if(lepeta < -0.8){
-	      if(leppt < 40.) lepidsf= 0.958;
-	      else if(leppt < 50.) lepidsf= 0.949; 
-	      else lepidsf= 0.952;
-	    } 
-	    else if(lepeta < 0.0){
-	      if(leppt < 40.) lepidsf= 0.955;
-	      else if(leppt < 50.) lepidsf= 0.964; 
-	      else lepidsf= 0.984;
-	    } 
-	    else if(lepeta < 0.8){
-	      if(leppt < 40.) lepidsf= 1.021;
-	      else if(leppt < 50.) lepidsf= 0.999; 
-	      else lepidsf= 1.014;
-	    } 
-	    else if(lepeta < 1.442){
-	      if(leppt < 40.) lepidsf= 0.946;
-	      else if(leppt < 50.) lepidsf= 0.960; 
-	      else lepidsf= 0.976;
-	    } 
-	    else if(lepeta < 1.566){
-	      if(leppt < 40.) lepidsf= 0.871;
-	      else if(leppt < 50.) lepidsf= 0.870; 
-	      else lepidsf= 0.875;
-	    } 
-	    else if(lepeta < 2.0){
-	      if(leppt < 40.) lepidsf= 0.823;
-	      else if(leppt < 50.) lepidsf= 0.856; 
-	      else lepidsf= 0.862;
-	    } 
-	    else{
-	      if(leppt < 40.) lepidsf= 0.858;
-	      else if(leppt < 50.) lepidsf= 0.865; 
-	      else lepidsf= 0.892;
-	    } 
-	  }else{ // Run >= 275726
-	    if(lepeta < -2.0){
-	      if(leppt < 40.) lepidsf= 0.906;
-	      else if(leppt < 50.) lepidsf= 0.912; 
-	      else lepidsf= 0.909;
-	    } 
-	    else if(lepeta < -1.566){
-	      if(leppt < 40.) lepidsf= 0.904;
-	      else if(leppt < 50.) lepidsf= 0.922; 
-	      else lepidsf= 0.934;
-	    } 
-	    else if(lepeta < -1.442){
-	      if(leppt < 40.) lepidsf= 0.909;
-	      else if(leppt < 50.) lepidsf= 0.938; 
-	      else lepidsf= 0.954;
-	    } 
-	    else if(lepeta < -0.8){
-	      if(leppt < 40.) lepidsf= 0.930;
-	      else if(leppt < 50.) lepidsf= 0.936; 
-	      else lepidsf= 0.938;
-	    } 
-	    else if(lepeta < 0.0){
-	      if(leppt < 40.) lepidsf= 0.920;
-	      else if(leppt < 50.) lepidsf= 0.928; 
-	      else lepidsf= 0.938;
-	    } 
-	    else if(lepeta < 0.8){
-	      if(leppt < 40.) lepidsf= 0.967;
-	      else if(leppt < 50.) lepidsf= 0.965; 
-	      else lepidsf= 0.972;
-	    } 
-	    else if(lepeta < 1.442){
-	      if(leppt < 40.) lepidsf= 0.929;
-	      else if(leppt < 50.) lepidsf= 0.941; 
-	      else lepidsf= 0.947;
-	    } 
-	    else if(lepeta < 1.566){
-	      if(leppt < 40.) lepidsf= 0.898;
-	      else if(leppt < 50.) lepidsf= 0.916; 
-	      else lepidsf= 0.907;
-	    } 
-	    else if(lepeta < 2.0){
-	      if(leppt < 40.) lepidsf= 0.907;
-	      else if(leppt < 50.) lepidsf= 0.927; 
-	      else lepidsf= 0.943;
-	    } 
-	    else{
-	      if(leppt < 40.) lepidsf= 0.923;
-	      else if(leppt < 50.) lepidsf= 0.935; 
-	      else lepidsf= 0.952;
-	    } 
+	  //MVA-based ID scale factors (non-triggering): http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/ichep2016_80X//resultsEleID/runBCD/passingMVA80/egammaEffi.txt_egammaPlots.pdf
+	  if(lepeta < -2.0){
+	    if(leppt < 30) lepidsf = 0.863;
+	    else if(leppt < 40) lepidsf = 0.915;
+	    else if(leppt < 50) lepidsf = 0.930;
+	    else lepidsf = 0.936;
+	  }
+	  else if(lepeta < -1.566){
+	    if(leppt < 30) lepidsf = 0.871;
+	    else if(leppt < 40) lepidsf = 0.916;
+	    else if(leppt < 50) lepidsf = 0.939;
+	    else lepidsf = 0.950;
+	  }
+	  else if(lepeta < -1.4442){
+	    if(leppt < 30) lepidsf = 0.891;
+	    else if(leppt < 40) lepidsf = 0.920;
+	    else if(leppt < 50) lepidsf = 0.953;
+	    else lepidsf = 0.965;
+	  }
+	  else if(lepeta < -0.8){
+	    if(leppt < 30) lepidsf = 0.923;
+	    else if(leppt < 40) lepidsf = 0.949;
+	    else if(leppt < 50) lepidsf = 0.956;
+	    else lepidsf = 0.957;
+	  }
+	  else if(lepeta < 0.0){
+	    if(leppt < 30) lepidsf = 0.920;
+	    else if(leppt < 40) lepidsf = 0.941;
+	    else if(leppt < 50) lepidsf = 0.951;
+	    else lepidsf = 0.957;
+	  }
+	  else if(lepeta < 0.8){
+	    if(leppt < 30) lepidsf = 0.945;
+	    else if(leppt < 40) lepidsf = 0.961;
+	    else if(leppt < 50) lepidsf = 0.965;
+	    else lepidsf = 0.971;
+	  }
+	  else if(lepeta < 1.4442){
+	    if(leppt < 30) lepidsf = 0.919;
+	    else if(leppt < 40) lepidsf = 0.945;
+	    else if(leppt < 50) lepidsf = 0.954;
+	    else lepidsf = 0.964;
+	  }
+	  else if(lepeta < 1.566){
+	    if(leppt < 30) lepidsf = 0.865;
+	    else if(leppt < 40) lepidsf = 0.918;
+	    else if(leppt < 50) lepidsf = 0.932;
+	    else lepidsf = 0.944;
+	  }
+	  else if(lepeta < 2.0){
+	    if(leppt < 30) lepidsf = 0.866;
+	    else if(leppt < 40) lepidsf = 0.919;
+	    else if(leppt < 50) lepidsf = 0.943;
+	    else lepidsf = 0.958;
+	  }
+	  else{
+	    if(leppt < 30) lepidsf = 0.892;
+	    else if(leppt < 40) lepidsf = 0.927;
+	    else if(leppt < 50) lepidsf = 0.943;
+	    else lepidsf = 0.954;
 	  }
 	}
       	if(isM){
 	  isPastTrigMC = 1;
 	  isPastTrigMCAlt = 1;
-
-	  // IsoMu20 || IsoTkMu20 Eff -- 76X DATA EFFICIENCIES
-	  if(leppt < 50){
-	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.947; //0.984; // 
-	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.936; //0.983;
-	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.936; //1.004;
-	    else TrigEffWeight = 0.897; //1.006;
+	  
+	  // IsoMu24 || IsoTkMu24 Eff -- 80X DATA EFFICIENCIES
+	  if(leppt < 40){
+	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.907; //0.984; // 
+	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.891; //0.983;
+	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.834; //1.004;
+	    else TrigEffWeight = 0.786; //1.006;
+	  }else if(leppt < 50){
+	    if(fabs(lepeta) < 0.9) TrigEffWeight = 0.926; //0.984; // 
+	    else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.916; //0.983;
+	    else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.856; //1.004;
+	    else TrigEffWeight = 0.817; //1.006;
           }else if(leppt < 60){
-            if(fabs(lepeta) < 0.9) TrigEffWeight = 0.953; //0.984; // 
-            else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.937; //0.983;
-            else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.941; //1.004;
-            else TrigEffWeight = 0.901; //1.006;
+            if(fabs(lepeta) < 0.9) TrigEffWeight = 0.930; //0.984; // 
+            else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.921; //0.983;
+            else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.861; //1.004;
+            else TrigEffWeight = 0.820; //1.006;
+          }else if(leppt < 120){
+            if(fabs(lepeta) < 0.9) TrigEffWeight = 0.929; //0.984; // 
+            else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.920; //0.983;
+            else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.858; //1.004;
+            else TrigEffWeight = 0.823; //1.006;
           }else{
-            if(fabs(lepeta) < 0.9) TrigEffWeight = 0.955; //0.984; // 
-            else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.939; //0.983;
-            else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.942; //1.004;
-            else TrigEffWeight = 0.907; //1.006;
+            if(fabs(lepeta) < 0.9) TrigEffWeight = 0.925; //0.984; // 
+            else if(fabs(lepeta) < 1.2) TrigEffWeight = 0.902; //0.983;
+            else if(fabs(lepeta) < 2.1) TrigEffWeight = 0.835; //1.004;
+            else TrigEffWeight = 0.773; //1.006;
 	  } 
 
-	  //Mini-iso < 0.2 SFs from SUSY TWiki for 80X/ICHEP
+	  //Mini-iso < 0.2 SFs from SUSY Lepton SF: https://jrgonzal.web.cern.ch/jrgonzal/MuonSF/4.MiniIso0.2_Loose/TnP_MuonID_NUM_MiniIsoTight_DENOM_LooseID_VAR_map_pt_eta.png
 	  if(leppt < 40){
 	    if(fabs(lepeta) < 0.9) isosf= 0.999;
 	    else if(fabs(lepeta) <  1.2) isosf= 1.000;
@@ -795,30 +862,38 @@ void step1::Loop()
 	    else if(fabs(lepeta) <  2.4) isosf= 0.999;
 	  }
 	  
-	  //Cut-based ID scale factors from POG TWiki -- Prelim 80X 2.6/fb
+	  //Cut-based ID scale factors from POG TWiki 7.6/fb: https://cmsdoc.cern.ch/cms/Physics/muon/ReferenceEfficiencies/Run2016/25ns/proviSFs_7p65/MuonID_Z_RunBCD_prompt80X_7p65.root
 	  if(fabs(lepeta) < 0.9){
-	    if(leppt < 40.) lepidsf= 0.9805;
-	    else if(leppt < 50.) lepidsf= 0.9793;
-            else if(leppt < 60.) lepidsf= 0.9789;
-            else lepidsf= 0.9791;
-	  } 
-	  else if(fabs(lepeta) < 1.2){ 
-            if(leppt < 40.) lepidsf= 0.9730;
-	    else if(leppt < 50.) lepidsf= 0.9728;
-            else if(leppt < 60.) lepidsf= 0.9720;
-	    else lepidsf= 0.9780;
+	    if(leppt < 30) lepidsf = 0.971;
+	    else if(leppt < 40) lepidsf = 0.976;
+	    else if(leppt < 50) lepidsf = 0.976;
+	    else if(leppt < 60) lepidsf = 0.972;
+	    else if(leppt < 100) lepidsf = 0.974;
+	    else lepidsf = 0.988;
 	  }
-	  else if(fabs(lepeta) < 2.1){ 
-	    if(leppt < 40.) lepidsf= 0.9915;
-	    else if(leppt < 50.) lepidsf= 0.9928;
-            else if(leppt < 60.) lepidsf= 0.9945;
-	    else lepidsf= 0.9965;
+	  else if(fabs(lepeta) < 1.2){
+	    if(leppt < 30) lepidsf = 0.967;
+	    else if(leppt < 40) lepidsf = 0.972;
+	    else if(leppt < 50) lepidsf = 0.971;
+	    else if(leppt < 60) lepidsf = 0.971;
+	    else if(leppt < 100) lepidsf = 0.968;
+	    else lepidsf = 1.027;
 	  }
-	  else{
-	    if(leppt < 40.) lepidsf= 0.9785;
-	    else if(leppt < 50.) lepidsf= 0.9782;
-            else if(leppt < 60.) lepidsf= 0.9786;
-	    else lepidsf= 0.9793;
+	  else if(fabs(lepeta) < 2.1){
+	    if(leppt < 30) lepidsf = 0.990;
+	    else if(leppt < 40) lepidsf = 0.990;
+	    else if(leppt < 50) lepidsf = 0.991;
+	    else if(leppt < 60) lepidsf = 0.992;
+	    else if(leppt < 100) lepidsf = 0.990;
+	    else lepidsf = 1.013;
+	  }
+	  else {
+	    if(leppt < 30) lepidsf = 0.976;
+	    else if(leppt < 40) lepidsf = 0.974;
+	    else if(leppt < 50) lepidsf = 0.970;
+	    else if(leppt < 60) lepidsf = 0.981;
+	    else if(leppt < 100) lepidsf = 0.975;
+	    else lepidsf = 0.918;
 	  }
 	}
       	isPastTrig = 1;
@@ -916,6 +991,68 @@ void step1::Loop()
 	      JetSFupwide_pTNbwflat *= max(wideup,min(one,max(jetsf+jetsferr,float(0.568135+0.0522921))));
 	      JetSFdnwide_pTNbwflat *= min(widedn,min(one,max(jetsf-jetsferr,float(0.568135-0.0522921))));
 	    }
+	  }
+
+	  // ------------------------------------------------------------------------------------------------------------------
+	  // B TAGGING fix
+	  // ------------------------------------------------------------------------------------------------------------------
+
+	  float bSF = 1.0;
+	  float bSFup = 1.0;
+	  float bSFdn = 1.0;
+	  double bEff = 1.0;
+	  float lSF = 1.0;
+	  float lSFup = 1.0;
+	  float lSFdn = 1.0;
+	  double lEff = 1.0;
+
+	  // Set the initial tagged/untagged state
+	  bool istagged = theJetCSV_JetSubCalc->at(ijet) > 0.800;
+
+	  if(theJetHFlav_JetSubCalc->at(ijet) == 5 || theJetHFlav_JetSubCalc->at(ijet) == 4){	    
+
+	    int binSF = (std::upper_bound(ptRangeSF.begin(), ptRangeSF.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeSF.begin())-1;
+	    float err = SFerr[binSF];
+	    if(theJetHFlav_JetSubCalc->at(ijet) == 4) err *= 2;
+	    bSF = 0.901114+(1.32145e-05*theJetPt_JetSubCalc->at(ijet));	    
+	    bSFup = bSF + err;
+	    bSFdn = bSF - err;
+	  
+	    int bin = (std::upper_bound(ptRangeEff.begin(), ptRangeEff.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeEff.begin())-1;
+	    bEff = BtagEff[bin];
+	    if(theJetHFlav_JetSubCalc->at(ijet) == 4) bEff *= 0.2;
+
+	    int tag = applySF(istagged,bSF,bEff);
+	    int tag_up = applySF(istagged,bSFup,bEff);
+	    int tag_dn = applySF(istagged,bSFdn,bEff);
+
+	    theJetBTag_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_bSFup_JetSubCalc->at(ijet) = tag_up;
+	    theJetBTag_bSFdn_JetSubCalc->at(ijet) = tag_dn;
+	    theJetBTag_lSFup_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_lSFdn_JetSubCalc->at(ijet) = tag;
+
+	  }else{
+
+	    int binSF = (std::upper_bound(ptRangeSF.begin(), ptRangeSF.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeSF.begin())-1;
+	    float pt = theJetPt_JetSubCalc->at(ijet);
+	    lSF = 0.980777+(-0.00109334*pt)+(4.2909e-06*pt*pt)+(-2.78512e-09*pt*pt*pt);
+	    lSFdn = lSF*(1-(0.0672836+(0.000102309*pt)+(-1.01558e-07*pt*pt)));
+	    lSFup = lSF*(1+(0.0672836+(0.000102309*pt)+(-1.01558e-07*pt*pt)));
+
+	    int bin = (std::upper_bound(ptRangeEff.begin(), ptRangeEff.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeEff.begin())-1;
+	    lEff = MistagEff[bin];
+
+	    int tag = applySF(istagged,lSF,lEff);
+	    int tag_up = applySF(istagged,lSFup,lEff);
+	    int tag_dn = applySF(istagged,lSFdn,lEff);
+
+	    theJetBTag_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_bSFup_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_bSFdn_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_lSFup_JetSubCalc->at(ijet) = tag_up;
+	    theJetBTag_lSFdn_JetSubCalc->at(ijet) = tag_dn;
+
 	  }
 	  
 	  jetptindpair.push_back(std::make_pair(theJetPt_JetSubCalc->at(ijet),ijet));
@@ -1048,6 +1185,7 @@ void step1::Loop()
       theJetAK8Energy_JetSubCalc_PtOrdered.clear();
       theJetAK8Mass_JetSubCalc_PtOrdered.clear();
       theJetAK8PrunedMass_JetSubCalc_PtOrdered.clear();
+      theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.clear();
       theJetAK8SoftDropMass_JetSubCalc_PtOrdered.clear();
       theJetAK8MaxSubCSV_JetSubCalc_PtOrdered.clear();
       theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.clear();
@@ -1060,6 +1198,7 @@ void step1::Loop()
       	theJetAK8Energy_JetSubCalc_PtOrdered.push_back(theJetAK8Energy_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8Mass_JetSubCalc_PtOrdered.push_back(theJetAK8Mass_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8PrunedMass_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8SoftDropMass_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8MaxSubCSV_JetSubCalc_PtOrdered.push_back(maxsubcsv.at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau1_JetSubCalc->at(jetak8ptindpair[ijet].second));
@@ -1228,7 +1367,6 @@ void step1::Loop()
       }
 
       //8TeV Top Pt Reweighting
-      /*
       float gen_tpt = -999;
       float gen_anti_tpt = -999;
       for(unsigned int ijet=0; ijet < topPt_TTbarMassCalc->size(); ijet++){
@@ -1252,7 +1390,7 @@ void step1::Loop()
       float SFtopHighPt = 0.98  - 0.00026*gen_tpt;  // 0.98 +- 0.24, 0.0026 +- 0.00039
       float SFantitopHighPt = 0.98  - 0.00026*gen_anti_tpt;
       float weightHighPt_toppt = TMath::Sqrt(SFtopHighPt*SFantitopHighPt);
-      */
+      
       //Calculate neutrino Pz with W constraint to the lepton
       double metpx = corr_met_singleLepCalc*cos(corr_met_phi_singleLepCalc);
       double metpy = corr_met_singleLepCalc*sin(corr_met_phi_singleLepCalc);
@@ -1333,42 +1471,42 @@ void step1::Loop()
       // Tag hadronic W jets, save lepton - AK8 jet information
       int nWtags = 0;
       NJetsWtagged_0p6 = 0;
+      NJetsTtagged_0p81 = 0;
       deltaR_lepAK8s.clear();
       deltaPhi_lepAK8s.clear();
       mass_lepAK8s.clear();
       minDR_lepAK8 = 1000;
       WJetLeadPt = -99.0;
+      TJetLeadPt = -99.0;
       deltaRtopWjet = -99;     deltaPhitopWjet = -99;
       deltaRlepWjet = -99;     deltaPhilepWjet = -99;	  
+      deltaRlepTjet = -99;     deltaPhilepTjet = -99;	  
 
       NJetsWtagged_0p6_shifts.clear();
+      NJetsTtagged_0p81_shifts.clear();
       theJetAK8Wmatch_JetSubCalc_PtOrdered.clear();
       theJetAK8Hmatch_JetSubCalc_PtOrdered.clear();
       theJetAK8Zmatch_JetSubCalc_PtOrdered.clear();
       theJetAK8Tmatch_JetSubCalc_PtOrdered.clear();
       theJetAK8MatchedPt_JetSubCalc_PtOrdered.clear();
       WJetLeadPt_shifts.clear();
+      TJetLeadPt_shifts.clear();
       deltaRtopWjet_shifts.clear();  deltaPhitopWjet_shifts.clear(); 
       deltaRlepWjet_shifts.clear();  deltaPhilepWjet_shifts.clear(); 
-      WJetTaggedPt.clear();           WJetTaggedMass.clear();
-      WJetTaggedPtJMRup.clear();      WJetTaggedMassJMRup.clear();
-      WJetTaggedPtJMRdn.clear();      WJetTaggedMassJMRdn.clear();
-      WJetTaggedPtJMSup.clear();      WJetTaggedMassJMSup.clear();
-      WJetTaggedPtJMSdn.clear();      WJetTaggedMassJMSdn.clear();
-      WJetTaggedPtTAUup.clear();      WJetTaggedMassTAUup.clear();
-      WJetTaggedPtTAUdn.clear();      WJetTaggedMassTAUdn.clear();
-      theJetAK8PrunedMassJMRSmeared_JetSubCalc.clear();
-      theJetAK8PrunedMassJMRSmearedUp_JetSubCalc.clear();
-      theJetAK8PrunedMassJMRSmearedDn_JetSubCalc.clear();
+      deltaRlepTjet_shifts.clear();  deltaPhilepTjet_shifts.clear(); 
 
       wjet1_lv.SetPtEtaPhiM(0,0,0,0);
+      tjet1_lv.SetPtEtaPhiM(0,0,0,0);
       ak8_lv.SetPtEtaPhiM(0,0,0,0);
 
-      for(int i = 0; i < 6; i++){
+      for(int i = 0; i < 2; i++){
 	NJetsWtagged_0p6_shifts.push_back(0);
+	NJetsTtagged_0p81_shifts.push_back(0);
 	WJetLeadPt_shifts.push_back(-99.0);
+	TJetLeadPt_shifts.push_back(-99.0);
 	deltaRtopWjet_shifts.push_back(-99.0);  deltaPhitopWjet_shifts.push_back(-99.0); 
 	deltaRlepWjet_shifts.push_back(-99.0);  deltaPhilepWjet_shifts.push_back(-99.0); 
+	deltaRlepTjet_shifts.push_back(-99.0);  deltaPhilepTjet_shifts.push_back(-99.0); 
       }
 
       for(unsigned int ijet=0; ijet < theJetAK8Pt_JetSubCalc_PtOrdered.size(); ijet++){
@@ -1382,37 +1520,20 @@ void step1::Loop()
 	if(lepton_lv.DeltaR(ak8_lv) < minDR_lepAK8) minDR_lepAK8 = lepton_lv.DeltaR(ak8_lv);
 
 	float tau21 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(ijet);
-	float mass = theJetAK8PrunedMass_JetSubCalc_PtOrdered.at(ijet);
+	float tau32 = theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet);
+	float mass = theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.at(ijet);
+	float massSD = theJetAK8SoftDropMass_JetSubCalc_PtOrdered.at(ijet);
 
 	if(tau21 < 0.6 && mass > 65.0 && mass < 105.0) nWtags += 1;
 
-	//Wtagging with jet mass resolution smearing	
-	//76X with v2 JEC: NO SCALE OR SMEAR CORRECTION, will add uncertainties later
-	
-	float AK8massScale=1.0; //0.982; //nominal
-	float AK8massScaleUp=1.0; //0.990; //scale up
-	float AK8massScaleDn=1.0; //0.974; //scale down
-	float AK8massSmear=0.0; //3.7; //nominal
-	float AK8massSmearUp=0.0; //4.7; //1sigma up
-	float AK8massSmearDn=0.0; //2.3; //1sigma down
-
-	float gran = 0; //gRandom->Gaus(0, AK8massSmear);
-	float granUp = 0; //gRandom->Gaus(0, AK8massSmearUp);
-	float granDn = 0; //gRandom->Gaus(0, AK8massSmearDn);
-	float prunedMassSmeared = (mass+gran)*AK8massScale;
-	float prunedMassSmearedUp = (mass+granUp)*AK8massScale;
-	float prunedMassSmearedDn = (mass+granDn)*AK8massScale;
-	float prunedMassSmearedScaleUp = (mass+gran)*AK8massScaleUp;
-	float prunedMassSmearedScaleDn = (mass+gran)*AK8massScaleDn;
-	float tau0p6SF = 1.0;
-	float tau0p6SFup = 1.0;
-	float tau0p6SFdn = 1.0;
-
+	// ------------------------------------------------------------------------------------------------------------------
+	// MONTE CARLO
+	// ------------------------------------------------------------------------------------------------------------------
 	if(isMC){
-	  theJetAK8PrunedMassJMRSmeared_JetSubCalc.push_back(prunedMassSmeared);
-	  theJetAK8PrunedMassJMRSmearedUp_JetSubCalc.push_back(prunedMassSmearedUp);
-	  theJetAK8PrunedMassJMRSmearedDn_JetSubCalc.push_back(prunedMassSmearedDn);
 
+	  // ------------------------------------------------------------------------------------------------------------------
+	  // TRUTH MATCHING
+	  // ------------------------------------------------------------------------------------------------------------------
 	  float minDR = 1000;
 	  float matchedPt= -99;
 	  int matchedID = 0;
@@ -1451,9 +1572,13 @@ void step1::Loop()
 	  if(isWmatched || isZmatched || isHmatched || isTmatched) theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(matchedPt);
 	  else theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(-99.0);
 	  
-	  double coin = gRandom->Rndm();
-
+	  // ------------------------------------------------------------------------------------------------------------------
+	  // W TAGGING
+	  // ------------------------------------------------------------------------------------------------------------------
 	  // SCALE FACTOR ONLY USED ON MATCHED JETS
+	  float tau0p6SF = 1.0;
+	  float tau0p6SFup = 1.0;
+	  float tau0p6SFdn = 1.0;
 	  double tau0p6Eff = 1.0;
 	  if(isWmatched){	    
 	    // VALUES FOR 76X FROM TWIKI 76X with JEC v2
@@ -1469,146 +1594,128 @@ void step1::Loop()
 	      int bin = (std::upper_bound(ptRangeTTbar.begin(), ptRangeTTbar.end(), matchedPt)-ptRangeTTbar.begin())-1;
 	      if(isTT) tau0p6Eff = TTbarEff[bin]; // ttbar
 	      else if(isST) tau0p6Eff = STEff[bin]; // single top (s and t channel had 0 boosted tops)
+	      else if(isTTV) tau0p6Eff = TTVEff[bin]; // tt+V
 	      else tau0p6Eff = WVEff[bin]; // WW, WZ, etc. 
 	    }
 	  }
 
 	  // Set the initial tagged/untagged state
-	  int tag_JMS_JMR_tau0p6 = (prunedMassSmeared > 65) && (prunedMassSmeared < 105) && (tau21 < 0.6);
-	  int tag_JMSup_JMR_tau0p6 = (prunedMassSmeared*AK8massScaleUp > 65) && (prunedMassSmeared*AK8massScaleUp < 105) && (tau21 < 0.6);
-	  int tag_JMSdn_JMR_tau0p6 = (prunedMassSmeared*AK8massScaleDn > 65) && (prunedMassSmeared*AK8massScaleDn < 105) && (tau21 < 0.6);
-	  int tag_JMS_JMRup_tau0p6 = (prunedMassSmearedUp > 65) && (prunedMassSmearedUp < 105) && (tau21 < 0.6);
-	  int tag_JMS_JMRdn_tau0p6 = (prunedMassSmearedDn > 65) && (prunedMassSmearedDn < 105) && (tau21 < 0.6);
-	  int tag_JMS_JMR_tau0p6up = (prunedMassSmeared > 65) && (prunedMassSmeared < 105) && (tau21 < 0.6);
-	  int tag_JMS_JMR_tau0p6dn = (prunedMassSmeared > 65) && (prunedMassSmeared < 105) && (tau21 < 0.6);
+	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6);
  
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
-	  if(tau0p6SF > 1){
-	    float mistagpercent = (1.0 - tau0p6SF) / (1.0 - (tau0p6SF/tau0p6Eff));
-	    if(tag_JMS_JMR_tau0p6 == 0 && coin < mistagpercent) tag_JMS_JMR_tau0p6 = 1;	    
-	    if(tag_JMSup_JMR_tau0p6 == 0 && coin < mistagpercent) tag_JMSup_JMR_tau0p6 = 1;	    
-	    if(tag_JMSdn_JMR_tau0p6 == 0 && coin < mistagpercent) tag_JMSdn_JMR_tau0p6 = 1;	    
-	    if(tag_JMS_JMRup_tau0p6 == 0 && coin < mistagpercent) tag_JMS_JMRup_tau0p6 = 1;	    
-	    if(tag_JMS_JMRdn_tau0p6 == 0 && coin < mistagpercent) tag_JMS_JMRdn_tau0p6 = 1;	    
-	  }
-	  else if(tau0p6SF < 1){
-	    if(tag_JMS_JMR_tau0p6 == 1 && coin > tau0p6SF) tag_JMS_JMR_tau0p6 = 0;	    
-	    if(tag_JMSup_JMR_tau0p6 == 1 && coin > tau0p6SF) tag_JMSup_JMR_tau0p6 = 0;	    
-	    if(tag_JMSdn_JMR_tau0p6 == 1 && coin > tau0p6SF) tag_JMSdn_JMR_tau0p6 = 0;	    
-	    if(tag_JMS_JMRup_tau0p6 == 1 && coin > tau0p6SF) tag_JMS_JMRup_tau0p6 = 0;	    
-	    if(tag_JMS_JMRdn_tau0p6 == 1 && coin > tau0p6SF) tag_JMS_JMRdn_tau0p6 = 0;	    
-	  }
-
-	  if(tau0p6SFup > 1){
-	    float mistagpercent = (1.0 - tau0p6SFup) / (1.0 - (tau0p6SFup/tau0p6Eff));
-	    if(tag_JMS_JMR_tau0p6up == 0 && coin < mistagpercent) tag_JMS_JMR_tau0p6up = 1;	    
-	  }
-	  else if(tau0p6SFup < 1){
-	    if(tag_JMS_JMR_tau0p6up == 1 && coin > tau0p6SFup) tag_JMS_JMR_tau0p6up = 0;	    
-	  }
-
-	  if(tau0p6SFdn > 1){
-	    float mistagpercent = (1.0 - tau0p6SFdn) / (1.0 - (tau0p6SFdn/tau0p6Eff));
-	    if(tag_JMS_JMR_tau0p6dn == 0 && coin < mistagpercent) tag_JMS_JMR_tau0p6dn = 1;	    
-	  }
-	  else if(tau0p6SFdn < 1){
-	    if(tag_JMS_JMR_tau0p6dn == 1 && coin > tau0p6SFdn) tag_JMS_JMR_tau0p6dn = 0;
-	  }
-
+	  int tag_tau0p6 = applySF(isWtagged,tau0p6SF,tau0p6Eff);
+	  int tag_tau0p6up = applySF(isWtagged,tau0p6SFup,tau0p6Eff);
+	  int tag_tau0p6dn = applySF(isWtagged,tau0p6SFdn,tau0p6Eff);
+	  
 	  // Now increase the tag count in the right variable	  
-	  NJetsWtagged_0p6 += tag_JMS_JMR_tau0p6;
-	  NJetsWtagged_0p6_shifts[0] += tag_JMS_JMRup_tau0p6;
-	  NJetsWtagged_0p6_shifts[1] += tag_JMS_JMRdn_tau0p6;
-	  NJetsWtagged_0p6_shifts[2] += tag_JMSup_JMR_tau0p6;
-	  NJetsWtagged_0p6_shifts[3] += tag_JMSdn_JMR_tau0p6;
-	  NJetsWtagged_0p6_shifts[4] += tag_JMS_JMR_tau0p6up;
-	  NJetsWtagged_0p6_shifts[5] += tag_JMS_JMR_tau0p6dn;
+	  NJetsWtagged_0p6 += tag_tau0p6;
+	  NJetsWtagged_0p6_shifts[0] += tag_tau0p6up;
+	  NJetsWtagged_0p6_shifts[1] += tag_tau0p6dn;
 
-	  if(tag_JMS_JMR_tau0p6 == 1){
-	    WJetTaggedPt.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMass.push_back(prunedMassSmeared);
+	  // Variables related to W-tagged jets
+	  if(tag_tau0p6 == 1){
 	    if(NJetsWtagged_0p6 == 1){
+	      WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
 	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),prunedMassSmeared);
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),mass);
 	      deltaRtopWjet = wjet1_lv.DeltaR(lvTop);
 	      deltaRlepWjet = wjet1_lv.DeltaR(lepton_lv);
 	      deltaPhitopWjet = wjet1_lv.DeltaPhi(lvTop);
 	      deltaPhilepWjet = wjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	  if(tag_JMS_JMRup_tau0p6 == 1){
-	    WJetTaggedPtJMRup.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMassJMRup.push_back(prunedMassSmearedUp);
+	  if(tag_tau0p6up == 1){
 	    if(NJetsWtagged_0p6_shifts[0] == 1){
+	      WJetLeadPt_shifts.at(0) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
 	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),prunedMassSmearedUp);
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),mass);
 	      deltaRtopWjet_shifts.at(0) = wjet1_lv.DeltaR(lvTop);
 	      deltaRlepWjet_shifts.at(0) = wjet1_lv.DeltaR(lepton_lv);
 	      deltaPhitopWjet_shifts.at(0) = wjet1_lv.DeltaPhi(lvTop);
 	      deltaPhilepWjet_shifts.at(0) = wjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	  if(tag_JMS_JMRdn_tau0p6 == 1){
-	    WJetTaggedPtJMRdn.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMassJMRdn.push_back(prunedMassSmearedDn);
+	  if(tag_tau0p6dn == 1){
 	    if(NJetsWtagged_0p6_shifts[1] == 1){
+	      WJetLeadPt_shifts.at(1) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
 	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),prunedMassSmearedDn);
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),mass);
 	      deltaRtopWjet_shifts.at(1) = wjet1_lv.DeltaR(lvTop);
 	      deltaRlepWjet_shifts.at(1) = wjet1_lv.DeltaR(lepton_lv);
 	      deltaPhitopWjet_shifts.at(1) = wjet1_lv.DeltaPhi(lvTop);
 	      deltaPhilepWjet_shifts.at(1) = wjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	  if(tag_JMSup_JMR_tau0p6 == 1){
-	    WJetTaggedPtJMSup.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMassJMSup.push_back(prunedMassSmearedScaleUp);
-	    if(NJetsWtagged_0p6_shifts[2] == 1){
-	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),prunedMassSmearedScaleUp);
-	      deltaRtopWjet_shifts.at(2) = wjet1_lv.DeltaR(lvTop);
-	      deltaRlepWjet_shifts.at(2) = wjet1_lv.DeltaR(lepton_lv);
-	      deltaPhitopWjet_shifts.at(2) = wjet1_lv.DeltaPhi(lvTop);
-	      deltaPhilepWjet_shifts.at(2) = wjet1_lv.DeltaPhi(lepton_lv);
+
+	  // ------------------------------------------------------------------------------------------------------------------
+	  // TOP TAGGING
+	  // ------------------------------------------------------------------------------------------------------------------
+	  float topTau81SF = 1.0;
+	  float topTau81SFup = 1.0;
+	  float topTau81SFdn = 1.0;
+	  double topTau81Eff = 1.0;
+	  if(isTmatched){	    
+	    // VALUES FOR 76X FROM PAS
+	    topTau81SF = 0.96;
+	    topTau81SFup = 1.04;
+	    topTau81SFdn = 0.88;
+	  
+	    // Use matched T to find the efficiency -- calculated for TpTp and ttbar, EWK/QCD will almost never pass here (use ttbar eff when they do)
+	    if(isSig){
+	      int bin = (std::upper_bound(ptRangeTpTpTop.begin(), ptRangeTpTpTop.end(), matchedPt)-ptRangeTpTpTop.begin())-1;
+	      topTau81Eff = SignalEffTop[SigMass][bin];
+	    }else{
+	      int bin = (std::upper_bound(ptRangeTTbarTop.begin(), ptRangeTTbarTop.end(), matchedPt)-ptRangeTTbarTop.begin())-1;
+	      topTau81Eff = TTbarEffTop[bin];
 	    }
 	  }
-	  if(tag_JMSdn_JMR_tau0p6 == 1){
-	    WJetTaggedPtJMSdn.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMassJMSdn.push_back(prunedMassSmearedScaleDn);
-	    if(NJetsWtagged_0p6_shifts[3] == 1){
-	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),prunedMassSmearedScaleDn);
-	      deltaRtopWjet_shifts.at(3) = wjet1_lv.DeltaR(lvTop);
-	      deltaRlepWjet_shifts.at(3) = wjet1_lv.DeltaR(lepton_lv);
-	      deltaPhitopWjet_shifts.at(3) = wjet1_lv.DeltaPhi(lvTop);
-	      deltaPhilepWjet_shifts.at(3) = wjet1_lv.DeltaPhi(lepton_lv);
+
+	  // Set the initial tagged/untagged state
+	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81);
+
+	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
+	  int tag_topTau81 = applySF(isTtagged,topTau81SF,topTau81Eff);
+	  int tag_topTau81up = applySF(isTtagged,topTau81SFup,topTau81Eff);
+	  int tag_topTau81dn = applySF(isTtagged,topTau81SFdn,topTau81Eff);
+ 
+	  // Now increase the tag count in the right variable	  
+	  NJetsTtagged_0p81 += tag_topTau81;
+	  NJetsTtagged_0p81_shifts[0] += tag_topTau81up;
+	  NJetsTtagged_0p81_shifts[1] += tag_topTau81dn;
+
+	  // Variables related to top-tagged jets
+	  if(tag_topTau81 == 1){
+	    TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	    if(NJetsTtagged_0p81 == 1){
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	  if(tag_JMS_JMR_tau0p6up == 1){
-	    WJetTaggedPtTAUup.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMassTAUup.push_back(prunedMassSmeared);
-	    if(NJetsWtagged_0p6_shifts[4] == 1){
-	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),prunedMassSmeared);
-	      deltaRtopWjet_shifts.at(4) = wjet1_lv.DeltaR(lvTop);
-	      deltaRlepWjet_shifts.at(4) = wjet1_lv.DeltaR(lepton_lv);
-	      deltaPhitopWjet_shifts.at(4) = wjet1_lv.DeltaPhi(lvTop);
-	      deltaPhilepWjet_shifts.at(4) = wjet1_lv.DeltaPhi(lepton_lv);
+	  if(tag_topTau81up == 1){
+	    TJetLeadPt_shifts.at(0) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	    if(NJetsTtagged_0p81_shifts[0] == 1){
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet_shifts.at(0) = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet_shifts.at(0) = tjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	  if(tag_JMS_JMR_tau0p6dn == 1){
-	    WJetTaggedPtTAUdn.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMassTAUdn.push_back(prunedMassSmeared);
-	    if(NJetsWtagged_0p6_shifts[5] == 1){
-	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),prunedMassSmeared);
-	      deltaRtopWjet_shifts.at(5) = wjet1_lv.DeltaR(lvTop);
-	      deltaRlepWjet_shifts.at(5) = wjet1_lv.DeltaR(lepton_lv);
-	      deltaPhitopWjet_shifts.at(5) = wjet1_lv.DeltaPhi(lvTop);
-	      deltaPhilepWjet_shifts.at(5) = wjet1_lv.DeltaPhi(lepton_lv);
+	  if(tag_topTau81dn == 1){
+	    TJetLeadPt_shifts.at(1) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	    if(NJetsTtagged_0p81_shifts[1] == 1){
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet_shifts.at(1) = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet_shifts.at(1) = tjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	}else{
+	}
+	// ------------------------------------------------------------------------------------------------------------------
+	// DATA
+	// ------------------------------------------------------------------------------------------------------------------
+	else{
 	 
 	  theJetAK8Wmatch_JetSubCalc_PtOrdered.push_back(0);
 	  theJetAK8Hmatch_JetSubCalc_PtOrdered.push_back(0);
@@ -1618,15 +1725,25 @@ void step1::Loop()
 	  if(tau21 < 0.6 && mass > 65.0 && mass < 105.0){
 
 	    NJetsWtagged_0p6 += 1;
-	    WJetTaggedPt.push_back(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	    WJetTaggedMass.push_back(prunedMassSmeared);
 	    if(NJetsWtagged_0p6 == 1){
+	      WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
 	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),theJetAK8Mass_JetSubCalc_PtOrdered.at(ijet));
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),mass);
 	      deltaRtopWjet = wjet1_lv.DeltaR(lvTop);
 	      deltaRlepWjet = wjet1_lv.DeltaR(lepton_lv);
 	      deltaPhitopWjet = wjet1_lv.DeltaPhi(lvTop);
 	      deltaPhilepWjet = wjet1_lv.DeltaPhi(lepton_lv);
+	    }
+	  }
+	  if(tau32 < 0.81 && massSD > 105.0 && massSD < 220.0){
+
+	    NJetsTtagged_0p81 += 1;
+	    if(NJetsTtagged_0p81 == 1){
+	      TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
 	}
@@ -1649,15 +1766,6 @@ void step1::Loop()
 	}
       }
 
-      if(WJetTaggedPt.size() > 0) WJetLeadPt = WJetTaggedPt.at(0);
-      if(WJetTaggedPtJMRup.size() > 0) WJetLeadPt_shifts.at(0) = WJetTaggedPtJMRup.at(0);
-      if(WJetTaggedPtJMRdn.size() > 0) WJetLeadPt_shifts.at(1) = WJetTaggedPtJMRdn.at(0);
-      if(WJetTaggedPtJMSup.size() > 0) WJetLeadPt_shifts.at(2) = WJetTaggedPtJMSup.at(0);
-      if(WJetTaggedPtJMSdn.size() > 0) WJetLeadPt_shifts.at(3) = WJetTaggedPtJMSdn.at(0);
-      if(WJetTaggedPtTAUup.size() > 0) WJetLeadPt_shifts.at(4) = WJetTaggedPtTAUup.at(0);
-      if(WJetTaggedPtTAUdn.size() > 0) WJetLeadPt_shifts.at(5) = WJetTaggedPtTAUdn.at(0);
-
-      
       //PDF and RENORM weights
       std::vector<double> renorm;
       std::vector<double> pdf;
@@ -1758,6 +1866,7 @@ void step1::Loop()
       isoSF                 = (float) isosf;
       lepIdSF               = (float) lepidsf;
       EGammaRecoSF          = (float) egammasf;
+      EGammaGsfSF           = (float) gsfsf;
       MCPastTrigger         = (int)   isPastTrigMC;
       MCPastTriggerAlt      = (int)   isPastTrigMCAlt;
       DataPastTrigger       = (int)   isPastTrig;
