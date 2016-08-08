@@ -10,9 +10,9 @@ shift = sys.argv[1]
 #IO directories must be full paths
 
 relbase = '/uscms_data/d3/jmanagan/CMSSW_7_4_14/'
-inputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_070516/'+shift+'/'
-outputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_071016_step1/'+shift+'/'
-condorDir='/uscms_data/d3/jmanagan/LJMet_1lepTT_071016_step1/'+shift+'/'
+inputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_080116/'+shift+'/'
+outputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_080816_step1/'+shift+'/'
+condorDir='/uscms_data/d3/jmanagan/LJMet_1lepTT_080816_step1/'+shift+'/'
 
 runDir=os.getcwd()
 # Can change the file directory if needed
@@ -148,9 +148,9 @@ Queue 1"""%dict)
 
 dirList = [
     #'TTJets_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8',
-    #'WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
-    #'TT_Mtt-1000toInf_TuneCUETP8M1_13TeV-powheg-pythia8',
+    'WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    #'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
+    'TT_Mtt-1000toInf_TuneCUETP8M1_13TeV-powheg-pythia8',
     #'TT_Mtt-700to1000_TuneCUETP8M1_13TeV-powheg-pythia8',
     'WW_TuneCUETP8M1_13TeV-pythia8',						      
     'WZ_TuneCUETP8M1_13TeV-pythia8',						      
@@ -193,12 +193,12 @@ if shift == 'nominal':
     #dirList.append('ST_tW_antitop_5f_scaledown_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')      
     dirList.append('TT_TuneCUETP8M1_13TeV-powheg-scaledown-pythia8')
     dirList.append('TT_TuneCUETP8M1_13TeV-powheg-scaleup-pythia8')
-    dirList.append('SingleElectron_PRB1')
-    dirList.append('SingleMuon_PRB1')
-    dirList.append('SingleElectron_PRB2')
-    dirList.append('SingleMuon_PRB2')
+    dirList.append('SingleElectron_PRB')
+    dirList.append('SingleMuon_PRB')
     dirList.append('SingleElectron_PRC')
     dirList.append('SingleMuon_PRC')
+    dirList.append('SingleElectron_PRD')
+    dirList.append('SingleMuon_PRD')
 
 for sample in dirList:
     os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+sample)
@@ -237,9 +237,9 @@ Queue 1"""%dict)
         print count, "jobs submitted!!!"
 
 #, %(RUNDIR)s/csc2015_Dec01.txt, %(RUNDIR)s/ecalscn1043093_Dec01.txt
-''' # not needed yet in 80X, waiting for high mass samples to finish
+
 sample = 'TT_TuneCUETP8M1_13TeV-powheg-pythia8'
-TTOutList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
+TTOutList = ['Mtt0to1000','Mtt1000toInf']
 
 rootfiles = EOSlist_root_files(inputDir+sample)
 relPath = sample        
