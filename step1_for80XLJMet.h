@@ -33,8 +33,7 @@ public :
    Bool_t          isTT;
    Bool_t          isTTV;
    Bool_t          isST;
-   Bool_t          isTTincMtt0to700;
-   Bool_t          isTTincMtt700to1000;
+   Bool_t          isTTincMtt0to1000;
    Bool_t          isTTincMtt1000toInf;
    Bool_t          outBWBW;
    Bool_t          outTZBW;
