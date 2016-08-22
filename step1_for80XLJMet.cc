@@ -1907,11 +1907,11 @@ void step1::Loop()
       topMass        = (float) lvTop.M();
       minMleppBjet   = (float) minMlb;
       minMleppJet    = (float) minMljet;
-      genTopPt       = -999; //(float) gen_tpt;
-      genAntiTopPt   = -999; //(float) gen_anti_tpt;
-      topPtWeight    = 1.0; //(float) weight_toppt;
-      topPtWeightPast400    = 1.0; //(float) weightPast400_toppt;
-      topPtWeightHighPt    = 1.0; //(float) weightHighPt_toppt;
+      genTopPt       = (float) gen_tpt;
+      genAntiTopPt   = (float) gen_anti_tpt;
+      topPtWeight    = (float) weight_toppt;
+      topPtWeightPast400    = (float) weightPast400_toppt;
+      topPtWeightHighPt    = (float) weightHighPt_toppt;
       deltaRlepJetInMinMljet   = (float) deltaR_lepJetInMinMljet;
       deltaPhilepJetInMinMljet = (float) deltaPhi_lepJetInMinMljet;
       deltaRlepbJetInMinMlb    = (float) deltaR_lepbJetInMinMlb;
@@ -1919,14 +1919,14 @@ void step1::Loop()
       minDR_lepJet = (float) mindeltar;
       ptRel_lepJet = (float) ptrel_lepclosestjet;
       topPtGen = -999;
-      /*
+      
       if(fabs(lvTop.Pt()-gen_tpt)<=fabs(lvTop.Pt()-gen_anti_tpt)){
-        topPtGen           = -999; //(float) gen_tpt;
+        topPtGen           = (float) gen_tpt;
       }
       else{
-        topPtGen           = -999; //(float) gen_anti_tpt;
+        topPtGen           = (float) gen_anti_tpt;
       }
-      */
+      
       outputTree->Fill();
    }
    std::cout<<"Nelectrons             = "<<Nelectrons<<" / "<<nentries<<std::endl;
