@@ -64,10 +64,14 @@ public :
    Float_t         pileupWeightDown;
    Float_t         TrigEffAltWeight;
    Float_t         TrigEffWeight;
+   Float_t         TrigEffWeightUncert;
    Float_t         isoSF;
    Float_t         lepIdSF;
-   Float_t         EGammaRecoSF;
+   Float_t         MuTrkSF;
    Float_t         EGammaGsfSF;
+   Float_t         JetSF_80X;
+   Float_t         JetSFup_80X;
+   Float_t         JetSFdn_80X;
    Float_t         JetSF_pTNbwflat;
    Float_t         JetSFup_pTNbwflat;
    Float_t         JetSFdn_pTNbwflat;
