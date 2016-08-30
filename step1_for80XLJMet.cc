@@ -1196,7 +1196,7 @@ void step1::Loop()
 	// ----------------------------------------------------------------------------
 
 	maxsubcsv.push_back(-99.0);
-	if(theJetAK8Pt_JetSubCalc->at(ijet) < 200 || fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
+	if(fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
 	if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
 	if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
 
@@ -1753,7 +1753,7 @@ void step1::Loop()
 	  }
 
 	  // Set the initial tagged/untagged state
-	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6);
+	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200;
  
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
 	  int tag_tau0p6 = applySF(isWtagged,tau0p6SF,tau0p6Eff);
@@ -1827,7 +1827,7 @@ void step1::Loop()
 	  }
 
 	  // Set the initial tagged/untagged state
-	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) > 400;
+	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400;
 
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
 	  int tag_topTau81 = applySF(isTtagged,topTau81SF,topTau81Eff);
@@ -1881,7 +1881,7 @@ void step1::Loop()
 	  theJetAK8Zmatch_JetSubCalc_PtOrdered.push_back(0);
 	  theJetAK8Tmatch_JetSubCalc_PtOrdered.push_back(0);
  
-	  if(tau21 < 0.6 && mass > 65.0 && mass < 105.0){
+	  if(tau21 < 0.6 && mass > 65.0 && mass < 105.0 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200){
 
 	    NJetsWtagged_0p6 += 1;
 	    if(NJetsWtagged_0p6 == 1){
@@ -1894,7 +1894,7 @@ void step1::Loop()
 	      deltaPhilepWjet = wjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	  if(tau32 < 0.81 && massSD > 105.0 && massSD < 220.0 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) > 400){
+	  if(tau32 < 0.81 && massSD > 105.0 && massSD < 220.0 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400){
 
 	    NJetsTtagged_0p81 += 1;
 	    if(NJetsTtagged_0p81 == 1){

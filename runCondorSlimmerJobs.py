@@ -11,8 +11,8 @@ shift = sys.argv[1]
 
 relbase = '/uscms_data/d3/jmanagan/CMSSW_7_4_14/'
 inputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_080116/'+shift+'/'
-outputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_080816_step1/'+shift+'/'
-condorDir='/uscms_data/d3/jmanagan/LJMet_1lepTT_080816_step1/'+shift+'/'
+outputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_082216_step1/'+shift+'/'
+condorDir='/uscms_data/d3/jmanagan/LJMet_1lepTT_082216_step1/'+shift+'/'
 
 runDir=os.getcwd()
 # Can change the file directory if needed
@@ -90,7 +90,7 @@ Queue 1"""%dict)
             print count, "jobs submitted!!!"
 
 #, %(RUNDIR)s/csc2015_Dec01.txt, %(RUNDIR)s/ecalscn1043093_Dec01.txt
-
+'''
 signalList = [
     #'BprimeBprime_M-700_TuneCUETP8M1_13TeV-madgraph-pythia8',
     'BprimeBprime_M-800_TuneCUETP8M1_13TeV-madgraph-pythia8',
@@ -145,13 +145,13 @@ Queue 1"""%dict)
             print count, "jobs submitted!!!"
 
 #, %(RUNDIR)s/csc2015_Dec01.txt, %(RUNDIR)s/ecalscn1043093_Dec01.txt
-
+'''
 dirList = [
     #'TTJets_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8',
-    'WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
     #'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
-    'TT_Mtt-1000toInf_TuneCUETP8M1_13TeV-powheg-pythia8',
     #'TT_Mtt-700to1000_TuneCUETP8M1_13TeV-powheg-pythia8',
+    'WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    'TT_Mtt-1000toInf_TuneCUETP8M1_13TeV-powheg-pythia8',
     'WW_TuneCUETP8M1_13TeV-pythia8',						      
     'WZ_TuneCUETP8M1_13TeV-pythia8',						      
     'ZZ_TuneCUETP8M1_13TeV-pythia8',						      
@@ -189,7 +189,7 @@ if shift == 'nominal':
     # These don't need to be run for shifted directories
     #dirList.append('ST_tW_top_5f_scaleup_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')
     #dirList.append('ST_tW_top_5f_scaledown_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')	      
-    #dirList.append('ST_tW_antitop_5f_scaleup_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')	      
+    #dirList.append('ST_tW_antitop_5f_scaleup_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')
     #dirList.append('ST_tW_antitop_5f_scaledown_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')      
     dirList.append('TT_TuneCUETP8M1_13TeV-powheg-scaledown-pythia8')
     dirList.append('TT_TuneCUETP8M1_13TeV-powheg-scaleup-pythia8')
@@ -261,7 +261,7 @@ universe = vanilla
 Executable = %(RUNDIR)s/makeStep1.sh
 Should_Transfer_Files = YES
 WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = %(RUNDIR)s/makeStep1.C, %(RUNDIR)s/%(POST)s/step1.cc, %(RUNDIR)s/%(POST)s/step1.h, %(RUNDIR)s/%(POST)s/step1_cc.d, %(RUNDIR)s/%(POST)s/step1_cc.so, %(RUNDIR)s/csc2015_Dec01.txt, %(RUNDIR)s/ecalscn1043093_Dec01.txt
+Transfer_Input_Files = %(RUNDIR)s/makeStep1.C, %(RUNDIR)s/%(POST)s/step1.cc, %(RUNDIR)s/%(POST)s/step1.h, %(RUNDIR)s/%(POST)s/step1_cc.d, %(RUNDIR)s/%(POST)s/step1_cc.so
 Output = %(FILENAME)s_%(LABEL)s.out
 Error = %(FILENAME)s_%(LABEL)s.err
 Log = %(FILENAME)s_%(LABEL)s.log
@@ -275,7 +275,7 @@ Queue 1"""%dict)
         os.system('sleep 0.5')                                
         os.chdir('%s'%(runDir))
         print count, "jobs submitted!!!"
-'''
+
 print("--- %s minutes ---" % (round(time.time() - start_time, 2)/60))
 
 
