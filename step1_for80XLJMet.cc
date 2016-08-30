@@ -1827,7 +1827,7 @@ void step1::Loop()
 	  }
 
 	  // Set the initial tagged/untagged state
-	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81);
+	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) > 400;
 
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
 	  int tag_topTau81 = applySF(isTtagged,topTau81SF,topTau81Eff);
@@ -1894,7 +1894,7 @@ void step1::Loop()
 	      deltaPhilepWjet = wjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
-	  if(tau32 < 0.81 && massSD > 105.0 && massSD < 220.0){
+	  if(tau32 < 0.81 && massSD > 105.0 && massSD < 220.0 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) > 400){
 
 	    NJetsTtagged_0p81 += 1;
 	    if(NJetsTtagged_0p81 == 1){
