@@ -1196,7 +1196,7 @@ void step1::Loop()
 	// ----------------------------------------------------------------------------
 
 	maxsubcsv.push_back(-99.0);
-	if(theJetAK8Pt_JetSubCalc->at(ijet) < 180 || fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) < 200 || fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
 	if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
 	if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
 
@@ -1733,7 +1733,7 @@ void step1::Loop()
 	  float tau0p6SFup = 1.0;
 	  float tau0p6SFdn = 1.0;
 	  double tau0p6Eff = 1.0;
-	  if(isWmatched){	    
+	  if(isWmatched && matchedPt >= 200){	    
 	    // VALUES FOR 76X FROM TWIKI 76X with JEC v2
 	    tau0p6SF = 0.980;
 	    tau0p6SFup = 1.014;
@@ -1810,7 +1810,7 @@ void step1::Loop()
 	  float topTau81SFup = 1.0;
 	  float topTau81SFdn = 1.0;
 	  double topTau81Eff = 1.0;
-	  if(isTmatched){	    
+	  if(isTmatched && matchedPt >= 400){	    
 	    // VALUES FOR 76X FROM PAS
 	    topTau81SF = 0.96;
 	    topTau81SFup = 1.04;
