@@ -478,7 +478,6 @@ public :
    vector<double>  *theJetAK8CSV_JetSubCalc;
    vector<double>  *theJetAK8Energy_JetSubCalc;
    vector<double>  *theJetAK8Eta_JetSubCalc;
-   vector<double>  *theJetAK8FilteredMass_JetSubCalc;
    vector<double>  *theJetAK8JetCharge_JetSubCalc;
    vector<double>  *theJetAK8Mass_JetSubCalc;
    vector<double>  *theJetAK8NEmEFrac_JetSubCalc;
@@ -500,7 +499,6 @@ public :
    vector<double>  *theJetAK8SDSubjetPhi_JetSubCalc;
    vector<double>  *theJetAK8SDSubjetPt_JetSubCalc;
    vector<double>  *theJetAK8SoftDropMass_JetSubCalc;
-   vector<double>  *theJetAK8TrimmedMass_JetSubCalc;
    vector<double>  *theJetCEmEFrac_JetSubCalc;
    vector<double>  *theJetCEmEnergy_JetSubCalc;
    vector<double>  *theJetCHadEFrac_JetSubCalc;
@@ -808,7 +806,6 @@ public :
    TBranch        *b_theJetAK8CSV_JetSubCalc;   //!
    TBranch        *b_theJetAK8Energy_JetSubCalc;   //!
    TBranch        *b_theJetAK8Eta_JetSubCalc;   //!
-   TBranch        *b_theJetAK8FilteredMass_JetSubCalc;   //!
    TBranch        *b_theJetAK8JetCharge_JetSubCalc;   //!
    TBranch        *b_theJetAK8Mass_JetSubCalc;   //!
    TBranch        *b_theJetAK8NEmEFrac_JetSubCalc;   //!
@@ -830,7 +827,6 @@ public :
    TBranch        *b_theJetAK8SDSubjetPhi_JetSubCalc;   //!
    TBranch        *b_theJetAK8SDSubjetPt_JetSubCalc;   //!
    TBranch        *b_theJetAK8SoftDropMass_JetSubCalc;   //!
-   TBranch        *b_theJetAK8TrimmedMass_JetSubCalc;   //!
    TBranch        *b_theJetCEmEFrac_JetSubCalc;   //!
    TBranch        *b_theJetCEmEnergy_JetSubCalc;   //!
    TBranch        *b_theJetCHadEFrac_JetSubCalc;   //!
@@ -1195,7 +1191,6 @@ void step1::Init(TTree *tree)
    theJetAK8CSV_JetSubCalc = 0;
    theJetAK8Energy_JetSubCalc = 0;
    theJetAK8Eta_JetSubCalc = 0;
-   theJetAK8FilteredMass_JetSubCalc = 0;
    theJetAK8JetCharge_JetSubCalc = 0;
    theJetAK8Mass_JetSubCalc = 0;
    theJetAK8NEmEFrac_JetSubCalc = 0;
@@ -1217,7 +1212,6 @@ void step1::Init(TTree *tree)
    theJetAK8SDSubjetPhi_JetSubCalc = 0;
    theJetAK8SDSubjetPt_JetSubCalc = 0;
    theJetAK8SoftDropMass_JetSubCalc = 0;
-   theJetAK8TrimmedMass_JetSubCalc = 0;
    theJetCEmEFrac_JetSubCalc = 0;
    theJetCEmEnergy_JetSubCalc = 0;
    theJetCHadEFrac_JetSubCalc = 0;
@@ -1530,7 +1524,6 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("theJetAK8CSV_JetSubCalc", &theJetAK8CSV_JetSubCalc, &b_theJetAK8CSV_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8Energy_JetSubCalc", &theJetAK8Energy_JetSubCalc, &b_theJetAK8Energy_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8Eta_JetSubCalc", &theJetAK8Eta_JetSubCalc, &b_theJetAK8Eta_JetSubCalc);
-   inputTree->SetBranchAddress("theJetAK8FilteredMass_JetSubCalc", &theJetAK8FilteredMass_JetSubCalc, &b_theJetAK8FilteredMass_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8JetCharge_JetSubCalc", &theJetAK8JetCharge_JetSubCalc, &b_theJetAK8JetCharge_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8Mass_JetSubCalc", &theJetAK8Mass_JetSubCalc, &b_theJetAK8Mass_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8NEmEFrac_JetSubCalc", &theJetAK8NEmEFrac_JetSubCalc, &b_theJetAK8NEmEFrac_JetSubCalc);
@@ -1552,7 +1545,6 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("theJetAK8SDSubjetPhi_JetSubCalc", &theJetAK8SDSubjetPhi_JetSubCalc, &b_theJetAK8SDSubjetPhi_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8SDSubjetPt_JetSubCalc", &theJetAK8SDSubjetPt_JetSubCalc, &b_theJetAK8SDSubjetPt_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8SoftDropMass_JetSubCalc", &theJetAK8SoftDropMass_JetSubCalc, &b_theJetAK8SoftDropMass_JetSubCalc);
-   inputTree->SetBranchAddress("theJetAK8TrimmedMass_JetSubCalc", &theJetAK8TrimmedMass_JetSubCalc, &b_theJetAK8TrimmedMass_JetSubCalc);
    inputTree->SetBranchAddress("theJetCEmEFrac_JetSubCalc", &theJetCEmEFrac_JetSubCalc, &b_theJetCEmEFrac_JetSubCalc);
    inputTree->SetBranchAddress("theJetCEmEnergy_JetSubCalc", &theJetCEmEnergy_JetSubCalc, &b_theJetCEmEnergy_JetSubCalc);
    inputTree->SetBranchAddress("theJetCHadEFrac_JetSubCalc", &theJetCHadEFrac_JetSubCalc, &b_theJetCHadEFrac_JetSubCalc);
