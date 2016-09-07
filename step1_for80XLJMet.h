@@ -34,6 +34,8 @@ public :
    Bool_t          isTTV;
    Bool_t          isST;
    Bool_t          isTTincMtt0to1000;
+   Bool_t          isTTincMtt0to700;
+   Bool_t          isTTincMtt700to1000;
    Bool_t          isTTincMtt1000toInf;
    Bool_t          outBWBW;
    Bool_t          outTZBW;
@@ -901,7 +903,9 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
   isST = inputFileName.Contains("ST");
   isTTV = (inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_"));
   isMC      = !inputFileName.Contains("Single");
-  isTTincMtt0to1000    = outputFileName.Contains("Mtt0to1000");
+  isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
+  isTTincMtt0to1000   = outputFileName.Contains("Mtt0to1000");
+  isTTincMtt700to1000 = outputFileName.Contains("Mtt700to1000");
   isTTincMtt1000toInf = outputFileName.Contains("Mtt1000toInf");
   outBWBW = outputFileName.Contains("BWBW");
   outTZBW = outputFileName.Contains("TZBW");

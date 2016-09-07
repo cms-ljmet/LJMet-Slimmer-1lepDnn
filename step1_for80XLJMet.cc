@@ -533,7 +533,9 @@ void step1::Loop()
       // Filter input file by mass or decay
       // ----------------------------------------------------------------------------
 
+      if(isTTincMtt0to700 && ttbarMass_TTbarMassCalc >= 700.) continue;
       if(isTTincMtt0to1000 && ttbarMass_TTbarMassCalc >= 1000.) continue;
+      if(isTTincMtt700to1000 && (ttbarMass_TTbarMassCalc < 700. || ttbarMass_TTbarMassCalc >= 1000.)) continue;
       if(isTTincMtt1000toInf && ttbarMass_TTbarMassCalc < 1000.) continue;
       if(outBWBW && !isBWBW_TpTpCalc) continue;
       if(outTZBW && !isTZBW_TpTpCalc) continue;
