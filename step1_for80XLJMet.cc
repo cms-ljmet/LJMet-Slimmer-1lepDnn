@@ -228,7 +228,7 @@ void step1::Loop()
    outputFile->cd();
    TTree *outputTree = new TTree("ljmet","ljmet");
 
-   outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/I");
+   outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
    outputTree->Branch("run_CommonCalc",&run_CommonCalc,"run_CommonCalc/I");
    outputTree->Branch("lumi_CommonCalc",&lumi_CommonCalc,"lumi_CommonCalc/I");
    outputTree->Branch("nPV_singleLepCalc",&nPV_singleLepCalc,"nPV_singleLepCalc/I");

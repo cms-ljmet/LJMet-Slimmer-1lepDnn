@@ -207,7 +207,7 @@ void step1::Loop()
    outputFile->cd();
    TTree *outputTree = new TTree("ljmet","ljmet");
 
-   outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/I");
+   outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
    outputTree->Branch("run_CommonCalc",&run_CommonCalc,"run_CommonCalc/I");
    outputTree->Branch("lumi_CommonCalc",&lumi_CommonCalc,"lumi_CommonCalc/I");
    outputTree->Branch("nPV_singleLepCalc",&nPV_singleLepCalc,"nPV_singleLepCalc/I");
@@ -595,6 +595,7 @@ void step1::Loop()
 
       //CSC filter (aka muon halo filter) NOTE: filtering data sets by running both SE and SM CSC filters!
       bool filterEvent = false;
+      if(event_CommonCalc < 0) cout << "EVENT NUMBER NEGATIVE" << endl;
       for(unsigned int i=0; i < CSC_run.size(); i++){
       	if(CSC_run[i]==run_CommonCalc && CSC_ls[i]==lumi_CommonCalc && CSC_event[i]==event_CommonCalc) filterEvent = true;
       }

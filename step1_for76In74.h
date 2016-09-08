@@ -221,7 +221,7 @@ public :
    Int_t           NLeptonDecays_TpTpCalc;
    Int_t           dataE_singleLepCalc;
    Int_t           dataM_singleLepCalc;
-   Int_t           event_CommonCalc;
+   Long64_t        event_CommonCalc;
    Int_t           genTDLID_singleLepCalc;
    Int_t           lumi_CommonCalc;
    Int_t           nAllJets_CommonCalc;
