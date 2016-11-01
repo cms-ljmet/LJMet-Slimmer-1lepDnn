@@ -63,11 +63,14 @@ public :
    Float_t         pileupWeight;
    Float_t         pileupWeightUp;
    Float_t         pileupWeightDown;
+   Float_t         TauPtWeightUp;
+   Float_t         TauPtWeightDown;
    Float_t         TrigEffAltWeight;
    Float_t         TrigEffWeight;
    Float_t         isoSF;
    Float_t         lepIdSF;
    Float_t         EGammaRecoSF;
+   Float_t         JetSF_HT;
    Float_t         JetSF_pTNbwflat;
    Float_t         JetSFup_pTNbwflat;
    Float_t         JetSFdn_pTNbwflat;
@@ -147,6 +150,7 @@ public :
    vector<double>  deltaPhi_lepAK8s;
    vector<double>  mass_lepAK8s;
    vector<double>  theJetAK8PrunedMass_JetSubCalc_PtOrdered;
+   vector<double>  theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8NjettinessTau1_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8NjettinessTau2_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8Pt_JetSubCalc_PtOrdered;
@@ -160,6 +164,10 @@ public :
    vector<double>  theJetAK8SoftDropMass_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8NjettinessTau3_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8MaxSubCSV_JetSubCalc_PtOrdered;
+   vector<double>  theJetAK8SumSubMass_JetSubCalc_PtOrdered;
+   vector<double>  theJetAK8SmearedSubMass_JetSubCalc_PtOrdered;
+   vector<double>  theJetAK8SDSubjetMass_JetSubCalc_PtOrdered;
+   vector<double>  theJetAK8SDSubjetCSV_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8MatchedPt_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8Wmatch_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8Tmatch_JetSubCalc_PtOrdered;
@@ -195,6 +203,8 @@ public :
 
    Int_t           NJetsHtagged;
    vector<int>     NJetsHtagged_shifts;
+   Int_t           NJetsHtaggedSmear;
+   vector<int>     NJetsHtaggedSmear_shifts;
 
    Float_t         topPt;
    Float_t         topPtGen;
@@ -484,6 +494,8 @@ public :
    vector<double>  *theJetAK8FilteredMass_JetSubCalc;
    vector<double>  *theJetAK8JetCharge_JetSubCalc;
    vector<double>  *theJetAK8Mass_JetSubCalc;
+   vector<double>  *theJetAK8GenMass_JetSubCalc;
+   vector<double>  *theJetAK8GenDR_JetSubCalc;
    vector<double>  *theJetAK8NEmEFrac_JetSubCalc;
    vector<double>  *theJetAK8NEmEnergy_JetSubCalc;
    vector<double>  *theJetAK8NHadEFrac_JetSubCalc;
@@ -493,6 +505,7 @@ public :
    vector<double>  *theJetAK8NjettinessTau3_JetSubCalc;
    vector<double>  *theJetAK8Phi_JetSubCalc;
    vector<double>  *theJetAK8PrunedMass_JetSubCalc;
+   vector<double>  *theJetAK8PrunedMassWtagUncerts_JetSubCalc;
    vector<double>  *theJetAK8Pt_JetSubCalc;
    vector<double>  *theJetAK8SDSubjetBTag_JetSubCalc;
    vector<double>  *theJetAK8SDSubjetCSV_JetSubCalc;
@@ -813,6 +826,8 @@ public :
    TBranch        *b_theJetAK8FilteredMass_JetSubCalc;   //!
    TBranch        *b_theJetAK8JetCharge_JetSubCalc;   //!
    TBranch        *b_theJetAK8Mass_JetSubCalc;   //!
+   TBranch        *b_theJetAK8GenMass_JetSubCalc;   //!
+   TBranch        *b_theJetAK8GenDR_JetSubCalc;   //!
    TBranch        *b_theJetAK8NEmEFrac_JetSubCalc;   //!
    TBranch        *b_theJetAK8NEmEnergy_JetSubCalc;   //!
    TBranch        *b_theJetAK8NHadEFrac_JetSubCalc;   //!
@@ -822,6 +837,7 @@ public :
    TBranch        *b_theJetAK8NjettinessTau3_JetSubCalc;   //!
    TBranch        *b_theJetAK8Phi_JetSubCalc;   //!
    TBranch        *b_theJetAK8PrunedMass_JetSubCalc;   //!
+   TBranch        *b_theJetAK8PrunedMassWtagUncerts_JetSubCalc;   //!
    TBranch        *b_theJetAK8Pt_JetSubCalc;   //!
    TBranch        *b_theJetAK8SDSubjetBTag_JetSubCalc;   //!
    TBranch        *b_theJetAK8SDSubjetCSV_JetSubCalc;   //!
@@ -873,6 +889,7 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
+   bool     applySF(bool& isTagged, float tag_SF, float tag_eff);
 };
 
 #endif
@@ -1199,6 +1216,8 @@ void step1::Init(TTree *tree)
    theJetAK8FilteredMass_JetSubCalc = 0;
    theJetAK8JetCharge_JetSubCalc = 0;
    theJetAK8Mass_JetSubCalc = 0;
+   theJetAK8GenMass_JetSubCalc = 0;
+   theJetAK8GenDR_JetSubCalc = 0;
    theJetAK8NEmEFrac_JetSubCalc = 0;
    theJetAK8NEmEnergy_JetSubCalc = 0;
    theJetAK8NHadEFrac_JetSubCalc = 0;
@@ -1208,6 +1227,7 @@ void step1::Init(TTree *tree)
    theJetAK8NjettinessTau3_JetSubCalc = 0;
    theJetAK8Phi_JetSubCalc = 0;
    theJetAK8PrunedMass_JetSubCalc = 0;
+   theJetAK8PrunedMassWtagUncerts_JetSubCalc = 0;
    theJetAK8Pt_JetSubCalc = 0;
    theJetAK8SDSubjetBTag_JetSubCalc = 0;
    theJetAK8SDSubjetCSV_JetSubCalc = 0;
@@ -1533,6 +1553,8 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("theJetAK8FilteredMass_JetSubCalc", &theJetAK8FilteredMass_JetSubCalc, &b_theJetAK8FilteredMass_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8JetCharge_JetSubCalc", &theJetAK8JetCharge_JetSubCalc, &b_theJetAK8JetCharge_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8Mass_JetSubCalc", &theJetAK8Mass_JetSubCalc, &b_theJetAK8Mass_JetSubCalc);
+   inputTree->SetBranchAddress("theJetAK8GenMass_JetSubCalc", &theJetAK8GenMass_JetSubCalc, &b_theJetAK8GenMass_JetSubCalc);
+   inputTree->SetBranchAddress("theJetAK8GenDR_JetSubCalc", &theJetAK8GenDR_JetSubCalc, &b_theJetAK8GenDR_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8NEmEFrac_JetSubCalc", &theJetAK8NEmEFrac_JetSubCalc, &b_theJetAK8NEmEFrac_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8NEmEnergy_JetSubCalc", &theJetAK8NEmEnergy_JetSubCalc, &b_theJetAK8NEmEnergy_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8NHadEFrac_JetSubCalc", &theJetAK8NHadEFrac_JetSubCalc, &b_theJetAK8NHadEFrac_JetSubCalc);
@@ -1542,6 +1564,7 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("theJetAK8NjettinessTau3_JetSubCalc", &theJetAK8NjettinessTau3_JetSubCalc, &b_theJetAK8NjettinessTau3_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8Phi_JetSubCalc", &theJetAK8Phi_JetSubCalc, &b_theJetAK8Phi_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8PrunedMass_JetSubCalc", &theJetAK8PrunedMass_JetSubCalc, &b_theJetAK8PrunedMass_JetSubCalc);
+   inputTree->SetBranchAddress("theJetAK8PrunedMassWtagUncerts_JetSubCalc", &theJetAK8PrunedMassWtagUncerts_JetSubCalc, &b_theJetAK8PrunedMassWtagUncerts_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8Pt_JetSubCalc", &theJetAK8Pt_JetSubCalc, &b_theJetAK8Pt_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8SDSubjetBTag_JetSubCalc", &theJetAK8SDSubjetBTag_JetSubCalc, &b_theJetAK8SDSubjetBTag_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8SDSubjetCSV_JetSubCalc", &theJetAK8SDSubjetCSV_JetSubCalc, &b_theJetAK8SDSubjetCSV_JetSubCalc);
