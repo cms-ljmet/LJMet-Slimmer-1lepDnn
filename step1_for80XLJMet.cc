@@ -501,11 +501,11 @@ void step1::Loop()
    }; 
 
    // Pileup distributions
-   double pileup_central[40] = {1.990e-04, 9.977e-03, 1.408e-02, 2.362e-02, 3.913e-02, 3.103e-02, 3.369e-02, 6.947e-02, 1.636e-01, 3.170e-01, 4.966e-01, 7.191e-01, 9.710e-01, 1.155e+00, 1.264e+00, 1.220e+00, 1.142e+00, 1.214e+00, 1.182e+00, 1.275e+00, 1.137e+00, 1.055e+00, 1.070e+00, 1.112e+00, 1.067e+00, 1.149e+00, 1.019e+00, 1.008e+00, 8.370e-01, 7.521e-01, 6.384e-01, 5.358e-01, 5.765e-01, 5.628e-01, 7.408e-01, 1.209e+00, 2.364e+00, 3.325e+00, 0.000e+00, 0.000e+00};
+   double pileup_central[40] = {7.892e-03, 1.846e-02, 1.858e-02, 2.098e-02, 3.207e-02, 2.484e-02, 2.326e-02, 3.721e-02, 7.012e-02, 1.266e-01, 2.280e-01, 3.998e-01, 5.895e-01, 7.439e-01, 8.700e-01, 8.940e-01, 8.630e-01, 9.238e-01, 8.971e-01, 9.710e-01, 8.868e-01, 8.635e-01, 9.279e-01, 1.027e+00, 1.066e+00, 1.256e+00, 1.250e+00, 1.425e+00, 1.414e+00, 1.557e+00, 1.665e+00, 1.801e+00, 2.588e+00, 3.449e+00, 6.530e+00, 1.510e+01, 4.634e+01, 9.928e+01, 0.000e+00, 0.000e+00};
 
-   double pileup_down[40] =    {3.167e-04, 1.224e-02, 1.592e-02, 2.817e-02, 4.279e-02, 3.554e-02, 4.153e-02, 1.191e-01, 2.535e-01, 4.625e-01, 6.876e-01, 9.668e-01, 1.248e+00, 1.411e+00, 1.502e+00, 1.421e+00, 1.293e+00, 1.335e+00, 1.263e+00, 1.324e+00, 1.145e+00, 1.030e+00, 1.011e+00, 1.013e+00, 9.292e-01, 9.449e-01, 7.845e-01, 7.233e-01, 5.580e-01, 4.638e-01, 3.611e-01, 2.756e-01, 2.680e-01, 2.356e-01, 2.784e-01, 4.070e-01, 7.124e-01, 8.988e-01, 0.000e+00, 0.000e+00};
+   double pileup_down[40] =    {8.176e-03, 2.356e-02, 1.953e-02, 2.397e-02, 3.574e-02, 2.725e-02, 2.694e-02, 5.769e-02, 1.033e-01, 1.926e-01, 3.514e-01, 5.697e-01, 7.846e-01, 9.493e-01, 1.083e+00, 1.068e+00, 9.832e-01, 1.014e+00, 9.614e-01, 1.030e+00, 9.352e-01, 8.958e-01, 9.406e-01, 1.019e+00, 1.037e+00, 1.195e+00, 1.163e+00, 1.296e+00, 1.255e+00, 1.344e+00, 1.391e+00, 1.451e+00, 2.006e+00, 2.568e+00, 4.665e+00, 1.032e+01, 3.013e+01, 6.090e+01, 0.000e+00, 0.000e+00};
 
-   double pileup_up[40] =      {1.230e-04, 8.231e-03, 1.238e-02, 1.978e-02, 3.623e-02, 2.701e-02, 2.954e-02, 4.398e-02, 1.026e-01, 2.169e-01, 3.559e-01, 5.350e-01, 7.430e-01, 9.278e-01, 1.057e+00, 1.041e+00, 9.943e-01, 1.085e+00, 1.085e+00, 1.200e+00, 1.098e+00, 1.049e+00, 1.095e+00, 1.172e+00, 1.162e+00, 1.302e+00, 1.215e+00, 1.275e+00, 1.128e+00, 1.082e+00, 9.846e-01, 8.912e-01, 1.042e+00, 1.113e+00, 1.610e+00, 2.896e+00, 6.253e+00, 9.726e+00, 0.000e+00, 0.000e+00};
+   double pileup_up[40] =      {7.690e-03, 1.454e-02, 1.759e-02, 1.842e-02, 2.919e-02, 2.240e-02, 2.122e-02, 2.606e-02, 4.722e-02, 8.679e-02, 1.494e-01, 2.732e-01, 4.337e-01, 5.773e-01, 6.949e-01, 7.319e-01, 7.369e-01, 8.227e-01, 8.247e-01, 9.106e-01, 8.382e-01, 8.210e-01, 8.956e-01, 1.012e+00, 1.071e+00, 1.285e+00, 1.304e+00, 1.519e+00, 1.539e+00, 1.730e+00, 1.896e+00, 2.109e+00, 3.129e+00, 4.317e+00, 8.471e+00, 2.033e+01, 6.483e+01, 1.448e+02, 0.000e+00, 0.000e+00};
 
   // ----------------------------------------------------------------------------
   // RUN THE EVENT LOOP
@@ -605,16 +605,16 @@ void step1::Loop()
       	if(isElectron){
 	  if(isSig){
 	    for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
 	    }
 	  }else{
 	    MCPastTrigger = 1;
@@ -797,12 +797,12 @@ void step1::Loop()
 	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v4" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v4") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v5" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v5") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v6" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v6") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v1" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v2" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v3" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v4" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v5" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v6" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
 	    }
 	  }else{
 	    MCPastTrigger = 1;
@@ -929,16 +929,17 @@ void step1::Loop()
       else{ //Data triggers check
 	if(isElectron){
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_singleLepCalc->size(); itrig++){
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_eta2p1_WPLoose_Gsf_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v6" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele27_WPTight_Gsf_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
 	  }
 	}
 	if(isMuon){
@@ -949,12 +950,12 @@ void step1::Loop()
 	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v4" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v4") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v5" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v5") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v6" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v6") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v1" && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v2" && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v3" && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v4" && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v5" && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu45_eta2p1_v6" && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
 	  }
 	}
 	MCPastTrigger = 1;
@@ -1048,7 +1049,7 @@ void step1::Loop()
 	  // ----------------------------------------------------------------------------
 	  // B TAGGING fix -- not needed after LJMet from 8/1/16 (efficiency had a typo)
 	  // ----------------------------------------------------------------------------
-
+	  /*
 	  float bSF = 1.0;
 	  float bSFup = 1.0;
 	  float bSFdn = 1.0;
@@ -1106,7 +1107,7 @@ void step1::Loop()
 	    theJetBTag_lSFdn_JetSubCalc->at(ijet) = tag_dn;
 
 	  }
-	  
+	  */
 	  // ----------------------------------------------------------------------------
 	  // Counts and pt ordering pair
 	  // ----------------------------------------------------------------------------

@@ -104,6 +104,11 @@ void step1::Loop()
    inputTree->SetBranchStatus("isBZBH_TpTpCalc",1);
    inputTree->SetBranchStatus("isBZBZ_TpTpCalc",1);
    inputTree->SetBranchStatus("NLeptonDecays_TpTpCalc",1);
+   inputTree->SetBranchStatus("tPrimeID_TpTpCalc",1);
+   inputTree->SetBranchStatus("tPrimePt_TpTpCalc",1);
+   inputTree->SetBranchStatus("tPrimeEta_TpTpCalc",1);
+   inputTree->SetBranchStatus("tPrimePhi_TpTpCalc",1);
+   inputTree->SetBranchStatus("tPrimeEnergy_TpTpCalc",1);
    
    //triggers
    inputTree->SetBranchStatus("vsSelMCTriggersEl_singleLepCalc",1);
@@ -263,6 +268,11 @@ void step1::Loop()
    outputTree->Branch("isBZBH_TpTpCalc",&isBZBH_TpTpCalc,"isBZBH_TpTpCalc/O");
    outputTree->Branch("isBZBZ_TpTpCalc",&isBZBZ_TpTpCalc,"isBZBZ_TpTpCalc/O");
    outputTree->Branch("NLeptonDecays_TpTpCalc",&NLeptonDecays_TpTpCalc,"NLeptonDecays_TpTpCalc/I");
+   outputTree->Branch("tPrimeID_TpTpCalc",&tPrimeID_TpTpCalc);
+   outputTree->Branch("tPrimePt_TpTpCalc",&tPrimePt_TpTpCalc);
+   outputTree->Branch("tPrimeEta_TpTpCalc",&tPrimeEta_TpTpCalc);
+   outputTree->Branch("tPrimePhi_TpTpCalc",&tPrimePhi_TpTpCalc);
+   outputTree->Branch("tPrimeEnergy_TpTpCalc",&tPrimeEnergy_TpTpCalc);
    outputTree->Branch("MCWeight_singleLepCalc",&MCWeight_singleLepCalc,"MCWeight_singleLepCalc/D");
    outputTree->Branch("renormWeights",&renormWeights);
    outputTree->Branch("pdfWeights",&pdfWeights);
