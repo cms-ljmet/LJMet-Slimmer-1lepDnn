@@ -103,6 +103,7 @@ public :
    Int_t           elTrigPresel_singleLepCalc;
 
    Int_t           NJets_JetSubCalc;
+   Int_t           NJetsCSV_JetSubCalc;
    Int_t           NJetsCSVwithSF_JetSubCalc;
    vector<int>     NJetsCSVwithSF_JetSubCalc_shifts;
    vector<double>  theJetPt_JetSubCalc_PtOrdered;
@@ -209,8 +210,10 @@ public :
    vector<double>  deltaRlepTjet_shifts;  
    vector<double>  deltaPhilepTjet_shifts; 
 
-   Int_t           NJetsHtagged;
-   vector<int>     NJetsHtagged_shifts;
+   Int_t           NJetsH1btagged;
+   vector<int>     NJetsH1btagged_shifts;
+   Int_t           NJetsH2btagged;
+   vector<int>     NJetsH2btagged_shifts;
 
    Float_t         topPt;
    Float_t         topPtGen;

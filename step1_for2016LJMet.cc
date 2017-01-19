@@ -354,10 +354,13 @@ void step1::Loop()
    outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
    outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
    outputTree->Branch("NJetsAK8_JetSubCalc",&NJetsAK8_JetSubCalc,"NJetsAK8_JetSubCalc/I");
+   outputTree->Branch("NJetsCSV_JetSubCalc",&NJetsCSV_JetSubCalc,"NJetsCSV_JetSubCalc/I");
    outputTree->Branch("NJetsCSVwithSF_JetSubCalc",&NJetsCSVwithSF_JetSubCalc,"NJetsCSVwithSF_JetSubCalc/I");
    outputTree->Branch("NJetsCSVwithSF_JetSubCalc_shifts",&NJetsCSVwithSF_JetSubCalc_shifts);
-   outputTree->Branch("NJetsHtagged",&NJetsHtagged,"NJetsHtagged/I");
-   outputTree->Branch("NJetsHtagged_shifts",&NJetsHtagged_shifts);
+   outputTree->Branch("NJetsH1btagged",&NJetsH1btagged,"NJetsH1btagged/I");
+   outputTree->Branch("NJetsH1btagged_shifts",&NJetsH1btagged_shifts);
+   outputTree->Branch("NJetsH2btagged",&NJetsH2btagged,"NJetsH2btagged/I");
+   outputTree->Branch("NJetsH2btagged_shifts",&NJetsH2btagged_shifts);
    outputTree->Branch("topPt",&topPt,"topPt/F");
    outputTree->Branch("topPtGen",&topPtGen,"topPtGen/F");
    outputTree->Branch("topMass",&topMass,"topMass/F");
@@ -1173,86 +1176,114 @@ void step1::Loop()
       // Loop over AK8 jets for calculations and pt ordering pair
       // ----------------------------------------------------------------------------
       
-      //count up tags
-      NJetsHtagged = 0;      
-      int nHtags_bSFup = 0;      
-      int nHtags_bSFdn = 0;      
-      int nHtags_lSFup = 0;      
-      int nHtags_lSFdn = 0;      
-      int nHtags_JMSup = 0;      
-      int nHtags_JMSdn = 0;      
-      int nHtags_JMRup = 0;      
-      int nHtags_JMRdn = 0;      
+      NJetsH1btagged = 0;
+      int NJetsH1btagged_bSFup = 0;
+      int NJetsH1btagged_bSFdn = 0;
+      int NJetsH1btagged_lSFup = 0;
+      int NJetsH1btagged_lSFdn = 0;
+      int NJetsH1btagged_JMSup = 0;
+      int NJetsH1btagged_JMSdn = 0;
+      int NJetsH1btagged_JMRup = 0;
+      int NJetsH1btagged_JMRdn = 0;
+      NJetsH2btagged = 0;
+      int NJetsH2btagged_bSFup = 0;
+      int NJetsH2btagged_bSFdn = 0;
+      int NJetsH2btagged_lSFup = 0;
+      int NJetsH2btagged_lSFdn = 0;
+      int NJetsH2btagged_JMSup = 0;
+      int NJetsH2btagged_JMSdn = 0;
+      int NJetsH2btagged_JMRup = 0;
+      int NJetsH2btagged_JMRdn = 0;
       NJetsAK8_JetSubCalc = 0;
-      vector<double> maxsubcsv;
-      vector<double> subjetmass;
-      NJetsHtagged_shifts.clear();
+      vector<float> maxsubcsv;
+      NJetsH1btagged_shifts.clear();
+      NJetsH2btagged_shifts.clear();
       vector<pair<double,int>> jetak8ptindpair;
-
+      
       for(unsigned int ijet=0; ijet < theJetAK8Pt_JetSubCalc->size(); ijet++){
-
-	// ----------------------------------------------------------------------------
-	// Basic cuts
-	// ----------------------------------------------------------------------------
-
-	maxsubcsv.push_back(-99.0);
-	if(theJetAK8Pt_JetSubCalc->at(ijet) < 200 || fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
-	if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
-	if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
-
-	// ----------------------------------------------------------------------------
-	// Counter and pt ordering pair
-	// ----------------------------------------------------------------------------
-
-	NJetsAK8_JetSubCalc += 1; 
-	jetak8ptindpair.push_back(std::make_pair(theJetAK8Pt_JetSubCalc->at(ijet),ijet));
-	  
-	// ----------------------------------------------------------------------------
-	// Count Higgs tags
-	// ----------------------------------------------------------------------------
-	  
-	int firstsub = theJetAK8SDSubjetIndex_JetSubCalc->at(ijet);
-	int nsubs = theJetAK8SDSubjetSize_JetSubCalc->at(ijet);
-	double maxCSVsubjet = 0;
-	double sdtagmass = theJetAK8SoftDropMassWtagUncerts_JetSubCalc->at(ijet);
-	double sdtagmass_JMSup = theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc->at(ijet);
-	double sdtagmass_JMSdn = theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc->at(ijet);
-	double sdtagmass_JMRup = theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc->at(ijet);
-	double sdtagmass_JMRdn = theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc->at(ijet);
-
-	for(int isub = firstsub; isub < firstsub + nsubs; isub++){
-	  if(theJetAK8SDSubjetCSV_JetSubCalc->at(isub) > maxCSVsubjet) maxCSVsubjet = theJetAK8SDSubjetCSV_JetSubCalc->at(isub);
-	  if(isub != firstsub && theJetAK8SDSubjetPt_JetSubCalc->at(isub) == theJetAK8SDSubjetPt_JetSubCalc->at(firstsub)) cout << "subjets have matching pT, something's wrong" << endl;
-	}
-	maxsubcsv.at(ijet) = maxCSVsubjet;
-
-	if(nsubs < 2) continue;
 	
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) NJetsHtagged += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_bSFup += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_bSFdn += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_lSFup += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_lSFdn += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMSup > 60 && sdtagmass_JMSup < 160) nHtags_JMSup += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMSdn > 60 && sdtagmass_JMSdn < 160) nHtags_JMSdn += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMRup > 60 && sdtagmass_JMRup < 160) nHtags_JMRup += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMRdn > 60 && sdtagmass_JMRdn < 160) nHtags_JMRdn += 1;
+        // ----------------------------------------------------------------------------                                  
+        // Basic cuts                                                                                                    
+        // ----------------------------------------------------------------------------                                  
+	
+        maxsubcsv.push_back(-99.0);
+        if(fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
+        if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
+        if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
+	
+        // ----------------------------------------------------------------------------                                  
+        // Counter and pt ordering pair                                                                                  
+        // ----------------------------------------------------------------------------                                  
+	
+        NJetsAK8_JetSubCalc += 1;
+        jetak8ptindpair.push_back(std::make_pair(theJetAK8Pt_JetSubCalc->at(ijet),ijet));
+	
+        // ----------------------------------------------------------------------------                                  
+        // Count Higgs tags                                                                                              
+        // ----------------------------------------------------------------------------                                  
+	
+        int firstsub = theJetAK8SDSubjetIndex_JetSubCalc->at(ijet);
+        int nsubs = theJetAK8SDSubjetSize_JetSubCalc->at(ijet);
+        double maxCSVsubjet = 0;
+        int NsubCSVM = 0;
+        for(int isub = firstsub; isub < firstsub + nsubs; isub++){
+          if(theJetAK8SDSubjetCSV_JetSubCalc->at(isub) > maxCSVsubjet) maxCSVsubjet = theJetAK8SDSubjetCSV_JetSubCalc->at(isub);
+          if(theJetAK8SDSubjetCSV_JetSubCalc->at(isub) > 0.8484) NsubCSVM += 1;
+          if(isub != firstsub && theJetAK8SDSubjetPt_JetSubCalc->at(isub) == theJetAK8SDSubjetPt_JetSubCalc->at(firstsub)) cout << "subjets have matching pT, something's wrong" << endl;
+        }
+        maxsubcsv.at(ijet) = maxCSVsubjet;
+        double sdmass = theJetAK8SoftDropMassWtagUncerts_JetSubCalc->at(ijet);
+        double sdmass_JMSup = theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc->at(ijet);
+        double sdmass_JMSdn = theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc->at(ijet);
+        double sdmass_JMRup = theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc->at(ijet);
+        double sdmass_JMRdn = theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc->at(ijet);
+        double pt = theJetAK8Pt_JetSubCalc->at(ijet);
+        if(pt > 300 && sdmass > 60 && sdmass < 160){
+          if(NsubCSVM == 1) NJetsH1btagged += 1;
+          //if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1) NJetsH1btagged += 1;                                  
+          if(theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) == 1) NJetsH1btagged_bSFup += 1;
+          if(theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) == 1) NJetsH1btagged_bSFdn += 1;
+          if(theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) == 1) NJetsH1btagged_lSFup += 1;
+          if(theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) == 1) NJetsH1btagged_lSFdn += 1;
+          if(NsubCSVM > 1) NJetsH2btagged += 1;
+          //if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1) NJetsH2btagged += 1;                                   
+          if(theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) > 1) NJetsH2btagged_bSFup += 1;
+          if(theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) > 1) NJetsH2btagged_bSFdn += 1;
+          if(theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) > 1) NJetsH2btagged_lSFup += 1;
+          if(theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) > 1) NJetsH2btagged_lSFdn += 1;
+	}
+	if(pt > 300 && NsubCSVM == 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH1btagged_JMSup += 1;
+	if(pt > 300 && NsubCSVM == 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH1btagged_JMSdn += 1;
+	if(pt > 300 && NsubCSVM == 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH1btagged_JMRup += 1;
+	if(pt > 300 && NsubCSVM == 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH1btagged_JMRdn += 1;
+	if(pt > 300 && NsubCSVM > 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH2btagged_JMSup += 1;
+	if(pt > 300 && NsubCSVM > 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH2btagged_JMSdn += 1;
+	if(pt > 300 && NsubCSVM > 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH2btagged_JMRup += 1;
+	if(pt > 300 && NsubCSVM > 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH2btagged_JMRdn += 1;
       }
-      NJetsHtagged_shifts.push_back(nHtags_bSFup);
-      NJetsHtagged_shifts.push_back(nHtags_bSFdn);
-      NJetsHtagged_shifts.push_back(nHtags_lSFup);
-      NJetsHtagged_shifts.push_back(nHtags_lSFdn);
-      NJetsHtagged_shifts.push_back(nHtags_JMSup);
-      NJetsHtagged_shifts.push_back(nHtags_JMSdn);
-      NJetsHtagged_shifts.push_back(nHtags_JMRup);
-      NJetsHtagged_shifts.push_back(nHtags_JMRdn);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_bSFup);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_bSFdn);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_lSFup);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_lSFdn);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMSup);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMSdn);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMRup);
+      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMRdn);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_bSFup);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_bSFdn);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_lSFup);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_lSFdn);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMSup);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMSdn);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMRup);
+      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMRdn);
 
       // ----------------------------------------------------------------------------
       // Skip failing events
       // ----------------------------------------------------------------------------
 
       int isPastNHjetsCut = 0;
-      if(NJetsHtagged >= 0){npass_nHjets += 1; isPastNHjetsCut = 1; }
+      if(NJetsH1btagged >= 0){npass_nHjets += 1; isPastNHjetsCut = 1; }
 
       if(!(isPastMETcut && isPastNJetsCut && isPastJetLeadPtCut && isPastLepPtCut && isPastElEtaCut && isPastJetSubLeadPtCut)) continue;
       npass_all+=1;
@@ -1505,6 +1536,7 @@ void step1::Loop()
       // AK4 Jet - lepton associations
       // ----------------------------------------------------------------------------
 
+      NJetsCSV_JetSubCalc = 0;
       NJetsCSVwithSF_JetSubCalc = 0;
       BJetLeadPt = -99;
       minMleppBjet = 1e8;
@@ -1558,18 +1590,23 @@ void step1::Loop()
 	deltaPhi_lepJets.push_back(lepton_lv.DeltaPhi(jet_lv));
 	mass_lepJets.push_back((lepton_lv + jet_lv).M());
 
+        // FOR NOW DON'T USE THE SCALE FACTORS                                         
+	if(theJetCSV_JetSubCalc_PtOrdered.at(ijet) > 0.8484){
+          NJetsCSV_JetSubCalc += 1;
+          if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
+          deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
+          deltaPhi_lepBJets.push_back(lepton_lv.DeltaPhi(jet_lv));
+          mass_lepBJets.push_back((lepton_lv + jet_lv).M());
+
+          if((lepton_lv + jet_lv).M() < minMleppBjet) {
+            minMleppBjet = fabs( (lepton_lv + jet_lv).M() );
+            deltaRlepbJetInMinMlb = jet_lv.DeltaR(lepton_lv);
+            deltaPhilepbJetInMinMlb = jet_lv.DeltaPhi(lepton_lv);
+          }
+        }
+        // LEAVE THIS BUT DON'T USE FOR MINMLB                                                       
 	if(theJetBTag_JetSubCalc_PtOrdered.at(ijet) == 1){
 	  NJetsCSVwithSF_JetSubCalc += 1;
-	  if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
-	  deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
-	  deltaPhi_lepBJets.push_back(lepton_lv.DeltaPhi(jet_lv));
-	  mass_lepBJets.push_back((lepton_lv + jet_lv).M());
-
-	  if((lepton_lv + jet_lv).M() < minMleppBjet) {
-	    minMleppBjet = fabs( (lepton_lv + jet_lv).M() );
-	    deltaRlepbJetInMinMlb = jet_lv.DeltaR(lepton_lv);
-	    deltaPhilepbJetInMinMlb = jet_lv.DeltaPhi(lepton_lv);
-	  }
 	}
 	if(theJetBTag_bSFup_JetSubCalc_PtOrdered.at(ijet) == 1){
 	  NJetsCSVwithSF_JetSubCalc_shifts.at(0) += 1;
