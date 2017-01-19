@@ -190,6 +190,16 @@ void step1::Loop()
    inputTree->SetBranchStatus("theJetAK8NjettinessTau3_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedMass_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropMass_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SoftDropMass_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedTau21Tag_JetSubCalc",1);
 
@@ -236,9 +246,13 @@ void step1::Loop()
    outputTree->Branch("isElectron",&isElectron,"isElectron/I");
    outputTree->Branch("isMuon",&isMuon,"isMuon/I");
    outputTree->Branch("MCPastTrigger",&MCPastTrigger,"MCPastTrigger/I");
-   outputTree->Branch("MCPastTriggerAlt",&MCPastTriggerAlt,"MCPastTriggerAlt/I");
+   outputTree->Branch("MCPastTriggerOR",&MCPastTriggerOR,"MCPastTriggerOR/I");
+   outputTree->Branch("MCPastTriggerLepTight",&MCPastTriggerLepTight,"MCPastTriggerLepTight/I");
+   outputTree->Branch("MCPastTriggerHTTight",&MCPastTriggerHTTight,"MCPastTriggerHTTight/I");
    outputTree->Branch("DataPastTrigger",&DataPastTrigger,"DataPastTrigger/I");
-   outputTree->Branch("DataPastTriggerAlt",&DataPastTriggerAlt,"DataPastTriggerAlt/I");
+   outputTree->Branch("DataPastTriggerOR",&DataPastTriggerOR,"DataPastTriggerOR/I");
+   outputTree->Branch("DataPastTriggerLepTight",&DataPastTriggerLepTight,"DataPastTriggerLepTight/I");
+   outputTree->Branch("DataPastTriggerHTTight",&DataPastTriggerHTTight,"DataPastTriggerHTTight/I");
    outputTree->Branch("isTHBW_TpTpCalc",&isTHBW_TpTpCalc,"isTHBW_TpTpCalc/O");
    outputTree->Branch("isTHTH_TpTpCalc",&isTHTH_TpTpCalc,"isTHTH_TpTpCalc/O");
    outputTree->Branch("isBWBW_TpTpCalc",&isBWBW_TpTpCalc,"isBWBW_TpTpCalc/O");
@@ -260,6 +274,9 @@ void step1::Loop()
    outputTree->Branch("JetSFdn_pTNbwflat",&JetSFdn_pTNbwflat,"JetSFdn_pTNbwflat/F");
    outputTree->Branch("JetSFupwide_pTNbwflat",&JetSFupwide_pTNbwflat,"JetSFupwide_pTNbwflat/F");
    outputTree->Branch("JetSFdnwide_pTNbwflat",&JetSFdnwide_pTNbwflat,"JetSFdnwide_pTNbwflat/F");
+   outputTree->Branch("JetSF_80X",&JetSF_80X,"JetSF_80X/F");
+   outputTree->Branch("JetSFup_80X",&JetSFup_80X,"JetSFup_80X/F");
+   outputTree->Branch("JetSFdn_80X",&JetSFdn_80X,"JetSFdn_80X/F");
    outputTree->Branch("pileupWeight",&pileupWeight,"pileupWeight/F");
    outputTree->Branch("pileupWeightUp",&pileupWeightUp,"pileupWeightUp/F");
    outputTree->Branch("pileupWeightDown",&pileupWeightDown,"pileupWeightDown/F");
@@ -304,6 +321,15 @@ void step1::Loop()
    outputTree->Branch("theJetAK8Energy_JetSubCalc_PtOrdered",&theJetAK8Energy_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8PrunedMass_JetSubCalc_PtOrdered",&theJetAK8PrunedMass_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8SoftDropMass_JetSubCalc_PtOrdered",&theJetAK8SoftDropMass_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8MaxSubCSV_JetSubCalc_PtOrdered",&theJetAK8MaxSubCSV_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau1_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau1_JetSubCalc_PtOrdered);
@@ -343,6 +369,8 @@ void step1::Loop()
    outputTree->Branch("topPtWeight",&topPtWeight,"topPtWeight/F");
    outputTree->Branch("topPtWeightPast400",&topPtWeightPast400,"topPtWeightPast400/F");
    outputTree->Branch("topPtWeightHighPt",&topPtWeightHighPt,"topPtWeightHighPt/F");
+   outputTree->Branch("TauPtWeightUp",&TauPtWeightUp,"TauPtWeightUp/F");
+   outputTree->Branch("TauPtWeightDown",&TauPtWeightDown,"TauPtWeightDown/F");
    outputTree->Branch("deltaRlepJetInMinMljet",&deltaRlepJetInMinMljet,"deltaRlepJetInMinMljet/F");
    outputTree->Branch("deltaRlepbJetInMinMlb",&deltaRlepbJetInMinMlb,"deltaRlepbJetInMinMlb/F");
    outputTree->Branch("deltaRlepbJetInMinMlb_shifts",&deltaRlepbJetInMinMlb_shifts);
@@ -553,14 +581,17 @@ void step1::Loop()
       if(elPt_singleLepCalc->size()==0 && muPt_singleLepCalc->size()>0) {isElectron = 0; isMuon = 1;}
       if(isElectron==0 && isMuon==0){std::cout << "got no leptons, something wrong" << std::endl; continue;}
 
+      if(isSM && isElectron == 1) continue;
+      if(isSE && isMuon == 1) continue;
+
       double leppt = 0;
       double lepeta = 0;
       if(isElectron){leppt = elPt_singleLepCalc->at(0); lepeta = elEta_singleLepCalc->at(0);}
       if(isMuon){leppt = muPt_singleLepCalc->at(0); lepeta = muEta_singleLepCalc->at(0);}
 
       // ICHEP dataset: Endcap muons outside 500 GeV had to be rejected
-      if(isMuon && leppt > 500 && fabs(lepeta) > 1.2) continue;
-      npass_mu500 += 1.0;
+      //if(isMuon && leppt > 500 && fabs(lepeta) > 1.2) continue;
+      //npass_mu500 += 1.0;
 
       // ----------------------------------------------------------------------------
       // Pileup weight calculation
@@ -579,10 +610,6 @@ void step1::Loop()
       // Assign Lepton scale factor or efficiency weights, save trigger pass/fail
       // ----------------------------------------------------------------------------
 
-      DataPastTrigger = 0;
-      DataPastTriggerAlt = 0;
-      MCPastTrigger = 0;
-      MCPastTriggerAlt = 0;
       TrigEffAltWeight = 1.0;
       TrigEffWeight = 1.0;
       TrigEffWeightUncert = 1.0;
@@ -591,25 +618,37 @@ void step1::Loop()
       EGammaGsfSF = 1.0;
       MuTrkSF = 1.0;
 
+      DataPastTrigger = 0;
+      DataPastTriggerOR = 0;
+      DataPastTriggerLepTight = 0;
+      DataPastTriggerHTTight = 0;
+      MCPastTrigger = 0;
+      MCPastTriggerOR = 0;
+      MCPastTriggerLepTight = 0;
+      MCPastTriggerHTTight = 0;
+      
       if(isMC){ //MC triggers check
-      	if(isElectron){
+	if(isElectron){
 	  if(isSig){
+	    std::string string_a = "Ele15_IsoVVVL_PFHT400";
+	    std::string string_b = "Ele15_IsoVVVL_PFHT350";
+	    std::string string_ORa = "Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50";
+	    std::string string_ORb = "Ele32_WPTight_Gsf";
+	    std::string string_LEP = "Ele32_eta2p1_WPTight_Gsf";
+	    std::string string_HT = "PFHT600";
 	    for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_LEP) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
 	    }
 	  }else{
-	    MCPastTrigger = 1;
-	    MCPastTriggerAlt = 1;
-	  }
+	   MCPastTrigger = 1;
+	   MCPastTriggerOR = 1;
+	   MCPastTriggerLepTight = 1;
+	   MCPastTriggerHTTight = 1;
+	 }
 	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/ichep2016_80X/resultsGsfID/egammaEffi.txt_egammaPlots.pdf
 	  if(lepeta < -2.4) EGammaGsfSF = 1.170;
 	  else if(lepeta < -2.3) EGammaGsfSF = 1.009;
@@ -788,25 +827,30 @@ void step1::Loop()
 	    else lepIdSF = 0.954;
 	  }
 	}
-      	if(isMuon){
+	if(isMuon){
 	  if(isSig){
+	    std::string string_a = "Mu15_IsoVVVL_PFHT400";
+	    std::string string_b = "Mu15_IsoVVVL_PFHT350";
+	    std::string string_ORa = "Mu40_eta2p1_PFJet200_PFJet50";
+	    std::string string_ORb = "Mu50";
+	    std::string string_ORc = "TkMu50";
+	    std::string string_LEPa = "IsoMu24";
+	    std::string string_LEPb = "IsoTkMu24";
+	    std::string string_HT = "PFHT600";
 	    for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_singleLepCalc->size(); itrig++){
-	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v1" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v1") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v2" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v2") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v3" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v3") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v4" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v4") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v5" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v5") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v6" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v6") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPa) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
 	    }
 	  }else{
 	    MCPastTrigger = 1;
-	    MCPastTriggerAlt = 1;
+	    MCPastTriggerOR = 1;
+	    MCPastTriggerLepTight = 1;
+	    MCPastTriggerHTTight = 1;
 	  }
 	  
 	  // IsoMu24 || IsoTkMu24 Eff -- 80X DATA EFFICIENCIES
@@ -925,43 +969,50 @@ void step1::Loop()
 	    else lepIdSF = 0.944;
 	  }
 	}
-      	DataPastTrigger = 1;
-      	DataPastTriggerAlt = 1;
+	DataPastTrigger = 1;
+	DataPastTriggerOR = 1;
+	DataPastTriggerLepTight = 1;
+	DataPastTriggerHTTight = 1;
       }
       else{ //Data triggers check
 	if(isElectron){
+	  std::string string_a = "Ele15_IsoVVVL_PFHT400";
+	  std::string string_b = "Ele15_IsoVVVL_PFHT350";
+	  std::string string_ORa = "Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50";
+	  std::string string_ORb = "Ele32_WPTight_Gsf";
+	  std::string string_LEP = "Ele32_eta2p1_WPTight_Gsf";
+	  std::string string_HT = "PFHT600";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_singleLepCalc->size(); itrig++){
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v6" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerOR = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_LEP) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerLepTight = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerHTTight = 1;
 	  }
 	}
 	if(isMuon){
+	  std::string string_a = "Mu15_IsoVVVL_PFHT400";
+	  std::string string_b = "Mu15_IsoVVVL_PFHT350";
+	  std::string string_ORa = "Mu40_eta2p1_PFJet200_PFJet50";
+	  std::string string_ORb = "Mu50";
+	  std::string string_ORc = "TkMu50";
+	  std::string string_LEPa = "IsoMu24";
+	  std::string string_LEPb = "IsoTkMu24";
+	  std::string string_HT = "PFHT600";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersMu_singleLepCalc->size(); itrig++){
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v1" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v1") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v2" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v2") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v3" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v3") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v4" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v4") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v5" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v5") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v6" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v6") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
-	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
+	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
+	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerOR = 1;
+	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerOR = 1;
+	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_LEPa) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerLepTight = 1;
+	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_LEPb) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerLepTight = 1;
+	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerHTTight = 1;
 	  }
 	}
 	MCPastTrigger = 1;
-	MCPastTriggerAlt = 1;
+	MCPastTriggerOR = 1;
+	MCPastTriggerLepTight = 1;
+	MCPastTriggerHTTight = 1;
       }
       
       if(DataPastTrigger) npass_trigger+=1;
@@ -1122,13 +1173,19 @@ void step1::Loop()
       // Loop over AK8 jets for calculations and pt ordering pair
       // ----------------------------------------------------------------------------
       
+      //count up tags
       NJetsHtagged = 0;      
-      int NJetsHtagged_bSFup = 0;      
-      int NJetsHtagged_bSFdn = 0;      
-      int NJetsHtagged_lSFup = 0;      
-      int NJetsHtagged_lSFdn = 0;      
+      int nHtags_bSFup = 0;      
+      int nHtags_bSFdn = 0;      
+      int nHtags_lSFup = 0;      
+      int nHtags_lSFdn = 0;      
+      int nHtags_JMSup = 0;      
+      int nHtags_JMSdn = 0;      
+      int nHtags_JMRup = 0;      
+      int nHtags_JMRdn = 0;      
       NJetsAK8_JetSubCalc = 0;
-      vector<float> maxsubcsv;
+      vector<double> maxsubcsv;
+      vector<double> subjetmass;
       NJetsHtagged_shifts.clear();
       vector<pair<double,int>> jetak8ptindpair;
 
@@ -1139,7 +1196,7 @@ void step1::Loop()
 	// ----------------------------------------------------------------------------
 
 	maxsubcsv.push_back(-99.0);
-	if(fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) < 200 || fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
 	if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
 	if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
 
@@ -1153,29 +1210,42 @@ void step1::Loop()
 	// ----------------------------------------------------------------------------
 	// Count Higgs tags
 	// ----------------------------------------------------------------------------
-
+	  
 	int firstsub = theJetAK8SDSubjetIndex_JetSubCalc->at(ijet);
 	int nsubs = theJetAK8SDSubjetSize_JetSubCalc->at(ijet);
 	double maxCSVsubjet = 0;
-	TLorentzVector tempsubjet;
-	TLorentzVector sumsubjets; sumsubjets.SetPtEtaPhiM(0,0,0,0);
+	double sdtagmass = theJetAK8SoftDropMassWtagUncerts_JetSubCalc->at(ijet);
+	double sdtagmass_JMSup = theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc->at(ijet);
+	double sdtagmass_JMSdn = theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc->at(ijet);
+	double sdtagmass_JMRup = theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc->at(ijet);
+	double sdtagmass_JMRdn = theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc->at(ijet);
+
 	for(int isub = firstsub; isub < firstsub + nsubs; isub++){
-	  tempsubjet.SetPtEtaPhiM(theJetAK8SDSubjetPt_JetSubCalc->at(isub),theJetAK8SDSubjetEta_JetSubCalc->at(isub),theJetAK8SDSubjetPhi_JetSubCalc->at(isub),theJetAK8SDSubjetMass_JetSubCalc->at(isub));
-	  sumsubjets += tempsubjet;
 	  if(theJetAK8SDSubjetCSV_JetSubCalc->at(isub) > maxCSVsubjet) maxCSVsubjet = theJetAK8SDSubjetCSV_JetSubCalc->at(isub);
 	  if(isub != firstsub && theJetAK8SDSubjetPt_JetSubCalc->at(isub) == theJetAK8SDSubjetPt_JetSubCalc->at(firstsub)) cout << "subjets have matching pT, something's wrong" << endl;
 	}
 	maxsubcsv.at(ijet) = maxCSVsubjet;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_bSFup += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_bSFdn += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_lSFup += 1;
-	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_lSFdn += 1;
+
+	if(nsubs < 2) continue;
+	
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) NJetsHtagged += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_bSFup += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_bSFdn += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_lSFup += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) > 0 && sdtagmass > 60 && sdtagmass < 160) nHtags_lSFdn += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMSup > 60 && sdtagmass_JMSup < 160) nHtags_JMSup += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMSdn > 60 && sdtagmass_JMSdn < 160) nHtags_JMSdn += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMRup > 60 && sdtagmass_JMRup < 160) nHtags_JMRup += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sdtagmass_JMRdn > 60 && sdtagmass_JMRdn < 160) nHtags_JMRdn += 1;
       }
-      NJetsHtagged_shifts.push_back(NJetsHtagged_bSFup);
-      NJetsHtagged_shifts.push_back(NJetsHtagged_bSFdn);
-      NJetsHtagged_shifts.push_back(NJetsHtagged_lSFup);
-      NJetsHtagged_shifts.push_back(NJetsHtagged_lSFdn);
+      NJetsHtagged_shifts.push_back(nHtags_bSFup);
+      NJetsHtagged_shifts.push_back(nHtags_bSFdn);
+      NJetsHtagged_shifts.push_back(nHtags_lSFup);
+      NJetsHtagged_shifts.push_back(nHtags_lSFdn);
+      NJetsHtagged_shifts.push_back(nHtags_JMSup);
+      NJetsHtagged_shifts.push_back(nHtags_JMSdn);
+      NJetsHtagged_shifts.push_back(nHtags_JMRup);
+      NJetsHtagged_shifts.push_back(nHtags_JMRdn);
 
       // ----------------------------------------------------------------------------
       // Skip failing events
@@ -1233,6 +1303,15 @@ void step1::Loop()
       theJetAK8Mass_JetSubCalc_PtOrdered.clear();
       theJetAK8PrunedMass_JetSubCalc_PtOrdered.clear();
       theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.clear();
+      theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.clear();
+      theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.clear();
+      theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.clear();
+      theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.clear();
+      theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered.clear();
+      theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.clear();
+      theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.clear();
+      theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.clear();
+      theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.clear();
       theJetAK8SoftDropMass_JetSubCalc_PtOrdered.clear();
       theJetAK8MaxSubCSV_JetSubCalc_PtOrdered.clear();
       theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.clear();
@@ -1246,7 +1325,16 @@ void step1::Loop()
       	theJetAK8Mass_JetSubCalc_PtOrdered.push_back(theJetAK8Mass_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8PrunedMass_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8SoftDropMass_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8MaxSubCSV_JetSubCalc_PtOrdered.push_back(maxsubcsv.at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau1_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau2_JetSubCalc->at(jetak8ptindpair[ijet].second));
@@ -1561,6 +1649,8 @@ void step1::Loop()
       deltaRlepWjet = -99;     deltaPhilepWjet = -99;	  
       deltaRlepTjet = -99;     deltaPhilepTjet = -99;	  
 
+      TauPtWeightUp = 1.0;
+      TauPtWeightDown = 1.0;
       NJetsWtagged_0p6_shifts.clear();
       NJetsTtagged_0p81_shifts.clear();
       theJetAK8Wmatch_JetSubCalc_PtOrdered.clear();
@@ -1619,6 +1709,10 @@ void step1::Loop()
 	float tau21 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(ijet);
 	float tau32 = theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet);
 	float mass = theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.at(ijet);
+	float mass_JMSup = theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.at(ijet);
+	float mass_JMSdn = theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.at(ijet);
+	float mass_JMRup = theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.at(ijet);
+	float mass_JMRdn = theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.at(ijet);
 	float massSD = theJetAK8SoftDropMass_JetSubCalc_PtOrdered.at(ijet);
 
 	// ------------------------------------------------------------------------------------------------------------------
@@ -1697,16 +1791,34 @@ void step1::Loop()
 
 	  // Set the initial tagged/untagged state
 	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200;
+	  bool isWtagged_JMSup = (mass_JMSup > 65) && (mass_JMSup < 105) && (tau21 < 0.6);
+	  bool isWtagged_JMSdn = (mass_JMSdn > 65) && (mass_JMSdn < 105) && (tau21 < 0.6);
+	  bool isWtagged_JMRup = (mass_JMRup > 65) && (mass_JMRup < 105) && (tau21 < 0.6);
+	  bool isWtagged_JMRdn = (mass_JMRdn > 65) && (mass_JMRdn < 105) && (tau21 < 0.6);
  
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
 	  int tag_tau0p6 = applySF(isWtagged,tau0p6SF,tau0p6Eff);
-	  int tag_tau0p6up = applySF(isWtagged,tau0p6SFup,tau0p6Eff);
+	  int tag_tau0p6_JMSup = applySF(isWtagged_JMSup,tau0p6SF,tau0p6Eff);
+	  int tag_tau0p6_JMSdn = applySF(isWtagged_JMSdn,tau0p6SF,tau0p6Eff);
+	  int tag_tau0p6_JMRup = applySF(isWtagged_JMRup,tau0p6SF,tau0p6Eff);
+	  int tag_tau0p6_JMRdn = applySF(isWtagged_JMRdn,tau0p6SF,tau0p6Eff);
+ 	  int tag_tau0p6up = applySF(isWtagged,tau0p6SFup,tau0p6Eff);
 	  int tag_tau0p6dn = applySF(isWtagged,tau0p6SFdn,tau0p6Eff);
 	  
 	  // Now increase the tag count in the right variable	  
 	  NJetsWtagged_0p6 += tag_tau0p6;
 	  NJetsWtagged_0p6_shifts[0] += tag_tau0p6up;
 	  NJetsWtagged_0p6_shifts[1] += tag_tau0p6dn;
+	  NJetsWtagged_0p6_shifts[2] += tag_tau0p6_JMSup;
+	  NJetsWtagged_0p6_shifts[3] += tag_tau0p6_JMSdn;
+	  NJetsWtagged_0p6_shifts[4] += tag_tau0p6_JMRup;
+	  NJetsWtagged_0p6_shifts[5] += tag_tau0p6_JMRdn;
+
+	  // Extra uncertainty for pt extrapolation
+	  if(tag_tau0p6 == 1){
+	    TauPtWeightUp *= 1 + 0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
+	    TauPtWeightDown *= 1 - 0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
+	  }
 
 	  // ------------------------------------------------------------------------------------------------------------------
 	  // Variables for W tagged jets
