@@ -372,6 +372,7 @@ void step1::Loop()
    outputTree->Branch("topPtWeight",&topPtWeight,"topPtWeight/F");
    outputTree->Branch("topPtWeightPast400",&topPtWeightPast400,"topPtWeightPast400/F");
    outputTree->Branch("topPtWeightHighPt",&topPtWeightHighPt,"topPtWeightHighPt/F");
+   outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");
    outputTree->Branch("TauPtWeightUp",&TauPtWeightUp,"TauPtWeightUp/F");
    outputTree->Branch("TauPtWeightDown",&TauPtWeightDown,"TauPtWeightDown/F");
    outputTree->Branch("deltaRlepJetInMinMljet",&deltaRlepJetInMinMljet,"deltaRlepJetInMinMljet/F");
@@ -1419,6 +1420,7 @@ void step1::Loop()
       topPtWeight = 1.0;
       topPtWeightPast400 = 1.0;
       topPtWeightHighPt = 1.0;
+      topPtWeight13TeV = 1.0;
 
       for(unsigned int ijet=0; ijet < topPt_TTbarMassCalc->size(); ijet++){
 	if(genTopPt < 0 && topID_TTbarMassCalc->at(ijet) == 6) genTopPt = topPt_TTbarMassCalc->at(ijet);
@@ -1442,6 +1444,11 @@ void step1::Loop()
 	float SFtopHighPt = 0.98  - 0.00026*genTopPt;  // 0.98 +- 0.24, 0.0026 +- 0.00039
 	float SFantitopHighPt = 0.98  - 0.00026*genAntiTopPt;
 	topPtWeightHighPt = TMath::Sqrt(SFtopHighPt*SFantitopHighPt);
+
+	// Updated info from the TWiki CMS/TopSystematics#pt_top_Reweighting, NOTE goes to at least pT = 750
+        float SFtop13TeV = TMath::Exp(0.0615-0.0005*genTopPt);
+        float SFantitop13TeV = TMath::Exp(0.0615-0.0005*genAntiTopPt);
+        topPtWeight13TeV = TMath::Sqrt(SFtop13TeV*SFantitop13TeV);
       }
       
       // ----------------------------------------------------------------------------
