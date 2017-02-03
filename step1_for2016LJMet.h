@@ -27,6 +27,9 @@ public :
    Int_t           fCurrent; //!current Tree number in a TChain
 
    Bool_t          isSig;
+   Bool_t          isTpTp;
+   Bool_t          isBpBp;
+   Bool_t          isXX;
    Bool_t          isTOP;
    Bool_t          isMadgraphBkg;
    Bool_t          isMC;
@@ -189,12 +192,14 @@ public :
    vector<double>  theJetAK8MatchedPt_JetSubCalc_PtOrdered;
 
    Int_t           NJetsWtagged_0p6;
+   Int_t           NJetsWtagged_0p6_notTtagged;
    Float_t         WJetLeadPt;
    Float_t         deltaRtopWjet;
    Float_t         deltaPhitopWjet;
    Float_t         deltaRlepWjet;
    Float_t         deltaPhilepWjet;
    vector<int>     NJetsWtagged_0p6_shifts;
+   vector<int>     NJetsWtagged_0p6_notTtagged_shifts;
    vector<double>  WJetLeadPt_shifts;
    vector<double>  deltaRtopWjet_shifts;  
    vector<double>  deltaPhitopWjet_shifts; 
@@ -920,8 +925,12 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
 
-  isSig  = inputFileName.Contains("prime");
+  isSig  = (inputFileName.Contains("prime") || inputFileName.Contains("X53"));
   if(isSig){
+    if(inputFileName.Contains("Tprime")) isTpTp = true;
+    else if(inputFileName.Contains("Bprime")) isBpBp = true;
+    else if(inputFileName.Contains("X53")) isXX = true;
+
     if(inputFileName.Contains("_M-700")) SigMass = 0;
     else if(inputFileName.Contains("_M-800")) SigMass = 1;
     else if(inputFileName.Contains("_M-900")) SigMass = 2;
@@ -935,7 +944,7 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
     else if(inputFileName.Contains("_M-1700")) SigMass = 10;
     else if(inputFileName.Contains("_M-1800")) SigMass = 11;
     else SigMass = -1;
-  }
+  }  
   isMadgraphBkg = inputFileName.Contains("WJetsToLNu_HT") || inputFileName.Contains("QCD");
   isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_") || inputFileName.Contains("TT_Tune"));
   isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt"));

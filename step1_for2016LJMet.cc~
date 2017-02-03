@@ -190,16 +190,6 @@ void step1::Loop()
    inputTree->SetBranchStatus("theJetAK8NjettinessTau3_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedMass_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SoftDropMass_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SoftDropMass_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8PrunedTau21Tag_JetSubCalc",1);
 
@@ -246,13 +236,9 @@ void step1::Loop()
    outputTree->Branch("isElectron",&isElectron,"isElectron/I");
    outputTree->Branch("isMuon",&isMuon,"isMuon/I");
    outputTree->Branch("MCPastTrigger",&MCPastTrigger,"MCPastTrigger/I");
-   outputTree->Branch("MCPastTriggerOR",&MCPastTriggerOR,"MCPastTriggerOR/I");
-   outputTree->Branch("MCPastTriggerLepTight",&MCPastTriggerLepTight,"MCPastTriggerLepTight/I");
-   outputTree->Branch("MCPastTriggerHTTight",&MCPastTriggerHTTight,"MCPastTriggerHTTight/I");
+   outputTree->Branch("MCPastTriggerAlt",&MCPastTriggerAlt,"MCPastTriggerAlt/I");
    outputTree->Branch("DataPastTrigger",&DataPastTrigger,"DataPastTrigger/I");
-   outputTree->Branch("DataPastTriggerOR",&DataPastTriggerOR,"DataPastTriggerOR/I");
-   outputTree->Branch("DataPastTriggerLepTight",&DataPastTriggerLepTight,"DataPastTriggerLepTight/I");
-   outputTree->Branch("DataPastTriggerHTTight",&DataPastTriggerHTTight,"DataPastTriggerHTTight/I");
+   outputTree->Branch("DataPastTriggerAlt",&DataPastTriggerAlt,"DataPastTriggerAlt/I");
    outputTree->Branch("isTHBW_TpTpCalc",&isTHBW_TpTpCalc,"isTHBW_TpTpCalc/O");
    outputTree->Branch("isTHTH_TpTpCalc",&isTHTH_TpTpCalc,"isTHTH_TpTpCalc/O");
    outputTree->Branch("isBWBW_TpTpCalc",&isBWBW_TpTpCalc,"isBWBW_TpTpCalc/O");
@@ -274,9 +260,6 @@ void step1::Loop()
    outputTree->Branch("JetSFdn_pTNbwflat",&JetSFdn_pTNbwflat,"JetSFdn_pTNbwflat/F");
    outputTree->Branch("JetSFupwide_pTNbwflat",&JetSFupwide_pTNbwflat,"JetSFupwide_pTNbwflat/F");
    outputTree->Branch("JetSFdnwide_pTNbwflat",&JetSFdnwide_pTNbwflat,"JetSFdnwide_pTNbwflat/F");
-   outputTree->Branch("JetSF_80X",&JetSF_80X,"JetSF_80X/F");
-   outputTree->Branch("JetSFup_80X",&JetSFup_80X,"JetSFup_80X/F");
-   outputTree->Branch("JetSFdn_80X",&JetSFdn_80X,"JetSFdn_80X/F");
    outputTree->Branch("pileupWeight",&pileupWeight,"pileupWeight/F");
    outputTree->Branch("pileupWeightUp",&pileupWeightUp,"pileupWeightUp/F");
    outputTree->Branch("pileupWeightDown",&pileupWeightDown,"pileupWeightDown/F");
@@ -321,15 +304,6 @@ void step1::Loop()
    outputTree->Branch("theJetAK8Energy_JetSubCalc_PtOrdered",&theJetAK8Energy_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8PrunedMass_JetSubCalc_PtOrdered",&theJetAK8PrunedMass_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered",&theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered",&theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8SoftDropMass_JetSubCalc_PtOrdered",&theJetAK8SoftDropMass_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8MaxSubCSV_JetSubCalc_PtOrdered",&theJetAK8MaxSubCSV_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau1_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau1_JetSubCalc_PtOrdered);
@@ -354,13 +328,10 @@ void step1::Loop()
    outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
    outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
    outputTree->Branch("NJetsAK8_JetSubCalc",&NJetsAK8_JetSubCalc,"NJetsAK8_JetSubCalc/I");
-   outputTree->Branch("NJetsCSV_JetSubCalc",&NJetsCSV_JetSubCalc,"NJetsCSV_JetSubCalc/I");
    outputTree->Branch("NJetsCSVwithSF_JetSubCalc",&NJetsCSVwithSF_JetSubCalc,"NJetsCSVwithSF_JetSubCalc/I");
    outputTree->Branch("NJetsCSVwithSF_JetSubCalc_shifts",&NJetsCSVwithSF_JetSubCalc_shifts);
-   outputTree->Branch("NJetsH1btagged",&NJetsH1btagged,"NJetsH1btagged/I");
-   outputTree->Branch("NJetsH1btagged_shifts",&NJetsH1btagged_shifts);
-   outputTree->Branch("NJetsH2btagged",&NJetsH2btagged,"NJetsH2btagged/I");
-   outputTree->Branch("NJetsH2btagged_shifts",&NJetsH2btagged_shifts);
+   outputTree->Branch("NJetsHtagged",&NJetsHtagged,"NJetsHtagged/I");
+   outputTree->Branch("NJetsHtagged_shifts",&NJetsHtagged_shifts);
    outputTree->Branch("topPt",&topPt,"topPt/F");
    outputTree->Branch("topPtGen",&topPtGen,"topPtGen/F");
    outputTree->Branch("topMass",&topMass,"topMass/F");
@@ -372,9 +343,6 @@ void step1::Loop()
    outputTree->Branch("topPtWeight",&topPtWeight,"topPtWeight/F");
    outputTree->Branch("topPtWeightPast400",&topPtWeightPast400,"topPtWeightPast400/F");
    outputTree->Branch("topPtWeightHighPt",&topPtWeightHighPt,"topPtWeightHighPt/F");
-   outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");
-   outputTree->Branch("TauPtWeightUp",&TauPtWeightUp,"TauPtWeightUp/F");
-   outputTree->Branch("TauPtWeightDown",&TauPtWeightDown,"TauPtWeightDown/F");
    outputTree->Branch("deltaRlepJetInMinMljet",&deltaRlepJetInMinMljet,"deltaRlepJetInMinMljet/F");
    outputTree->Branch("deltaRlepbJetInMinMlb",&deltaRlepbJetInMinMlb,"deltaRlepbJetInMinMlb/F");
    outputTree->Branch("deltaRlepbJetInMinMlb_shifts",&deltaRlepbJetInMinMlb_shifts);
@@ -395,8 +363,6 @@ void step1::Loop()
    outputTree->Branch("deltaPhilepTjet_shifts",&deltaPhilepTjet_shifts);
    outputTree->Branch("NJetsWtagged_0p6",&NJetsWtagged_0p6,"NJetsWtagged_0p6/I");
    outputTree->Branch("NJetsWtagged_0p6_shifts",&NJetsWtagged_0p6_shifts);
-   outputTree->Branch("NJetsWtagged_0p6_notTtagged",&NJetsWtagged_0p6_notTtagged,"NJetsWtagged_0p6_notTtagged/I");
-   outputTree->Branch("NJetsWtagged_0p6_notTtagged_shifts",&NJetsWtagged_0p6_notTtagged_shifts);
    outputTree->Branch("NJetsTtagged_0p81",&NJetsTtagged_0p81,"NJetsTtagged_0p81/I");
    outputTree->Branch("NJetsTtagged_0p81_shifts",&NJetsTtagged_0p81_shifts);
    outputTree->Branch("minDR_leadAK8otherAK8",&minDR_leadAK8otherAK8,"minDR_leadAK8otherAK8/F");
@@ -463,96 +429,83 @@ void step1::Loop()
    TLorentzVector lepton_lv;
    TLorentzVector ak8_lv;
    
-   // Muon tracking efficiencies
+   // Muon Trigger & tracking efficiencies
+   float avePtPOG[4][6] = {
+     {35.55,44.32,53.90,73.03,145.96,254.04},
+     {35.56,44.41,53.84,72.79,144.55,254.16},
+     {35.36,44.38,53.83,71.70,144.44,230.07},
+     {35.69,44.31,53.95,73.08,145.84,270.32},
+   };
+   float mueffs[4][6] = {
+     {0.906,0.926,0.930,0.929,0.926,0.922},
+     {0.904,0.928,0.932,0.931,0.912,0.889},
+     {0.859,0.884,0.889,0.888,0.874,0.851},
+     {0.786,0.817,0.820,0.823,0.774,0.675}
+   };
    float tracksf[10] = {0.9824, 0.9918, 0.9959, 0.9934, 0.9915, 0.9947, 0.9967, 0.9949, 0.9912, 0.9768};
+
+   // B tagging efficiencies. This will not be needed after 8/1/16 LJMet
+   std::vector<float> ptRangeSF, ptRangeEff;
+   float SFerr[7]  = {0.011629186570644379, 0.011501740664243698, 0.01121238712221384, 0.016118986532092094, 0.016830746084451675, 0.032492130994796753, 0.036446873098611832};
+   float ptmin16[7] = {30, 50, 70, 100, 140, 200, 300};
+   for (int i=0;i<7;++i) ptRangeSF.push_back(ptmin16[i]);
+   float ptminEff[19] = {30, 50, 70, 100, 140, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1400, 1600, 1800};
+   for (int i=0;i<19;++i) ptRangeEff.push_back(ptminEff[i]);
+   float BtagEff[19] = {0.598502,0.650253,0.675872,0.684356,0.681335,0.647372,0.607565,0.563892,0.536284,0.526137,0.511053,0.490886,0.482464,0.461109,0.447184,0.452516,0.455189,0.399306,0.367347};
+   float MistagEff[19] = {0.014675,0.012310,0.012179,0.012088,0.013761,0.015344,0.021110,0.023148,0.023755,0.028529,0.030575,0.030955,0.034016,0.037446,0.034907,0.043372,0.052239,0.049661,0.073034};
 
    // W tagging efficiencies. Assumes each signal mass uses the same pT bins but has unique values.
    std::vector<float> ptRangeTpTp, ptRangeTTbar;
-   float ptminTTbar[11] = {200,250,300,350,400,450,500,550,600,700,800};
-   for (int i=0;i<11;++i) ptRangeTTbar.push_back(ptminTTbar[i]);
-   float ptminTpTp[11] = {200,250,300,350,400,450,500,550,600,700,800};
-   for (int i=0;i<11;++i) ptRangeTpTp.push_back(ptminTpTp[i]);
+   float ptminTTbar[14] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<14;++i) ptRangeTTbar.push_back(ptminTTbar[i]);
+   float ptminTpTp[14] = {200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<14;++i) ptRangeTpTp.push_back(ptminTpTp[i]);
 
-   std::vector<std::vector<float>> SignalEff;
-   if(isTpTp){
-     SignalEff = {//TpTp
-       {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0},//700
-       {0.542155115821,0.575132860149,0.58091518866,0.588012400965,0.595087182776,0.592679055,0.606709521896,0.602146478266,0.607605657661,0.611871419478,0.589529028436},//800
-       {0.534155519543,0.562368452405,0.563465250965,0.564928335386,0.570521050069,0.578527298279,0.58054138368,0.586554895418,0.591619082147,0.587640213859,0.587026556378},//900
-       {0.531189279732,0.553182041274,0.542545393621,0.546336861964,0.55737230824,0.563210567446,0.570254000881,0.567822899041,0.572519083969,0.589643341578,0.574335266924},//1000
-       {0.526181982204,0.547823872319,0.534071901287,0.534315081121,0.54266543267,0.552942637199,0.556231342243,0.562947112928,0.568080496646,0.569671619428,0.567609469935},//1100
-       {0.530513892304,0.547829864011,0.526266628927,0.523286958783,0.529797941094,0.539789712401,0.546641432842,0.546573042284,0.552191578198,0.551722304912,0.558194256151},//1200
-       {0.534977711738,0.543346978478,0.525411905395,0.515838861993,0.518266007613,0.527089249773,0.53649057147,0.541357913127,0.540769663712,0.547631392882,0.548374166434},//1300
-       {0.541429874412,0.547898452476,0.523515927595,0.513111857831,0.509468247896,0.521226201611,0.52366801741,0.533376499245,0.536777866798,0.539495148965,0.538332745858},//1400
-       {0.54,0.555857705755,0.533621960206,0.507559308404,0.502171081198,0.509037056982,0.516793769268,0.521417445483,0.527783996005,0.53325093208,0.534566198493},//1500
-       {0.555072326747,0.559549251991,0.531206804891,0.513979496738,0.500937851694,0.503579861376,0.505009370045,0.517146056407,0.518947294001,0.522793366344,0.527386071708},//1600
-       {0.552914544426,0.566804724651,0.535233927537,0.516092666704,0.510090081023,0.50606884058,0.499600790016,0.506586540375,0.513597634517,0.518201416692,0.518731146604},//1700
-       {0.557304785894,0.574445000835,0.548293442855,0.521840347975,0.505016722408,0.493875141437,0.498675288518,0.503879892038,0.505652397328,0.509588061125,0.514533401326},//1800
-     };
-   }else if(isBpBp){
-     SignalEff = {//BpBp
-       {0.571316812194,0.619171502902,0.630177262656,0.627737226277,0.626867694393,0.618013835791,0.617155612245,0.608659906824,0.602723551637,0.581827568405,0.513856185474},//700
-       {0.56095311299,0.593338687369,0.600969270688,0.612646526256,0.610678186233,0.604357469948,0.603506499514,0.605046246775,0.60640974039,0.594612794613,0.560510732791},//800
-       {0.548879276445,0.581034389678,0.584898428517,0.586931469903,0.589491369265,0.59254437494,0.588772123894,0.592661357307,0.592802688153,0.59106195835,0.561016663861},//900
-       {0.547583223622,0.57284685249,0.565508265001,0.56937906299,0.576081139624,0.576754260959,0.579974164486,0.577656675749,0.584525039421,0.585134161714,0.573134939595},//1000
-       {0.548974943052,0.568378818275,0.554797677205,0.551012493421,0.561901412261,0.571771483437,0.572043275141,0.569514474102,0.570573119809,0.570439367311,0.567815446527},//1100
-       {0.55310880829,0.572242739251,0.554384809571,0.541857309646,0.544279078025,0.554630501294,0.558544063629,0.555428379061,0.564449833532,0.562727458002,0.554459845157},//1200
-       {0.56469176818,0.57223482865,0.548051014909,0.534453522429,0.537845303867,0.545478340531,0.547438298991,0.553319366693,0.548403882718,0.552726120034,0.550669982042},//1300
-       {0.568780282284,0.573462226048,0.550106168108,0.535709634003,0.529150011313,0.532763829566,0.536680189317,0.544223052917,0.543148628234,0.545385605295,0.54225539007},//1400
-       {0.579244292837,0.588145250446,0.560811257184,0.536458050133,0.529834280081,0.527700771954,0.531121154456,0.530227290479,0.535775453868,0.540290126345,0.535991338731},//1500
-       {0.580073671286,0.594465965689,0.568110373734,0.537333522244,0.519657808518,0.51708428246,0.526542537387,0.52463645348,0.523932398819,0.529809574657,0.531768715457},//1600
-       {0.580860776003,0.610442607513,0.57023916415,0.542696862664,0.528352424916,0.520626684979,0.510434546933,0.515005650663,0.52263745963,0.528273592569,0.525057904901},//1700
-       {0.574163568773,0.603955619875,0.580538497874,0.544635740475,0.528828473864,0.514449860724,0.513044812769,0.511588627193,0.518700025793,0.516953639579,0.518698466277},//1800
-     };
-   }else if(isXX){
-     SignalEff = {//X53X53
-       {0.566925893031,0.62161641629,0.636941836178,0.650958411183,0.667353274822,0.678406537283,0.673695578038,0.680802103879,0.679591117378,0.668444309005,0.599083438685},
-       {0.556511089944,0.605295894793,0.61837536724,0.636037070102,0.648640452845,0.650873774001,0.672515347602,0.67375,0.6882467475,0.684533057138,0.650487845213},
-       {0.553287435456,0.586659453866,0.593620001254,0.613787074351,0.62753902074,0.64008952301,0.656196654148,0.662242523485,0.674528152762,0.684610075914,0.6714004914},
-       {0.549337325525,0.576449316307,0.581686793268,0.598489343252,0.60872148289,0.625341698992,0.636303111004,0.645827296436,0.660045875028,0.67767976032,0.673147561748},
-       {0.561883067578,0.581489701089,0.576142490191,0.578519696167,0.594028654443,0.608761914602,0.620171857604,0.634996067121,0.646388319672,0.660065578028,0.672348649353},
-       {0.57100230571,0.593421732392,0.570766821075,0.569674380977,0.58276797829,0.598245991607,0.612715779926,0.622911101447,0.630220803405,0.645870517605,0.662805826167},
-       {0.573128288142,0.597828356651,0.576185834958,0.565503219248,0.573957093595,0.585485320117,0.599905790915,0.612320053565,0.624193950622,0.635501989235,0.65247853407},
-       {0.58307603242,0.600175691786,0.577511869005,0.563568052357,0.566398882291,0.575695291926,0.593158367676,0.608965754066,0.615377984656,0.627299437915,0.645537430388},
-       {0.600553505535,0.612926972909,0.581568040525,0.570012802883,0.560987493909,0.569187695179,0.576118785958,0.594428895109,0.603938465798,0.61662817552,0.634043796568},
-       {0.597950653903,0.622669198895,0.591802168022,0.578664029884,0.565150382963,0.562586983217,0.579468453546,0.579576783988,0.600145653487,0.611545682103,0.628881540129},
-       {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0},//1700
-       {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0},//1800
-     };
-   }
-   float TTbarEff[11] = {0.681206254288,0.735941209916,0.707103097861,0.677917682843,0.658083687932,0.647541816212,0.643957428932,0.638267559481,0.623471882641,0.600233100233,0.562602515036};
-   float STEff[11] = {0.714838184078,0.78439868981,0.765502997656,0.743723066601,0.730054061917,0.718778986424,0.712329743992,0.712565925247,0.706687402799,0.705987889661,0.690933538225};
-   float WVEff[11] = {0.721890942821,0.790270329132,0.764814186734,0.727797290517,0.702466303413,0.665134285023,0.658878504673,0.627565982405,0.63355635615,0.597587719298,0.579212916246};
+   float SignalEff[11][14] = {
+     {0.548356, 0.582139, 0.583056, 0.589624, 0.593879, 0.596037, 0.606139, 0.603989, 0.604075, 0.612769, 0.598276, 0.563951, 0.562433, 0.481481},
+     {0.537263, 0.566472, 0.563321, 0.566097, 0.569125, 0.578216, 0.579019, 0.585555, 0.589941, 0.589891, 0.590064, 0.591820, 0.566303, 0.476440},
+     {0.538521, 0.557660, 0.543946, 0.545865, 0.558151, 0.563405, 0.572813, 0.570846, 0.573461, 0.586819, 0.578804, 0.572940, 0.561443, 0.555556},
+     {0.530602, 0.550354, 0.538940, 0.536638, 0.544389, 0.550410, 0.554327, 0.562982, 0.568316, 0.567526, 0.576123, 0.575019, 0.560201, 0.550186},
+     {0.533944, 0.550041, 0.530723, 0.522086, 0.528805, 0.539058, 0.545445, 0.549327, 0.552455, 0.554668, 0.559353, 0.558860, 0.553680, 0.531915},
+     {0.538718, 0.549315, 0.523989, 0.518197, 0.516679, 0.527819, 0.534820, 0.540149, 0.540099, 0.549270, 0.550459, 0.557293, 0.545746, 0.559468},
+     {0.542657, 0.554109, 0.528772, 0.512938, 0.509910, 0.519070, 0.522395, 0.532678, 0.535456, 0.538611, 0.540082, 0.546394, 0.540544, 0.539807},
+     {0.539844, 0.566326, 0.531928, 0.506292, 0.502152, 0.510498, 0.513585, 0.520557, 0.527288, 0.534014, 0.538507, 0.537015, 0.535885, 0.540658},
+     {0.548628, 0.559869, 0.551592, 0.510941, 0.501727, 0.506774, 0.502805, 0.513068, 0.519535, 0.520095, 0.519365, 0.519234, 0.537919, 0.519135},
+     {0.549918, 0.577604, 0.540031, 0.518584, 0.507735, 0.504109, 0.500252, 0.506397, 0.513234, 0.518664, 0.521474, 0.520294, 0.518832, 0.532468},
+     {0.554463, 0.581864, 0.553090, 0.522106, 0.504654, 0.496037, 0.501408, 0.500636, 0.504387, 0.509833, 0.515884, 0.510956, 0.515713, 0.538008},
+   };
+   float TTbarEff[14] = {0.682439, 0.738105, 0.707007, 0.676506, 0.655480, 0.647157, 0.640495, 0.631280, 0.629425, 0.588845, 0.572383,  0.631179, 0.528302, 0.333333};
+   float STEff[14] = {0.721371, 0.799146, 0.782680, 0.762160, 0.743905, 0.729174, 0.727657, 0.709333, 0.724403, 0.717466, 0.690385,  0.666667, 0.483333, 0.600000};
+   float WVEff[14] = {0.712598, 0.791459, 0.756127, 0.723847, 0.705318, 0.674699, 0.718884, 0.626923, 0.662162, 0.656250, 0.564356,  0.454545, 0.285714, 0.285714};
+   float TTVEff[14] = {0.605128, 0.633895, 0.614585, 0.602014, 0.588748, 0.569500, 0.557702, 0.571873, 0.539608, 0.537893, 0.540462,  0.444444, 0.189189, 0.600000};
 
    // Top tagging efficiencies
    std::vector<float> ptRangeTpTpTop, ptRangeTTbarTop;
-   float ptminTTbarTop[9] = {400,450,500,550,600,700,800,1000,1200};
-   for (int i=0;i<9;++i) ptRangeTTbarTop.push_back(ptminTTbarTop[i]);
-   float ptminTpTpTop[9] = {400,450,500,550,600,700,800,1000,1200};//X53X53
-   for (int i=0;i<9;++i) ptRangeTpTpTop.push_back(ptminTpTpTop[i]);
-   float TTbarEffTop[9] = {0.64208858919,0.821519027925,0.839975416553,0.82829058032,0.803050070173,0.765524749265,0.725845116909,0.692908561801,0.688736374647};
-   float STEffTop[9] = {0.63705887773,0.83559444489,0.856893441192,0.852849740933,0.826657296791,0.787193318253,0.748102815177,0.730245231608,0.719262295082};
-
-   float SignalEffTop[10][9] = {//X53X53
-     {0.589018843405,0.749030140257,0.783639056625,0.799945265463,0.793082826672,0.782485374934,0.761915318111,0.713728549142,0.66},
-     {0.562738731856,0.733780948384,0.760017497813,0.77619841192,0.772791782118,0.765164162493,0.762129122628,0.733503618561,0.697087378641},
-     {0.552508911434,0.701517956312,0.737090883048,0.744680851064,0.751427560766,0.753888452474,0.752504173623,0.73694880892,0.685790884718},
-     {0.527962777119,0.668169331549,0.71597359736,0.728841413311,0.730256452073,0.735716361523,0.734179425977,0.741627595445,0.729747675963},
-     {0.499089776756,0.649914941877,0.685815868263,0.706903008364,0.712857647474,0.713546408549,0.715045165752,0.722279555097,0.720125130344},
-     {0.491063029163,0.633738824564,0.662361276569,0.678767163651,0.68772290589,0.693537401338,0.703355750059,0.711434204041,0.710015582944},
-     {0.477746158224,0.605132578694,0.633594653643,0.658764111705,0.67115790726,0.676241961699,0.688610182602,0.697609264102,0.690987545356},
-     {0.461648280337,0.593832076591,0.621836537132,0.643556135461,0.65182875783,0.660159744409,0.665966188138,0.674362627106,0.685412382101},
-     {0.443819393042,0.578952408312,0.601645377787,0.621383490596,0.63452642535,0.646748362048,0.657257057207,0.668398791541,0.682943750667},
-     {0.434303568492,0.56420027522,0.594215600351,0.602773683505,0.617693430657,0.628969294412,0.643941371723,0.653109176953,0.665804469951},
+   float ptminTTbarTop[10] = {400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<10;++i) ptRangeTTbarTop.push_back(ptminTTbarTop[i]);
+   float ptminTpTpTop[10] = {400, 450, 500, 550, 600, 700, 800, 1000, 1200, 1600};
+   for (int i=0;i<10;++i) ptRangeTpTpTop.push_back(ptminTpTpTop[i]);
+   float TTbarEffTop[10] = {0.656721, 0.842644, 0.864036, 0.851990, 0.824271, 0.782050, 0.738981, 0.699812, 0.676243, 0.646388};
+   float SignalEffTop[11][10] = {
+     {0.611732, 0.780089, 0.804294, 0.810772, 0.799419, 0.780285, 0.757704, 0.712814, 0.647868, 0.658120}, 
+     {0.581438, 0.746973, 0.777896, 0.788666, 0.782500, 0.766847, 0.748906, 0.725802, 0.698985, 0.673077}, 
+     {0.559565, 0.718270, 0.750923, 0.766999, 0.757874, 0.751325, 0.737532, 0.718955, 0.700150, 0.679035}, 
+     {0.541422, 0.681966, 0.728139, 0.738110, 0.738715, 0.726217, 0.711723, 0.707830, 0.692991, 0.666259}, 
+     {0.522404, 0.666741, 0.702028, 0.713631, 0.718917, 0.715071, 0.701261, 0.698686, 0.692463, 0.678025}, 
+     {0.495974, 0.639434, 0.678278, 0.690605, 0.700150, 0.696724, 0.687981, 0.683291, 0.694443, 0.679642}, 
+     {0.491851, 0.625171, 0.657520, 0.672060, 0.678105, 0.680814, 0.674685, 0.671018, 0.672606, 0.687192}, 
+     {0.482352, 0.607627, 0.638979, 0.653509, 0.661607, 0.663634, 0.662143, 0.662867, 0.667102, 0.685247}, 
+     {0.474970, 0.611347, 0.612631, 0.644484, 0.641295, 0.656193, 0.649018, 0.645009, 0.665298, 0.674550}, 
+     {0.472171, 0.591681, 0.617293, 0.622990, 0.628382, 0.632128, 0.637580, 0.638157, 0.650723, 0.662004}, 
+     {0.470206, 0.584249, 0.607135, 0.604068, 0.614005, 0.621413, 0.624816, 0.626804, 0.639740, 0.659275},
    }; 
 
-   // Pileup distributions -- ReReco Data vs Moriond17MC
-   double pileup_central[75] = {3.603e-01, 9.378e-01, 1.201e+00, 9.651e-01, 1.112e+00, 1.162e+00, 7.847e-01, 4.960e-01, 7.422e-01, 8.839e-01, 9.662e-01, 1.071e+00, 1.124e+00, 1.175e+00, 1.203e+00, 1.208e+00, 1.200e+00, 1.182e+00, 1.144e+00, 1.096e+00, 1.065e+00, 1.051e+00, 1.052e+00, 1.051e+00, 1.050e+00, 1.057e+00, 1.072e+00, 1.083e+00, 1.095e+00, 1.108e+00, 1.094e+00, 1.084e+00, 1.042e+00, 9.850e-01, 9.095e-01, 8.196e-01, 7.159e-01, 6.107e-01, 5.032e-01, 4.052e-01, 3.092e-01, 2.285e-01, 1.636e-01, 1.133e-01, 7.738e-02, 5.090e-02, 3.180e-02, 2.013e-02, 1.226e-02, 7.425e-03, 4.389e-03, 2.614e-03, 1.572e-03, 9.679e-04, 7.333e-04, 6.786e-04, 7.342e-04, 9.346e-04, 1.346e-03, 1.888e-03, 3.248e-03, 3.966e-03, 4.872e-03, 5.119e-03, 5.452e-03, 5.338e-03, 5.112e-03, 4.397e-03, 4.023e-03, 3.359e-03, 2.987e-03, 2.770e-03, 2.278e-03, 1.982e-03, 1.765e-03};
+   // Pileup distributions
+   double pileup_central[40] = {7.892e-03, 1.846e-02, 1.858e-02, 2.098e-02, 3.207e-02, 2.484e-02, 2.326e-02, 3.721e-02, 7.012e-02, 1.266e-01, 2.280e-01, 3.998e-01, 5.895e-01, 7.439e-01, 8.700e-01, 8.940e-01, 8.630e-01, 9.238e-01, 8.971e-01, 9.710e-01, 8.868e-01, 8.635e-01, 9.279e-01, 1.027e+00, 1.066e+00, 1.256e+00, 1.250e+00, 1.425e+00, 1.414e+00, 1.557e+00, 1.665e+00, 1.801e+00, 2.588e+00, 3.449e+00, 6.530e+00, 1.510e+01, 4.634e+01, 9.928e+01, 0.000e+00, 0.000e+00};
 
-   double pileup_down[75] = {3.733e-01, 1.197e+00, 1.263e+00, 1.102e+00, 1.240e+00, 1.278e+00, 9.076e-01, 7.680e-01, 1.093e+00, 1.345e+00, 1.489e+00, 1.526e+00, 1.496e+00, 1.500e+00, 1.498e+00, 1.445e+00, 1.367e+00, 1.298e+00, 1.228e+00, 1.165e+00, 1.125e+00, 1.091e+00, 1.065e+00, 1.041e+00, 1.019e+00, 1.005e+00, 9.973e-01, 9.851e-01, 9.722e-01, 9.567e-01, 9.141e-01, 8.732e-01, 8.075e-01, 7.337e-01, 6.501e-01, 5.605e-01, 4.658e-01, 3.750e-01, 2.886e-01, 2.147e-01, 1.498e-01, 1.001e-01, 6.433e-02, 3.962e-02, 2.392e-02, 1.382e-02, 7.544e-03, 4.163e-03, 2.215e-03, 1.187e-03, 6.441e-04, 3.850e-04, 2.739e-04, 2.425e-04, 2.913e-04, 3.993e-04, 5.467e-04, 7.711e-04, 1.143e-03, 1.598e-03, 2.706e-03, 3.234e-03, 3.878e-03, 3.973e-03, 4.121e-03, 3.928e-03, 3.659e-03, 3.059e-03, 2.719e-03, 2.203e-03, 1.901e-03, 1.709e-03, 1.362e-03, 1.147e-03, 9.884e-04};
+   double pileup_down[40] =    {8.176e-03, 2.356e-02, 1.953e-02, 2.397e-02, 3.574e-02, 2.725e-02, 2.694e-02, 5.769e-02, 1.033e-01, 1.926e-01, 3.514e-01, 5.697e-01, 7.846e-01, 9.493e-01, 1.083e+00, 1.068e+00, 9.832e-01, 1.014e+00, 9.614e-01, 1.030e+00, 9.352e-01, 8.958e-01, 9.406e-01, 1.019e+00, 1.037e+00, 1.195e+00, 1.163e+00, 1.296e+00, 1.255e+00, 1.344e+00, 1.391e+00, 1.451e+00, 2.006e+00, 2.568e+00, 4.665e+00, 1.032e+01, 3.013e+01, 6.090e+01, 0.000e+00, 0.000e+00};
 
-   double pileup_up[75] = {3.510e-01, 7.384e-01, 1.136e+00, 8.481e-01, 1.011e+00, 1.047e+00, 7.158e-01, 3.479e-01, 5.006e-01, 6.065e-01, 6.335e-01, 7.320e-01, 8.266e-01, 9.118e-01, 9.603e-01, 9.892e-01, 1.024e+00, 1.052e+00, 1.051e+00, 1.027e+00, 1.005e+00, 9.982e-01, 1.015e+00, 1.038e+00, 1.058e+00, 1.085e+00, 1.121e+00, 1.155e+00, 1.192e+00, 1.232e+00, 1.245e+00, 1.269e+00, 1.260e+00, 1.233e+00, 1.180e+00, 1.103e+00, 1.001e+00, 8.905e-01, 7.691e-01, 6.545e-01, 5.326e-01, 4.236e-01, 3.297e-01, 2.501e-01, 1.888e-01, 1.381e-01, 9.654e-02, 6.875e-02, 4.733e-02, 3.248e-02, 2.175e-02, 1.456e-02, 9.619e-03, 6.146e-03, 4.301e-03, 3.097e-03, 2.253e-03, 1.894e-03, 2.009e-03, 2.389e-03, 3.847e-03, 4.626e-03, 5.722e-03, 6.110e-03, 6.639e-03, 6.646e-03, 6.514e-03, 5.738e-03, 5.381e-03, 4.607e-03, 4.204e-03, 4.003e-03, 3.382e-03, 3.025e-03, 2.770e-03};
-
+   double pileup_up[40] =      {7.690e-03, 1.454e-02, 1.759e-02, 1.842e-02, 2.919e-02, 2.240e-02, 2.122e-02, 2.606e-02, 4.722e-02, 8.679e-02, 1.494e-01, 2.732e-01, 4.337e-01, 5.773e-01, 6.949e-01, 7.319e-01, 7.369e-01, 8.227e-01, 8.247e-01, 9.106e-01, 8.382e-01, 8.210e-01, 8.956e-01, 1.012e+00, 1.071e+00, 1.285e+00, 1.304e+00, 1.519e+00, 1.539e+00, 1.730e+00, 1.896e+00, 2.109e+00, 3.129e+00, 4.317e+00, 8.471e+00, 2.033e+01, 6.483e+01, 1.448e+02, 0.000e+00, 0.000e+00};
 
   // ----------------------------------------------------------------------------
   // RUN THE EVENT LOOP
@@ -610,17 +563,14 @@ void step1::Loop()
       if(elPt_singleLepCalc->size()==0 && muPt_singleLepCalc->size()>0) {isElectron = 0; isMuon = 1;}
       if(isElectron==0 && isMuon==0){std::cout << "got no leptons, something wrong" << std::endl; continue;}
 
-      if(isSM && isElectron == 1) continue;
-      if(isSE && isMuon == 1) continue;
-
       double leppt = 0;
       double lepeta = 0;
       if(isElectron){leppt = elPt_singleLepCalc->at(0); lepeta = elEta_singleLepCalc->at(0);}
       if(isMuon){leppt = muPt_singleLepCalc->at(0); lepeta = muEta_singleLepCalc->at(0);}
 
       // ICHEP dataset: Endcap muons outside 500 GeV had to be rejected
-      //if(isMuon && leppt > 500 && fabs(lepeta) > 1.2) continue;
-      //npass_mu500 += 1.0;
+      if(isMuon && leppt > 500 && fabs(lepeta) > 1.2) continue;
+      npass_mu500 += 1.0;
 
       // ----------------------------------------------------------------------------
       // Pileup weight calculation
@@ -639,6 +589,10 @@ void step1::Loop()
       // Assign Lepton scale factor or efficiency weights, save trigger pass/fail
       // ----------------------------------------------------------------------------
 
+      DataPastTrigger = 0;
+      DataPastTriggerAlt = 0;
+      MCPastTrigger = 0;
+      MCPastTriggerAlt = 0;
       TrigEffAltWeight = 1.0;
       TrigEffWeight = 1.0;
       TrigEffWeightUncert = 1.0;
@@ -647,251 +601,260 @@ void step1::Loop()
       EGammaGsfSF = 1.0;
       MuTrkSF = 1.0;
 
-      DataPastTrigger = 0;
-      DataPastTriggerOR = 0;
-      DataPastTriggerLepTight = 0;
-      DataPastTriggerHTTight = 0;
-      MCPastTrigger = 0;
-      MCPastTriggerOR = 0;
-      MCPastTriggerLepTight = 0;
-      MCPastTriggerHTTight = 0;
-      
       if(isMC){ //MC triggers check
-	if(isElectron){
-	  std::string string_a = "Ele15_IsoVVVL_PFHT400";
-	  std::string string_b = "Ele15_IsoVVVL_PFHT350";
-	  std::string string_ORa = "Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50";
-	  std::string string_ORb = "Ele32_WPTight_Gsf";
-	  std::string string_LEP = "Ele32_eta2p1_WPTight_Gsf";
-	  std::string string_HT = "PFHT600";
-	  for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_LEP) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
-	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
+      	if(isElectron){
+	  if(isSig){
+	    for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_Gsf_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v1" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v2" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v3" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v4" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v5" && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	    }
+	  }else{
+	    MCPastTrigger = 1;
+	    MCPastTriggerAlt = 1;
 	  }
-
-	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/Moriond17/approval/RECO/passingRECO/egammaEffi.txt_egammaPlots.pdf
-	  if(lepeta < -2.45) EGammaGsfSF = 1.318;
-	  else if(lepeta < -2.4) EGammaGsfSF = 1.114;
-	  else if(lepeta < -2.3) EGammaGsfSF = 1.025;
-	  else if(lepeta < -2.2) EGammaGsfSF = 1.014;
-	  else if(lepeta < -2.0) EGammaGsfSF = 1.007;
-	  else if(lepeta < -1.8) EGammaGsfSF = 0.995;
-	  else if(lepeta < -1.65) EGammaGsfSF = 0.995;
-	  else if(lepeta < -1.566) EGammaGsfSF = 0.992;
-	  else if(lepeta < -1.4442) EGammaGsfSF = 0.963;
-	  else if(lepeta < -1.2) EGammaGsfSF = 0.990;
-	  else if(lepeta < -1.0) EGammaGsfSF = 0.986;
-	  else if(lepeta < -0.6) EGammaGsfSF = 0.982;
-	  else if(lepeta < -0.4) EGammaGsfSF = 0.985;
-	  else if(lepeta < -0.2) EGammaGsfSF = 0.982;
-	  else if(lepeta < 0.0) EGammaGsfSF = 0.980;
-	  else if(lepeta < 0.2) EGammaGsfSF = 0.985;
-	  else if(lepeta < 0.4) EGammaGsfSF = 0.989;
-	  else if(lepeta < 0.6) EGammaGsfSF = 0.988;
-	  else if(lepeta < 1.0) EGammaGsfSF = 0.988;
-	  else if(lepeta < 1.2) EGammaGsfSF = 0.988;
-	  else if(lepeta < 1.4442) EGammaGsfSF = 0.988;
-	  else if(lepeta < 1.566) EGammaGsfSF = 0.968;
+	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/ichep2016_80X/resultsGsfID/egammaEffi.txt_egammaPlots.pdf
+	  if(lepeta < -2.4) EGammaGsfSF = 1.170;
+	  else if(lepeta < -2.3) EGammaGsfSF = 1.009;
+	  else if(lepeta < -2.2) EGammaGsfSF = 1.010;
+	  else if(lepeta < -2.0) EGammaGsfSF = 1.005;
+	  else if(lepeta < -1.8) EGammaGsfSF = 0.998;
+	  else if(lepeta < -1.65) EGammaGsfSF = 0.992;
+	  else if(lepeta < -1.566) EGammaGsfSF = 0.986;
+	  else if(lepeta < -1.4442) EGammaGsfSF = 0.962;
+	  else if(lepeta < -1.2) EGammaGsfSF = 0.987;
+	  else if(lepeta < -1.0) EGammaGsfSF = 0.978;
+	  else if(lepeta < -0.6) EGammaGsfSF = 0.969;
+	  else if(lepeta < -0.4) EGammaGsfSF = 0.966;
+	  else if(lepeta < -0.2) EGammaGsfSF = 0.963;
+	  else if(lepeta < 0.0) EGammaGsfSF = 0.960;
+	  else if(lepeta < 0.2) EGammaGsfSF = 0.966;
+	  else if(lepeta < 0.4) EGammaGsfSF = 0.980;
+	  else if(lepeta < 0.6) EGammaGsfSF = 0.977;
+	  else if(lepeta < 1.0) EGammaGsfSF = 0.981;
+	  else if(lepeta < 1.2) EGammaGsfSF = 0.987;
+	  else if(lepeta < 1.4442) EGammaGsfSF = 0.987;
+	  else if(lepeta < 1.566) EGammaGsfSF = 0.971;
 	  else if(lepeta < 1.65) EGammaGsfSF = 0.990;
-	  else if(lepeta < 1.8) EGammaGsfSF = 0.993;
-	  else if(lepeta < 2.0) EGammaGsfSF = 0.992;
-	  else if(lepeta < 2.2) EGammaGsfSF = 0.998;
-	  else if(lepeta < 2.3) EGammaGsfSF = 1.001;
-	  else if(lepeta < 2.4) EGammaGsfSF = 0.990;
-	  else if(lepeta < 2.45) EGammaGsfSF = 0.971;
-	  else EGammaGsfSF = 0.907;
+	  else if(lepeta < 1.8) EGammaGsfSF = 0.996;
+	  else if(lepeta < 2.0) EGammaGsfSF = 0.990;
+	  else if(lepeta < 2.2) EGammaGsfSF = 0.995;
+	  else if(lepeta < 2.3) EGammaGsfSF = 0.993;
+	  else if(lepeta < 2.4) EGammaGsfSF = 0.967;
+	  else EGammaGsfSF = 0.884;
 	  
-	  // Ele15_IsoVVVL_PFHT350 || Ele15_IsoVVVL_PFHT400 || Ele32_WPTight_Gsf -- 80X DATA EFFICIENCIES, Julie - 22Jan17
-	  //RRB2G:
-	  double TrigEffWeightR = 1.0;
-	  double TrigEffWeightH = 1.0;
-	  double TrigEffWeightRUncert = 1.0;
-	  double TrigEffWeightHUncert = 1.0;
-	  if(leppt < 60){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.964; TrigEffWeightRUncert = 0.049;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.966; TrigEffWeightRUncert = 0.057;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.902; TrigEffWeightRUncert = 0.072;}
-	    else {TrigEffWeightR = 0.899; TrigEffWeightRUncert = 0.089;}
-	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.958; TrigEffWeightRUncert = 0.050;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.968; TrigEffWeightRUncert = 0.062;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.869; TrigEffWeightRUncert = 0.078;}
-	    else {TrigEffWeightR = 0.938; TrigEffWeightRUncert = 0.102;}
-	  }else if(leppt < 100){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.968; TrigEffWeightRUncert = 0.033;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.965; TrigEffWeightRUncert = 0.039;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.938; TrigEffWeightRUncert = 0.053;}
-	    else {TrigEffWeightR = 0.929; TrigEffWeightRUncert = 0.065;}
+	  // Ele27_WPTight -- 80X DATA EFFICIENCIES. SHOULD WORK OK FOR Ele32 given offline cut
+	  if(leppt < 40){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.604; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.580;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.433;
+	    else TrigEffWeight = 0.562;
+	  }else if(leppt < 50){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.693; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.678;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.557;
+	    else TrigEffWeight = 0.671;
+	  }else if(leppt < 60){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.723; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.710;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.579;
+	    else TrigEffWeight = 0.798;
+	  }else if(leppt < 90){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.887; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.893;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.750;
+	    else TrigEffWeight = 0.799;
+	  }else if(leppt < 120){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.900; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.901;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.774;
+	    else TrigEffWeight = 0.809;
+	  }else if(leppt < 150){
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.900; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.901;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.774;
+	    else TrigEffWeight = 0.809;
 	  }else if(leppt < 200){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.974; TrigEffWeightRUncert = 0.022;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.973; TrigEffWeightRUncert = 0.028;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.922; TrigEffWeightRUncert = 0.038;}
-	    else {TrigEffWeightR = 0.924; TrigEffWeightRUncert = 0.053;}
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.900; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.901;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.774;
+	    else TrigEffWeight = 0.809;
 	  }else{
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.964; TrigEffWeightRUncert = 0.025;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.969; TrigEffWeightRUncert = 0.034;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.932; TrigEffWeightRUncert = 0.044;}
-	    else {TrigEffWeightR = 0.954; TrigEffWeightRUncert = 0.064;}
+	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.909; // 
+	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.912;
+	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.797;
+	    else TrigEffWeight = 0.816;
 	  }
-	  //PRH:
-	  if(leppt < 60){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.956; TrigEffWeightHUncert = 0.091;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.972; TrigEffWeightHUncert = 0.103;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.888; TrigEffWeightHUncert = 0.131;}
-	    else {TrigEffWeightH = 0.898; TrigEffWeightHUncert = 0.170;}
-	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.090;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.947; TrigEffWeightHUncert = 0.104;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.890; TrigEffWeightHUncert = 0.143;}
-	    else {TrigEffWeightH = 0.836; TrigEffWeightHUncert = 0.167;}
-	  }else if(leppt < 100){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.992; TrigEffWeightHUncert = 0.058;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.972; TrigEffWeightHUncert = 0.067;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.877; TrigEffWeightHUncert = 0.088;}
-	    else {TrigEffWeightH = 0.928; TrigEffWeightHUncert = 0.120;}
-	  }else if(leppt < 200){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.984; TrigEffWeightHUncert = 0.041;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.049;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.944; TrigEffWeightHUncert = 0.073;}
-	    else {TrigEffWeightH = 0.884; TrigEffWeightHUncert = 0.092;}
-	  }else{
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.970; TrigEffWeightHUncert = 0.048;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.983; TrigEffWeightHUncert = 0.070;}
-	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.938; TrigEffWeightHUncert = 0.093;}
-	    else {TrigEffWeightH = 0.847; TrigEffWeightHUncert = 0.147;}
-	  }
+	  TrigEffWeightUncert = TrigEffWeight;
 
-	  TrigEffWeight = (27.957*TrigEffWeightR + 8.857*TrigEffWeightH)/36.814;
-	  TrigEffWeightUncert = sqrt(pow(27.957*TrigEffWeightRUncert,2) + pow(8.857*TrigEffWeightHUncert,2))/36.814;
-
-	  //miniIso < 0.1 scale factors -- Moriond17 -- from Julie - 22Jan17
+	  //miniIso < 0.1 scale factors from SUSYLepSF: http://tomc.web.cern.ch/tomc/tagAndProbe/20160726/output/scaleFactors.root
 	  if(fabs(lepeta) < 0.8){
-	    if(leppt < 30) isoSF = 0.999;
-	    else if(leppt < 40) isoSF = 0.999;
-	    else if(leppt < 50) isoSF = 0.999;
-	    else if(leppt < 60) isoSF = 0.998;
-	    else if(leppt < 100) isoSF = 0.999;
-	    else if(leppt < 200) isoSF = 1.002;
-	    else isoSF = 1.001;
+	    if(leppt < 30) isoSF = 0.991;
+	    else if(leppt < 40) isoSF = 0.993;
+	    else if(leppt < 50) isoSF = 0.996;
+	    else if(leppt < 100) isoSF = 0.996;
+	    else isoSF = 0.996;
 	  }
 	  else if(fabs(lepeta) < 1.4442){
-	    if(leppt < 30) isoSF = 1.005;
-	    else if(leppt < 40) isoSF = 1.000;
-	    else if(leppt < 50) isoSF = 1.000;
-	    else if(leppt < 60) isoSF = 1.000;
-	    else if(leppt < 100) isoSF = 1.000;
-	    else if(leppt < 200) isoSF = 1.002;
-	    else isoSF = 0.999;
+	    if(leppt < 30) isoSF = 0.989;
+	    else if(leppt < 40) isoSF = 0.993;
+	    else if(leppt < 50) isoSF = 0.995;
+	    else if(leppt < 100) isoSF = 0.996;
+	    else isoSF = 0.998;
 	  }
 	  else if(fabs(lepeta) < 1.566){
-	    if(leppt < 30) isoSF = 1.000;
-	    else if(leppt < 40) isoSF = 1.000;
-	    else if(leppt < 50) isoSF = 1.000;
-	    else if(leppt < 60) isoSF = 1.000;
-	    else if(leppt < 100) isoSF = 1.000;
-	    else if(leppt < 200) isoSF = 1.000;
-	    else isoSF = 1.000;
+	    if(leppt < 30) isoSF = 1.007;
+	    else if(leppt < 40) isoSF = 0.998;
+	    else if(leppt < 50) isoSF = 0.995;
+	    else if(leppt < 100) isoSF = 1.004;
+	    else isoSF = 0.988;
 	  }
 	  else if(fabs(lepeta) < 2.0){
-	    if(leppt < 30) isoSF = 0.992;
-	    else if(leppt < 40) isoSF = 0.998;
-	    else if(leppt < 50) isoSF = 0.997;
-	    else if(leppt < 60) isoSF = 0.999;
+	    if(leppt < 30) isoSF = 0.990;
+	    else if(leppt < 40) isoSF = 0.999;
+	    else if(leppt < 50) isoSF = 0.998;
 	    else if(leppt < 100) isoSF = 0.999;
-	    else if(leppt < 200) isoSF = 1.000;
-	    else isoSF = 0.998;
+	    else isoSF = 1.000;
 	  }
 	  else {
 	    if(leppt < 30) isoSF = 0.978;
-	    else if(leppt < 40) isoSF = 0.987;
-	    else if(leppt < 50) isoSF = 0.993;
-	    else if(leppt < 60) isoSF = 0.998;
-	    else if(leppt < 100) isoSF = 1.001;
-	    else if(leppt < 200) isoSF = 1.000;
-	    else isoSF = 0.997;
+	    else if(leppt < 40) isoSF = 0.991;
+	    else if(leppt < 50) isoSF = 0.995;
+	    else if(leppt < 100) isoSF = 0.999;
+	    else isoSF = 1.001;
 	  }
 	  
-	  //MVA-based ID scale factors for 80X-trained MVA -- Moriond17 -- from Julie - 22Jan17
-	  if(fabs(lepeta) < 0.8){
-	    if(leppt < 30) lepIdSF = 0.965;
-	    else if(leppt < 40) lepIdSF = 0.971;
-	    else if(leppt < 50) lepIdSF = 0.973;
-	    else if(leppt < 60) lepIdSF = 0.973;
-	    else if(leppt < 100) lepIdSF = 0.977;
-	    else if(leppt < 200) lepIdSF = 0.985;
-	    else lepIdSF = 0.985;
+	  //MVA-based ID scale factors for 76X-trained MVA (NOT the "new one"): http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/ichep2016_80X//resultsEleID/runBCD/passingMVA80/egammaEffi.txt_egammaPlots.pdf 
+	  if(lepeta < -2.0){
+	    if(leppt < 30) lepIdSF = 0.863;
+	    else if(leppt < 40) lepIdSF = 0.915;
+	    else if(leppt < 50) lepIdSF = 0.930;
+	    else lepIdSF = 0.936;
 	  }
-	  else if(fabs(lepeta) < 1.4442){
-	    if(leppt < 30) lepIdSF = 0.935;
-	    else if(leppt < 40) lepIdSF = 0.947;
-	    else if(leppt < 50) lepIdSF = 0.952;
-	    else if(leppt < 60) lepIdSF = 0.951;
-	    else if(leppt < 100) lepIdSF = 0.956;
-	    else if(leppt < 200) lepIdSF = 0.974;
-	    else lepIdSF = 0.942;
+	  else if(lepeta < -1.566){
+	    if(leppt < 30) lepIdSF = 0.871;
+	    else if(leppt < 40) lepIdSF = 0.916;
+	    else if(leppt < 50) lepIdSF = 0.939;
+	    else lepIdSF = 0.950;
 	  }
-	  else if(fabs(lepeta) < 1.566){
-	    if(leppt < 30) lepIdSF = 1.000;
-	    else if(leppt < 40) lepIdSF = 1.000;
-	    else if(leppt < 50) lepIdSF = 1.000;
-	    else if(leppt < 60) lepIdSF = 1.000;
-	    else if(leppt < 100) lepIdSF = 1.000;
-	    else if(leppt < 200) lepIdSF = 1.000;
-	    else lepIdSF = 1.000;
+	  else if(lepeta < -1.4442){
+	    if(leppt < 30) lepIdSF = 0.891;
+	    else if(leppt < 40) lepIdSF = 0.920;
+	    else if(leppt < 50) lepIdSF = 0.953;
+	    else lepIdSF = 0.965;
 	  }
-	  else if(fabs(lepeta) < 2.0){
-	    if(leppt < 30) lepIdSF = 0.935;
-	    else if(leppt < 40) lepIdSF = 0.947;
+	  else if(lepeta < -0.8){
+	    if(leppt < 30) lepIdSF = 0.923;
+	    else if(leppt < 40) lepIdSF = 0.949;
+	    else if(leppt < 50) lepIdSF = 0.956;
+	    else lepIdSF = 0.957;
+	  }
+	  else if(lepeta < 0.0){
+	    if(leppt < 30) lepIdSF = 0.920;
+	    else if(leppt < 40) lepIdSF = 0.941;
+	    else if(leppt < 50) lepIdSF = 0.951;
+	    else lepIdSF = 0.957;
+	  }
+	  else if(lepeta < 0.8){
+	    if(leppt < 30) lepIdSF = 0.945;
+	    else if(leppt < 40) lepIdSF = 0.961;
 	    else if(leppt < 50) lepIdSF = 0.965;
-	    else if(leppt < 60) lepIdSF = 0.970;
-	    else if(leppt < 100) lepIdSF = 0.971;
-	    else if(leppt < 200) lepIdSF = 0.992;
-	    else lepIdSF = 1.010;
-	  }
-	  else {
-	    if(leppt < 30) lepIdSF = 0.947;
-	    else if(leppt < 40) lepIdSF = 0.963;
-	    else if(leppt < 50) lepIdSF = 0.970;
-	    else if(leppt < 60) lepIdSF = 0.973;
-	    else if(leppt < 100) lepIdSF = 0.978;
-	    else if(leppt < 200) lepIdSF = 1.013;
 	    else lepIdSF = 0.971;
-	  }	  
+	  }
+	  else if(lepeta < 1.4442){
+	    if(leppt < 30) lepIdSF = 0.919;
+	    else if(leppt < 40) lepIdSF = 0.945;
+	    else if(leppt < 50) lepIdSF = 0.954;
+	    else lepIdSF = 0.964;
+	  }
+	  else if(lepeta < 1.566){
+	    if(leppt < 30) lepIdSF = 0.865;
+	    else if(leppt < 40) lepIdSF = 0.918;
+	    else if(leppt < 50) lepIdSF = 0.932;
+	    else lepIdSF = 0.944;
+	  }
+	  else if(lepeta < 2.0){
+	    if(leppt < 30) lepIdSF = 0.866;
+	    else if(leppt < 40) lepIdSF = 0.919;
+	    else if(leppt < 50) lepIdSF = 0.943;
+	    else lepIdSF = 0.958;
+	  }
+	  else{
+	    if(leppt < 30) lepIdSF = 0.892;
+	    else if(leppt < 40) lepIdSF = 0.927;
+	    else if(leppt < 50) lepIdSF = 0.943;
+	    else lepIdSF = 0.954;
+	  }
 	}
-	if(isMuon){
-	  std::string string_a = "Mu15_IsoVVVL_PFHT400";
-	  std::string string_b = "Mu15_IsoVVVL_PFHT350";
-	  std::string string_ORa = "Mu40_eta2p1_PFJet200_PFJet50";
-	  std::string string_ORb = "Mu50";
-	  std::string string_ORc = "TkMu50";
-	  std::string string_LEPa = "IsoMu24";
-	  std::string string_LEPb = "IsoTkMu24";
-	  std::string string_HT = "PFHT600";
-	  for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_singleLepCalc->size(); itrig++){
-	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
-	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
-	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPa) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
-	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
-	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
+      	if(isMuon){
+	  if(isSig){
+	    for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_singleLepCalc->size(); itrig++){
+	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v1" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v1") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v2" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v2") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v3" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v3") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v4" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v4") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v5" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v5") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if((vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v6" || vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v6") && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6" && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerAlt = 1;
+	    }
+	  }else{
+	    MCPastTrigger = 1;
+	    MCPastTriggerAlt = 1;
 	  }
 	  
-	  // Muon tracking SF -- NOT TO BE USED, calculate in case
+	  // IsoMu24 || IsoTkMu24 Eff -- 80X DATA EFFICIENCIES
 	  int ebin = -1;
+	  int pbin = -1;
+	  if(fabs(leptonEta_singleLepCalc) < 0.9) ebin = 0;
+	  else if(fabs(leptonEta_singleLepCalc) < 1.6) ebin = 1;
+	  else if(fabs(leptonEta_singleLepCalc) < 2.1) ebin = 2;
+	  else if(fabs(leptonEta_singleLepCalc) < 2.4) ebin = 3;
+	  else std::cout << "Found a muon out of eta range" << std::endl;
+	  
+	  if(leptonPt_singleLepCalc < 40) pbin = 0;
+	  else if(leptonPt_singleLepCalc < 50) pbin = 1;
+	  else if(leptonPt_singleLepCalc < 60) pbin = 2;
+	  else if(leptonPt_singleLepCalc < 120) pbin = 3;
+	  else if(leptonPt_singleLepCalc < 200) pbin = 4;
+	  else pbin = 5;
+	  
+	  TrigEffWeight = mueffs[ebin][pbin];
+	  
+	  if(fabs(leptonEta_singleLepCalc) > 1.2 && fabs(leptonEta_singleLepCalc) <= 2.1){
+	    if(leptonPt_singleLepCalc < avePtPOG[2][3]) TrigEffWeightUncert = TrigEffWeight;
+	    else if(leptonPt_singleLepCalc < avePtPOG[2][4]){
+	      TrigEffWeightUncert = mueffs[2][3] + (mueffs[2][4]-mueffs[2][3])*(leptonPt_singleLepCalc - avePtPOG[2][3])/(avePtPOG[2][4]-avePtPOG[2][3]);
+	    }
+	    else if(leptonPt_singleLepCalc < avePtPOG[2][5]){
+	      TrigEffWeightUncert = mueffs[2][4] + (mueffs[2][5]-mueffs[2][4])*(leptonPt_singleLepCalc - avePtPOG[2][4])/(avePtPOG[2][5]-avePtPOG[2][4]);
+	    }
+	    else TrigEffWeightUncert = TrigEffWeight;
+	  }
+	  else if(fabs(leptonEta_singleLepCalc) > 2.1 && fabs(leptonEta_singleLepCalc) <= 2.4){
+	    if(leptonPt_singleLepCalc < avePtPOG[3][3]) TrigEffWeightUncert = TrigEffWeight;
+	    else if(leptonPt_singleLepCalc < avePtPOG[3][4]){
+	      TrigEffWeightUncert = mueffs[3][3] + (mueffs[3][4]-mueffs[3][3])*(leptonPt_singleLepCalc - avePtPOG[3][3])/(avePtPOG[3][4]-avePtPOG[3][3]);
+	    }
+	    else if(leptonPt_singleLepCalc < avePtPOG[3][5]){
+	      TrigEffWeightUncert = mueffs[3][4] + (mueffs[3][5]-mueffs[3][4])*(leptonPt_singleLepCalc - avePtPOG[3][4])/(avePtPOG[3][5]-avePtPOG[3][4]);
+	    }
+	    else TrigEffWeightUncert = TrigEffWeight;
+	  }
+	  else TrigEffWeightUncert = TrigEffWeight;
+
+	  // Muon tracking SF
 	  if(leptonEta_singleLepCalc < -2.1) ebin = 0;
 	  else if(leptonEta_singleLepCalc < -1.6) ebin = 1;
 	  else if(leptonEta_singleLepCalc < -1.1) ebin = 2;
@@ -905,107 +868,43 @@ void step1::Loop()
 
 	  MuTrkSF = tracksf[ebin];
 
-	  // Mu15_IsoVVVL_PFHT350 || Mu15_IsoVVVL_PFHT400 || Mu50 || TkMu50 -- 80X DATA EFFICIENCIES, Julie - 22Jan17
-	  //RRB2G:
-	  double TrigEffWeightR = 1.0;
-	  double TrigEffWeightH = 1.0;
-	  double TrigEffWeightRUncert = 1.0;
-	  double TrigEffWeightHUncert = 1.0;
-	  if(leppt < 60){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.963; TrigEffWeightRUncert = 0.038;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.969; TrigEffWeightRUncert = 0.070;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.982; TrigEffWeightRUncert = 0.047;}
-	    else {TrigEffWeightR = 0.954; TrigEffWeightRUncert = 0.104;}
-	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.958; TrigEffWeightRUncert = 0.039;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.973; TrigEffWeightRUncert = 0.076;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.991; TrigEffWeightRUncert = 0.052;}
-	    else {TrigEffWeightR = 0.971; TrigEffWeightRUncert = 0.119;}
-	  }else if(leppt < 100){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.956; TrigEffWeightRUncert = 0.025;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.971; TrigEffWeightRUncert = 0.048;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.983; TrigEffWeightRUncert = 0.034;}
-	    else {TrigEffWeightR = 0.983; TrigEffWeightRUncert = 0.080;}
-	  }else if(leppt < 200){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.960; TrigEffWeightRUncert = 0.019;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.971; TrigEffWeightRUncert = 0.037;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.986; TrigEffWeightRUncert = 0.026;}
-	    else {TrigEffWeightR = 0.958; TrigEffWeightRUncert = 0.068;}
-	  }else{
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.950; TrigEffWeightRUncert = 0.024;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.970; TrigEffWeightRUncert = 0.051;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.985; TrigEffWeightRUncert = 0.041;}
-	    else {TrigEffWeightR = 0.936; TrigEffWeightRUncert = 0.129;}
-	  }
-
-	  //PRH:
-	  if(leppt < 60){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.979; TrigEffWeightHUncert = 0.064;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.993; TrigEffWeightHUncert = 0.119;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.965; TrigEffWeightHUncert = 0.081;}
-	    else {TrigEffWeightH = 0.954; TrigEffWeightHUncert = 0.169;}
-	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.969; TrigEffWeightHUncert = 0.070;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.990; TrigEffWeightHUncert = 0.138;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.973; TrigEffWeightHUncert = 0.086;}
-	    else {TrigEffWeightH = 0.963; TrigEffWeightHUncert = 0.187;}
-	  }else if(leppt < 100){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.958; TrigEffWeightHUncert = 0.043;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.986; TrigEffWeightHUncert = 0.083;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.976; TrigEffWeightHUncert = 0.058;}
-	    else {TrigEffWeightH = 0.981; TrigEffWeightHUncert = 0.134;}
-	  }else if(leppt < 200){
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.965; TrigEffWeightHUncert = 0.032;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.977; TrigEffWeightHUncert = 0.063;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.046;}
-	    else {TrigEffWeightH = 0.986; TrigEffWeightHUncert = 0.118;}
-	  }else{
-	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.963; TrigEffWeightHUncert = 0.045;} // 
-	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.987; TrigEffWeightHUncert = 0.091;}
-	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.966; TrigEffWeightHUncert = 0.073;}
-	    else {TrigEffWeightH = 0.967; TrigEffWeightHUncert = 0.252;}
-	  }
-
-	  TrigEffWeight = (27.957*TrigEffWeightR + 8.857*TrigEffWeightH)/36.814;
-	  TrigEffWeightUncert = sqrt(pow(27.957*TrigEffWeightRUncert,2) + pow(8.857*TrigEffWeightHUncert,2))/36.814;
-	  
-	  //Mini-iso < 0.1 scale factors for ReReco B-H / Spring16MC from Clint's Jan 18th talk: https://indico.cern.ch/event/605620/                                                                                                              
+	  //Mini-iso < 0.2 scale factors for ReReco B-H / Spring16MC from Clint's Dec 4th workshop talk
 	  if(leppt < 40){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.999708;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.999764;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.999537;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.999363;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.996;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.996;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.997;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.998;
 	  }
 	  else if(leppt < 50){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.998914;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.999142;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.999084;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.999475;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.998;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999;
 	  }
 	  else if(leppt < 60){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.999181;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.999393;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.999276;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.999611;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999;
 	  }
 	  else if(leppt < 100){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.999594;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.999992;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.999704;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.99999;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999;
+	    else if(fabs(lepeta) <  2.4) isoSF= 1.000;
 	  }
 	  else{
-	    if(fabs(lepeta) < 0.9) isoSF= 1.00003;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.999797;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.99981;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.999982;
+	    if(fabs(lepeta) < 0.9) isoSF= 1.000;
+	    else if(fabs(lepeta) <  1.2) isoSF= 1.000;
+	    else if(fabs(lepeta) <  2.1) isoSF= 1.000;
+	    else if(fabs(lepeta) <  2.4) isoSF= 1.000;
 	  }
 	  
-	  //Cut-based Tight scale factors for ReReco B-H / Moriond17MC from Clint's Jan 18th talk: https://indico.cern.ch/event/605620/                                                                                                            
+	  //Cut-based Tight scale factors for ReReco B-H / Spring16MC from Clint's Dec 4th workshop talk
 	  if(fabs(lepeta) < 0.9){
-	    if(leppt < 40) lepIdSF = 0.983;
-	    else if(leppt < 50) lepIdSF = 0.971;
-	    else if(leppt < 60) lepIdSF = 0.987;
+	    if(leppt < 40) lepIdSF = 0.953;
+	    else if(leppt < 50) lepIdSF = 0.954;
+	    else if(leppt < 60) lepIdSF = 0.947;
 	    else if(leppt < 100) lepIdSF = 0.932;
 	    else lepIdSF = 0.966;
 	  }
@@ -1029,52 +928,45 @@ void step1::Loop()
 	    else if(leppt < 60) lepIdSF = 0.939;
 	    else if(leppt < 100) lepIdSF = 0.926;
 	    else lepIdSF = 0.944;
-	  }	
+	  }
 	}
-	DataPastTrigger = 1;
-	DataPastTriggerOR = 1;
-	DataPastTriggerLepTight = 1;
-	DataPastTriggerHTTight = 1;
+      	DataPastTrigger = 1;
+      	DataPastTriggerAlt = 1;
       }
       else{ //Data triggers check
 	if(isElectron){
-	  std::string string_a = "Ele15_IsoVVVL_PFHT400";
-	  std::string string_b = "Ele15_IsoVVVL_PFHT350";
-	  std::string string_ORa = "Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50";
-	  std::string string_ORb = "Ele32_WPTight_Gsf";
-	  std::string string_LEP = "Ele32_eta2p1_WPTight_Gsf";
-	  std::string string_HT = "PFHT600";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_singleLepCalc->size(); itrig++){
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerOR = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_LEP) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerLepTight = 1;
-	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerHTTight = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele15_IsoVVVL_PFHT400_v6" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v1" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v2" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v3" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v4" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if(vsSelTriggersEl_singleLepCalc->at(itrig) == "HLT_Ele32_eta2p1_WPTight_Gsf_v5" && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
 	  }
 	}
 	if(isMuon){
-	  std::string string_a = "Mu15_IsoVVVL_PFHT400";
-	  std::string string_b = "Mu15_IsoVVVL_PFHT350";
-	  std::string string_ORa = "Mu40_eta2p1_PFJet200_PFJet50";
-	  std::string string_ORb = "Mu50";
-	  std::string string_ORc = "TkMu50";
-	  std::string string_LEPa = "IsoMu24";
-	  std::string string_LEPb = "IsoTkMu24";
-	  std::string string_HT = "PFHT600";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersMu_singleLepCalc->size(); itrig++){
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0){ DataPastTrigger = 1; DataPastTriggerOR = 1;}
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerOR = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerOR = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_LEPa) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerLepTight = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_LEPb) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerLepTight = 1;
-	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerHTTight = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v1" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v1") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v2" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v2") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v3" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v3") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v4" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v4") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v5" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v5") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoMu24_v6" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_IsoTkMu24_v6") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v1") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v2") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v3") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v4") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v5") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
+	    if((vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6" || vsSelTriggersMu_singleLepCalc->at(itrig) == "HLT_Mu15_IsoVVVL_PFHT400_v6") && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTriggerAlt = 1;
 	  }
 	}
 	MCPastTrigger = 1;
-	MCPastTriggerOR = 1;
-	MCPastTriggerLepTight = 1;
-	MCPastTriggerHTTight = 1;
+	MCPastTriggerAlt = 1;
       }
       
       if(DataPastTrigger) npass_trigger+=1;
@@ -1162,6 +1054,68 @@ void step1::Loop()
 	  }
 
 	  // ----------------------------------------------------------------------------
+	  // B TAGGING fix -- not needed after LJMet from 8/1/16 (efficiency had a typo)
+	  // ----------------------------------------------------------------------------
+	  /*
+	  float bSF = 1.0;
+	  float bSFup = 1.0;
+	  float bSFdn = 1.0;
+	  double bEff = 1.0;
+	  float lSF = 1.0;
+	  float lSFup = 1.0;
+	  float lSFdn = 1.0;
+	  double lEff = 1.0;
+
+	  // Set the initial tagged/untagged state
+	  bool istagged = theJetCSV_JetSubCalc->at(ijet) > 0.800;
+
+	  if(theJetHFlav_JetSubCalc->at(ijet) == 5 || theJetHFlav_JetSubCalc->at(ijet) == 4){	    
+
+	    int binSF = (std::upper_bound(ptRangeSF.begin(), ptRangeSF.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeSF.begin())-1;
+	    float err = SFerr[binSF];
+	    if(theJetHFlav_JetSubCalc->at(ijet) == 4) err *= 2;
+	    bSF = 0.901114+(1.32145e-05*theJetPt_JetSubCalc->at(ijet));	    
+	    bSFup = bSF + err;
+	    bSFdn = bSF - err;
+	  
+	    int bin = (std::upper_bound(ptRangeEff.begin(), ptRangeEff.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeEff.begin())-1;
+	    bEff = BtagEff[bin];
+	    if(theJetHFlav_JetSubCalc->at(ijet) == 4) bEff *= 0.2;
+
+	    int tag = applySF(istagged,bSF,bEff);
+	    int tag_up = applySF(istagged,bSFup,bEff);
+	    int tag_dn = applySF(istagged,bSFdn,bEff);
+
+	    theJetBTag_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_bSFup_JetSubCalc->at(ijet) = tag_up;
+	    theJetBTag_bSFdn_JetSubCalc->at(ijet) = tag_dn;
+	    theJetBTag_lSFup_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_lSFdn_JetSubCalc->at(ijet) = tag;
+
+	  }else{
+
+	    int binSF = (std::upper_bound(ptRangeSF.begin(), ptRangeSF.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeSF.begin())-1;
+	    float pt = theJetPt_JetSubCalc->at(ijet);
+	    lSF = 0.980777+(-0.00109334*pt)+(4.2909e-06*pt*pt)+(-2.78512e-09*pt*pt*pt);
+	    lSFdn = lSF*(1-(0.0672836+(0.000102309*pt)+(-1.01558e-07*pt*pt)));
+	    lSFup = lSF*(1+(0.0672836+(0.000102309*pt)+(-1.01558e-07*pt*pt)));
+
+	    int bin = (std::upper_bound(ptRangeEff.begin(), ptRangeEff.end(), theJetPt_JetSubCalc->at(ijet))-ptRangeEff.begin())-1;
+	    lEff = MistagEff[bin];
+
+	    int tag = applySF(istagged,lSF,lEff);
+	    int tag_up = applySF(istagged,lSFup,lEff);
+	    int tag_dn = applySF(istagged,lSFdn,lEff);
+
+	    theJetBTag_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_bSFup_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_bSFdn_JetSubCalc->at(ijet) = tag;
+	    theJetBTag_lSFup_JetSubCalc->at(ijet) = tag_up;
+	    theJetBTag_lSFdn_JetSubCalc->at(ijet) = tag_dn;
+
+	  }
+	  */
+	  // ----------------------------------------------------------------------------
 	  // Counts and pt ordering pair
 	  // ----------------------------------------------------------------------------
 
@@ -1235,114 +1189,67 @@ void step1::Loop()
       // Loop over AK8 jets for calculations and pt ordering pair
       // ----------------------------------------------------------------------------
       
-      NJetsH1btagged = 0;
-      int NJetsH1btagged_bSFup = 0;
-      int NJetsH1btagged_bSFdn = 0;
-      int NJetsH1btagged_lSFup = 0;
-      int NJetsH1btagged_lSFdn = 0;
-      int NJetsH1btagged_JMSup = 0;
-      int NJetsH1btagged_JMSdn = 0;
-      int NJetsH1btagged_JMRup = 0;
-      int NJetsH1btagged_JMRdn = 0;
-      NJetsH2btagged = 0;
-      int NJetsH2btagged_bSFup = 0;
-      int NJetsH2btagged_bSFdn = 0;
-      int NJetsH2btagged_lSFup = 0;
-      int NJetsH2btagged_lSFdn = 0;
-      int NJetsH2btagged_JMSup = 0;
-      int NJetsH2btagged_JMSdn = 0;
-      int NJetsH2btagged_JMRup = 0;
-      int NJetsH2btagged_JMRdn = 0;
+      NJetsHtagged = 0;      
+      int NJetsHtagged_bSFup = 0;      
+      int NJetsHtagged_bSFdn = 0;      
+      int NJetsHtagged_lSFup = 0;      
+      int NJetsHtagged_lSFdn = 0;      
       NJetsAK8_JetSubCalc = 0;
       vector<float> maxsubcsv;
-      NJetsH1btagged_shifts.clear();
-      NJetsH2btagged_shifts.clear();
+      NJetsHtagged_shifts.clear();
       vector<pair<double,int>> jetak8ptindpair;
-      
+
       for(unsigned int ijet=0; ijet < theJetAK8Pt_JetSubCalc->size(); ijet++){
-	
-        // ----------------------------------------------------------------------------                                  
-        // Basic cuts                                                                                                    
-        // ----------------------------------------------------------------------------                                  
-	
-        maxsubcsv.push_back(-99.0);
-        if(fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
-        if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
-        if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
-	
-        // ----------------------------------------------------------------------------                                  
-        // Counter and pt ordering pair                                                                                  
-        // ----------------------------------------------------------------------------                                  
-	
-        NJetsAK8_JetSubCalc += 1;
-        jetak8ptindpair.push_back(std::make_pair(theJetAK8Pt_JetSubCalc->at(ijet),ijet));
-	
-        // ----------------------------------------------------------------------------                                  
-        // Count Higgs tags                                                                                              
-        // ----------------------------------------------------------------------------                                  
-	
-        int firstsub = theJetAK8SDSubjetIndex_JetSubCalc->at(ijet);
-        int nsubs = theJetAK8SDSubjetSize_JetSubCalc->at(ijet);
-        double maxCSVsubjet = 0;
-        int NsubCSVM = 0;
-        for(int isub = firstsub; isub < firstsub + nsubs; isub++){
-          if(theJetAK8SDSubjetCSV_JetSubCalc->at(isub) > maxCSVsubjet) maxCSVsubjet = theJetAK8SDSubjetCSV_JetSubCalc->at(isub);
-          if(theJetAK8SDSubjetCSV_JetSubCalc->at(isub) > 0.8484) NsubCSVM += 1;
-          if(isub != firstsub && theJetAK8SDSubjetPt_JetSubCalc->at(isub) == theJetAK8SDSubjetPt_JetSubCalc->at(firstsub)) cout << "subjets have matching pT, something's wrong" << endl;
-        }
-        maxsubcsv.at(ijet) = maxCSVsubjet;
-        double sdmass = theJetAK8SoftDropMassWtagUncerts_JetSubCalc->at(ijet);
-        double sdmass_JMSup = theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc->at(ijet);
-        double sdmass_JMSdn = theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc->at(ijet);
-        double sdmass_JMRup = theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc->at(ijet);
-        double sdmass_JMRdn = theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc->at(ijet);
-        double pt = theJetAK8Pt_JetSubCalc->at(ijet);
-        if(pt > 300 && sdmass > 60 && sdmass < 160){
-          //if(NsubCSVM == 1) NJetsH1btagged += 1;
-          if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1) NJetsH1btagged += 1;                                  
-          if(theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) == 1) NJetsH1btagged_bSFup += 1;
-          if(theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) == 1) NJetsH1btagged_bSFdn += 1;
-          if(theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) == 1) NJetsH1btagged_lSFup += 1;
-          if(theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) == 1) NJetsH1btagged_lSFdn += 1;
-          //if(NsubCSVM > 1) NJetsH2btagged += 1;
-          if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1) NJetsH2btagged += 1;                                   
-          if(theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) > 1) NJetsH2btagged_bSFup += 1;
-          if(theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) > 1) NJetsH2btagged_bSFdn += 1;
-          if(theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) > 1) NJetsH2btagged_lSFup += 1;
-          if(theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) > 1) NJetsH2btagged_lSFdn += 1;
+
+	// ----------------------------------------------------------------------------
+	// Basic cuts
+	// ----------------------------------------------------------------------------
+
+	maxsubcsv.push_back(-99.0);
+	if(fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
+	if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
+	if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
+
+	// ----------------------------------------------------------------------------
+	// Counter and pt ordering pair
+	// ----------------------------------------------------------------------------
+
+	NJetsAK8_JetSubCalc += 1; 
+	jetak8ptindpair.push_back(std::make_pair(theJetAK8Pt_JetSubCalc->at(ijet),ijet));
+	  
+	// ----------------------------------------------------------------------------
+	// Count Higgs tags
+	// ----------------------------------------------------------------------------
+
+	int firstsub = theJetAK8SDSubjetIndex_JetSubCalc->at(ijet);
+	int nsubs = theJetAK8SDSubjetSize_JetSubCalc->at(ijet);
+	double maxCSVsubjet = 0;
+	TLorentzVector tempsubjet;
+	TLorentzVector sumsubjets; sumsubjets.SetPtEtaPhiM(0,0,0,0);
+	for(int isub = firstsub; isub < firstsub + nsubs; isub++){
+	  tempsubjet.SetPtEtaPhiM(theJetAK8SDSubjetPt_JetSubCalc->at(isub),theJetAK8SDSubjetEta_JetSubCalc->at(isub),theJetAK8SDSubjetPhi_JetSubCalc->at(isub),theJetAK8SDSubjetMass_JetSubCalc->at(isub));
+	  sumsubjets += tempsubjet;
+	  if(theJetAK8SDSubjetCSV_JetSubCalc->at(isub) > maxCSVsubjet) maxCSVsubjet = theJetAK8SDSubjetCSV_JetSubCalc->at(isub);
+	  if(isub != firstsub && theJetAK8SDSubjetPt_JetSubCalc->at(isub) == theJetAK8SDSubjetPt_JetSubCalc->at(firstsub)) cout << "subjets have matching pT, something's wrong" << endl;
 	}
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH1btagged_JMSup += 1;
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH1btagged_JMSdn += 1;
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH1btagged_JMRup += 1;
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH1btagged_JMRdn += 1;
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH2btagged_JMSup += 1;
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH2btagged_JMSdn += 1;
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH2btagged_JMRup += 1;
-	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH2btagged_JMRdn += 1;
+	maxsubcsv.at(ijet) = maxCSVsubjet;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_bSFup += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_bSFdn += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_lSFup += 1;
+	if(theJetAK8Pt_JetSubCalc->at(ijet) > 300 &&  theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) > 0 && sumsubjets.M() > 60 && sumsubjets.M() < 150) NJetsHtagged_lSFdn += 1;
       }
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_bSFup);
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_bSFdn);
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_lSFup);
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_lSFdn);
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMSup);
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMSdn);
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMRup);
-      NJetsH1btagged_shifts.push_back(NJetsH1btagged_JMRdn);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_bSFup);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_bSFdn);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_lSFup);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_lSFdn);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMSup);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMSdn);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMRup);
-      NJetsH2btagged_shifts.push_back(NJetsH2btagged_JMRdn);
+      NJetsHtagged_shifts.push_back(NJetsHtagged_bSFup);
+      NJetsHtagged_shifts.push_back(NJetsHtagged_bSFdn);
+      NJetsHtagged_shifts.push_back(NJetsHtagged_lSFup);
+      NJetsHtagged_shifts.push_back(NJetsHtagged_lSFdn);
 
       // ----------------------------------------------------------------------------
       // Skip failing events
       // ----------------------------------------------------------------------------
 
       int isPastNHjetsCut = 0;
-      if(NJetsH1btagged >= 0){npass_nHjets += 1; isPastNHjetsCut = 1; }
+      if(NJetsHtagged >= 0){npass_nHjets += 1; isPastNHjetsCut = 1; }
 
       if(!(isPastMETcut && isPastNJetsCut && isPastJetLeadPtCut && isPastLepPtCut && isPastElEtaCut && isPastJetSubLeadPtCut)) continue;
       npass_all+=1;
@@ -1393,15 +1300,6 @@ void step1::Loop()
       theJetAK8Mass_JetSubCalc_PtOrdered.clear();
       theJetAK8PrunedMass_JetSubCalc_PtOrdered.clear();
       theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.clear();
-      theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.clear();
-      theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.clear();
-      theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.clear();
-      theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.clear();
-      theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered.clear();
-      theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.clear();
-      theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.clear();
-      theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.clear();
-      theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.clear();
       theJetAK8SoftDropMass_JetSubCalc_PtOrdered.clear();
       theJetAK8MaxSubCSV_JetSubCalc_PtOrdered.clear();
       theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.clear();
@@ -1415,16 +1313,7 @@ void step1::Loop()
       	theJetAK8Mass_JetSubCalc_PtOrdered.push_back(theJetAK8Mass_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8PrunedMass_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8SoftDropMass_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8SoftDropMassWtagUncerts_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8MaxSubCSV_JetSubCalc_PtOrdered.push_back(maxsubcsv.at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau1_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau2_JetSubCalc->at(jetak8ptindpair[ijet].second));
@@ -1478,7 +1367,6 @@ void step1::Loop()
       topPtWeight = 1.0;
       topPtWeightPast400 = 1.0;
       topPtWeightHighPt = 1.0;
-      topPtWeight13TeV = 1.0;
 
       for(unsigned int ijet=0; ijet < topPt_TTbarMassCalc->size(); ijet++){
 	if(genTopPt < 0 && topID_TTbarMassCalc->at(ijet) == 6) genTopPt = topPt_TTbarMassCalc->at(ijet);
@@ -1502,11 +1390,6 @@ void step1::Loop()
 	float SFtopHighPt = 0.98  - 0.00026*genTopPt;  // 0.98 +- 0.24, 0.0026 +- 0.00039
 	float SFantitopHighPt = 0.98  - 0.00026*genAntiTopPt;
 	topPtWeightHighPt = TMath::Sqrt(SFtopHighPt*SFantitopHighPt);
-
-	// Updated info from the TWiki CMS/TopSystematics#pt_top_Reweighting, NOTE goes to at least pT = 750
-        float SFtop13TeV = TMath::Exp(0.0615-0.0005*genTopPt);
-        float SFantitop13TeV = TMath::Exp(0.0615-0.0005*genAntiTopPt);
-        topPtWeight13TeV = TMath::Sqrt(SFtop13TeV*SFantitop13TeV);
       }
       
       // ----------------------------------------------------------------------------
@@ -1601,7 +1484,6 @@ void step1::Loop()
       // AK4 Jet - lepton associations
       // ----------------------------------------------------------------------------
 
-      NJetsCSV_JetSubCalc = 0;
       NJetsCSVwithSF_JetSubCalc = 0;
       BJetLeadPt = -99;
       minMleppBjet = 1e8;
@@ -1655,33 +1537,18 @@ void step1::Loop()
 	deltaPhi_lepJets.push_back(lepton_lv.DeltaPhi(jet_lv));
 	mass_lepJets.push_back((lepton_lv + jet_lv).M());
 
-        // FOR NOW DON'T USE THE SCALE FACTORS                                         
-	if(theJetCSV_JetSubCalc_PtOrdered.at(ijet) > 0.8484){
-          NJetsCSV_JetSubCalc += 1;
-	  //   if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
-	  //   deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
-	  //   deltaPhi_lepBJets.push_back(lepton_lv.DeltaPhi(jet_lv));
-	  //   mass_lepBJets.push_back((lepton_lv + jet_lv).M());
-	  
-	  //   if((lepton_lv + jet_lv).M() < minMleppBjet) {
-	  //     minMleppBjet = fabs( (lepton_lv + jet_lv).M() );
-	  //     deltaRlepbJetInMinMlb = jet_lv.DeltaR(lepton_lv);
-	  //     deltaPhilepbJetInMinMlb = jet_lv.DeltaPhi(lepton_lv);
-	  //   }
-        }
-	// OK, we're back to using SFs
 	if(theJetBTag_JetSubCalc_PtOrdered.at(ijet) == 1){
 	  NJetsCSVwithSF_JetSubCalc += 1;
-          if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
-          deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
-          deltaPhi_lepBJets.push_back(lepton_lv.DeltaPhi(jet_lv));
-          mass_lepBJets.push_back((lepton_lv + jet_lv).M());
-	  
-          if((lepton_lv + jet_lv).M() < minMleppBjet) {
-            minMleppBjet = fabs( (lepton_lv + jet_lv).M() );
-            deltaRlepbJetInMinMlb = jet_lv.DeltaR(lepton_lv);
-            deltaPhilepbJetInMinMlb = jet_lv.DeltaPhi(lepton_lv);
-          }
+	  if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
+	  deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
+	  deltaPhi_lepBJets.push_back(lepton_lv.DeltaPhi(jet_lv));
+	  mass_lepBJets.push_back((lepton_lv + jet_lv).M());
+
+	  if((lepton_lv + jet_lv).M() < minMleppBjet) {
+	    minMleppBjet = fabs( (lepton_lv + jet_lv).M() );
+	    deltaRlepbJetInMinMlb = jet_lv.DeltaR(lepton_lv);
+	    deltaPhilepbJetInMinMlb = jet_lv.DeltaPhi(lepton_lv);
+	  }
 	}
 	if(theJetBTag_bSFup_JetSubCalc_PtOrdered.at(ijet) == 1){
 	  NJetsCSVwithSF_JetSubCalc_shifts.at(0) += 1;
@@ -1761,8 +1628,6 @@ void step1::Loop()
       deltaRlepWjet = -99;     deltaPhilepWjet = -99;	  
       deltaRlepTjet = -99;     deltaPhilepTjet = -99;	  
 
-      TauPtWeightUp = 1.0;
-      TauPtWeightDown = 1.0;
       NJetsWtagged_0p6_shifts.clear();
       NJetsTtagged_0p81_shifts.clear();
       theJetAK8Wmatch_JetSubCalc_PtOrdered.clear();
@@ -1782,7 +1647,7 @@ void step1::Loop()
       TLorentzVector leadak8;
       leadak8.SetPtEtaPhiM(0,0,0,0);
 
-      for(int i = 0; i < 6; i++){
+      for(int i = 0; i < 2; i++){
 	NJetsWtagged_0p6_shifts.push_back(0);
 	NJetsTtagged_0p81_shifts.push_back(0);
 	WJetLeadPt_shifts.push_back(-99.0);
@@ -1817,26 +1682,18 @@ void step1::Loop()
 	// ----------------------------------------------------------------------------
 	// W & top tagging on MC
 	// ----------------------------------------------------------------------------
-	
+
 	float tau21 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(ijet);
 	float tau32 = theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet);
 	float mass = theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.at(ijet);
-	float mass_JMSup = theJetAK8PrunedMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.at(ijet);
-	float mass_JMSdn = theJetAK8PrunedMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.at(ijet);
-	float mass_JMRup = theJetAK8PrunedMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.at(ijet);
-	float mass_JMRdn = theJetAK8PrunedMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.at(ijet);
 	float massSD = theJetAK8SoftDropMass_JetSubCalc_PtOrdered.at(ijet);
-	float massSD_JMSup = theJetAK8SoftDropMassWtagUncerts_JMSup_JetSubCalc_PtOrdered.at(ijet);
-	float massSD_JMSdn = theJetAK8SoftDropMassWtagUncerts_JMSdn_JetSubCalc_PtOrdered.at(ijet);
-	float massSD_JMRup = theJetAK8SoftDropMassWtagUncerts_JMRup_JetSubCalc_PtOrdered.at(ijet);
-	float massSD_JMRdn = theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc_PtOrdered.at(ijet);
 
 	// ------------------------------------------------------------------------------------------------------------------
 	// MC Calculation first
 	// ------------------------------------------------------------------------------------------------------------------
 
 	if(isMC){
-	  
+
 	  // ------------------------------------------------------------------------------------------------------------------
 	  // TRUTH MATCHING
 	  // ------------------------------------------------------------------------------------------------------------------
@@ -1861,7 +1718,7 @@ void step1::Loop()
 	      d3.SetPtEtaPhiE(HadronicVHtD2Pt_JetSubCalc->at(iW),HadronicVHtD2Eta_JetSubCalc->at(iW),HadronicVHtD2Phi_JetSubCalc->at(iW),HadronicVHtD2E_JetSubCalc->at(iW));
 	    }
    	  }	 
-	  
+  
 	  bool WallDsInJet = false;
 	  bool TallDsInJet = false;
 	  if(matchedID != 6 && ak8_lv.DeltaR(d1) < 0.8 && ak8_lv.DeltaR(d2) < 0.8) WallDsInJet = true;
@@ -1877,87 +1734,6 @@ void step1::Loop()
 	  theJetAK8Tmatch_JetSubCalc_PtOrdered.push_back(isTmatched);
 	  if(isWmatched || isZmatched || isHmatched || isTmatched) theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(matchedPt);
 	  else theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(-99.0);
-
-	  // ------------------------------------------------------------------------------------------------------------------
-	  // TOP TAGGING
-	  // ------------------------------------------------------------------------------------------------------------------
-	  float topTau81SF = 1.0;
-	  float topTau81SFup = 1.0;
-	  float topTau81SFdn = 1.0;
-	  double topTau81Eff = 1.0;
-	  if(isTmatched && matchedPt >= 400){	    
-	    // VALUES FOR 76X FROM PAS
-	    topTau81SF = 0.96;
-	    topTau81SFup = 1.04;
-	    topTau81SFdn = 0.88;
-	    
-	    // Use matched T to find the efficiency -- calculated for TpTp and ttbar, EWK/QCD will almost never pass here (use ttbar eff when they do)
-	    if(isSig){
-	      int bin = (std::upper_bound(ptRangeTpTpTop.begin(), ptRangeTpTpTop.end(), matchedPt)-ptRangeTpTpTop.begin())-1;
-	      topTau81Eff = SignalEffTop[SigMass][bin];
-	    }else{
-	      int bin = (std::upper_bound(ptRangeTTbarTop.begin(), ptRangeTTbarTop.end(), matchedPt)-ptRangeTTbarTop.begin())-1;
-	      if(isTT) topTau81Eff = TTbarEffTop[bin]; // ttbar
-	      else topTau81Eff = STEffTop[bin]; // ST
-	    }
-	  }
-	  
-	  // Set the initial tagged/untagged state
-	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
-	  bool isTtagged_JMSup = (massSD_JMSup > 105) && (massSD_JMSup < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
-	  bool isTtagged_JMSdn = (massSD_JMSdn > 105) && (massSD_JMSdn < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
-	  bool isTtagged_JMRup = (massSD_JMRup > 105) && (massSD_JMRup < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
-	  bool isTtagged_JMRdn = (massSD_JMRdn > 105) && (massSD_JMRdn < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
-
-	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
-	  int tag_topTau81 = applySF(isTtagged,topTau81SF,topTau81Eff);
-	  int tag_topTau81up = applySF(isTtagged,topTau81SFup,topTau81Eff);
-	  int tag_topTau81dn = applySF(isTtagged,topTau81SFdn,topTau81Eff);
-	  int tag_topTau81_JMSup = applySF(isTtagged_JMSup,topTau81SF,topTau81Eff);
-	  int tag_topTau81_JMSdn = applySF(isTtagged_JMSdn,topTau81SF,topTau81Eff);
-	  int tag_topTau81_JMRup = applySF(isTtagged_JMRup,topTau81SF,topTau81Eff);
-	  int tag_topTau81_JMRdn = applySF(isTtagged_JMRdn,topTau81SF,topTau81Eff);
- 
-	  // Now increase the tag count in the right variable	  
-	  NJetsTtagged_0p81 += tag_topTau81;
-	  NJetsTtagged_0p81_shifts[0] += tag_topTau81up;
-	  NJetsTtagged_0p81_shifts[1] += tag_topTau81dn;
-	  NJetsTtagged_0p81_shifts[2] += tag_topTau81_JMSup;
-	  NJetsTtagged_0p81_shifts[3] += tag_topTau81_JMSdn;
-	  NJetsTtagged_0p81_shifts[4] += tag_topTau81_JMRup;
-	  NJetsTtagged_0p81_shifts[5] += tag_topTau81_JMRdn;
-
- 	  // ------------------------------------------------------------------------------------------------------------------
-	  // Variable for top tagged jets
-	  // ------------------------------------------------------------------------------------------------------------------
-
-	  if(tag_topTau81 == 1){
-	    TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	    if(NJetsTtagged_0p81 == 1){
-	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
-	      deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
-	      deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
-	    }
-	  }
-	  if(tag_topTau81up == 1){
-	    TJetLeadPt_shifts.at(0) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	    if(NJetsTtagged_0p81_shifts[0] == 1){
-	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
-	      deltaRlepTjet_shifts.at(0) = tjet1_lv.DeltaR(lepton_lv);
-	      deltaPhilepTjet_shifts.at(0) = tjet1_lv.DeltaPhi(lepton_lv);
-	    }
-	  }
-	  if(tag_topTau81dn == 1){
-	    TJetLeadPt_shifts.at(1) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	    if(NJetsTtagged_0p81_shifts[1] == 1){
-	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
-	      deltaRlepTjet_shifts.at(1) = tjet1_lv.DeltaR(lepton_lv);
-	      deltaPhilepTjet_shifts.at(1) = tjet1_lv.DeltaPhi(lepton_lv);
-	    }
-	  }
 	  
 	  // ------------------------------------------------------------------------------------------------------------------
 	  // W TAGGING
@@ -1968,11 +1744,11 @@ void step1::Loop()
 	  float tau0p6SFdn = 1.0;
 	  double tau0p6Eff = 1.0;
 	  if(isWmatched && matchedPt >= 200){	    
-	    // VALUES FOR 80X from TWiki
-	    tau0p6SF = 1.002;
-	    tau0p6SFup = 1.002+0.028;
-	    tau0p6SFdn = 1.002-0.028;
-	    
+	    // VALUES FOR 76X FROM TWIKI 76X with JEC v2
+	    tau0p6SF = 0.980;
+	    tau0p6SFup = 1.014;
+	    tau0p6SFdn = 0.946;
+	  
 	    // Use matched W to find the efficiency -- calculated for TpTp and ttbar, EWK/QCD will almost never pass here (use ttbar eff when they do)
 	    if(isSig){
 	      int bin = (std::upper_bound(ptRangeTpTp.begin(), ptRangeTpTp.end(), matchedPt)-ptRangeTpTp.begin())-1;
@@ -1981,48 +1757,23 @@ void step1::Loop()
 	      int bin = (std::upper_bound(ptRangeTTbar.begin(), ptRangeTTbar.end(), matchedPt)-ptRangeTTbar.begin())-1;
 	      if(isTT) tau0p6Eff = TTbarEff[bin]; // ttbar
 	      else if(isST) tau0p6Eff = STEff[bin]; // single top (s and t channel had 0 boosted tops)
+	      else if(isTTV) tau0p6Eff = TTVEff[bin]; // tt+V
 	      else tau0p6Eff = WVEff[bin]; // WW, WZ, etc. 
 	    }
 	  }
-	  
+
 	  // Set the initial tagged/untagged state
-	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  bool isWtagged_JMSup = (mass_JMSup > 65) && (mass_JMSup < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  bool isWtagged_JMSdn = (mass_JMSdn > 65) && (mass_JMSdn < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  bool isWtagged_JMRup = (mass_JMRup > 65) && (mass_JMRup < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  bool isWtagged_JMRdn = (mass_JMRdn > 65) && (mass_JMRdn < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
+	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200;
  
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
 	  int tag_tau0p6 = applySF(isWtagged,tau0p6SF,tau0p6Eff);
-	  int tag_tau0p6_JMSup = applySF(isWtagged_JMSup,tau0p6SF,tau0p6Eff);
-	  int tag_tau0p6_JMSdn = applySF(isWtagged_JMSdn,tau0p6SF,tau0p6Eff);
-	  int tag_tau0p6_JMRup = applySF(isWtagged_JMRup,tau0p6SF,tau0p6Eff);
-	  int tag_tau0p6_JMRdn = applySF(isWtagged_JMRdn,tau0p6SF,tau0p6Eff);
- 	  int tag_tau0p6up = applySF(isWtagged,tau0p6SFup,tau0p6Eff);
+	  int tag_tau0p6up = applySF(isWtagged,tau0p6SFup,tau0p6Eff);
 	  int tag_tau0p6dn = applySF(isWtagged,tau0p6SFdn,tau0p6Eff);
 	  
 	  // Now increase the tag count in the right variable	  
 	  NJetsWtagged_0p6 += tag_tau0p6;
 	  NJetsWtagged_0p6_shifts[0] += tag_tau0p6up;
 	  NJetsWtagged_0p6_shifts[1] += tag_tau0p6dn;
-	  NJetsWtagged_0p6_shifts[2] += tag_tau0p6_JMSup;
-	  NJetsWtagged_0p6_shifts[3] += tag_tau0p6_JMSdn;
-	  NJetsWtagged_0p6_shifts[4] += tag_tau0p6_JMRup;
-	  NJetsWtagged_0p6_shifts[5] += tag_tau0p6_JMRdn;
-
-	  NJetsWtagged_0p6_notTtagged += tag_tau0p6-tag_topTau81;
-	  NJetsWtagged_0p6_notTtagged_shifts[0] += tag_tau0p6up-tag_topTau81up;
-	  NJetsWtagged_0p6_notTtagged_shifts[1] += tag_tau0p6dn-tag_topTau81dn;
-	  NJetsWtagged_0p6_notTtagged_shifts[2] += tag_tau0p6_JMSup-tag_topTau81_JMSup;
-	  NJetsWtagged_0p6_notTtagged_shifts[3] += tag_tau0p6_JMSdn-tag_topTau81_JMSdn;
-	  NJetsWtagged_0p6_notTtagged_shifts[4] += tag_tau0p6_JMRup-tag_topTau81_JMRup;
-	  NJetsWtagged_0p6_notTtagged_shifts[5] += tag_tau0p6_JMRdn-tag_topTau81_JMRdn;
-
-	  // Extra uncertainty for pt extrapolation
-	  if(tag_tau0p6 == 1){
-	    TauPtWeightUp *= 1 + 0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
-	    TauPtWeightDown *= 1 - 0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
-	  }
 
 	  // ------------------------------------------------------------------------------------------------------------------
 	  // Variables for W tagged jets
@@ -2061,40 +1812,108 @@ void step1::Loop()
 	      deltaPhilepWjet_shifts.at(1) = wjet1_lv.DeltaPhi(lepton_lv);
 	    }
 	  }
+
+	  // ------------------------------------------------------------------------------------------------------------------
+	  // TOP TAGGING
+	  // ------------------------------------------------------------------------------------------------------------------
+	  float topTau81SF = 1.0;
+	  float topTau81SFup = 1.0;
+	  float topTau81SFdn = 1.0;
+	  double topTau81Eff = 1.0;
+	  if(isTmatched && matchedPt >= 400){	    
+	    // VALUES FOR 76X FROM PAS
+	    topTau81SF = 0.96;
+	    topTau81SFup = 1.04;
+	    topTau81SFdn = 0.88;
+	  
+	    // Use matched T to find the efficiency -- calculated for TpTp and ttbar, EWK/QCD will almost never pass here (use ttbar eff when they do)
+	    if(isSig){
+	      int bin = (std::upper_bound(ptRangeTpTpTop.begin(), ptRangeTpTpTop.end(), matchedPt)-ptRangeTpTpTop.begin())-1;
+	      topTau81Eff = SignalEffTop[SigMass][bin];
+	    }else{
+	      int bin = (std::upper_bound(ptRangeTTbarTop.begin(), ptRangeTTbarTop.end(), matchedPt)-ptRangeTTbarTop.begin())-1;
+	      topTau81Eff = TTbarEffTop[bin];
+	    }
+	  }
+
+	  // Set the initial tagged/untagged state
+	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400;
+
+	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
+	  int tag_topTau81 = applySF(isTtagged,topTau81SF,topTau81Eff);
+	  int tag_topTau81up = applySF(isTtagged,topTau81SFup,topTau81Eff);
+	  int tag_topTau81dn = applySF(isTtagged,topTau81SFdn,topTau81Eff);
+ 
+	  // Now increase the tag count in the right variable	  
+	  NJetsTtagged_0p81 += tag_topTau81;
+	  NJetsTtagged_0p81_shifts[0] += tag_topTau81up;
+	  NJetsTtagged_0p81_shifts[1] += tag_topTau81dn;
+
+ 	  // ------------------------------------------------------------------------------------------------------------------
+	  // Variable for top tagged jets
+	  // ------------------------------------------------------------------------------------------------------------------
+
+	  if(tag_topTau81 == 1){
+	    TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	    if(NJetsTtagged_0p81 == 1){
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
+	    }
+	  }
+	  if(tag_topTau81up == 1){
+	    TJetLeadPt_shifts.at(0) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	    if(NJetsTtagged_0p81_shifts[0] == 1){
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet_shifts.at(0) = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet_shifts.at(0) = tjet1_lv.DeltaPhi(lepton_lv);
+	    }
+	  }
+	  if(tag_topTau81dn == 1){
+	    TJetLeadPt_shifts.at(1) = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	    if(NJetsTtagged_0p81_shifts[1] == 1){
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet_shifts.at(1) = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet_shifts.at(1) = tjet1_lv.DeltaPhi(lepton_lv);
+	    }
+	  }
 	}
 	// ------------------------------------------------------------------------------------------------------------------
 	// DATA Calculation second
 	// ------------------------------------------------------------------------------------------------------------------
 	else{
-	  
+	 
 	  theJetAK8Wmatch_JetSubCalc_PtOrdered.push_back(0);
 	  theJetAK8Hmatch_JetSubCalc_PtOrdered.push_back(0);
 	  theJetAK8Zmatch_JetSubCalc_PtOrdered.push_back(0);
 	  theJetAK8Tmatch_JetSubCalc_PtOrdered.push_back(0);
-	  
-	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
-	  
-	  NJetsTtagged_0p81 += isTtagged;
-	  if(NJetsTtagged_0p81 == 1){
-	    TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	    tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				  theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
-	    deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
-	    deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
+ 
+	  if(tau21 < 0.6 && mass > 65.0 && mass < 105.0 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200){
+
+	    NJetsWtagged_0p6 += 1;
+	    if(NJetsWtagged_0p6 == 1){
+	      WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	      wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),mass);
+	      deltaRtopWjet = wjet1_lv.DeltaR(lvTop);
+	      deltaRlepWjet = wjet1_lv.DeltaR(lepton_lv);
+	      deltaPhitopWjet = wjet1_lv.DeltaPhi(lvTop);
+	      deltaPhilepWjet = wjet1_lv.DeltaPhi(lepton_lv);
+	    }
 	  }
-	  
-	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  
-	  NJetsWtagged_0p6 += isWtagged;
-	  NJetsWtagged_0p6_notTtagged += isWtagged-isTtagged;
-	  if(NJetsWtagged_0p6 == 1){
-	    WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	    wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				  theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),mass);
-	    deltaRtopWjet = wjet1_lv.DeltaR(lvTop);
-	    deltaRlepWjet = wjet1_lv.DeltaR(lepton_lv);
-	    deltaPhitopWjet = wjet1_lv.DeltaPhi(lvTop);
-	    deltaPhilepWjet = wjet1_lv.DeltaPhi(lepton_lv);
+	  if(tau32 < 0.81 && massSD > 105.0 && massSD < 220.0 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400){
+
+	    NJetsTtagged_0p81 += 1;
+	    if(NJetsTtagged_0p81 == 1){
+	      TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	      tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+				    theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	      deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
+	      deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
+	    }
 	  }
 	}
       }
