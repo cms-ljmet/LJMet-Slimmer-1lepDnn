@@ -461,19 +461,7 @@ void step1::Loop()
    TLorentzVector lepton_lv;
    TLorentzVector ak8_lv;
    
-   // Muon Trigger & tracking efficiencies
-   float avePtPOG[4][6] = {
-     {35.55,44.32,53.90,73.03,145.96,254.04},
-     {35.56,44.41,53.84,72.79,144.55,254.16},
-     {35.36,44.38,53.83,71.70,144.44,230.07},
-     {35.69,44.31,53.95,73.08,145.84,270.32},
-   };
-   float mueffs[4][6] = {
-     {0.906,0.926,0.930,0.929,0.926,0.922},
-     {0.904,0.928,0.932,0.931,0.912,0.889},
-     {0.859,0.884,0.889,0.888,0.874,0.851},
-     {0.786,0.817,0.820,0.823,0.774,0.675}
-   };
+   // Muon tracking efficiencies
    float tracksf[10] = {0.9824, 0.9918, 0.9959, 0.9934, 0.9915, 0.9947, 0.9967, 0.9949, 0.9912, 0.9768};
 
    // W tagging efficiencies. Assumes each signal mass uses the same pT bins but has unique values.
@@ -522,12 +510,13 @@ void step1::Loop()
      {0.470206, 0.584249, 0.607135, 0.604068, 0.614005, 0.621413, 0.624816, 0.626804, 0.639740, 0.659275},
    }; 
 
-   // Pileup distributions
-   double pileup_central[40] = {7.892e-03, 1.846e-02, 1.858e-02, 2.098e-02, 3.207e-02, 2.484e-02, 2.326e-02, 3.721e-02, 7.012e-02, 1.266e-01, 2.280e-01, 3.998e-01, 5.895e-01, 7.439e-01, 8.700e-01, 8.940e-01, 8.630e-01, 9.238e-01, 8.971e-01, 9.710e-01, 8.868e-01, 8.635e-01, 9.279e-01, 1.027e+00, 1.066e+00, 1.256e+00, 1.250e+00, 1.425e+00, 1.414e+00, 1.557e+00, 1.665e+00, 1.801e+00, 2.588e+00, 3.449e+00, 6.530e+00, 1.510e+01, 4.634e+01, 9.928e+01, 0.000e+00, 0.000e+00};
+   // Pileup distributions -- ReReco Data vs Moriond17MC
+   double pileup_central[75] = {3.603e-01, 9.378e-01, 1.201e+00, 9.651e-01, 1.112e+00, 1.162e+00, 7.847e-01, 4.960e-01, 7.422e-01, 8.839e-01, 9.662e-01, 1.071e+00, 1.124e+00, 1.175e+00, 1.203e+00, 1.208e+00, 1.200e+00, 1.182e+00, 1.144e+00, 1.096e+00, 1.065e+00, 1.051e+00, 1.052e+00, 1.051e+00, 1.050e+00, 1.057e+00, 1.072e+00, 1.083e+00, 1.095e+00, 1.108e+00, 1.094e+00, 1.084e+00, 1.042e+00, 9.850e-01, 9.095e-01, 8.196e-01, 7.159e-01, 6.107e-01, 5.032e-01, 4.052e-01, 3.092e-01, 2.285e-01, 1.636e-01, 1.133e-01, 7.738e-02, 5.090e-02, 3.180e-02, 2.013e-02, 1.226e-02, 7.425e-03, 4.389e-03, 2.614e-03, 1.572e-03, 9.679e-04, 7.333e-04, 6.786e-04, 7.342e-04, 9.346e-04, 1.346e-03, 1.888e-03, 3.248e-03, 3.966e-03, 4.872e-03, 5.119e-03, 5.452e-03, 5.338e-03, 5.112e-03, 4.397e-03, 4.023e-03, 3.359e-03, 2.987e-03, 2.770e-03, 2.278e-03, 1.982e-03, 1.765e-03};
 
-   double pileup_down[40] =    {8.176e-03, 2.356e-02, 1.953e-02, 2.397e-02, 3.574e-02, 2.725e-02, 2.694e-02, 5.769e-02, 1.033e-01, 1.926e-01, 3.514e-01, 5.697e-01, 7.846e-01, 9.493e-01, 1.083e+00, 1.068e+00, 9.832e-01, 1.014e+00, 9.614e-01, 1.030e+00, 9.352e-01, 8.958e-01, 9.406e-01, 1.019e+00, 1.037e+00, 1.195e+00, 1.163e+00, 1.296e+00, 1.255e+00, 1.344e+00, 1.391e+00, 1.451e+00, 2.006e+00, 2.568e+00, 4.665e+00, 1.032e+01, 3.013e+01, 6.090e+01, 0.000e+00, 0.000e+00};
+   double pileup_down[75] = {3.733e-01, 1.197e+00, 1.263e+00, 1.102e+00, 1.240e+00, 1.278e+00, 9.076e-01, 7.680e-01, 1.093e+00, 1.345e+00, 1.489e+00, 1.526e+00, 1.496e+00, 1.500e+00, 1.498e+00, 1.445e+00, 1.367e+00, 1.298e+00, 1.228e+00, 1.165e+00, 1.125e+00, 1.091e+00, 1.065e+00, 1.041e+00, 1.019e+00, 1.005e+00, 9.973e-01, 9.851e-01, 9.722e-01, 9.567e-01, 9.141e-01, 8.732e-01, 8.075e-01, 7.337e-01, 6.501e-01, 5.605e-01, 4.658e-01, 3.750e-01, 2.886e-01, 2.147e-01, 1.498e-01, 1.001e-01, 6.433e-02, 3.962e-02, 2.392e-02, 1.382e-02, 7.544e-03, 4.163e-03, 2.215e-03, 1.187e-03, 6.441e-04, 3.850e-04, 2.739e-04, 2.425e-04, 2.913e-04, 3.993e-04, 5.467e-04, 7.711e-04, 1.143e-03, 1.598e-03, 2.706e-03, 3.234e-03, 3.878e-03, 3.973e-03, 4.121e-03, 3.928e-03, 3.659e-03, 3.059e-03, 2.719e-03, 2.203e-03, 1.901e-03, 1.709e-03, 1.362e-03, 1.147e-03, 9.884e-04};
 
-   double pileup_up[40] =      {7.690e-03, 1.454e-02, 1.759e-02, 1.842e-02, 2.919e-02, 2.240e-02, 2.122e-02, 2.606e-02, 4.722e-02, 8.679e-02, 1.494e-01, 2.732e-01, 4.337e-01, 5.773e-01, 6.949e-01, 7.319e-01, 7.369e-01, 8.227e-01, 8.247e-01, 9.106e-01, 8.382e-01, 8.210e-01, 8.956e-01, 1.012e+00, 1.071e+00, 1.285e+00, 1.304e+00, 1.519e+00, 1.539e+00, 1.730e+00, 1.896e+00, 2.109e+00, 3.129e+00, 4.317e+00, 8.471e+00, 2.033e+01, 6.483e+01, 1.448e+02, 0.000e+00, 0.000e+00};
+   double pileup_up[75] = {3.510e-01, 7.384e-01, 1.136e+00, 8.481e-01, 1.011e+00, 1.047e+00, 7.158e-01, 3.479e-01, 5.006e-01, 6.065e-01, 6.335e-01, 7.320e-01, 8.266e-01, 9.118e-01, 9.603e-01, 9.892e-01, 1.024e+00, 1.052e+00, 1.051e+00, 1.027e+00, 1.005e+00, 9.982e-01, 1.015e+00, 1.038e+00, 1.058e+00, 1.085e+00, 1.121e+00, 1.155e+00, 1.192e+00, 1.232e+00, 1.245e+00, 1.269e+00, 1.260e+00, 1.233e+00, 1.180e+00, 1.103e+00, 1.001e+00, 8.905e-01, 7.691e-01, 6.545e-01, 5.326e-01, 4.236e-01, 3.297e-01, 2.501e-01, 1.888e-01, 1.381e-01, 9.654e-02, 6.875e-02, 4.733e-02, 3.248e-02, 2.175e-02, 1.456e-02, 9.619e-03, 6.146e-03, 4.301e-03, 3.097e-03, 2.253e-03, 1.894e-03, 2.009e-03, 2.389e-03, 3.847e-03, 4.626e-03, 5.722e-03, 6.110e-03, 6.639e-03, 6.646e-03, 6.514e-03, 5.738e-03, 5.381e-03, 4.607e-03, 4.204e-03, 4.003e-03, 3.382e-03, 3.025e-03, 2.770e-03};
+
 
   // ----------------------------------------------------------------------------
   // RUN THE EVENT LOOP
@@ -633,271 +622,240 @@ void step1::Loop()
       
       if(isMC){ //MC triggers check
 	if(isElectron){
-	  if(isSig){
-	    std::string string_a = "Ele15_IsoVVVL_PFHT400";
-	    std::string string_b = "Ele15_IsoVVVL_PFHT350";
-	    std::string string_ORa = "Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50";
-	    std::string string_ORb = "Ele32_WPTight_Gsf";
-	    std::string string_LEP = "Ele32_eta2p1_WPTight_Gsf";
-	    std::string string_HT = "PFHT600";
-	    for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_LEP) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
-	      if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
-	    }
-	  }else{
-	   MCPastTrigger = 1;
-	   MCPastTriggerOR = 1;
-	   MCPastTriggerLepTight = 1;
-	   MCPastTriggerHTTight = 1;
-	 }
-	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/ichep2016_80X/resultsGsfID/egammaEffi.txt_egammaPlots.pdf
-	  if(lepeta < -2.4) EGammaGsfSF = 1.170;
-	  else if(lepeta < -2.3) EGammaGsfSF = 1.009;
-	  else if(lepeta < -2.2) EGammaGsfSF = 1.010;
-	  else if(lepeta < -2.0) EGammaGsfSF = 1.005;
-	  else if(lepeta < -1.8) EGammaGsfSF = 0.998;
-	  else if(lepeta < -1.65) EGammaGsfSF = 0.992;
-	  else if(lepeta < -1.566) EGammaGsfSF = 0.986;
-	  else if(lepeta < -1.4442) EGammaGsfSF = 0.962;
-	  else if(lepeta < -1.2) EGammaGsfSF = 0.987;
-	  else if(lepeta < -1.0) EGammaGsfSF = 0.978;
-	  else if(lepeta < -0.6) EGammaGsfSF = 0.969;
-	  else if(lepeta < -0.4) EGammaGsfSF = 0.966;
-	  else if(lepeta < -0.2) EGammaGsfSF = 0.963;
-	  else if(lepeta < 0.0) EGammaGsfSF = 0.960;
-	  else if(lepeta < 0.2) EGammaGsfSF = 0.966;
-	  else if(lepeta < 0.4) EGammaGsfSF = 0.980;
-	  else if(lepeta < 0.6) EGammaGsfSF = 0.977;
-	  else if(lepeta < 1.0) EGammaGsfSF = 0.981;
-	  else if(lepeta < 1.2) EGammaGsfSF = 0.987;
-	  else if(lepeta < 1.4442) EGammaGsfSF = 0.987;
-	  else if(lepeta < 1.566) EGammaGsfSF = 0.971;
-	  else if(lepeta < 1.65) EGammaGsfSF = 0.990;
-	  else if(lepeta < 1.8) EGammaGsfSF = 0.996;
-	  else if(lepeta < 2.0) EGammaGsfSF = 0.990;
-	  else if(lepeta < 2.2) EGammaGsfSF = 0.995;
-	  else if(lepeta < 2.3) EGammaGsfSF = 0.993;
-	  else if(lepeta < 2.4) EGammaGsfSF = 0.967;
-	  else EGammaGsfSF = 0.884;
-	  
-	  // Ele27_WPTight -- 80X DATA EFFICIENCIES. SHOULD WORK OK FOR Ele32 given offline cut
-	  if(leppt < 35){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.620; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.619;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.475;
-	    else TrigEffWeight = 0.480;
-	  }else if(leppt < 40){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.694; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.711;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.573;
-	    else TrigEffWeight = 0.583;
-	  }else if(leppt < 45){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.740; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.763;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.640;
-	    else TrigEffWeight = 0.646;
-	  }else if(leppt < 50){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.771; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.791;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.669;
-	    else TrigEffWeight = 0.682;
-	  }else if(leppt < 60){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.794; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.812;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.678;
-	    else TrigEffWeight = 0.703;
-	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.818; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.833;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.679;
-	    else TrigEffWeight = 0.728;
-	  }else if(leppt < 90){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.838; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.853;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.678;
-	    else TrigEffWeight = 0.743;
-	  }else if(leppt < 130){
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.861; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.874;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.707;
-	    else TrigEffWeight = 0.773;
-	  }else{
-	    if(fabs(lepeta) < 0.8) TrigEffWeight = 0.886; // 
-	    else if(fabs(lepeta) < 1.442) TrigEffWeight = 0.896;
-	    else if(fabs(lepeta) < 1.566) TrigEffWeight = 0.720;
-	    else TrigEffWeight = 0.785;
+	  std::string string_a = "Ele15_IsoVVVL_PFHT400";
+	  std::string string_b = "Ele15_IsoVVVL_PFHT350";
+	  std::string string_ORa = "Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50";
+	  std::string string_ORb = "Ele32_WPTight_Gsf";
+	  std::string string_LEP = "Ele32_eta2p1_WPTight_Gsf";
+	  std::string string_HT = "PFHT600";
+	  for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_LEP) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
+	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
 	  }
-	  TrigEffWeightUncert = TrigEffWeight;
 
-	  //miniIso < 0.1 scale factors from SUSYLepSF: http://tomc.web.cern.ch/tomc/tagAndProbe/20160726/output/scaleFactors.root
+	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/Moriond17/approval/RECO/passingRECO/egammaEffi.txt_egammaPlots.pdf
+	  if(lepeta < -2.45) EGammaGsfSF = 1.318;
+	  else if(lepeta < -2.4) EGammaGsfSF = 1.114;
+	  else if(lepeta < -2.3) EGammaGsfSF = 1.025;
+	  else if(lepeta < -2.2) EGammaGsfSF = 1.014;
+	  else if(lepeta < -2.0) EGammaGsfSF = 1.007;
+	  else if(lepeta < -1.8) EGammaGsfSF = 0.995;
+	  else if(lepeta < -1.65) EGammaGsfSF = 0.995;
+	  else if(lepeta < -1.566) EGammaGsfSF = 0.992;
+	  else if(lepeta < -1.4442) EGammaGsfSF = 0.963;
+	  else if(lepeta < -1.2) EGammaGsfSF = 0.990;
+	  else if(lepeta < -1.0) EGammaGsfSF = 0.986;
+	  else if(lepeta < -0.6) EGammaGsfSF = 0.982;
+	  else if(lepeta < -0.4) EGammaGsfSF = 0.985;
+	  else if(lepeta < -0.2) EGammaGsfSF = 0.982;
+	  else if(lepeta < 0.0) EGammaGsfSF = 0.980;
+	  else if(lepeta < 0.2) EGammaGsfSF = 0.985;
+	  else if(lepeta < 0.4) EGammaGsfSF = 0.989;
+	  else if(lepeta < 0.6) EGammaGsfSF = 0.988;
+	  else if(lepeta < 1.0) EGammaGsfSF = 0.988;
+	  else if(lepeta < 1.2) EGammaGsfSF = 0.988;
+	  else if(lepeta < 1.4442) EGammaGsfSF = 0.988;
+	  else if(lepeta < 1.566) EGammaGsfSF = 0.968;
+	  else if(lepeta < 1.65) EGammaGsfSF = 0.990;
+	  else if(lepeta < 1.8) EGammaGsfSF = 0.993;
+	  else if(lepeta < 2.0) EGammaGsfSF = 0.992;
+	  else if(lepeta < 2.2) EGammaGsfSF = 0.998;
+	  else if(lepeta < 2.3) EGammaGsfSF = 1.001;
+	  else if(lepeta < 2.4) EGammaGsfSF = 0.990;
+	  else if(lepeta < 2.45) EGammaGsfSF = 0.971;
+	  else EGammaGsfSF = 0.907;
+	  
+	  // Ele15_IsoVVVL_PFHT350 || Ele15_IsoVVVL_PFHT400 || Ele32_WPTight_Gsf -- 80X DATA EFFICIENCIES, Julie - 22Jan17
+	  //RRB2G:
+	  double TrigEffWeightR = 1.0;
+	  double TrigEffWeightH = 1.0;
+	  double TrigEffWeightRUncert = 1.0;
+	  double TrigEffWeightHUncert = 1.0;
+	  if(leppt < 60){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.964; TrigEffWeightRUncert = 0.049;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.966; TrigEffWeightRUncert = 0.057;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.902; TrigEffWeightRUncert = 0.072;}
+	    else {TrigEffWeightR = 0.899; TrigEffWeightRUncert = 0.089;}
+	  }else if(leppt < 70){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.958; TrigEffWeightRUncert = 0.050;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.968; TrigEffWeightRUncert = 0.062;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.869; TrigEffWeightRUncert = 0.078;}
+	    else {TrigEffWeightR = 0.938; TrigEffWeightRUncert = 0.102;}
+	  }else if(leppt < 100){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.968; TrigEffWeightRUncert = 0.033;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.965; TrigEffWeightRUncert = 0.039;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.938; TrigEffWeightRUncert = 0.053;}
+	    else {TrigEffWeightR = 0.929; TrigEffWeightRUncert = 0.065;}
+	  }else if(leppt < 200){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.974; TrigEffWeightRUncert = 0.022;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.973; TrigEffWeightRUncert = 0.028;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.922; TrigEffWeightRUncert = 0.038;}
+	    else {TrigEffWeightR = 0.924; TrigEffWeightRUncert = 0.053;}
+	  }else{
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.964; TrigEffWeightRUncert = 0.025;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.969; TrigEffWeightRUncert = 0.034;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.932; TrigEffWeightRUncert = 0.044;}
+	    else {TrigEffWeightR = 0.954; TrigEffWeightRUncert = 0.064;}
+	  }
+	  //PRH:
+	  if(leppt < 60){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.956; TrigEffWeightHUncert = 0.091;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.972; TrigEffWeightHUncert = 0.103;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.888; TrigEffWeightHUncert = 0.131;}
+	    else {TrigEffWeightH = 0.898; TrigEffWeightHUncert = 0.170;}
+	  }else if(leppt < 70){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.090;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.947; TrigEffWeightHUncert = 0.104;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.890; TrigEffWeightHUncert = 0.143;}
+	    else {TrigEffWeightH = 0.836; TrigEffWeightHUncert = 0.167;}
+	  }else if(leppt < 100){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.992; TrigEffWeightHUncert = 0.058;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.972; TrigEffWeightHUncert = 0.067;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.877; TrigEffWeightHUncert = 0.088;}
+	    else {TrigEffWeightH = 0.928; TrigEffWeightHUncert = 0.120;}
+	  }else if(leppt < 200){
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.984; TrigEffWeightHUncert = 0.041;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.049;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.944; TrigEffWeightHUncert = 0.073;}
+	    else {TrigEffWeightH = 0.884; TrigEffWeightHUncert = 0.092;}
+	  }else{
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.970; TrigEffWeightHUncert = 0.048;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.983; TrigEffWeightHUncert = 0.070;}
+	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.938; TrigEffWeightHUncert = 0.093;}
+	    else {TrigEffWeightH = 0.847; TrigEffWeightHUncert = 0.147;}
+	  }
+
+	  TrigEffWeight = (27.957*TrigEffWeightR + 8.857*TrigEffWeightH)/36.814;
+	  TrigEffWeightUncert = sqrt(pow(27.957*TrigEffWeightRUncert,2) + pow(8.857*TrigEffWeightHUncert,2))/36.814;
+
+	  //miniIso < 0.1 scale factors -- Moriond17 -- from Julie - 22Jan17
 	  if(fabs(lepeta) < 0.8){
-	    if(leppt < 30) isoSF = 0.991;
-	    else if(leppt < 40) isoSF = 0.993;
-	    else if(leppt < 50) isoSF = 0.996;
-	    else if(leppt < 100) isoSF = 0.996;
-	    else isoSF = 0.996;
+	    if(leppt < 30) isoSF = 0.999;
+	    else if(leppt < 40) isoSF = 0.999;
+	    else if(leppt < 50) isoSF = 0.999;
+	    else if(leppt < 60) isoSF = 0.998;
+	    else if(leppt < 100) isoSF = 0.999;
+	    else if(leppt < 200) isoSF = 1.002;
+	    else isoSF = 1.001;
 	  }
 	  else if(fabs(lepeta) < 1.4442){
-	    if(leppt < 30) isoSF = 0.989;
-	    else if(leppt < 40) isoSF = 0.993;
-	    else if(leppt < 50) isoSF = 0.995;
-	    else if(leppt < 100) isoSF = 0.996;
-	    else isoSF = 0.998;
+	    if(leppt < 30) isoSF = 1.005;
+	    else if(leppt < 40) isoSF = 1.000;
+	    else if(leppt < 50) isoSF = 1.000;
+	    else if(leppt < 60) isoSF = 1.000;
+	    else if(leppt < 100) isoSF = 1.000;
+	    else if(leppt < 200) isoSF = 1.002;
+	    else isoSF = 0.999;
 	  }
 	  else if(fabs(lepeta) < 1.566){
-	    if(leppt < 30) isoSF = 1.007;
-	    else if(leppt < 40) isoSF = 0.998;
-	    else if(leppt < 50) isoSF = 0.995;
-	    else if(leppt < 100) isoSF = 1.004;
-	    else isoSF = 0.988;
+	    if(leppt < 30) isoSF = 1.000;
+	    else if(leppt < 40) isoSF = 1.000;
+	    else if(leppt < 50) isoSF = 1.000;
+	    else if(leppt < 60) isoSF = 1.000;
+	    else if(leppt < 100) isoSF = 1.000;
+	    else if(leppt < 200) isoSF = 1.000;
+	    else isoSF = 1.000;
 	  }
 	  else if(fabs(lepeta) < 2.0){
-	    if(leppt < 30) isoSF = 0.990;
-	    else if(leppt < 40) isoSF = 0.999;
-	    else if(leppt < 50) isoSF = 0.998;
+	    if(leppt < 30) isoSF = 0.992;
+	    else if(leppt < 40) isoSF = 0.998;
+	    else if(leppt < 50) isoSF = 0.997;
+	    else if(leppt < 60) isoSF = 0.999;
 	    else if(leppt < 100) isoSF = 0.999;
-	    else isoSF = 1.000;
+	    else if(leppt < 200) isoSF = 1.000;
+	    else isoSF = 0.998;
 	  }
 	  else {
 	    if(leppt < 30) isoSF = 0.978;
-	    else if(leppt < 40) isoSF = 0.991;
-	    else if(leppt < 50) isoSF = 0.995;
-	    else if(leppt < 100) isoSF = 0.999;
-	    else isoSF = 1.001;
+	    else if(leppt < 40) isoSF = 0.987;
+	    else if(leppt < 50) isoSF = 0.993;
+	    else if(leppt < 60) isoSF = 0.998;
+	    else if(leppt < 100) isoSF = 1.001;
+	    else if(leppt < 200) isoSF = 1.000;
+	    else isoSF = 0.997;
 	  }
 	  
-	  //MVA-based ID scale factors for 76X-trained MVA (NOT the "new one"): http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/ichep2016_80X//resultsEleID/runBCD/passingMVA80/egammaEffi.txt_egammaPlots.pdf 
-	  if(lepeta < -2.0){
-	    if(leppt < 30) lepIdSF = 0.863;
-	    else if(leppt < 40) lepIdSF = 0.915;
-	    else if(leppt < 50) lepIdSF = 0.930;
-	    else lepIdSF = 0.936;
+	  //MVA-based ID scale factors for 80X-trained MVA -- Moriond17 -- from Julie - 22Jan17
+	  if(fabs(lepeta) < 0.8){
+	    if(leppt < 30) lepIdSF = 0.965;
+	    else if(leppt < 40) lepIdSF = 0.971;
+	    else if(leppt < 50) lepIdSF = 0.973;
+	    else if(leppt < 60) lepIdSF = 0.973;
+	    else if(leppt < 100) lepIdSF = 0.977;
+	    else if(leppt < 200) lepIdSF = 0.985;
+	    else lepIdSF = 0.985;
 	  }
-	  else if(lepeta < -1.566){
-	    if(leppt < 30) lepIdSF = 0.871;
-	    else if(leppt < 40) lepIdSF = 0.916;
-	    else if(leppt < 50) lepIdSF = 0.939;
-	    else lepIdSF = 0.950;
+	  else if(fabs(lepeta) < 1.4442){
+	    if(leppt < 30) lepIdSF = 0.935;
+	    else if(leppt < 40) lepIdSF = 0.947;
+	    else if(leppt < 50) lepIdSF = 0.952;
+	    else if(leppt < 60) lepIdSF = 0.951;
+	    else if(leppt < 100) lepIdSF = 0.956;
+	    else if(leppt < 200) lepIdSF = 0.974;
+	    else lepIdSF = 0.942;
 	  }
-	  else if(lepeta < -1.4442){
-	    if(leppt < 30) lepIdSF = 0.891;
-	    else if(leppt < 40) lepIdSF = 0.920;
-	    else if(leppt < 50) lepIdSF = 0.953;
-	    else lepIdSF = 0.965;
+	  else if(fabs(lepeta) < 1.566){
+	    if(leppt < 30) lepIdSF = 1.000;
+	    else if(leppt < 40) lepIdSF = 1.000;
+	    else if(leppt < 50) lepIdSF = 1.000;
+	    else if(leppt < 60) lepIdSF = 1.000;
+	    else if(leppt < 100) lepIdSF = 1.000;
+	    else if(leppt < 200) lepIdSF = 1.000;
+	    else lepIdSF = 1.000;
 	  }
-	  else if(lepeta < -0.8){
-	    if(leppt < 30) lepIdSF = 0.923;
-	    else if(leppt < 40) lepIdSF = 0.949;
-	    else if(leppt < 50) lepIdSF = 0.956;
-	    else lepIdSF = 0.957;
-	  }
-	  else if(lepeta < 0.0){
-	    if(leppt < 30) lepIdSF = 0.920;
-	    else if(leppt < 40) lepIdSF = 0.941;
-	    else if(leppt < 50) lepIdSF = 0.951;
-	    else lepIdSF = 0.957;
-	  }
-	  else if(lepeta < 0.8){
-	    if(leppt < 30) lepIdSF = 0.945;
-	    else if(leppt < 40) lepIdSF = 0.961;
+	  else if(fabs(lepeta) < 2.0){
+	    if(leppt < 30) lepIdSF = 0.935;
+	    else if(leppt < 40) lepIdSF = 0.947;
 	    else if(leppt < 50) lepIdSF = 0.965;
+	    else if(leppt < 60) lepIdSF = 0.970;
+	    else if(leppt < 100) lepIdSF = 0.971;
+	    else if(leppt < 200) lepIdSF = 0.992;
+	    else lepIdSF = 1.010;
+	  }
+	  else {
+	    if(leppt < 30) lepIdSF = 0.947;
+	    else if(leppt < 40) lepIdSF = 0.963;
+	    else if(leppt < 50) lepIdSF = 0.970;
+	    else if(leppt < 60) lepIdSF = 0.973;
+	    else if(leppt < 100) lepIdSF = 0.978;
+	    else if(leppt < 200) lepIdSF = 1.013;
 	    else lepIdSF = 0.971;
-	  }
-	  else if(lepeta < 1.4442){
-	    if(leppt < 30) lepIdSF = 0.919;
-	    else if(leppt < 40) lepIdSF = 0.945;
-	    else if(leppt < 50) lepIdSF = 0.954;
-	    else lepIdSF = 0.964;
-	  }
-	  else if(lepeta < 1.566){
-	    if(leppt < 30) lepIdSF = 0.865;
-	    else if(leppt < 40) lepIdSF = 0.918;
-	    else if(leppt < 50) lepIdSF = 0.932;
-	    else lepIdSF = 0.944;
-	  }
-	  else if(lepeta < 2.0){
-	    if(leppt < 30) lepIdSF = 0.866;
-	    else if(leppt < 40) lepIdSF = 0.919;
-	    else if(leppt < 50) lepIdSF = 0.943;
-	    else lepIdSF = 0.958;
-	  }
-	  else{
-	    if(leppt < 30) lepIdSF = 0.892;
-	    else if(leppt < 40) lepIdSF = 0.927;
-	    else if(leppt < 50) lepIdSF = 0.943;
-	    else lepIdSF = 0.954;
-	  }
+	  }	  
 	}
 	if(isMuon){
-	  if(isSig){
-	    std::string string_a = "Mu15_IsoVVVL_PFHT400";
-	    std::string string_b = "Mu15_IsoVVVL_PFHT350";
-	    std::string string_ORa = "Mu40_eta2p1_PFJet200_PFJet50";
-	    std::string string_ORb = "Mu50";
-	    std::string string_ORc = "TkMu50";
-	    std::string string_LEPa = "IsoMu24";
-	    std::string string_LEPb = "IsoTkMu24";
-	    std::string string_HT = "PFHT600";
-	    for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_singleLepCalc->size(); itrig++){
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPa) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
-	      if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
-	    }
-	  }else{
-	    MCPastTrigger = 1;
-	    MCPastTriggerOR = 1;
-	    MCPastTriggerLepTight = 1;
-	    MCPastTriggerHTTight = 1;
+	  std::string string_a = "Mu15_IsoVVVL_PFHT400";
+	  std::string string_b = "Mu15_IsoVVVL_PFHT350";
+	  std::string string_ORa = "Mu40_eta2p1_PFJet200_PFJet50";
+	  std::string string_ORb = "Mu50";
+	  std::string string_ORc = "TkMu50";
+	  std::string string_LEPa = "IsoMu24";
+	  std::string string_LEPb = "IsoTkMu24";
+	  std::string string_HT = "PFHT600";
+	  for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_singleLepCalc->size(); itrig++){
+	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0){ MCPastTrigger = 1; MCPastTriggerOR = 1;}
+	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
+	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerOR = 1;
+	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPa) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
+	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_LEPb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerLepTight = 1;
+	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
 	  }
 	  
-	  // IsoMu24 || IsoTkMu24 Eff -- 80X DATA EFFICIENCIES
+	  // Muon tracking SF -- NOT TO BE USED, calculate in case
 	  int ebin = -1;
-	  int pbin = -1;
-	  if(fabs(leptonEta_singleLepCalc) < 0.9) ebin = 0;
-	  else if(fabs(leptonEta_singleLepCalc) < 1.6) ebin = 1;
-	  else if(fabs(leptonEta_singleLepCalc) < 2.1) ebin = 2;
-	  else if(fabs(leptonEta_singleLepCalc) < 2.4) ebin = 3;
-	  else std::cout << "Found a muon out of eta range" << std::endl;
-	  
-	  if(leptonPt_singleLepCalc < 40) pbin = 0;
-	  else if(leptonPt_singleLepCalc < 50) pbin = 1;
-	  else if(leptonPt_singleLepCalc < 60) pbin = 2;
-	  else if(leptonPt_singleLepCalc < 120) pbin = 3;
-	  else if(leptonPt_singleLepCalc < 200) pbin = 4;
-	  else pbin = 5;
-	  
-	  TrigEffWeight = mueffs[ebin][pbin];
-	  
-	  if(fabs(leptonEta_singleLepCalc) > 1.2 && fabs(leptonEta_singleLepCalc) <= 2.1){
-	    if(leptonPt_singleLepCalc < avePtPOG[2][3]) TrigEffWeightUncert = TrigEffWeight;
-	    else if(leptonPt_singleLepCalc < avePtPOG[2][4]){
-	      TrigEffWeightUncert = mueffs[2][3] + (mueffs[2][4]-mueffs[2][3])*(leptonPt_singleLepCalc - avePtPOG[2][3])/(avePtPOG[2][4]-avePtPOG[2][3]);
-	    }
-	    else if(leptonPt_singleLepCalc < avePtPOG[2][5]){
-	      TrigEffWeightUncert = mueffs[2][4] + (mueffs[2][5]-mueffs[2][4])*(leptonPt_singleLepCalc - avePtPOG[2][4])/(avePtPOG[2][5]-avePtPOG[2][4]);
-	    }
-	    else TrigEffWeightUncert = TrigEffWeight;
-	  }
-	  else if(fabs(leptonEta_singleLepCalc) > 2.1 && fabs(leptonEta_singleLepCalc) <= 2.4){
-	    if(leptonPt_singleLepCalc < avePtPOG[3][3]) TrigEffWeightUncert = TrigEffWeight;
-	    else if(leptonPt_singleLepCalc < avePtPOG[3][4]){
-	      TrigEffWeightUncert = mueffs[3][3] + (mueffs[3][4]-mueffs[3][3])*(leptonPt_singleLepCalc - avePtPOG[3][3])/(avePtPOG[3][4]-avePtPOG[3][3]);
-	    }
-	    else if(leptonPt_singleLepCalc < avePtPOG[3][5]){
-	      TrigEffWeightUncert = mueffs[3][4] + (mueffs[3][5]-mueffs[3][4])*(leptonPt_singleLepCalc - avePtPOG[3][4])/(avePtPOG[3][5]-avePtPOG[3][4]);
-	    }
-	    else TrigEffWeightUncert = TrigEffWeight;
-	  }
-	  else TrigEffWeightUncert = TrigEffWeight;
-
-	  // Muon tracking SF
 	  if(leptonEta_singleLepCalc < -2.1) ebin = 0;
 	  else if(leptonEta_singleLepCalc < -1.6) ebin = 1;
 	  else if(leptonEta_singleLepCalc < -1.1) ebin = 2;
@@ -911,43 +869,107 @@ void step1::Loop()
 
 	  MuTrkSF = tracksf[ebin];
 
-	  //Mini-iso < 0.2 scale factors for ReReco B-H / Spring16MC from Clint's Dec 4th workshop talk
+	  // Mu15_IsoVVVL_PFHT350 || Mu15_IsoVVVL_PFHT400 || Mu50 || TkMu50 -- 80X DATA EFFICIENCIES, Julie - 22Jan17
+	  //RRB2G:
+	  double TrigEffWeightR = 1.0;
+	  double TrigEffWeightH = 1.0;
+	  double TrigEffWeightRUncert = 1.0;
+	  double TrigEffWeightHUncert = 1.0;
+	  if(leppt < 60){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.963; TrigEffWeightRUncert = 0.038;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.969; TrigEffWeightRUncert = 0.070;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.982; TrigEffWeightRUncert = 0.047;}
+	    else {TrigEffWeightR = 0.954; TrigEffWeightRUncert = 0.104;}
+	  }else if(leppt < 70){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.958; TrigEffWeightRUncert = 0.039;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.973; TrigEffWeightRUncert = 0.076;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.991; TrigEffWeightRUncert = 0.052;}
+	    else {TrigEffWeightR = 0.971; TrigEffWeightRUncert = 0.119;}
+	  }else if(leppt < 100){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.956; TrigEffWeightRUncert = 0.025;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.971; TrigEffWeightRUncert = 0.048;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.983; TrigEffWeightRUncert = 0.034;}
+	    else {TrigEffWeightR = 0.983; TrigEffWeightRUncert = 0.080;}
+	  }else if(leppt < 200){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.960; TrigEffWeightRUncert = 0.019;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.971; TrigEffWeightRUncert = 0.037;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.986; TrigEffWeightRUncert = 0.026;}
+	    else {TrigEffWeightR = 0.958; TrigEffWeightRUncert = 0.068;}
+	  }else{
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightR = 0.950; TrigEffWeightRUncert = 0.024;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightR = 0.970; TrigEffWeightRUncert = 0.051;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightR = 0.985; TrigEffWeightRUncert = 0.041;}
+	    else {TrigEffWeightR = 0.936; TrigEffWeightRUncert = 0.129;}
+	  }
+
+	  //PRH:
+	  if(leppt < 60){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.979; TrigEffWeightHUncert = 0.064;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.993; TrigEffWeightHUncert = 0.119;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.965; TrigEffWeightHUncert = 0.081;}
+	    else {TrigEffWeightH = 0.954; TrigEffWeightHUncert = 0.169;}
+	  }else if(leppt < 70){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.969; TrigEffWeightHUncert = 0.070;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.990; TrigEffWeightHUncert = 0.138;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.973; TrigEffWeightHUncert = 0.086;}
+	    else {TrigEffWeightH = 0.963; TrigEffWeightHUncert = 0.187;}
+	  }else if(leppt < 100){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.958; TrigEffWeightHUncert = 0.043;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.986; TrigEffWeightHUncert = 0.083;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.976; TrigEffWeightHUncert = 0.058;}
+	    else {TrigEffWeightH = 0.981; TrigEffWeightHUncert = 0.134;}
+	  }else if(leppt < 200){
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.965; TrigEffWeightHUncert = 0.032;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.977; TrigEffWeightHUncert = 0.063;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.046;}
+	    else {TrigEffWeightH = 0.986; TrigEffWeightHUncert = 0.118;}
+	  }else{
+	    if(fabs(lepeta) < 0.9) {TrigEffWeightH = 0.963; TrigEffWeightHUncert = 0.045;} // 
+	    else if(fabs(lepeta) < 1.2) {TrigEffWeightH = 0.987; TrigEffWeightHUncert = 0.091;}
+	    else if(fabs(lepeta) < 2.1) {TrigEffWeightH = 0.966; TrigEffWeightHUncert = 0.073;}
+	    else {TrigEffWeightH = 0.967; TrigEffWeightHUncert = 0.252;}
+	  }
+
+	  TrigEffWeight = (27.957*TrigEffWeightR + 8.857*TrigEffWeightH)/36.814;
+	  TrigEffWeightUncert = sqrt(pow(27.957*TrigEffWeightRUncert,2) + pow(8.857*TrigEffWeightHUncert,2))/36.814;
+	  
+	  //Mini-iso < 0.1 scale factors for ReReco B-H / Spring16MC from Clint's Jan 18th talk: https://indico.cern.ch/event/605620/                                                                                                              
 	  if(leppt < 40){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.996;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.996;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.997;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.998;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999708;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999764;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999537;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999363;
 	  }
 	  else if(leppt < 50){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.999;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.998;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.999;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.999;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.998914;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999142;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999084;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999475;
 	  }
 	  else if(leppt < 60){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.999;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.999;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.999;
-	    else if(fabs(lepeta) <  2.4) isoSF= 0.999;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999181;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999393;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999276;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999611;
 	  }
 	  else if(leppt < 100){
-	    if(fabs(lepeta) < 0.9) isoSF= 0.999;
-	    else if(fabs(lepeta) <  1.2) isoSF= 0.999;
-	    else if(fabs(lepeta) <  2.1) isoSF= 0.999;
-	    else if(fabs(lepeta) <  2.4) isoSF= 1.000;
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999594;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999992;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999704;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.99999;
 	  }
 	  else{
-	    if(fabs(lepeta) < 0.9) isoSF= 1.000;
-	    else if(fabs(lepeta) <  1.2) isoSF= 1.000;
-	    else if(fabs(lepeta) <  2.1) isoSF= 1.000;
-	    else if(fabs(lepeta) <  2.4) isoSF= 1.000;
+	    if(fabs(lepeta) < 0.9) isoSF= 1.00003;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999797;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.99981;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999982;
 	  }
 	  
-	  //Cut-based Tight scale factors for ReReco B-H / Spring16MC from Clint's Dec 4th workshop talk
+	  //Cut-based Tight scale factors for ReReco B-H / Moriond17MC from Clint's Jan 18th talk: https://indico.cern.ch/event/605620/                                                                                                            
 	  if(fabs(lepeta) < 0.9){
-	    if(leppt < 40) lepIdSF = 0.953;
-	    else if(leppt < 50) lepIdSF = 0.954;
-	    else if(leppt < 60) lepIdSF = 0.947;
+	    if(leppt < 40) lepIdSF = 0.983;
+	    else if(leppt < 50) lepIdSF = 0.971;
+	    else if(leppt < 60) lepIdSF = 0.987;
 	    else if(leppt < 100) lepIdSF = 0.932;
 	    else lepIdSF = 0.966;
 	  }
@@ -971,7 +993,7 @@ void step1::Loop()
 	    else if(leppt < 60) lepIdSF = 0.939;
 	    else if(leppt < 100) lepIdSF = 0.926;
 	    else lepIdSF = 0.944;
-	  }
+	  }	
 	}
 	DataPastTrigger = 1;
 	DataPastTriggerOR = 1;
@@ -1240,27 +1262,27 @@ void step1::Loop()
         double sdmass_JMRdn = theJetAK8SoftDropMassWtagUncerts_JMRdn_JetSubCalc->at(ijet);
         double pt = theJetAK8Pt_JetSubCalc->at(ijet);
         if(pt > 300 && sdmass > 60 && sdmass < 160){
-          if(NsubCSVM == 1) NJetsH1btagged += 1;
-          //if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1) NJetsH1btagged += 1;                                  
+          //if(NsubCSVM == 1) NJetsH1btagged += 1;
+          if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1) NJetsH1btagged += 1;                                  
           if(theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) == 1) NJetsH1btagged_bSFup += 1;
           if(theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) == 1) NJetsH1btagged_bSFdn += 1;
           if(theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) == 1) NJetsH1btagged_lSFup += 1;
           if(theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) == 1) NJetsH1btagged_lSFdn += 1;
-          if(NsubCSVM > 1) NJetsH2btagged += 1;
-          //if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1) NJetsH2btagged += 1;                                   
+          //if(NsubCSVM > 1) NJetsH2btagged += 1;
+          if(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1) NJetsH2btagged += 1;                                   
           if(theJetAK8SDSubjetNCSVM_bSFup_JetSubCalc->at(ijet) > 1) NJetsH2btagged_bSFup += 1;
           if(theJetAK8SDSubjetNCSVM_bSFdn_JetSubCalc->at(ijet) > 1) NJetsH2btagged_bSFdn += 1;
           if(theJetAK8SDSubjetNCSVM_lSFup_JetSubCalc->at(ijet) > 1) NJetsH2btagged_lSFup += 1;
           if(theJetAK8SDSubjetNCSVM_lSFdn_JetSubCalc->at(ijet) > 1) NJetsH2btagged_lSFdn += 1;
 	}
-	if(pt > 300 && NsubCSVM == 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH1btagged_JMSup += 1;
-	if(pt > 300 && NsubCSVM == 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH1btagged_JMSdn += 1;
-	if(pt > 300 && NsubCSVM == 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH1btagged_JMRup += 1;
-	if(pt > 300 && NsubCSVM == 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH1btagged_JMRdn += 1;
-	if(pt > 300 && NsubCSVM > 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH2btagged_JMSup += 1;
-	if(pt > 300 && NsubCSVM > 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH2btagged_JMSdn += 1;
-	if(pt > 300 && NsubCSVM > 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH2btagged_JMRup += 1;
-	if(pt > 300 && NsubCSVM > 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH2btagged_JMRdn += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH1btagged_JMSup += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH1btagged_JMSdn += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH1btagged_JMRup += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) == 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH1btagged_JMRdn += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMSup > 60 && sdmass_JMSup < 160) NJetsH2btagged_JMSup += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMSdn > 60 && sdmass_JMSdn < 160) NJetsH2btagged_JMSdn += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMRup > 60 && sdmass_JMRup < 160) NJetsH2btagged_JMRup += 1;
+	if(pt > 300 && theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(ijet) > 1 && sdmass_JMRdn > 60 && sdmass_JMRdn < 160) NJetsH2btagged_JMRdn += 1;
       }
       NJetsH1btagged_shifts.push_back(NJetsH1btagged_bSFup);
       NJetsH1btagged_shifts.push_back(NJetsH1btagged_bSFdn);
@@ -1600,20 +1622,30 @@ void step1::Loop()
         // FOR NOW DON'T USE THE SCALE FACTORS                                         
 	if(theJetCSV_JetSubCalc_PtOrdered.at(ijet) > 0.8484){
           NJetsCSV_JetSubCalc += 1;
+	  //   if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
+	  //   deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
+	  //   deltaPhi_lepBJets.push_back(lepton_lv.DeltaPhi(jet_lv));
+	  //   mass_lepBJets.push_back((lepton_lv + jet_lv).M());
+	  
+	  //   if((lepton_lv + jet_lv).M() < minMleppBjet) {
+	  //     minMleppBjet = fabs( (lepton_lv + jet_lv).M() );
+	  //     deltaRlepbJetInMinMlb = jet_lv.DeltaR(lepton_lv);
+	  //     deltaPhilepbJetInMinMlb = jet_lv.DeltaPhi(lepton_lv);
+	  //   }
+        }
+	// OK, we're back to using SFs
+	if(theJetBTag_JetSubCalc_PtOrdered.at(ijet) == 1){
+	  NJetsCSVwithSF_JetSubCalc += 1;
           if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
           deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
           deltaPhi_lepBJets.push_back(lepton_lv.DeltaPhi(jet_lv));
           mass_lepBJets.push_back((lepton_lv + jet_lv).M());
-
+	  
           if((lepton_lv + jet_lv).M() < minMleppBjet) {
             minMleppBjet = fabs( (lepton_lv + jet_lv).M() );
             deltaRlepbJetInMinMlb = jet_lv.DeltaR(lepton_lv);
             deltaPhilepbJetInMinMlb = jet_lv.DeltaPhi(lepton_lv);
           }
-        }
-        // LEAVE THIS BUT DON'T USE FOR MINMLB                                                       
-	if(theJetBTag_JetSubCalc_PtOrdered.at(ijet) == 1){
-	  NJetsCSVwithSF_JetSubCalc += 1;
 	}
 	if(theJetBTag_bSFup_JetSubCalc_PtOrdered.at(ijet) == 1){
 	  NJetsCSVwithSF_JetSubCalc_shifts.at(0) += 1;
@@ -1714,7 +1746,7 @@ void step1::Loop()
       TLorentzVector leadak8;
       leadak8.SetPtEtaPhiM(0,0,0,0);
 
-      for(int i = 0; i < 2; i++){
+      for(int i = 0; i < 6; i++){
 	NJetsWtagged_0p6_shifts.push_back(0);
 	NJetsTtagged_0p81_shifts.push_back(0);
 	WJetLeadPt_shifts.push_back(-99.0);
@@ -1815,10 +1847,10 @@ void step1::Loop()
 	  float tau0p6SFdn = 1.0;
 	  double tau0p6Eff = 1.0;
 	  if(isWmatched && matchedPt >= 200){	    
-	    // VALUES FOR 76X FROM TWIKI 76X with JEC v2
-	    tau0p6SF = 0.980;
-	    tau0p6SFup = 1.014;
-	    tau0p6SFdn = 0.946;
+	    // VALUES FOR 80X from TWiki
+	    tau0p6SF = 1.002;
+	    tau0p6SFup = 1.002+0.028;
+	    tau0p6SFdn = 1.002-0.028;
 	  
 	    // Use matched W to find the efficiency -- calculated for TpTp and ttbar, EWK/QCD will almost never pass here (use ttbar eff when they do)
 	    if(isSig){
