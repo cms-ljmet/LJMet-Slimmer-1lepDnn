@@ -654,7 +654,7 @@ void step1::Loop()
       pileupWeightUp = 1.0;
       pileupWeightDown = 1.0;
 	
-      if(nTrueInteractions_singleLepCalc > 39) nTrueInteractions_singleLepCalc = 39;
+      if(nTrueInteractions_singleLepCalc > 74) nTrueInteractions_singleLepCalc = 74;
       pileupWeight = pileup_central[nTrueInteractions_singleLepCalc];
       pileupWeightUp = pileup_down[nTrueInteractions_singleLepCalc];
       pileupWeightDown = pileup_up[nTrueInteractions_singleLepCalc];
