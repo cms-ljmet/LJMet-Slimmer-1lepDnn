@@ -225,6 +225,17 @@ void step1::Loop()
    inputTree->SetBranchStatus("topPhi_TTbarMassCalc",1);
    inputTree->SetBranchStatus("topPt_TTbarMassCalc",1);
    inputTree->SetBranchStatus("topID_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTT_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTTbb_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTTbj_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTTcc_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTTcj_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTTlf_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTTll_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("NExtraBs_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("NExtraCs_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("NExtraLs_TTbarMassCalc",1);
+   inputTree->SetBranchStatus("isTau_singleLepCalc",1);
    
    //LHE weights
    inputTree->SetBranchStatus("LHEweightids_singleLepCalc",1);
@@ -289,6 +300,17 @@ void step1::Loop()
    outputTree->Branch("MuTrkSF",&MuTrkSF,"MuTrkSF/F");
 
    outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
+   outputTree->Branch("isTT_TTbarMassCalc",&isTT_TTbarMassCalc,"isTT_TTbarMassCalc/I");
+   outputTree->Branch("isTTbb_TTbarMassCalc",&isTTbb_TTbarMassCalc,"isTTbb_TTbarMassCalc/I");
+   outputTree->Branch("isTTbj_TTbarMassCalc",&isTTbj_TTbarMassCalc,"isTTbj_TTbarMassCalc/I");
+   outputTree->Branch("isTTcc_TTbarMassCalc",&isTTcc_TTbarMassCalc,"isTTcc_TTbarMassCalc/I");
+   outputTree->Branch("isTTcj_TTbarMassCalc",&isTTcj_TTbarMassCalc,"isTTcj_TTbarMassCalc/I");
+   outputTree->Branch("isTTlf_TTbarMassCalc",&isTTlf_TTbarMassCalc,"isTTlf_TTbarMassCalc/I");
+   outputTree->Branch("isTTll_TTbarMassCalc",&isTTll_TTbarMassCalc,"isTTll_TTbarMassCalc/I");
+   outputTree->Branch("NExtraBs_TTbarMassCalc",&NExtraBs_TTbarMassCalc,"NExtraBs_TTbarMassCalc/I");
+   outputTree->Branch("NExtraCs_TTbarMassCalc",&NExtraCs_TTbarMassCalc,"NExtraCs_TTbarMassCalc/I");
+   outputTree->Branch("NExtraLs_TTbarMassCalc",&NExtraLs_TTbarMassCalc,"NExtraLs_TTbarMassCalc/I");
+   outputTree->Branch("isTau_singleLepCalc",&isTau_singleLepCalc,"isTau_singleLepCalc/O");
    outputTree->Branch("corr_met_singleLepCalc",&corr_met_singleLepCalc,"corr_met_singleLepCalc/D");
    outputTree->Branch("corr_met_phi_singleLepCalc",&corr_met_phi_singleLepCalc,"corr_met_phi_singleLepCalc/D");
    outputTree->Branch("leptonPt_singleLepCalc",&leptonPt_singleLepCalc,"leptonPt_singleLepCalc/F");
@@ -432,11 +454,12 @@ void step1::Loop()
 
    // basic cuts
    float metCut=30;
-   int   njetsCut=2;
+   int   njetsCut=3;
    float JetLeadPtCut=50;
    float JetSubLeadPtCut=30;
    float lepPtCut=30;
    float elEtaCut=2.5;
+   float muEtaCut=2.4;
    float jetEtaCut=2.4;
    float ak8EtaCut=2.4;
    float jetPtCut=30;
@@ -451,6 +474,7 @@ void step1::Loop()
    int npass_JetSubLeadPt = 0;
    int npass_lepPt        = 0;
    int npass_ElEta        = 0;
+   int npass_MuEta        = 0;
    int npass_all          = 0;
    int Nelectrons         = 0;
    int Nmuons             = 0;
@@ -1224,9 +1248,11 @@ void step1::Loop()
       if(leppt > lepPtCut){npass_lepPt+=1;isPastLepPtCut=1;}
       
       int isPastElEtaCut = 0;
+      int isPastMuEtaCut = 0;
       if(isElectron && fabs(lepeta) < elEtaCut){npass_ElEta+=1;isPastElEtaCut=1;}
-      if(isMuon){Nmuons+=1;isPastElEtaCut=1;}
+      if(isMuon && fabs(lepeta) < muEtaCut){npass_MuEta+=1;isPastMuEtaCut=1;}
       if(isElectron){Nelectrons+=1;}
+      if(isMuon){Nmuons+=1;}
       
       AK4HTpMETpLepPt = 0;
       AK4HTpMETpLepPt = AK4HT + corr_met_singleLepCalc + leppt;
@@ -1344,7 +1370,7 @@ void step1::Loop()
       int isPastNHjetsCut = 0;
       if(NJetsH1btagged >= 0){npass_nHjets += 1; isPastNHjetsCut = 1; }
 
-      if(!(isPastMETcut && isPastNJetsCut && isPastJetLeadPtCut && isPastLepPtCut && isPastElEtaCut && isPastJetSubLeadPtCut)) continue;
+      if(!(isPastMETcut && isPastNJetsCut && isPastJetLeadPtCut && isPastLepPtCut && (isPastElEtaCut || isPastMuEtaCut) && isPastJetSubLeadPtCut)) continue;
       npass_all+=1;
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2183,6 +2209,7 @@ void step1::Loop()
    std::cout<<"Npassed_JetSubLeadPt   = "<<npass_JetSubLeadPt<<" / "<<nentries<<std::endl;
    std::cout<<"Npassed_lepPt          = "<<npass_lepPt<<" / "<<nentries<<std::endl;
    std::cout<<"Npassed_ElEta          = "<<npass_ElEta<<" / "<<nentries<<std::endl;
+   std::cout<<"Npassed_MuEta          = "<<npass_MuEta<<" / "<<nentries<<std::endl;
    std::cout<<"Npassed_ALL            = "<<npass_all<<" / "<<nentries<<std::endl;
    outputTree->Write();
 

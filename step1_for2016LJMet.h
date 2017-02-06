@@ -259,6 +259,22 @@ public :
    Int_t           nTightMuons_CommonCalc;
    Int_t           nTrueInteractions_singleLepCalc;
    Int_t           run_CommonCalc;
+   Int_t           isTau_singleLepCalc;
+   Int_t           NBsFromTTbar_TTbarMassCalc;
+   Int_t           NCharm_TTbarMassCalc;
+   Int_t           NExtraBs_TTbarMassCalc;
+   Int_t           NExtraCs_TTbarMassCalc;
+   Int_t           NExtraLs_TTbarMassCalc;
+   Int_t           NLight_TTbarMassCalc;
+   Int_t           NTotalBs_TTbarMassCalc;
+   Int_t           NWdecaysFromTTbar_TTbarMassCalc;
+   Int_t           isTT_TTbarMassCalc;
+   Int_t           isTTbb_TTbarMassCalc;
+   Int_t           isTTbj_TTbarMassCalc;
+   Int_t           isTTcc_TTbarMassCalc;
+   Int_t           isTTcj_TTbarMassCalc;
+   Int_t           isTTlf_TTbarMassCalc;
+   Int_t           isTTll_TTbarMassCalc;
    Double_t        AK4HT_singleLepCalc;
    Double_t        MCWeight_singleLepCalc;
    Double_t        corr_met_phi_singleLepCalc;
@@ -585,6 +601,22 @@ public :
    TBranch        *b_dataM_singleLepCalc;   //!
    TBranch        *b_event_CommonCalc;   //!
    TBranch        *b_genTDLID_singleLepCalc;   //!
+   TBranch        *b_isTau_singleLepCalc;   //!
+   TBranch        *b_NBsFromTTbar_TTbarMassCalc;   //!
+   TBranch        *b_NCharm_TTbarMassCalc;   //!
+   TBranch        *b_NExtraBs_TTbarMassCalc;   //!
+   TBranch        *b_NExtraCs_TTbarMassCalc;   //!
+   TBranch        *b_NExtraLs_TTbarMassCalc;   //!
+   TBranch        *b_NLight_TTbarMassCalc;   //!
+   TBranch        *b_NTotalBs_TTbarMassCalc;   //!
+   TBranch        *b_NWdecaysFromTTbar_TTbarMassCalc;   //!
+   TBranch        *b_isTT_TTbarMassCalc;   //!
+   TBranch        *b_isTTbb_TTbarMassCalc;   //!
+   TBranch        *b_isTTbj_TTbarMassCalc;   //!
+   TBranch        *b_isTTcc_TTbarMassCalc;   //!
+   TBranch        *b_isTTcj_TTbarMassCalc;   //!
+   TBranch        *b_isTTlf_TTbarMassCalc;   //!
+   TBranch        *b_isTTll_TTbarMassCalc;   //!
    TBranch        *b_lumi_CommonCalc;   //!
    TBranch        *b_nAllJets_CommonCalc;   //!
    TBranch        *b_nLooseMuons_CommonCalc;   //!
@@ -1329,6 +1361,22 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("dataM_singleLepCalc", &dataM_singleLepCalc, &b_dataM_singleLepCalc);
    inputTree->SetBranchAddress("event_CommonCalc", &event_CommonCalc, &b_event_CommonCalc);
    inputTree->SetBranchAddress("genTDLID_singleLepCalc", &genTDLID_singleLepCalc, &b_genTDLID_singleLepCalc);
+   inputTree->SetBranchAddress("isTau_singleLepCalc", &isTau_singleLepCalc, &b_isTau_singleLepCalc);
+   inputTree->SetBranchAddress("NBsFromTTbar_TTbarMassCalc", &NBsFromTTbar_TTbarMassCalc, &b_NBsFromTTbar_TTbarMassCalc);
+   inputTree->SetBranchAddress("NCharm_TTbarMassCalc", &NCharm_TTbarMassCalc, &b_NCharm_TTbarMassCalc);
+   inputTree->SetBranchAddress("NExtraBs_TTbarMassCalc", &NExtraBs_TTbarMassCalc, &b_NExtraBs_TTbarMassCalc);
+   inputTree->SetBranchAddress("NExtraCs_TTbarMassCalc", &NExtraCs_TTbarMassCalc, &b_NExtraCs_TTbarMassCalc);
+   inputTree->SetBranchAddress("NExtraLs_TTbarMassCalc", &NExtraLs_TTbarMassCalc, &b_NExtraLs_TTbarMassCalc);
+   inputTree->SetBranchAddress("NLight_TTbarMassCalc", &NLight_TTbarMassCalc, &b_NLight_TTbarMassCalc);
+   inputTree->SetBranchAddress("NTotalBs_TTbarMassCalc", &NTotalBs_TTbarMassCalc, &b_NTotalBs_TTbarMassCalc);
+   inputTree->SetBranchAddress("NWdecaysFromTTbar_TTbarMassCalc", &NWdecaysFromTTbar_TTbarMassCalc, &b_NWdecaysFromTTbar_TTbarMassCalc);
+   inputTree->SetBranchAddress("isTT_TTbarMassCalc", &isTT_TTbarMassCalc, &b_isTT_TTbarMassCalc);
+   inputTree->SetBranchAddress("isTTbb_TTbarMassCalc", &isTTbb_TTbarMassCalc, &b_isTTbb_TTbarMassCalc);
+   inputTree->SetBranchAddress("isTTbj_TTbarMassCalc", &isTTbj_TTbarMassCalc, &b_isTTbj_TTbarMassCalc);
+   inputTree->SetBranchAddress("isTTcc_TTbarMassCalc", &isTTcc_TTbarMassCalc, &b_isTTcc_TTbarMassCalc);
+   inputTree->SetBranchAddress("isTTcj_TTbarMassCalc", &isTTcj_TTbarMassCalc, &b_isTTcj_TTbarMassCalc);
+   inputTree->SetBranchAddress("isTTlf_TTbarMassCalc", &isTTlf_TTbarMassCalc, &b_isTTlf_TTbarMassCalc);
+   inputTree->SetBranchAddress("isTTll_TTbarMassCalc", &isTTll_TTbarMassCalc, &b_isTTll_TTbarMassCalc);
    inputTree->SetBranchAddress("lumi_CommonCalc", &lumi_CommonCalc, &b_lumi_CommonCalc);
    inputTree->SetBranchAddress("nAllJets_CommonCalc", &nAllJets_CommonCalc, &b_nAllJets_CommonCalc);
    inputTree->SetBranchAddress("nLooseMuons_CommonCalc", &nLooseMuons_CommonCalc, &b_nLooseMuons_CommonCalc);
