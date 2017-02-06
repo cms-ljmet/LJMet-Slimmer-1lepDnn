@@ -436,7 +436,7 @@ void step1::Loop()
    float JetLeadPtCut=50;
    float JetSubLeadPtCut=30;
    float lepPtCut=30;
-   float elEtaCut=2.1;
+   float elEtaCut=2.5;
    float jetEtaCut=2.4;
    float ak8EtaCut=2.4;
    float jetPtCut=30;
@@ -1747,6 +1747,7 @@ void step1::Loop()
       // ----------------------------------------------------------------------------
 
       NJetsWtagged_0p6 = 0;
+      NJetsWtagged_0p6_notTtagged = 0;
       NJetsTtagged_0p81 = 0;
       deltaR_lepAK8s.clear();
       deltaPhi_lepAK8s.clear();
@@ -1764,6 +1765,7 @@ void step1::Loop()
       TauPtWeightUp = 1.0;
       TauPtWeightDown = 1.0;
       NJetsWtagged_0p6_shifts.clear();
+      NJetsWtagged_0p6_notTtagged_shifts.clear();
       NJetsTtagged_0p81_shifts.clear();
       theJetAK8Wmatch_JetSubCalc_PtOrdered.clear();
       theJetAK8Hmatch_JetSubCalc_PtOrdered.clear();
@@ -1784,6 +1786,7 @@ void step1::Loop()
 
       for(int i = 0; i < 6; i++){
 	NJetsWtagged_0p6_shifts.push_back(0);
+	NJetsWtagged_0p6_notTtagged_shifts.push_back(0);
 	NJetsTtagged_0p81_shifts.push_back(0);
 	WJetLeadPt_shifts.push_back(-99.0);
 	TJetLeadPt_shifts.push_back(-99.0);
