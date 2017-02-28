@@ -54,6 +54,109 @@ bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
   return newTag;
 }
 
+enum shift:char{ central, uncert };
+
+double step1::GetBtagSF2016Medium_comb(shift Shift, double pt, double eta){
+    if(pt > 1000.) pt = 1000.;
+    if(fabs(eta) > 2.4 or pt<20.) return 1.0; 
+    switch(Shift){
+	case uncert:
+	    if(pt<30) return 0.040213499218225479;
+	    else if(pt<50) return 0.014046305790543556;
+	    else if(pt<70) return 0.012372690252959728;
+	    else if(pt<100) return 0.012274007312953472;
+	    else if(pt<140) return 0.011465910822153091;
+	    else if(pt<200) return 0.012079551815986633;
+	    else if(pt<300) return 0.014995276927947998;
+	    else if(pt<600) return 0.021414462476968765;
+	    else  return 0.032377112656831741;
+	case central:
+	default:
+	    return    0.561694*((1.+(0.31439*pt))/(1.+(0.17756*pt)));
+    }//end switch on shift
+}
+
+double step1::GetCtagSF2016Medium_comb(shift Shift, double pt, double eta){
+  // SFs are identical with 3x uncertainty as B tag
+  if(pt > 1000.) pt = 1000.;
+  if(fabs(eta) > 2.4 or pt<20.) return 1.0; 
+  switch(Shift){
+  case uncert: return 3.0 * GetBtagSF2016Medium_comb(uncert, pt, eta);
+  case central:
+  default: return GetBtagSF2016Medium_comb(central, pt, eta);
+  }//end switch on shift
+}
+
+double step1::GetLFSF2016Medium( shift Shift, double pt, double eta){
+    if(pt > 1000.) pt = 1000.;
+    if(fabs(eta) > 2.4 or pt<20.) return 1.;
+    switch(Shift){
+	case uncert:
+	    return  (1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt)*((0.100485+3.95509e-05*pt+-4.90326e-08*pt*pt));
+	case central:
+	default:
+	    return  1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt;
+    }//end switch Shift
+}//end GetLFSF2016
+
+double step1::GetBtagEfficiency(double pt){
+  // Efficiencies from TT powheg sample for Moriond17.
+  // See distribution in /uscms_data/d3/jmanagan/EffsAndNewWeights/TagEffsM17/BEff.png
+  // Uses hadronFlavour() rather than partonFlavour() as recommended in BTV physics plenary CMS Week 10/2015
+  if(pt < 30) return 0.331971;
+  else if(pt < 50) return 0.550937;
+  else if(pt < 70) return 0.599929;
+  else if(pt < 100) return 0.624677;
+  else if(pt < 140) return 0.635101;
+  else if(pt < 200) return 0.632463;
+  else if(pt < 300) return 0.598059;
+  else if(pt < 400) return 0.558359;
+  else if(pt < 500) return 0.514297;
+  else if(pt < 600) return 0.494422;
+  else if(pt < 800) return 0.474555;
+  else if(pt < 1000) return 0.451810;
+  else if(pt < 1200) return 0.427328;
+  else return 0.414162;
+}
+
+double step1::GetCtagEfficiency(double pt){
+  if(pt < 30) return 0.057985;
+  else if(pt < 50) return 0.111536;
+  else if(pt < 70) return 0.112216;
+  else if(pt < 100) return 0.120075;
+  else if(pt < 140) return 0.128499;
+  else if(pt < 200) return 0.132918;
+  else if(pt < 300) return 0.126724;
+  else if(pt < 400) return 0.126281;
+  else if(pt < 500) return 0.123026;
+  else if(pt < 600) return 0.124840;
+  else if(pt < 800) return 0.130060;
+  else if(pt < 1000) return 0.128022;
+  else if(pt < 1200) return 0.134100;
+  else return 0.125348;
+}
+
+double step1::GetMistagRate(double pt){
+  // Mistag rates from TT powheg sample for Moriond17.
+  // See distribution in /uscms_data/d3/jmanagan/EffsAndNewWeights/TagEffsM17/BEff.png
+  // Uses hadronFlavour() rather than partonFlavour() as recommended in BTV physics plenary CMS Week 10/2015
+  if(pt < 30)    return 0.003385;
+  else if(pt < 50)   return 0.009673;
+  else if(pt < 70)   return 0.008316;
+  else if(pt < 100)  return 0.008524;
+  else if(pt < 140)  return 0.009092;
+  else if(pt < 200)  return 0.011431;
+  else if(pt < 300)  return 0.013666;
+  else if(pt < 400)  return 0.020405;
+  else if(pt < 500)  return 0.023609;
+  else if(pt < 600)  return 0.025348;
+  else if(pt < 800)  return 0.028858;
+  else if(pt < 1000) return 0.030427;
+  else if(pt < 1200) return 0.034091;
+  else return 0.047619;
+}
+
+
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
@@ -395,8 +498,6 @@ void step1::Loop()
    outputTree->Branch("topPtWeightPast400",&topPtWeightPast400,"topPtWeightPast400/F");
    outputTree->Branch("topPtWeightHighPt",&topPtWeightHighPt,"topPtWeightHighPt/F");
    outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");
-   outputTree->Branch("TauPtWeightUp",&TauPtWeightUp,"TauPtWeightUp/F");
-   outputTree->Branch("TauPtWeightDown",&TauPtWeightDown,"TauPtWeightDown/F");
    outputTree->Branch("deltaRlepJetInMinMljet",&deltaRlepJetInMinMljet,"deltaRlepJetInMinMljet/F");
    outputTree->Branch("deltaRlepbJetInMinMlb",&deltaRlepbJetInMinMlb,"deltaRlepbJetInMinMlb/F");
    outputTree->Branch("deltaRlepbJetInMinMlb_shifts",&deltaRlepbJetInMinMlb_shifts);
@@ -487,8 +588,8 @@ void step1::Loop()
    TLorentzVector lepton_lv;
    TLorentzVector ak8_lv;
    
-   // Muon tracking efficiencies
-   float tracksf[10] = {0.9824, 0.9918, 0.9959, 0.9934, 0.9915, 0.9947, 0.9967, 0.9949, 0.9912, 0.9768};
+   // Muon tracking efficiencies, https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonWorkInProgressAndPagResults#Results_on_the_full_2016_data, Feb 16 release for full data
+   float tracksf[10] = {0.991237,0.994853, 0.996413,0.997157,0.997512,0.99756,0.996745,0.996996,0.99772,0.998604,0.998321,0.997682,0.995252,0.994919,0.987334};
 
    // W tagging efficiencies. Assumes each signal mass uses the same pT bins but has unique values.
    std::vector<float> ptRangeTpTp, ptRangeTTbar;
@@ -530,23 +631,23 @@ void step1::Loop()
      };
    }else if(isXX){
      SignalEff = {//X53X53
-       {0.566925893031,0.62161641629,0.636941836178,0.650958411183,0.667353274822,0.678406537283,0.673695578038,0.680802103879,0.679591117378,0.668444309005,0.599083438685},
-       {0.556511089944,0.605295894793,0.61837536724,0.636037070102,0.648640452845,0.650873774001,0.672515347602,0.67375,0.6882467475,0.684533057138,0.650487845213},
-       {0.553287435456,0.586659453866,0.593620001254,0.613787074351,0.62753902074,0.64008952301,0.656196654148,0.662242523485,0.674528152762,0.684610075914,0.6714004914},
-       {0.549337325525,0.576449316307,0.581686793268,0.598489343252,0.60872148289,0.625341698992,0.636303111004,0.645827296436,0.660045875028,0.67767976032,0.673147561748},
-       {0.561883067578,0.581489701089,0.576142490191,0.578519696167,0.594028654443,0.608761914602,0.620171857604,0.634996067121,0.646388319672,0.660065578028,0.672348649353},
-       {0.57100230571,0.593421732392,0.570766821075,0.569674380977,0.58276797829,0.598245991607,0.612715779926,0.622911101447,0.630220803405,0.645870517605,0.662805826167},
-       {0.573128288142,0.597828356651,0.576185834958,0.565503219248,0.573957093595,0.585485320117,0.599905790915,0.612320053565,0.624193950622,0.635501989235,0.65247853407},
-       {0.58307603242,0.600175691786,0.577511869005,0.563568052357,0.566398882291,0.575695291926,0.593158367676,0.608965754066,0.615377984656,0.627299437915,0.645537430388},
-       {0.600553505535,0.612926972909,0.581568040525,0.570012802883,0.560987493909,0.569187695179,0.576118785958,0.594428895109,0.603938465798,0.61662817552,0.634043796568},
-       {0.597950653903,0.622669198895,0.591802168022,0.578664029884,0.565150382963,0.562586983217,0.579468453546,0.579576783988,0.600145653487,0.611545682103,0.628881540129},
+       {0.886851914605,0.943074961483,0.93237659762,0.926341703594,0.922959415383,0.916790900558,0.906608536026,0.901708936541,0.887334315169,0.878630082115,0.818613690348},//700
+       {0.890015668524,0.942851870079,0.937010377822,0.92943003572,0.924872986704,0.914120339211,0.91749193594,0.904017686971,0.902931785196,0.887533572068,0.843917614246},//800
+       {0.888011049724,0.943309885788,0.93451146872,0.927802488236,0.924830193964,0.920539126936,0.920277711276,0.90682716705,0.904527725962,0.895711060948,0.860173759758},//900
+       {0.887845146598,0.9416651283,0.93638647343,0.930002482181,0.926200462829,0.919989275729,0.917484836584,0.910344123353,0.907314368871,0.900824160628,0.868240483581},//1000
+       {0.885167464115,0.939913681968,0.936628120411,0.929869392391,0.924636438068,0.920621899293,0.918717753531,0.916682437547,0.90773381295,0.89904930356,0.876642129105},//1100
+       {0.887530304627,0.942044833242,0.935850499973,0.928164571859,0.928728971154,0.921897023464,0.918657033574,0.914663625998,0.908632640202,0.897587191822,0.877439139658},//1200
+       {0.883689005366,0.942861847522,0.939229445254,0.929900813552,0.926411191016,0.923938894987,0.92037037037,0.918466103629,0.909518000363,0.901081762676,0.87809903732},//1300
+       {0.884255194615,0.939495138002,0.938070506767,0.931117340809,0.926310979093,0.923306721607,0.918570057582,0.919101017716,0.910261641251,0.901643357713,0.880637353772},//1400
+       {0.887072049055,0.936874085743,0.93347500693,0.928047556551,0.92161963845,0.924390812638,0.917535389005,0.918262301832,0.908880208333,0.903353927626,0.878233594532},//1500
+       {0.884170653907,0.943492478744,0.929453075122,0.931058865123,0.929416282642,0.919454107573,0.923949579832,0.914571444714,0.915165632872,0.904887294193,0.879504893495},//1600
        {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0},//1700
        {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0},//1800
      };
    }
-   float TTbarEff[11] = {0.681206254288,0.735941209916,0.707103097861,0.677917682843,0.658083687932,0.647541816212,0.643957428932,0.638267559481,0.623471882641,0.600233100233,0.562602515036};
-   float STEff[11] = {0.714838184078,0.78439868981,0.765502997656,0.743723066601,0.730054061917,0.718778986424,0.712329743992,0.712565925247,0.706687402799,0.705987889661,0.690933538225};
-   float WVEff[11] = {0.721890942821,0.790270329132,0.764814186734,0.727797290517,0.702466303413,0.665134285023,0.658878504673,0.627565982405,0.63355635615,0.597587719298,0.579212916246};
+   float TTbarEff[11] = {0.871591160506,0.941302510747,0.9283897909,0.915552183708,0.903871015995,0.891792958732,0.87799522673,0.869734032227,0.855294681361,0.827974276527,0.795208655332};
+   float STEff[11] = {0.870911904738,0.945643941514,0.934710724235,0.926644831904,0.921621373766,0.915942028986,0.907449414754,0.91384886798,0.905805765909,0.892826764956,0.873694437697};
+   float WVEff[11] = {0.872952123429,0.945897875368,0.937289636847,0.924373288393,0.926175754169,0.906627489389,0.912530712531,0.897670549085,0.902474526929,0.880573248408,0.860740740741};
 
    // Top tagging efficiencies
    std::vector<float> ptRangeTpTpTop, ptRangeTTbarTop;
@@ -554,21 +655,21 @@ void step1::Loop()
    for (int i=0;i<9;++i) ptRangeTTbarTop.push_back(ptminTTbarTop[i]);
    float ptminTpTpTop[9] = {400,450,500,550,600,700,800,1000,1200};//X53X53
    for (int i=0;i<9;++i) ptRangeTpTpTop.push_back(ptminTpTpTop[i]);
-   float TTbarEffTop[9] = {0.64208858919,0.821519027925,0.839975416553,0.82829058032,0.803050070173,0.765524749265,0.725845116909,0.692908561801,0.688736374647};
-   float STEffTop[9] = {0.63705887773,0.83559444489,0.856893441192,0.852849740933,0.826657296791,0.787193318253,0.748102815177,0.730245231608,0.719262295082};
+   float TTbarEffTop[9] = {0.710731908673,0.911246812099,0.946258231276,0.950948087531,0.952308954524,0.947643078335,0.94133549608,0.929334428924,0.924661246612};
+   float STEffTop[9] = {0.691643703728,0.906228313671,0.941468696261,0.948002294016,0.947021636542,0.941775836972,0.933049300061,0.936046511628,0.933862433862};
 
    float SignalEffTop[10][9] = {//X53X53
-     {0.589018843405,0.749030140257,0.783639056625,0.799945265463,0.793082826672,0.782485374934,0.761915318111,0.713728549142,0.66},
-     {0.562738731856,0.733780948384,0.760017497813,0.77619841192,0.772791782118,0.765164162493,0.762129122628,0.733503618561,0.697087378641},
-     {0.552508911434,0.701517956312,0.737090883048,0.744680851064,0.751427560766,0.753888452474,0.752504173623,0.73694880892,0.685790884718},
-     {0.527962777119,0.668169331549,0.71597359736,0.728841413311,0.730256452073,0.735716361523,0.734179425977,0.741627595445,0.729747675963},
-     {0.499089776756,0.649914941877,0.685815868263,0.706903008364,0.712857647474,0.713546408549,0.715045165752,0.722279555097,0.720125130344},
-     {0.491063029163,0.633738824564,0.662361276569,0.678767163651,0.68772290589,0.693537401338,0.703355750059,0.711434204041,0.710015582944},
-     {0.477746158224,0.605132578694,0.633594653643,0.658764111705,0.67115790726,0.676241961699,0.688610182602,0.697609264102,0.690987545356},
-     {0.461648280337,0.593832076591,0.621836537132,0.643556135461,0.65182875783,0.660159744409,0.665966188138,0.674362627106,0.685412382101},
-     {0.443819393042,0.578952408312,0.601645377787,0.621383490596,0.63452642535,0.646748362048,0.657257057207,0.668398791541,0.682943750667},
-     {0.434303568492,0.56420027522,0.594215600351,0.602773683505,0.617693430657,0.628969294412,0.643941371723,0.653109176953,0.665804469951},
-   }; 
+     {0.724620303757,0.899211846191,0.936291859515,0.944579091937,0.94692371772,0.945789586458,0.935492651062,0.913173652695,0.90977443609},
+     {0.720768101761,0.907892004154,0.937210055022,0.945094294581,0.944494920294,0.941136208077,0.93661971831,0.924356223176,0.930051813472},
+     {0.724299065421,0.904784643301,0.937938576506,0.940539456533,0.944067043362,0.943750614613,0.939160329201,0.925230671333,0.920143884892},
+     {0.723555888972,0.891038887845,0.93702487906,0.943868050013,0.9433296466,0.941325202647,0.933387610095,0.930462184874,0.920435510888},
+     {0.706017891027,0.891839315242,0.929181103693,0.945251210149,0.946220930233,0.943065231159,0.936117240989,0.930840845279,0.918595371109},
+     {0.706572416905,0.885974797664,0.923103809857,0.938941876579,0.943281477238,0.942451135188,0.935289623871,0.926310160428,0.918116871222},
+     {0.703368526898,0.873433303491,0.920978890342,0.936481121716,0.942840429532,0.941648216482,0.935452396142,0.926339285714,0.913049112349},
+     {0.687741686002,0.876234529316,0.917185109638,0.93502800517,0.93907257226,0.941280976676,0.929876038507,0.923884514436,0.91489965922},
+     {0.675073181716,0.87130710477,0.909954158481,0.928911723494,0.937305146274,0.940579646213,0.932647997164,0.921526157947,0.91551008728},
+     {0.679444301518,0.863857374392,0.909068746953,0.920785999386,0.932639746077,0.937310063385,0.933625327818,0.923361250175,0.914409413854}
+     }; 
 
    // Pileup distributions -- ReReco Data vs Moriond17MC
    double pileup_central[75] = {3.603e-01, 9.378e-01, 1.201e+00, 9.651e-01, 1.112e+00, 1.162e+00, 7.847e-01, 4.960e-01, 7.422e-01, 8.839e-01, 9.662e-01, 1.071e+00, 1.124e+00, 1.175e+00, 1.203e+00, 1.208e+00, 1.200e+00, 1.182e+00, 1.144e+00, 1.096e+00, 1.065e+00, 1.051e+00, 1.052e+00, 1.051e+00, 1.050e+00, 1.057e+00, 1.072e+00, 1.083e+00, 1.095e+00, 1.108e+00, 1.094e+00, 1.084e+00, 1.042e+00, 9.850e-01, 9.095e-01, 8.196e-01, 7.159e-01, 6.107e-01, 5.032e-01, 4.052e-01, 3.092e-01, 2.285e-01, 1.636e-01, 1.133e-01, 7.738e-02, 5.090e-02, 3.180e-02, 2.013e-02, 1.226e-02, 7.425e-03, 4.389e-03, 2.614e-03, 1.572e-03, 9.679e-04, 7.333e-04, 6.786e-04, 7.342e-04, 9.346e-04, 1.346e-03, 1.888e-03, 3.248e-03, 3.966e-03, 4.872e-03, 5.119e-03, 5.452e-03, 5.338e-03, 5.112e-03, 4.397e-03, 4.023e-03, 3.359e-03, 2.987e-03, 2.770e-03, 2.278e-03, 1.982e-03, 1.765e-03};
@@ -914,18 +1015,23 @@ void step1::Loop()
 	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_HT) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTriggerHTTight = 1;
 	  }
 	  
-	  // Muon tracking SF -- NOT TO BE USED, calculate in case
+	  // Muon tracking SF -- https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonWorkInProgressAndPagResults#Results_on_the_full_2016_data, Feb 16 version for full data
 	  int ebin = -1;
 	  if(leptonEta_singleLepCalc < -2.1) ebin = 0;
 	  else if(leptonEta_singleLepCalc < -1.6) ebin = 1;
-	  else if(leptonEta_singleLepCalc < -1.1) ebin = 2;
-	  else if(leptonEta_singleLepCalc < -0.6) ebin = 3;
-	  else if(leptonEta_singleLepCalc <  0.0) ebin = 4;
-	  else if(leptonEta_singleLepCalc <  0.6) ebin = 5;
-	  else if(leptonEta_singleLepCalc <  1.1) ebin = 6;
-	  else if(leptonEta_singleLepCalc <  1.6) ebin = 7;
-	  else if(leptonEta_singleLepCalc <  2.1) ebin = 8;
-	  else if(leptonEta_singleLepCalc <  2.4) ebin = 9;
+	  else if(leptonEta_singleLepCalc < -1.2) ebin = 2;
+	  else if(leptonEta_singleLepCalc < -0.9) ebin = 3;
+	  else if(leptonEta_singleLepCalc < -0.6) ebin = 4;
+	  else if(leptonEta_singleLepCalc < -0.3) ebin = 5;
+	  else if(leptonEta_singleLepCalc < -0.2) ebin = 6;
+	  else if(leptonEta_singleLepCalc <  0.2) ebin = 7;
+	  else if(leptonEta_singleLepCalc <  0.3) ebin = 8;
+	  else if(leptonEta_singleLepCalc <  0.6) ebin = 9;
+	  else if(leptonEta_singleLepCalc <  0.9) ebin = 10;
+	  else if(leptonEta_singleLepCalc <  1.2) ebin = 11;
+	  else if(leptonEta_singleLepCalc <  1.6) ebin = 12;
+	  else if(leptonEta_singleLepCalc <  2.1) ebin = 13;
+	  else if(leptonEta_singleLepCalc <  2.4) ebin = 14;
 
 	  MuTrkSF = tracksf[ebin];
 
@@ -1184,6 +1290,69 @@ void step1::Loop()
 	      JetSFdn_80X *= min(one,max(jetsf-jetsferr,float(0.726255-0.0190384)));
 	    }
 	  }
+
+	  // ----------------------------------------------------------------------------
+	  // B TAGGING fix -- from Moriond17 preliminary SFs to Feb 3 release
+	  // ----------------------------------------------------------------------------
+
+	  double heavySF = 1.0;
+	  double heavySFerr = 0.0;
+	  double heavySFup = 1.0;
+	  double heavySFdn = 1.0;
+	  double heavyEff = 1.0;
+	  double lightSF = 1.0;
+	  double lightSFerr = 0.0;
+	  double lightSFup = 1.0;
+	  double lightSFdn = 1.0;
+	  double lightEff = 1.0;
+
+	  // Set the initial tagged/untagged state
+	  bool istagged = theJetCSV_JetSubCalc->at(ijet) > 0.8484;	  
+	  double ijetPt = theJetPt_JetSubCalc->at(ijet);
+	  double ijetEta= theJetEta_JetSubCalc->at(ijet);
+	  
+	  if(theJetHFlav_JetSubCalc->at(ijet) == 5){//b-quarks
+		heavySF   = GetBtagSF2016Medium_comb(central, ijetPt, ijetEta);
+		heavySFerr= GetBtagSF2016Medium_comb(uncert, ijetPt, ijetEta);
+		if(ijetPt>1000){heavySFerr *=2.0;}
+		heavySFup = heavySF + heavySFerr;
+		heavySFdn = heavySF - heavySFerr;
+		heavyEff  = GetBtagEfficiency(ijetPt);
+
+		theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+		theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySFup,heavyEff);
+		theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySFdn,heavyEff);
+		theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+		theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+		
+	  }else if(theJetHFlav_JetSubCalc->at(ijet) == 4){//c-quarks
+		heavySF   = GetCtagSF2016Medium_comb(central, ijetPt, ijetEta);
+		heavySFerr= GetCtagSF2016Medium_comb(uncert, ijetPt, ijetEta);
+		if(ijetPt>1000){heavySFerr *=2.0;}
+		heavySFup = heavySF + heavySFerr;
+		heavySFdn = heavySF - heavySFerr;
+		heavyEff  = GetCtagEfficiency(ijetPt);
+		
+		theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+		theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySFup,heavyEff);
+		theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySFdn,heavyEff);
+		theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+		theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+		
+	  }else{//udsg-quarks
+		lightSF   = GetLFSF2016Medium(central, ijetPt, ijetEta);
+		lightSFerr= GetLFSF2016Medium(uncert, ijetPt, ijetEta);
+		if(ijetPt>1000){lightSFerr *=2.0;}
+		lightSFup = lightSF + lightSFerr;
+		lightSFdn = lightSF - lightSFerr;
+		lightEff  = GetMistagRate(ijetPt);
+		
+		theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
+		theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
+		theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
+		theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,lightSFup,lightEff);
+		theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,lightSFdn,lightEff);
+		}
 
 	  // ----------------------------------------------------------------------------
 	  // Counts and pt ordering pair
@@ -1788,8 +1957,6 @@ void step1::Loop()
       deltaRlepWjet = -99;     deltaPhilepWjet = -99;	  
       deltaRlepTjet = -99;     deltaPhilepTjet = -99;	  
 
-      TauPtWeightUp = 1.0;
-      TauPtWeightDown = 1.0;
       NJetsWtagged_0p6_shifts.clear();
       NJetsWtagged_0p6_notTtagged_shifts.clear();
       NJetsTtagged_0p81_shifts.clear();
@@ -1810,7 +1977,7 @@ void step1::Loop()
       TLorentzVector leadak8;
       leadak8.SetPtEtaPhiM(0,0,0,0);
 
-      for(int i = 0; i < 6; i++){
+      for(int i = 0; i < 8; i++){
 	NJetsWtagged_0p6_shifts.push_back(0);
 	NJetsWtagged_0p6_notTtagged_shifts.push_back(0);
 	NJetsTtagged_0p81_shifts.push_back(0);
@@ -1995,12 +2162,16 @@ void step1::Loop()
 	  float tau0p6SF = 1.0;
 	  float tau0p6SFup = 1.0;
 	  float tau0p6SFdn = 1.0;
+	  float taupt0p6SFup = 1.0;
+	  float taupt0p6SFdn = 1.0;
 	  double tau0p6Eff = 1.0;
-	  if(isWmatched && matchedPt >= 200){	    
+	  if(isWmatched && matchedPt >= 200 && mass > 65 && mass < 105){	    
 	    // VALUES FOR 80X from TWiki
 	    tau0p6SF = 1.002;
 	    tau0p6SFup = 1.002+0.028;
 	    tau0p6SFdn = 1.002-0.028;
+	    taupt0p6SFup = 1.002+0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
+	    taupt0p6SFdn = 1.002-0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
 	    
 	    // Use matched W to find the efficiency -- calculated for TpTp and ttbar, EWK/QCD will almost never pass here (use ttbar eff when they do)
 	    if(isSig){
@@ -2023,12 +2194,14 @@ void step1::Loop()
  
 	  // IF THE JET IS NOT TRUTH-MATCHED, THESE IFS WILL DO NOTHING, SF == 1
 	  int tag_tau0p6 = applySF(isWtagged,tau0p6SF,tau0p6Eff);
+ 	  int tag_tau0p6up = applySF(isWtagged,tau0p6SFup,tau0p6Eff);
+	  int tag_tau0p6dn = applySF(isWtagged,tau0p6SFdn,tau0p6Eff);
 	  int tag_tau0p6_JMSup = applySF(isWtagged_JMSup,tau0p6SF,tau0p6Eff);
 	  int tag_tau0p6_JMSdn = applySF(isWtagged_JMSdn,tau0p6SF,tau0p6Eff);
 	  int tag_tau0p6_JMRup = applySF(isWtagged_JMRup,tau0p6SF,tau0p6Eff);
 	  int tag_tau0p6_JMRdn = applySF(isWtagged_JMRdn,tau0p6SF,tau0p6Eff);
- 	  int tag_tau0p6up = applySF(isWtagged,tau0p6SFup,tau0p6Eff);
-	  int tag_tau0p6dn = applySF(isWtagged,tau0p6SFdn,tau0p6Eff);
+ 	  int tag_taupt0p6up = applySF(isWtagged,taupt0p6SFup,tau0p6Eff);
+	  int tag_taupt0p6dn = applySF(isWtagged,taupt0p6SFdn,tau0p6Eff);
 	  
 	  // Now increase the tag count in the right variable	  
 	  NJetsWtagged_0p6 += tag_tau0p6;
@@ -2038,20 +2211,18 @@ void step1::Loop()
 	  NJetsWtagged_0p6_shifts[3] += tag_tau0p6_JMSdn;
 	  NJetsWtagged_0p6_shifts[4] += tag_tau0p6_JMRup;
 	  NJetsWtagged_0p6_shifts[5] += tag_tau0p6_JMRdn;
+	  NJetsWtagged_0p6_shifts[6] += tag_taupt0p6up;
+	  NJetsWtagged_0p6_shifts[7] += tag_taupt0p6dn;
 
-	  NJetsWtagged_0p6_notTtagged += tag_tau0p6-tag_topTau81;
-	  NJetsWtagged_0p6_notTtagged_shifts[0] += tag_tau0p6up-tag_topTau81up;
-	  NJetsWtagged_0p6_notTtagged_shifts[1] += tag_tau0p6dn-tag_topTau81dn;
-	  NJetsWtagged_0p6_notTtagged_shifts[2] += tag_tau0p6_JMSup-tag_topTau81_JMSup;
-	  NJetsWtagged_0p6_notTtagged_shifts[3] += tag_tau0p6_JMSdn-tag_topTau81_JMSdn;
-	  NJetsWtagged_0p6_notTtagged_shifts[4] += tag_tau0p6_JMRup-tag_topTau81_JMRup;
-	  NJetsWtagged_0p6_notTtagged_shifts[5] += tag_tau0p6_JMRdn-tag_topTau81_JMRdn;
-
-	  // Extra uncertainty for pt extrapolation
-	  if(tag_tau0p6 == 1){
-	    TauPtWeightUp *= 1 + 0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
-	    TauPtWeightDown *= 1 - 0.0453*log(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)/200);
-	  }
+	  if(tag_tau0p6){NJetsWtagged_0p6_notTtagged += tag_tau0p6-tag_topTau81;}
+	  if(tag_tau0p6up){NJetsWtagged_0p6_notTtagged_shifts[0] += tag_tau0p6up-tag_topTau81up;}
+	  if(tag_tau0p6dn){NJetsWtagged_0p6_notTtagged_shifts[1] += tag_tau0p6dn-tag_topTau81dn;}
+	  if(tag_tau0p6_JMSup){NJetsWtagged_0p6_notTtagged_shifts[2] += tag_tau0p6_JMSup-tag_topTau81_JMSup;}
+	  if(tag_tau0p6_JMSdn){NJetsWtagged_0p6_notTtagged_shifts[3] += tag_tau0p6_JMSdn-tag_topTau81_JMSdn;}
+	  if(tag_tau0p6_JMRup){NJetsWtagged_0p6_notTtagged_shifts[4] += tag_tau0p6_JMRup-tag_topTau81_JMRup;}
+	  if(tag_tau0p6_JMRdn){NJetsWtagged_0p6_notTtagged_shifts[5] += tag_tau0p6_JMRdn-tag_topTau81_JMRdn;}
+	  if(tag_taupt0p6up){NJetsWtagged_0p6_notTtagged_shifts[6] += tag_taupt0p6up-tag_topTau81up;}
+	  if(tag_taupt0p6dn){NJetsWtagged_0p6_notTtagged_shifts[7] += tag_taupt0p6dn-tag_topTau81dn;}
 
 	  // ------------------------------------------------------------------------------------------------------------------
 	  // Variables for W tagged jets
@@ -2115,7 +2286,7 @@ void step1::Loop()
 	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
 	  
 	  NJetsWtagged_0p6 += isWtagged;
-	  NJetsWtagged_0p6_notTtagged += isWtagged-isTtagged;
+	  if(isWtagged){NJetsWtagged_0p6_notTtagged += isWtagged-isTtagged;}
 	  if(NJetsWtagged_0p6 == 1){
 	    WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
 	    wjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
