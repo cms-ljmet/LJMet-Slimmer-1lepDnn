@@ -10,8 +10,8 @@ outputDir=${4}
 scratch=${PWD}
 macroDir=${PWD}
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-scramv1 project CMSSW CMSSW_7_4_14
-cd CMSSW_7_4_14
+scramv1 project CMSSW CMSSW_8_0_26_patch1
+cd CMSSW_8_0_26_patch1
 eval `scramv1 runtime -sh`
 cd -
 
