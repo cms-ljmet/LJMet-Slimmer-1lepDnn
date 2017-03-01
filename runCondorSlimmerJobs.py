@@ -10,9 +10,9 @@ shift = sys.argv[1]
 #IO directories must be full paths
 
 relbase = '/uscms_data/d3/jmanagan/CMSSW_7_4_14/'
-inputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_080116/'+shift+'/'
-outputDir='/eos/uscms/store/user/lpcljm/2016/LJMet_1lepTT_082216_step1/'+shift+'/'
-condorDir='/uscms_data/d3/jmanagan/LJMet_1lepTT_082216_step1/'+shift+'/'
+inputDir='/eos/uscms/store/user/lpcljm/2016/LJMet80X_1lep_022317/'+shift+'/'
+outputDir='/eos/uscms/store/user/lpcljm/2016/LJMet80X_1lep_022317_step1/'+shift+'/'
+condorDir='/uscms_data/d3/jmanagan/LJMet80X_1lep_022317_step1/'+shift+'/'
 
 runDir=os.getcwd()
 # Can change the file directory if needed
@@ -90,7 +90,7 @@ Queue 1"""%dict)
             print count, "jobs submitted!!!"
 
 #, %(RUNDIR)s/csc2015_Dec01.txt, %(RUNDIR)s/ecalscn1043093_Dec01.txt
-'''
+
 signalList = [
     #'BprimeBprime_M-700_TuneCUETP8M1_13TeV-madgraph-pythia8',
     'BprimeBprime_M-800_TuneCUETP8M1_13TeV-madgraph-pythia8',
@@ -145,29 +145,19 @@ Queue 1"""%dict)
             print count, "jobs submitted!!!"
 
 #, %(RUNDIR)s/csc2015_Dec01.txt, %(RUNDIR)s/ecalscn1043093_Dec01.txt
-'''
+
 dirList = [
-    #'TTJets_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8',
-    #'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
-    #'TT_Mtt-700to1000_TuneCUETP8M1_13TeV-powheg-pythia8',
-    'WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    'TT_Mtt-1000toInf_TuneCUETP8M1_13TeV-powheg-pythia8',
-    'WW_TuneCUETP8M1_13TeV-pythia8',						      
-    'WZ_TuneCUETP8M1_13TeV-pythia8',						      
-    'ZZ_TuneCUETP8M1_13TeV-pythia8',						      
-    'DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8',			      
+    'TT_Mtt-700to1000_TuneCUETP8M2T4_13TeV-powheg-pythia8',
+    'TT_Mtt-1000toInf_TuneCUETP8M2T4_13TeV-powheg-pythia8',
+
     'ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1',		      
-    'ST_t-channel_top_4f_leptonDecays_13TeV-powheg-pythia8_TuneCUETP8M1',		      
-    'ST_t-channel_antitop_4f_leptonDecays_13TeV-powheg-pythia8_TuneCUETP8M1',		      
-    'ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1',		      
-    'ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1',		      
-    'TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',		      
-    'TTWJetsToQQ_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',			      
-    'TTZToQQ_TuneCUETP8M1_13TeV-amcatnlo-pythia8',					      
-    'TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8',			      
+    'ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1',
+    'ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1',
+    'ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1',
+    'ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1',
   
-    #'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
-    #'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
+    'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
+    'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
     'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
     'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
     'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
@@ -182,23 +172,36 @@ dirList = [
     'WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    
+
+    'DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',			      
+    'WW_TuneCUETP8M1_13TeV-pythia8',						      
+    'WZ_TuneCUETP8M1_13TeV-pythia8',						      
+    'ZZ_TuneCUETP8M1_13TeV-pythia8',						      
+
+    'X53X53_M-800_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-900_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1000_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1100_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1200_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1300_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1400_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1500_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1600_LH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-800_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-900_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1000_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1100_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1200_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1300_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1400_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1500_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'X53X53_M-1600_RH_TuneCUETP8M1_13TeV-madgraph-pythia8',
     ]
 
 if shift == 'nominal':
     # These don't need to be run for shifted directories
-    #dirList.append('ST_tW_top_5f_scaleup_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')
-    #dirList.append('ST_tW_top_5f_scaledown_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')	      
-    #dirList.append('ST_tW_antitop_5f_scaleup_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')
-    #dirList.append('ST_tW_antitop_5f_scaledown_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1')      
-    dirList.append('TT_TuneCUETP8M1_13TeV-powheg-scaledown-pythia8')
-    dirList.append('TT_TuneCUETP8M1_13TeV-powheg-scaleup-pythia8')
-    dirList.append('SingleElectron_PRB')
-    dirList.append('SingleMuon_PRB')
-    dirList.append('SingleElectron_PRC')
-    dirList.append('SingleMuon_PRC')
-    dirList.append('SingleElectron_PRD')
-    dirList.append('SingleMuon_PRD')
+    dirList.append('SingleElectron_RRBCDEFGH')
+    dirList.append('SingleMuon_RRBCDEFGH')
 
 for sample in dirList:
     os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+sample)
@@ -238,8 +241,8 @@ Queue 1"""%dict)
 
 #, %(RUNDIR)s/csc2015_Dec01.txt, %(RUNDIR)s/ecalscn1043093_Dec01.txt
 
-sample = 'TT_TuneCUETP8M1_13TeV-powheg-pythia8'
-TTOutList = ['Mtt0to1000','Mtt1000toInf']
+sample = 'TT_TuneCUETP8M2T4_13TeV-powheg-pythia8'
+TTOutList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
 
 rootfiles = EOSlist_root_files(inputDir+sample)
 relPath = sample        
