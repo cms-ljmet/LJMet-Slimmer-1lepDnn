@@ -40,7 +40,8 @@ public :
    Bool_t          isTT;
    Bool_t          isTTV;
    Bool_t          isVV;
-   Bool_t          isST;
+   Bool_t          isSTt;
+   Bool_t          isSTtW;
    Bool_t          isTTincMtt0to1000;
    Bool_t          isTTincMtt0to700;
    Bool_t          isTTincMtt700to1000;
@@ -1170,7 +1171,8 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
   isMadgraphBkg = ((inputFileName.Contains("WJetsToLNu") || inputFileName.Contains("DYJetsToLL_M-50") || inputFileName.Contains("QCD")) && inputFileName.Contains("madgraph"));
   isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_") || inputFileName.Contains("TT_Tune"));
   isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt"));
-  isST = inputFileName.Contains("ST");
+  isSTt = inputFileName.Contains("ST_t-channel");
+  isSTtW = inputFileName.Contains("ST_tW");
   isTTV = (inputFileName.Contains("TTZ_") || inputFileName.Contains("TTW_"));
   isVV = (inputFileName.Contains("WW_") || inputFileName.Contains("WZ_") || inputFileName.Contains("ZZ_"));
   isMC      = !inputFileName.Contains("Single");
