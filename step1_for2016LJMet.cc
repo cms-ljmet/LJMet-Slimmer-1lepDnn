@@ -164,6 +164,12 @@ double step1::GetMistagRate(double pt){
 
 void step1::Loop() 
 {
+  
+  TFile* file = TFile::Open("puppiCorr.root","READ");
+  TF1 *puppisd_corrGEN      = (TF1*)file->Get("puppiJECcorr_gen");
+  TF1 *puppisd_corrRECO_cen = (TF1*)file->Get("puppiJECcorr_reco_0eta1v3");
+  TF1 *puppisd_corrRECO_for = (TF1*)file->Get("puppiJECcorr_reco_1v3eta2v5");
+  file->Close();  
 
   // ----------------------------------------------------------------------------
   // Turn on input tree branches
@@ -788,12 +794,6 @@ void step1::Loop()
    poly2D->SetParameter(6,0.351156);
 
    
-   TFile* file = TFile::Open("puppiCorr.root","READ");
-   TF1 *puppisd_corrGEN      = (TF1*)file->Get("puppiJECcorr_gen");
-   TF1 *puppisd_corrRECO_cen = (TF1*)file->Get("puppiJECcorr_reco_0eta1v3");
-   TF1 *puppisd_corrRECO_for = (TF1*)file->Get("puppiJECcorr_reco_1v3eta2v5");
-   file->Close();
-
   // ----------------------------------------------------------------------------
   // RUN THE EVENT LOOP
   // ----------------------------------------------------------------------------
@@ -958,29 +958,29 @@ void step1::Loop()
 	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.902; TrigEffWeightRUncert = 0.072;}
 	    else {TrigEffWeightR = 0.899; TrigEffWeightRUncert = 0.089;}
 	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.958; TrigEffWeightRUncert = 0.050;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.968; TrigEffWeightRUncert = 0.062;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.962; TrigEffWeightRUncert = 0.039;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.979; TrigEffWeightRUncert = 0.051;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.869; TrigEffWeightRUncert = 0.078;}
-	    else {TrigEffWeightR = 0.938; TrigEffWeightRUncert = 0.102;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.891; TrigEffWeightRUncert = 0.064;}
+	    else {TrigEffWeightR = 0.901; TrigEffWeightRUncert = 0.071;}
 	  }else if(leppt < 100){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.968; TrigEffWeightRUncert = 0.033;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.965; TrigEffWeightRUncert = 0.039;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.967; TrigEffWeightRUncert = 0.025;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.970; TrigEffWeightRUncert = 0.032;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.938; TrigEffWeightRUncert = 0.053;}
-	    else {TrigEffWeightR = 0.929; TrigEffWeightRUncert = 0.065;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.916; TrigEffWeightRUncert = 0.043;}
+	    else {TrigEffWeightR = 0.896; TrigEffWeightRUncert = 0.046;}
 	  }else if(leppt < 200){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.974; TrigEffWeightRUncert = 0.022;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.973; TrigEffWeightRUncert = 0.028;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.971; TrigEffWeightRUncert = 0.017;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.973; TrigEffWeightRUncert = 0.023;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.922; TrigEffWeightRUncert = 0.038;}
-	    else {TrigEffWeightR = 0.924; TrigEffWeightRUncert = 0.053;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.892; TrigEffWeightRUncert = 0.030;}
+	    else {TrigEffWeightR = 0.900; TrigEffWeightRUncert = 0.037;}
 	  }else{
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.964; TrigEffWeightRUncert = 0.025;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.969; TrigEffWeightRUncert = 0.034;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightR = 0.974; TrigEffWeightRUncert = 0.019;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightR = 0.973; TrigEffWeightRUncert = 0.025;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightR = 1.000; TrigEffWeightRUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.932; TrigEffWeightRUncert = 0.044;}
-	    else {TrigEffWeightR = 0.954; TrigEffWeightRUncert = 0.064;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightR = 0.877; TrigEffWeightRUncert = 0.032;}
+	    else {TrigEffWeightR = 0.898; TrigEffWeightRUncert = 0.040;}
 	  }
 	  //PRH:
 	  if(leppt < 60){
@@ -990,29 +990,29 @@ void step1::Loop()
 	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.888; TrigEffWeightHUncert = 0.131;}
 	    else {TrigEffWeightH = 0.898; TrigEffWeightHUncert = 0.170;}
 	  }else if(leppt < 70){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.090;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.947; TrigEffWeightHUncert = 0.104;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.973; TrigEffWeightHUncert = 0.076;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.944; TrigEffWeightHUncert = 0.092;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.890; TrigEffWeightHUncert = 0.143;}
-	    else {TrigEffWeightH = 0.836; TrigEffWeightHUncert = 0.167;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.898; TrigEffWeightHUncert = 0.132;}
+	    else {TrigEffWeightH = 0.892; TrigEffWeightHUncert = 0.143;}
 	  }else if(leppt < 100){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.992; TrigEffWeightHUncert = 0.058;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.972; TrigEffWeightHUncert = 0.067;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.969; TrigEffWeightHUncert = 0.048;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.966; TrigEffWeightHUncert = 0.060;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.877; TrigEffWeightHUncert = 0.088;}
-	    else {TrigEffWeightH = 0.928; TrigEffWeightHUncert = 0.120;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.869; TrigEffWeightHUncert = 0.079;}
+	    else {TrigEffWeightH = 0.934; TrigEffWeightHUncert = 0.100;}
 	  }else if(leppt < 200){
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.984; TrigEffWeightHUncert = 0.041;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.049;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.978; TrigEffWeightHUncert = 0.034;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.972; TrigEffWeightHUncert = 0.044;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.944; TrigEffWeightHUncert = 0.073;}
-	    else {TrigEffWeightH = 0.884; TrigEffWeightHUncert = 0.092;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.897; TrigEffWeightHUncert = 0.063;}
+	    else {TrigEffWeightH = 0.867; TrigEffWeightHUncert = 0.071;}
 	  }else{
-	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.970; TrigEffWeightHUncert = 0.048;} // 
-	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.983; TrigEffWeightHUncert = 0.070;}
+	    if(fabs(lepeta) < 0.8) {TrigEffWeightH = 0.974; TrigEffWeightHUncert = 0.039;} // 
+	    else if(fabs(lepeta) < 1.442) {TrigEffWeightH = 0.971; TrigEffWeightHUncert = 0.056;}
 	    else if(fabs(lepeta) < 1.566) {TrigEffWeightH = 1.000; TrigEffWeightHUncert = 0.000;}
-	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.938; TrigEffWeightHUncert = 0.093;}
-	    else {TrigEffWeightH = 0.847; TrigEffWeightHUncert = 0.147;}
+	    else if(fabs(lepeta) < 2.0) {TrigEffWeightH = 0.850; TrigEffWeightHUncert = 0.072;}
+	    else {TrigEffWeightH = 0.746; TrigEffWeightHUncert = 0.085;}
 	  }
 
 	  TrigEffWeight = (27.957*TrigEffWeightR + 8.857*TrigEffWeightH)/36.814;
@@ -1445,64 +1445,64 @@ void step1::Loop()
 	  // // B TAGGING fix -- from Moriond17 preliminary SFs to Feb 3 release
 	  // // ----------------------------------------------------------------------------
 
-	  // double heavySF = 1.0;
-	  // double heavySFerr = 0.0;
-	  // double heavySFup = 1.0;
-	  // double heavySFdn = 1.0;
-	  // double heavyEff = 1.0;
-	  // double lightSF = 1.0;
-	  // double lightSFerr = 0.0;
-	  // double lightSFup = 1.0;
-	  // double lightSFdn = 1.0;
-	  // double lightEff = 1.0;
+	  double heavySF = 1.0;
+	  double heavySFerr = 0.0;
+	  double heavySFup = 1.0;
+	  double heavySFdn = 1.0;
+	  double heavyEff = 1.0;
+	  double lightSF = 1.0;
+	  double lightSFerr = 0.0;
+	  double lightSFup = 1.0;
+	  double lightSFdn = 1.0;
+	  double lightEff = 1.0;
 
-	  // // Set the initial tagged/untagged state
-	  // bool istagged = theJetCSV_JetSubCalc->at(ijet) > 0.8484;	  
-	  // double ijetPt = theJetPt_JetSubCalc->at(ijet);
-	  // double ijetEta= theJetEta_JetSubCalc->at(ijet);
+	  // Set the initial tagged/untagged state
+	  bool istagged = theJetCSV_JetSubCalc->at(ijet) > 0.8484;	  
+	  double ijetPt = theJetPt_JetSubCalc->at(ijet);
+	  double ijetEta= theJetEta_JetSubCalc->at(ijet);
 	  
-	  // if(theJetHFlav_JetSubCalc->at(ijet) == 5){//b-quarks
-	  // 	heavySF   = GetBtagSF2016Medium_comb(central, ijetPt, ijetEta);
-	  // 	heavySFerr= GetBtagSF2016Medium_comb(uncert, ijetPt, ijetEta);
-	  // 	if(ijetPt>1000){heavySFerr *=2.0;}
-	  // 	heavySFup = heavySF + heavySFerr;
-	  // 	heavySFdn = heavySF - heavySFerr;
-	  // 	heavyEff  = GetBtagEfficiency(ijetPt);
+	  if(theJetHFlav_JetSubCalc->at(ijet) == 5){//b-quarks
+	  	heavySF   = GetBtagSF2016Medium_comb(central, ijetPt, ijetEta);
+	  	heavySFerr= GetBtagSF2016Medium_comb(uncert, ijetPt, ijetEta);
+	  	if(ijetPt>1000){heavySFerr *=2.0;}
+	  	heavySFup = heavySF + heavySFerr;
+	  	heavySFdn = heavySF - heavySFerr;
+	  	heavyEff  = GetBtagEfficiency(ijetPt);
 
-	  // 	theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
-	  // 	theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySFup,heavyEff);
-	  // 	theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySFdn,heavyEff);
-	  // 	theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
-	  // 	theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+	  	theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+	  	theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySFup,heavyEff);
+	  	theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySFdn,heavyEff);
+	  	theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+	  	theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
 		
-	  // }else if(theJetHFlav_JetSubCalc->at(ijet) == 4){//c-quarks
-	  // 	heavySF   = GetCtagSF2016Medium_comb(central, ijetPt, ijetEta);
-	  // 	heavySFerr= GetCtagSF2016Medium_comb(uncert, ijetPt, ijetEta);
-	  // 	if(ijetPt>1000){heavySFerr *=2.0;}
-	  // 	heavySFup = heavySF + heavySFerr;
-	  // 	heavySFdn = heavySF - heavySFerr;
-	  // 	heavyEff  = GetCtagEfficiency(ijetPt);
+	  }else if(theJetHFlav_JetSubCalc->at(ijet) == 4){//c-quarks
+	  	heavySF   = GetCtagSF2016Medium_comb(central, ijetPt, ijetEta);
+	  	heavySFerr= GetCtagSF2016Medium_comb(uncert, ijetPt, ijetEta);
+	  	if(ijetPt>1000){heavySFerr *=2.0;}
+	  	heavySFup = heavySF + heavySFerr;
+	  	heavySFdn = heavySF - heavySFerr;
+	  	heavyEff  = GetCtagEfficiency(ijetPt);
 		
-	  // 	theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
-	  // 	theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySFup,heavyEff);
-	  // 	theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySFdn,heavyEff);
-	  // 	theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
-	  // 	theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+	  	theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+	  	theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySFup,heavyEff);
+	  	theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySFdn,heavyEff);
+	  	theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
+	  	theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,heavySF,heavyEff);
 		
-	  // }else{//udsg-quarks
-	  // 	lightSF   = GetLFSF2016Medium(central, ijetPt, ijetEta);
-	  // 	lightSFerr= GetLFSF2016Medium(uncert, ijetPt, ijetEta);
-	  // 	if(ijetPt>1000){lightSFerr *=2.0;}
-	  // 	lightSFup = lightSF + lightSFerr;
-	  // 	lightSFdn = lightSF - lightSFerr;
-	  // 	lightEff  = GetMistagRate(ijetPt);
+	  }else{//udsg-quarks
+	  	lightSF   = GetLFSF2016Medium(central, ijetPt, ijetEta);
+	  	lightSFerr= GetLFSF2016Medium(uncert, ijetPt, ijetEta);
+	  	if(ijetPt>1000){lightSFerr *=2.0;}
+	  	lightSFup = lightSF + lightSFerr;
+	  	lightSFdn = lightSF - lightSFerr;
+	  	lightEff  = GetMistagRate(ijetPt);
 		
-	  // 	theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
-	  // 	theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
-	  // 	theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
-	  // 	theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,lightSFup,lightEff);
-	  // 	theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,lightSFdn,lightEff);
-	  // 	}
+	  	theJetBTag_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
+	  	theJetBTag_bSFup_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
+	  	theJetBTag_bSFdn_JetSubCalc->at(ijet) = applySF(istagged,lightSF,lightEff);
+	  	theJetBTag_lSFup_JetSubCalc->at(ijet) = applySF(istagged,lightSFup,lightEff);
+	  	theJetBTag_lSFdn_JetSubCalc->at(ijet) = applySF(istagged,lightSFdn,lightEff);
+	  	}
 
 	  // ----------------------------------------------------------------------------
 	  // Counts and pt ordering pair
