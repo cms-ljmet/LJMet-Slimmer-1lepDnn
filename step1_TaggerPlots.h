@@ -63,6 +63,8 @@ public :
    // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // NEW BRANCHES
+   vector<double> theJetAK8Truth_JetSubCalc_PtOrdered;
+
    double Tprime1_BEST_Mass;
    double Tprime2_BEST_Mass;
    double Tprime1_BEST_Pt;
@@ -83,19 +85,26 @@ public :
    double Tprime2_DeepAK8_Phi;
    double TprimeAvg_DeepAK8_Mass;
 
-   double Tprime1_DeepAK8decorr_Mass;
-   double Tprime2_DeepAK8decorr_Mass;
-   double Tprime1_DeepAK8decorr_Pt;
-   double Tprime2_DeepAK8decorr_Pt;
-   double Tprime1_DeepAK8decorr_Eta;
-   double Tprime2_DeepAK8decorr_Eta;
-   double Tprime1_DeepAK8decorr_Phi;
-   double Tprime2_DeepAK8decorr_Phi;
-   double TprimeAvg_DeepAK8decorr_Mass;
+
+   double Tprime1_DeepAK8_decorr_Mass;
+   double Tprime2_DeepAK8_decorr_Mass;
+   double Tprime1_DeepAK8_decorr_Pt;
+   double Tprime2_DeepAK8_decorr_Pt;
+   double Tprime1_DeepAK8_decorr_Eta;
+   double Tprime2_DeepAK8_decorr_Eta;
+   double Tprime1_DeepAK8_decorr_Phi;
+   double Tprime2_DeepAK8_decorr_Phi;
+   double TprimeAvg_DeepAK8_decorr_Mass;
 
    bool validDecay_BEST;;
    bool validDecay_DeepAK8;
-   bool validDecay_DeepAK8decorr;
+   bool validDecay_DeepAK8_decorr;
+
+   double highPtAK8Jet1_SoftDropCorrectedMass;
+   double highPtAK8Jet2_SoftDropCorrectedMass;
+   double highPtAK8Jet3_SoftDropCorrectedMass;
+
+   double W_mass;
 
    Int_t           isElectron;
    Int_t           isMuon;
@@ -152,6 +161,9 @@ public :
    Int_t           NJetsCSVwithSF_JetSubCalc;
    Int_t           NJetsCSVnotH_JetSubCalc;
    Int_t           NJetsCSVnotPH_JetSubCalc;
+
+   vector<int>     maxProb_JetSubCalc_PtOrdered;
+
    vector<int>     dnn_largest_BestCalc_PtOrdered;
    vector<int>     dnn_largest_DeepAK8Calc_PtOrdered;
    vector<int>     decorr_largest_DeepAK8Calc_PtOrdered;
@@ -445,6 +457,7 @@ public :
    vector<int>     *bPrimeNDaughters_TpTpCalc;
    vector<int>     *bPrimeStatus_TpTpCalc;
    vector<int>     *bosonID_TpTpCalc;
+   vector<int>     *maxProb_JetSubCalc;
    vector<int>     *dnn_largest_BestCalc;
    vector<int>     *dnn_largest_DeepAK8Calc;
    vector<int>     *decorr_largest_DeepAK8Calc;
@@ -982,6 +995,7 @@ public :
    TBranch        *b_bPrimeNDaughters_TpTpCalc;   //!
    TBranch        *b_bPrimeStatus_TpTpCalc;   //!
    TBranch        *b_bosonID_TpTpCalc;   //!
+   TBranch        *b_maxProb_JetSubCalc;   //!
    TBranch        *b_dnn_largest_BestCalc;   //!
    TBranch        *b_dnn_largest_DeepAK8Calc;   //!
    TBranch        *b_decorr_largest_DeepAK8Calc;   //!
@@ -1558,6 +1572,7 @@ void step1::Init(TTree *tree)
    bPrimeNDaughters_TpTpCalc = 0;
    bPrimeStatus_TpTpCalc = 0;
    bosonID_TpTpCalc = 0;
+   maxProb_JetSubCalc = 0;
    dnn_largest_BestCalc = 0;
    dnn_largest_DeepAK8Calc = 0;
    decorr_largest_DeepAK8Calc = 0;
@@ -2099,6 +2114,7 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("bPrimeNDaughters_TpTpCalc", &bPrimeNDaughters_TpTpCalc, &b_bPrimeNDaughters_TpTpCalc);
    inputTree->SetBranchAddress("bPrimeStatus_TpTpCalc", &bPrimeStatus_TpTpCalc, &b_bPrimeStatus_TpTpCalc);
    inputTree->SetBranchAddress("bosonID_TpTpCalc", &bosonID_TpTpCalc, &b_bosonID_TpTpCalc);
+   inputTree->SetBranchAddress("maxProb_JetSubCalc", &maxProb_JetSubCalc, &b_maxProb_JetSubCalc);
    inputTree->SetBranchAddress("dnn_largest_BestCalc", &dnn_largest_BestCalc, &b_dnn_largest_BestCalc);
    inputTree->SetBranchAddress("dnn_largest_DeepAK8Calc", &dnn_largest_DeepAK8Calc, &b_dnn_largest_DeepAK8Calc);
    inputTree->SetBranchAddress("decorr_largest_DeepAK8Calc", &decorr_largest_DeepAK8Calc, &b_decorr_largest_DeepAK8Calc);
