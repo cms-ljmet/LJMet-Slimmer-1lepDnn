@@ -478,6 +478,8 @@ void step1::Loop()
    outputTree->Branch("elIsLooseEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsLooseEndCap_singleLepCalc/F");
    outputTree->Branch("elIsVetoEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsVetoEndCap_singleLepCalc/F");
 
+   outputTree->Branch("theJetAK8Truth_JetSubCalc_PtOrdered",&theJetAK8Truth_JetSubCalc_PtOrdered);
+
    outputTree->Branch("Tprime1_BEST_Mass",&Tprime1_BEST_Mass);
    outputTree->Branch("Tprime2_BEST_Mass",&Tprime2_BEST_Mass);
    outputTree->Branch("Tprime1_BEST_Pt",&Tprime1_BEST_Pt);
