@@ -63,6 +63,8 @@ public :
    // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // NEW BRANCHES
+   vector<double> theJetAK8Truth_JetSubCalc_PtOrdered;
+
    double Tprime1_BEST_Mass;
    double Tprime2_BEST_Mass;
    double Tprime1_BEST_Pt;
@@ -83,7 +85,7 @@ public :
    double Tprime2_DeepAK8_Phi;
    double TprimeAvg_DeepAK8_Mass;
 
-<<<<<<< HEAD
+
    double Tprime1_DeepAK8_decorr_Mass;
    double Tprime2_DeepAK8_decorr_Mass;
    double Tprime1_DeepAK8_decorr_Pt;
