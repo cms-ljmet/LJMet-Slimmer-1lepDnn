@@ -64,6 +64,7 @@ void step1::Loop()
    inputTree->SetBranchStatus("isBZTW_TpTpCalc",1);
    inputTree->SetBranchStatus("isBZBH_TpTpCalc",1);
    inputTree->SetBranchStatus("isBZBZ_TpTpCalc",1);
+   inputTree->SetBranchStatus("tPrimePt_TpTpCalc",1);
    inputTree->SetBranchStatus("NLeptonDecays_TpTpCalc",1);
    
    //triggers
@@ -81,8 +82,17 @@ void step1::Loop()
    inputTree->SetBranchStatus("elEta_singleLepCalc",1);
    inputTree->SetBranchStatus("elPhi_singleLepCalc",1);
    inputTree->SetBranchStatus("elEnergy_singleLepCalc",1);
-   inputTree->SetBranchStatus("elMVAValue_alt_singleLepCalc",1);
+   inputTree->SetBranchStatus("elMVAValue_singleLepCalc",1);
    inputTree->SetBranchStatus("elMiniIso_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsTightBarrel_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsMediumBarrel_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsLooseBarrel_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsVetoBarrel_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsTIghtEndCap_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsMediumEndCap_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsLooseEndCap_singleLepCalc",1);
+   inputTree->SetBranchStatus("elIsVetoEndCap_singleLepCalc",1);
+
    
    //muons  **** ADD MORE/NEW ID BRANCHES *****
    inputTree->SetBranchStatus("muPt_singleLepCalc",1);
@@ -90,6 +100,10 @@ void step1::Loop()
    inputTree->SetBranchStatus("muPhi_singleLepCalc",1);
    inputTree->SetBranchStatus("muEnergy_singleLepCalc",1);
    inputTree->SetBranchStatus("muMiniIso_singleLepCalc",1);
+   inputTree->SetBranchStatus("muIsTight_singleLepCalc",1);
+   inputTree->SetBranchStatus("muIsMedium_singleLepCalc",1);
+   inputTree->SetBranchStatus("muIsMediumPrompt_singleLepCalc",1);
+   inputTree->SetBranchStatus("muIsLoose_singleLepCalc",1);
 
    //missing et
    inputTree->SetBranchStatus("corr_met_singleLepCalc",1);
@@ -115,13 +129,18 @@ void step1::Loop()
    inputTree->SetBranchStatus("HadronicVHtD2E_JetSubCalc",1);
 
    //jets *** CHECK ALL THESE NAMES, ADD BEST, ADD DeepAK8, Add DoubleB discrim, ADD DeepCSV from singleLepCalc ****
+   //JetSubCalc
    inputTree->SetBranchStatus("theJetHFlav_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetPFlav_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetPt_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetEta_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetPhi_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetEnergy_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetCSV_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetCSVb_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetCSVbb_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8DoubleB_JetSubCalc",1);
+   //inputTree->SetBranchStatus("theJetCSVc_JetSubCalc",1);
+   //inputTree->SetBranchStatus("theJetCSVudsg_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetBTag_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8Pt_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8Eta_JetSubCalc",1);
@@ -131,21 +150,105 @@ void step1::Loop()
    inputTree->SetBranchStatus("theJetAK8NjettinessTau1_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8NjettinessTau2_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8NjettinessTau3_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PUPPITau1_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PUPPITau2_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PUPPITau3_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PrunedMass_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SoftDropMass_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PUPPISoftDropRaw_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PUPPISoftDropCorr_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8PUPPISoftDrop_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SDSubjetNCSVMSF_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SDSubjetPt_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8CHSTau1_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8CHSTau2_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8CHSTau3_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8CHSPrunedMass_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8CHSSoftDropMass_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropRaw_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDropCorr_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SoftDrop_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc",1);
+   /* inputTree->SetBranchStatus("theJetAK8SDSubjetPt_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SDSubjetEta_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SDSubjetCSV_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SDSubjetCSVb_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SDSubjetCSVbb_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SDSubjetCSVc_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SDSubjetCSVudsg_JetSubCalc",1);*/
    inputTree->SetBranchStatus("theJetAK8SDSubjetHFlav_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SDSubjetIndex_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SDSubjetSize_JetSubCalc",1);
+
+   //BEST
+   /*inputTree->SetBranchStatus("AK8JetPt_BestCalc",1);
+   inputTree->SetBranchStatus("AK8JetEta_BestCalc",1);
+   inputTree->SetBranchStatus("AK8JetPhi_BestCalc",1);
+   inputTree->SetBranchStatus("AK8JetEnergy_BestCalc",1);
+   inputTree->SetBranchStatus("AK8JetCSV_BestCalc",1);
+   inputTree->SetBranchStatus("dnn_QCD_BestCalc",1);
+   inputTree->SetBranchStatus("dnn_Top_BestCalc",1);
+   inputTree->SetBranchStatus("dnn_Higgs_BestCalc",1);
+   inputTree->SetBranchStatus("dnn_Z_BestCalc",1);
+   inputTree->SetBranchStatus("dnn_W_BestCalc",1);*/
+   inputTree->SetBranchStatus("dnn_largest_BestCalc",1);
+   /*inputTree->SetBranchStatus("bDisc_BestCalc",1);
+   inputTree->SetBranchStatus("bDisc1_BestCalc",1);
+   inputTree->SetBranchStatus("bDisc2_BestCalc",1);
+   inputTree->SetBranchStatus("et_BestCalc",1);
+   inputTree->SetBranchStatus("eta_BestCalc",1);
+   inputTree->SetBranchStatus("mass_BestCalc",1);
+   inputTree->SetBranchStatus("SDmass_BestCalc",1);
+   inputTree->SetBranchStatus("tau32_BestCalc",1);
+   inputTree->SetBranchStatus("tau21_BestCalc",1);
+   inputTree->SetBranchStatus("q_BestCalc",1);
+   inputTree->SetBranchStatus("m1234_jet_BestCalc",1);
+   inputTree->SetBranchStatus("m12_jet_BestCalc",1);
+   inputTree->SetBranchStatus("m23_jet_BestCalc",1);
+   inputTree->SetBranchStatus("m13_jet_BestCalc",1);
+   inputTree->SetBranchStatus("m1234top_BestCalc",1);
+   inputTree->SetBranchStatus("m12top_BestCalc",1);
+   inputTree->SetBranchStatus("m23top_BestCalc",1);
+   inputTree->SetBranchStatus("m13top_BestCalc",1);
+   inputTree->SetBranchStatus("m1234W_BestCalc",1);
+   inputTree->SetBranchStatus("m12W_BestCalc",1);
+   inputTree->SetBranchStatus("m23W_BestCalc",1);
+   inputTree->SetBranchStatus("m13W_BestCalc",1);
+   inputTree->SetBranchStatus("m1234Z_BestCalc",1);
+   inputTree->SetBranchStatus("m12Z_BestCalc",1);
+   inputTree->SetBranchStatus("m23Z_BestCalc",1);
+   inputTree->SetBranchStatus("m13Z_BestCalc",1);
+   inputTree->SetBranchStatus("m1234H_BestCalc",1);
+   inputTree->SetBranchStatus("m12H_BestCalc",1);
+   inputTree->SetBranchStatus("m23H_BestCalc",1);
+   inputTree->SetBranchStatus("m13H_BestCalc",1);
+   inputTree->SetBranchStatus("pzOverp_top_BestCalc",1);
+   inputTree->SetBranchStatus("pzOverp_W_BestCalc",1);
+   inputTree->SetBranchStatus("pzOverp_Z_BestCalc",1);
+   inputTree->SetBranchStatus("pzOverp_H_BestCalc",1);
+   inputTree->SetBranchStatus("pzOverp_jet_BestCalc",1);
+   inputTree->SetBranchStatus("Njets_top_BestCalc",1);
+   inputTree->SetBranchStatus("Njets_W_BestCalc",1);
+   inputTree->SetBranchStatus("Njets_Z_BestCalc",1);
+   inputTree->SetBranchStatus("Njets_H_BestCalc",1);
+   inputTree->SetBranchStatus("Njets_jet_BestCalc",1);
+   inputTree->SetBranchStatus("Njets_orig_BestCalc",1);*/
+
+
+
+   //DeepAK8
+   /*inputTree->SetBranchStatus("dnn_B_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("dnn_J_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("dnn_W_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("dnn_Z_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("dnn_H_DeepAK8Calc",1);*/
+   inputTree->SetBranchStatus("dnn_largest_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_largest_DeepAK8Calc",1);
+   /*inputTree->SetBranchStatus("dnn_T_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_B_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_J_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_W_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_Z_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_H_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_T_DeepAK8Calc",1);*/
+
+   //JetSubCalc
+   inputTree->SetBranchStatus("maxProb_JetSubCalc",1);
+
+   //adding DeepCSV from singleLepCalc
+   //inputTree->SetBranchStatus("AK8JetDeepCSVb_singleLepCalc",1);
+   //inputTree->SetBranchStatus("AK8JetDeepCSVbb_singleLepCalc",1);
+   //   inputTree->SetBranchStatus("AK8JetDeepCSVc_singleLepCalc",1);
+   //inputTree->SetBranchStatus("AK8JetDeepCSVudsg_singleLepCalc",1);
    
    //top
    inputTree->SetBranchStatus("ttbarMass_TTbarMassCalc",1);
@@ -165,6 +268,8 @@ void step1::Loop()
    // OUTPUT FILE
    outputFile->cd();
    TTree *outputTree = new TTree("ljmet","ljmet");
+
+
 
    // ***** EVERY NEW BRANCH NEEDS A LINE HERE ****
    outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
@@ -188,6 +293,7 @@ void step1::Loop()
    outputTree->Branch("isBZTW_TpTpCalc",&isBZTW_TpTpCalc,"isBZTW_TpTpCalc/O");
    outputTree->Branch("isBZBH_TpTpCalc",&isBZBH_TpTpCalc,"isBZBH_TpTpCalc/O");
    outputTree->Branch("isBZBZ_TpTpCalc",&isBZBZ_TpTpCalc,"isBZBZ_TpTpCalc/O");
+   outputTree->Branch("tPrimePt_TpTpCalc",&tPrimePt_TpTpCalc,"tPrimePt_TpTpCalc/O");
    outputTree->Branch("NLeptonDecays_TpTpCalc",&NLeptonDecays_TpTpCalc,"NLeptonDecays_TpTpCalc/I");
    outputTree->Branch("MCWeight_singleLepCalc",&MCWeight_singleLepCalc,"MCWeight_singleLepCalc/D");
    outputTree->Branch("renormWeights",&renormWeights);
@@ -203,14 +309,18 @@ void step1::Loop()
    outputTree->Branch("leptonEta_singleLepCalc",&leptonEta_singleLepCalc,"leptonEta_singleLepCalc/F");
    outputTree->Branch("leptonPhi_singleLepCalc",&leptonPhi_singleLepCalc,"leptonPhi_singleLepCalc/F");
    outputTree->Branch("leptonEnergy_singleLepCalc",&leptonEnergy_singleLepCalc,"leptonEnergy_singleLepCalc/F");
-   outputTree->Branch("leptonMVAValue_alt_singleLepCalc",&leptonMVAValue_alt_singleLepCalc,"leptonMVAValue_alt_singleLepCalc/F");
+   outputTree->Branch("leptonMVAValue_singleLepCalc",&leptonMVAValue_singleLepCalc,"leptonMVAValue_singleLepCalc/F");
    outputTree->Branch("leptonMiniIso_singleLepCalc",&leptonMiniIso_singleLepCalc,"leptonMiniIso_singleLepCalc/F");
    outputTree->Branch("theJetPt_JetSubCalc_PtOrdered",&theJetPt_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetEta_JetSubCalc_PtOrdered",&theJetEta_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetPhi_JetSubCalc_PtOrdered",&theJetPhi_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetEnergy_JetSubCalc_PtOrdered",&theJetEnergy_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetCSV_JetSubCalc_PtOrdered",&theJetCSV_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetCSVb_JetSubCalc_PtOrdered",&theJetCSVb_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetCSVbb_JetSubCalc_PtOrdered",&theJetCSVbb_JetSubCalc_PtOrdered);
+   //outputTree->Branch("theJetCSVc_JetSubCalc_PtOrdered",&theJetCSVc_JetSubCalc_PtOrdered);
+   //outputTree->Branch("theJetCSVudsg_JetSubCalc_PtOrdered",&theJetCSVudsg_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetHFlav_JetSubCalc_PtOrdered",&theJetHFlav_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetPFlav_JetSubCalc_PtOrdered",&theJetPFlav_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetBTag_JetSubCalc_PtOrdered",&theJetBTag_JetSubCalc_PtOrdered);
    outputTree->Branch("HadronicVHtID_JetSubCalc",&HadronicVHtID_JetSubCalc);
    outputTree->Branch("HadronicVHtPt_JetSubCalc",&HadronicVHtPt_JetSubCalc);
@@ -220,24 +330,35 @@ void step1::Loop()
    outputTree->Branch("theJetAK8Pt_JetSubCalc_PtOrdered",&theJetAK8Pt_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Eta_JetSubCalc_PtOrdered",&theJetAK8Eta_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Phi_JetSubCalc_PtOrdered",&theJetAK8Phi_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8Mass_JetSubCalc_PtOrdered",&theJetAK8Mass_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Energy_JetSubCalc_PtOrdered",&theJetAK8Energy_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PrunedMass_JetSubCalc_PtOrdered",&theJetAK8PrunedMass_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8SoftDropMass_JetSubCalc_PtOrdered",&theJetAK8SoftDropMass_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PUPPISoftDropRaw_JetSubCalc_PtOrdered",&theJetAK8PUPPISoftDropRaw_PtOrdered);
-   outputTree->Branch("theJetAK8PUPPISoftDropCorr_JetSubCalc_PtOrdered",&theJetAK8PUPPISoftDropCorr_PtOrdered);
-   outputTree->Branch("theJetAK8PUPPISoftDrop_PtOrdered",&theJetAK8PUPPISoftDrop_PtOrdered);
+   outputTree->Branch("theJetAK8CHSPrunedMass_JetSubCalc_PtOrdered",&theJetAK8CHSPrunedMass_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8CHSSoftDropMass_JetSubCalc_PtOrdered",&theJetAK8CHSSoftDropMass_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDropRaw_JetSubCalc_PtOrdered",&theJetAK8SoftDropRaw_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDropCorr_JetSubCalc_PtOrdered",&theJetAK8SoftDropCorr_PtOrdered);
+   outputTree->Branch("theJetAK8oubleB_JetSubCalc_PtOrdered",&theJetAK8DoubleB_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SoftDrop_PtOrdered",&theJetAK8SoftDrop_PtOrdered);
    outputTree->Branch("theJetAK8SDSubjetNCSVM_PtOrdered",&theJetAK8SDSubjetNCSVM_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau1_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau1_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau2_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau2_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8NjettinessTau3_JetSubCalc_PtOrdered",&theJetAK8NjettinessTau3_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PUPPITau1_JetSubCalc_PtOrdered",&theJetAK8PUPPITau1_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PUPPITau2_JetSubCalc_PtOrdered",&theJetAK8PUPPITau2_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetAK8PUPPITau3_JetSubCalc_PtOrdered",&theJetAK8PUPPITau3_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8CHSTau1_JetSubCalc_PtOrdered",&theJetAK8CHSTau1_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8CHSTau2_JetSubCalc_PtOrdered",&theJetAK8CHSTau2_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8CHSTau3_JetSubCalc_PtOrdered",&theJetAK8CHSTau3_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Wmatch_JetSubCalc_PtOrdered",&theJetAK8Wmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Tmatch_JetSubCalc_PtOrdered",&theJetAK8Tmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Zmatch_JetSubCalc_PtOrdered",&theJetAK8Zmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8Hmatch_JetSubCalc_PtOrdered",&theJetAK8Hmatch_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetAK8MatchedPt_JetSubCalc_PtOrdered",&theJetAK8MatchedPt_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SDSubjetIndex_JetSubCalc_PtOrdered",&theJetAK8SDSubjetIndex_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SDSubjetSize_JetSubCalc_PtOrdered",&theJetAK8SDSubjetSize_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetAK8SDSubjetIndex_JetSubCalc",&theJetAK8SDSubjetIndex_JetSubCalc);
+   outputTree->Branch("theJetAK8SDSubjetSize_JetSubCalc",&theJetAK8SDSubjetSize_JetSubCalc);
+   outputTree->Branch("theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered",&theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered);
+   outputTree->Branch("maxProb_JetSubCalc_PtOrdered",&maxProb_JetSubCalc_PtOrdered);
+   outputTree->Branch("dnn_largest_BestCalc_PtOrdered",&dnn_largest_BestCalc_PtOrdered);
+   outputTree->Branch("dnn_largest_DeepAK8Calc_PtOrdered",&dnn_largest_DeepAK8Calc_PtOrdered);
+   outputTree->Branch("decorr_largest_DeepAK8Calc_PtOrdered",&decorr_largest_DeepAK8Calc_PtOrdered);
    outputTree->Branch("BJetLeadPt",&BJetLeadPt,"BJetLeadPt/F");
    outputTree->Branch("WJetLeadPt",&WJetLeadPt,"WJetLeadPt/F");
    outputTree->Branch("TJetLeadPt",&TJetLeadPt,"TJetLeadPt/F");
@@ -272,22 +393,305 @@ void step1::Loop()
    outputTree->Branch("deltaR_lepJets",&deltaR_lepJets);
    outputTree->Branch("deltaR_lepBJets",&deltaR_lepBJets);
    outputTree->Branch("deltaR_lepAK8s",&deltaR_lepAK8s);
+   outputTree->Branch("muIsLoose_singleLepCalc",&muIsLoose_singleLepCalc);
+   outputTree->Branch("muIsMedium_singleLepCalc",&muIsMedium_singleLepCalc);
+   outputTree->Branch("muIsMediumPrompt_singleLepCalc",&muIsMediumPrompt_singleLepCalc);
+   outputTree->Branch("muIsTight_singleLepCalc",&muIsTight_singleLepCalc);
+   outputTree->Branch("AK8JetPt_BestCalc",&AK8JetPt_BestCalc);
+   outputTree->Branch("AK8JetEta_BestCalc",&AK8JetEta_BestCalc);
+   outputTree->Branch("AK8JetPhi_BestCalc",&AK8JetPhi_BestCalc);
+   outputTree->Branch("AK8JetEnergy_BestCalc",&AK8JetEnergy_BestCalc);
+   outputTree->Branch("AK8JetCSV_BestCalc",&AK8JetCSV_BestCalc);
+   outputTree->Branch("dnn_QCD_BestCalc",&dnn_QCD_BestCalc);
+   outputTree->Branch("dnn_Top_BestCalc",&dnn_Top_BestCalc);
+   outputTree->Branch("dnn_Higgs_BestCalc",&dnn_Higgs_BestCalc);
+   outputTree->Branch("dnn_Z_BestCalc",&dnn_Z_BestCalc);
+   outputTree->Branch("dnn_W_BestCalc",&dnn_W_BestCalc);
+   outputTree->Branch("maxProb_JetSubCalc",&maxProb_JetSubCalc);
+   outputTree->Branch("dnn_largest_BestCalc",&dnn_largest_BestCalc);
+   outputTree->Branch("bDisc_BestCalc",&bDisc_BestCalc);
+   outputTree->Branch("bDisc1_BestCalc",&bDisc1_BestCalc);
+   outputTree->Branch("bDisc2_BestCalc",&bDisc2_BestCalc);
+   outputTree->Branch("et_BestCalc",&et_BestCalc);
+   outputTree->Branch("eta_BestCalc",&eta_BestCalc);
+   outputTree->Branch("mass_BestCalc",&mass_BestCalc);
+   outputTree->Branch("SDmass_BestCalc",&SDmass_BestCalc);
+   outputTree->Branch("tau32_BestCalc",&tau32_BestCalc);
+   outputTree->Branch("tau21_BestCalc",&tau21_BestCalc);
+   outputTree->Branch("q_BestCalc",&q_BestCalc);
+   outputTree->Branch("m1234_jet_BestCalc",&m1234_jet_BestCalc);
+   outputTree->Branch("m12_jet_BestCalc",&m12_jet_BestCalc);
+   outputTree->Branch("m23_jet_BestCalc",&m23_jet_BestCalc);
+   outputTree->Branch("m13_jet_BestCalc",&m13_jet_BestCalc);
+   outputTree->Branch("m1234top_BestCalc",&m1234top_BestCalc);
+   outputTree->Branch("m12top_BestCalc",&m12top_BestCalc);
+   outputTree->Branch("m23top_BestCalc",&m23top_BestCalc);
+   outputTree->Branch("m13top_BestCalc",&m13top_BestCalc);
+   outputTree->Branch("m1234W_BestCalc",&m1234W_BestCalc);
+   outputTree->Branch("m12W_BestCalc",&m12W_BestCalc);
+   outputTree->Branch("m23W_BestCalc",&m23W_BestCalc);
+   outputTree->Branch("m13W_BestCalc",&m13W_BestCalc);
+   outputTree->Branch("m1234Z_BestCalc",&m1234Z_BestCalc);
+   outputTree->Branch("m12Z_BestCalc",&m12Z_BestCalc);
+   outputTree->Branch("m23Z_BestCalc",&m23Z_BestCalc);
+   outputTree->Branch("m13Z_BestCalc",&m13Z_BestCalc);
+   outputTree->Branch("m1234H_BestCalc",&m1234H_BestCalc);
+   outputTree->Branch("m12H_BestCalc",&m12H_BestCalc);
+   outputTree->Branch("m23H_BestCalc",&m23H_BestCalc);
+   outputTree->Branch("m13H_BestCalc",&m13H_BestCalc);
+   outputTree->Branch("pzOverp_top_BestCalc",&pzOverp_top_BestCalc);
+   outputTree->Branch("pzOverp_W_BestCalc",&pzOverp_W_BestCalc);
+   outputTree->Branch("pzOverp_Z_BestCalc",&pzOverp_Z_BestCalc);
+   outputTree->Branch("pzOverp_H_BestCalc",&pzOverp_H_BestCalc);
+   outputTree->Branch("pzOverp_jet_BestCalc",&pzOverp_jet_BestCalc);
+   outputTree->Branch("Njets_top_BestCalc",&Njets_top_BestCalc);
+   outputTree->Branch("Njets_W_BestCalc",&Njets_W_BestCalc);
+   outputTree->Branch("Njets_Z_BestCalc",&Njets_Z_BestCalc);
+   outputTree->Branch("Njets_H_BestCalc",&Njets_H_BestCalc);
+   outputTree->Branch("Njets_jet_BestCalc",&Njets_jet_BestCalc);
+   outputTree->Branch("Njets_orig_BestCalc",&Njets_orig_BestCalc);
+   outputTree->Branch("dnn_B_DeepAK8Calc",&dnn_B_DeepAK8Calc);
+   outputTree->Branch("dnn_J_DeepAK8Calc",&dnn_J_DeepAK8Calc);
+   outputTree->Branch("dnn_W_DeepAK8Calc",&dnn_W_DeepAK8Calc);
+   outputTree->Branch("dnn_Z_DeepAK8Calc",&dnn_Z_DeepAK8Calc);
+   outputTree->Branch("dnn_H_DeepAK8Calc",&dnn_H_DeepAK8Calc);
+   outputTree->Branch("dnn_T_DeepAK8Calc",&dnn_T_DeepAK8Calc);
+   outputTree->Branch("dnn_largest_DeepAK8Calc",&dnn_T_DeepAK8Calc);
+   outputTree->Branch("decorr_largest_DeepAK8Calc",&decorr_T_DeepAK8Calc);
+   outputTree->Branch("decorr_B_DeepAK8Calc",&decorr_B_DeepAK8Calc);
+   outputTree->Branch("decorr_J_DeepAK8Calc",&decorr_J_DeepAK8Calc);
+   outputTree->Branch("decorr_W_DeepAK8Calc",&decorr_W_DeepAK8Calc);
+   outputTree->Branch("decorr_Z_DeepAK8Calc",&decorr_Z_DeepAK8Calc);
+   outputTree->Branch("decorr_H_DeepAK8Calc",&decorr_H_DeepAK8Calc);
+   outputTree->Branch("decorr_T_DeepAK8Calc",&decorr_T_DeepAK8Calc);
+   //outputTree->Branch("AK8JetDeepCSVb_singleLepCalc",&AK8JetDeepCSVb_singleLepCalc);
+   //outputTree->Branch("AK8JetDeepCSVbb_singleLepCalc",&AK8JetDeepCSVbb_singleLepCalc);
+   //outputTree->Branch("AK8JetDeepCSVc_singleLepCalc",&AK8JetDeepCSVc_singleLepCalc);
+   //outputTree->Branch("AK8JetDeepCSVudsg_singleLepCalc",&AK8JetDeepCSVudsg_singleLepCalc);
+   outputTree->Branch("theJetAK8SDSubjetHFlav_JetSubCalc",&theJetAK8SDSubjetHFlav_JetSubCalc);
+   outputTree->Branch("elIsTightBarrel_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsTightBarrel_singleLepCalc/F");
+   outputTree->Branch("elIsMediumBarrel_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsMediumBarrel_singleLepCalc/F");
+   outputTree->Branch("elIsLooseBarrel_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsLooseBarrel_singleLepCalc/F");
+   outputTree->Branch("elIsVetoBarrel_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsVetoBarrel_singleLepCalc/F");
+   outputTree->Branch("elIsTightEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsTightEndCap_singleLepCalc/F");
+   outputTree->Branch("elIsMediumEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsMediumEndCap_singleLepCalc/F");
+   outputTree->Branch("elIsLooseEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsLooseEndCap_singleLepCalc/F");
+   outputTree->Branch("elIsVetoEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsVetoEndCap_singleLepCalc/F");
+
+   outputTree->Branch("Tprime1_BEST_Mass",&Tprime1_BEST_Mass);
+   outputTree->Branch("Tprime2_BEST_Mass",&Tprime2_BEST_Mass);
+   outputTree->Branch("Tprime1_BEST_Pt",&Tprime1_BEST_Pt);
+   outputTree->Branch("Tprime2_BEST_Pt",&Tprime2_BEST_Pt);
+   outputTree->Branch("Tprime1_BEST_Eta",&Tprime1_BEST_Eta);
+   outputTree->Branch("Tprime2_BEST_Eta",&Tprime2_BEST_Eta);
+   outputTree->Branch("Tprime1_BEST_Phi",&Tprime1_BEST_Phi);
+   outputTree->Branch("Tprime2_BEST_Phi",&Tprime2_BEST_Phi);
+   outputTree->Branch("TprimeAvg_BEST_Mass",&TprimeAvg_BEST_Mass);
+
+   outputTree->Branch("Tprime1_DeepAK8_Mass",&Tprime1_DeepAK8_Mass);
+   outputTree->Branch("Tprime2_DeepAK8_Mass",&Tprime2_DeepAK8_Mass);
+   outputTree->Branch("Tprime1_DeepAK8_Pt",&Tprime1_DeepAK8_Pt);
+   outputTree->Branch("Tprime2_DeepAK8_Pt",&Tprime2_DeepAK8_Pt);
+   outputTree->Branch("Tprime1_DeepAK8_Eta",&Tprime1_DeepAK8_Eta);
+   outputTree->Branch("Tprime2_DeepAK8_Eta",&Tprime2_DeepAK8_Eta);
+   outputTree->Branch("Tprime1_DeepAK8_Phi",&Tprime1_DeepAK8_Phi);
+   outputTree->Branch("Tprime2_DeepAK8_Phi",&Tprime2_DeepAK8_Phi);
+   outputTree->Branch("TprimeAvg_DeepAK8_Mass",&TprimeAvg_DeepAK8_Mass);
+
+   outputTree->Branch("Tprime1_DeepAK8_decorr_Mass",&Tprime1_DeepAK8_decorr_Mass);
+   outputTree->Branch("Tprime2_DeepAK8_decorr_Mass",&Tprime2_DeepAK8_decorr_Mass);
+   outputTree->Branch("Tprime1_DeepAK8_decorr_Pt",&Tprime1_DeepAK8_decorr_Pt);
+   outputTree->Branch("Tprime2_DeepAK8_decorr_Pt",&Tprime2_DeepAK8_decorr_Pt);
+   outputTree->Branch("Tprime1_DeepAK8_decorr_Eta",&Tprime1_DeepAK8_decorr_Eta);
+   outputTree->Branch("Tprime2_DeepAK8_decorr_Eta",&Tprime2_DeepAK8_decorr_Eta);
+   outputTree->Branch("Tprime1_DeepAK8_decorr_Phi",&Tprime1_DeepAK8_decorr_Phi);
+   outputTree->Branch("Tprime2_DeepAK8_decorr_Phi",&Tprime2_DeepAK8_decorr_Phi);
+   outputTree->Branch("TprimeAvg_DeepAK8_decorr_Mass",&TprimeAvg_DeepAK8_decorr_Mass);
+
+   outputTree->Branch("isValidVLQDecayMode_BEST",&validDecay_BEST);
+   outputTree->Branch("isValidVLQDecayMode_DeepAK8",&validDecay_DeepAK8);
+   outputTree->Branch("isValidVLQDecayMode_DeepAK8_decorr",&validDecay_DeepAK8_decorr);
+
+   outputTree->Branch("highPtAK8Jet1_SoftDropCorrectedMass",&highPtAK8Jet1_SoftDropCorrectedMass);
+   outputTree->Branch("highPtAK8Jet2_SoftDropCorrectedMass",&highPtAK8Jet2_SoftDropCorrectedMass);
+   outputTree->Branch("highPtAK8Jet3_SoftDropCorrectedMass",&highPtAK8Jet3_SoftDropCorrectedMass);
+
 
    // ******* HERE's an example histogram definition that could go in the file ********
    // ******* TH1D *name = new TH1D("name","title;x-axis title;y-axis title",nbins,xmin,xmax)
+
+   // Tprime tagging denominator histogram
+   TH1D *THBWeff_den = new TH1D("THBWeff_den",";T VLQ pT [GeV];N(THBW VLQ's from Tagging Algorithm) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_den->Sumw2();
+   TH1D *THTHeff_den = new TH1D("THTHeff_den",";T VLQ pT [GeV];N(THTH VLQ's from Tagging Algorithm) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_den->Sumw2();
+   TH1D *THTZeff_den = new TH1D("THTZeff_den",";T VLQ pT [GeV];N(THTZ VLQ's from Tagging Algorithm) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_den->Sumw2();
+   TH1D *TZBWeff_den = new TH1D("TZBWeff_den",";T VLQ pT [GeV];N(TZBW VLQ's from Tagging Algorithm) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_den->Sumw2();
+   TH1D *TZTZeff_den = new TH1D("TZTZeff_den",";T VLQ pT [GeV];N(TZTZ VLQ's from Tagging Algorithm) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_den->Sumw2();
+   TH1D *BWBWeff_den = new TH1D("BWBWeff_den",";T VLQ pT [GeV];N(BWBW VLQ's from Tagging Algorithm) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_den->Sumw2();
+   TH1D *BWTZeff_den = new TH1D("BWTZeff_den",";T VLQ pT [GeV];N(BWTZ VLQ's from Tagging Algorithm) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_den->Sumw2();
+   TH1D *BWTHeff_den = new TH1D("BWTHeff_den",";T VLQ pT [GeV];N(BWTH VLQ's from Tagging Algorithm) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_den->Sumw2();
+
+   // Tprime mistagging denominator histogram
+   TH1D *THBWeff_mistag_den = new TH1D("THBWeff_mistag_den",";T VLQ pT [GeV];N(THBW VLQ's from Tagging Algorithm) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_den->Sumw2();
+   TH1D *THTHeff_mistag_den = new TH1D("THTHeff_mistag_den",";T VLQ pT [GeV];N(THTH VLQ's from Tagging Algorithm) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_den->Sumw2();
+   TH1D *THTZeff_mistag_den = new TH1D("THTZeff_mistag_den",";T VLQ pT [GeV];N(THTZ VLQ's from Tagging Algorithm) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_den->Sumw2();
+   TH1D *TZBWeff_mistag_den = new TH1D("TZBWeff_mistag_den",";T VLQ pT [GeV];N(TZBW VLQ's from Tagging Algorithm) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_den->Sumw2();
+   TH1D *TZTZeff_mistag_den = new TH1D("TZTZeff_mistag_den",";T VLQ pT [GeV];N(TZTZ VLQ's from Tagging Algorithm) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_den->Sumw2();
+   TH1D *BWBWeff_mistag_den = new TH1D("BWBWeff_mistag_den",";T VLQ pT [GeV];N(BWBW VLQ's from Tagging Algorithm) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_den->Sumw2();
+   TH1D *BWTZeff_mistag_den = new TH1D("BWTZeff_mistag_den",";T VLQ pT [GeV];N(BWTZ VLQ's from Tagging Algorithm) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_den->Sumw2();
+   TH1D *BWTHeff_mistag_den = new TH1D("BWTHeff_mistag_den",";T VLQ pT [GeV];N(BWTH VLQ's from Tagging Algorithm) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_den->Sumw2();
+
+   // Tagging Efficiency denominator histograms
+   TH1D *Weff_den = new TH1D("Weff_den",";W boson pT [GeV];N(W from Tagging Algorithm) / N(true hadronic W)", 50, 200, 2000); Weff_den->Sumw2(); 
+   TH1D *Zeff_den = new TH1D("Zeff_den",";Z boson pT [GeV];N(Z from Tagging Algorithm) / N(true hadronic Z)", 50, 200, 2000); Zeff_den->Sumw2(); 
+   TH1D *Heff_den = new TH1D("Heff_den",";H boson pT [GeV];N(H from Tagging Algorithm) / N(true hadronic H)", 50, 200, 2000); Heff_den->Sumw2(); 
+   TH1D *Teff_den = new TH1D("Teff_den",";T boson pT [GeV];N(T from Tagging Algorithm) / N(true hadronic T)", 50, 200, 2000); Teff_den->Sumw2(); 
+   TH1D *Beff_den = new TH1D("Beff_den",";B boson pT [GeV];N(B from Tagging Algorithm) / N(true hadronic B)", 50, 200, 2000); Beff_den->Sumw2(); 
+   TH1D *Jeff_den = new TH1D("Jeff_den",";J boson pT [GeV];N(J from Tagging Algorithm) / N(true hadronic J)", 50, 200, 2000); Jeff_den->Sumw2(); 
+
+   // Mistagging efficiency denominator histograms
+   TH1D *Weff_mistag_den = new TH1D("Weff_mistag_den",";W boson pT [GeV];N(W from Tagging Algorithm) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_den->Sumw2();
+   TH1D *Zeff_mistag_den = new TH1D("Zeff_mistag_den",";Z boson pT [GeV];N(Z from Tagging Algorithm) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_den->Sumw2();
+   TH1D *Heff_mistag_den = new TH1D("Heff_mistag_den",";H boson pT [GeV];N(H from Tagging Algorithm) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_den->Sumw2();
+   TH1D *Teff_mistag_den = new TH1D("Teff_mistag_den",";T boson pT [GeV];N(T from Tagging Algorithm) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_den->Sumw2();
+   TH1D *Beff_mistag_den = new TH1D("Beff_mistag_den",";B boson pT [GeV];N(B from Tagging Algorithm) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_den->Sumw2();
+   TH1D *Jeff_mistag_den = new TH1D("Jeff_mistag_den",";J boson pT [GeV];N(J from Tagging Algorithm) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_den->Sumw2();
+
+   // Tprime agging efficiency numerator histgram
+   TH1D *THBWeff_BEST_num = new TH1D("THBWeff_BEST_num",";THBW VLQ pT [GeV];N(THBW VLQ's from BEST) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_BEST_num->Sumw2();
+   TH1D *THTHeff_BEST_num = new TH1D("THTHeff_BEST_num",";THTH VLQ pT [GeV];N(THTH VLQ's from BEST) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_BEST_num->Sumw2();
+   TH1D *THTZeff_BEST_num = new TH1D("THTZeff_BEST_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from BEST) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_BEST_num->Sumw2();
+   TH1D *TZBWeff_BEST_num = new TH1D("TZBWeff_BEST_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from BEST) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_BEST_num->Sumw2();
+   TH1D *TZTZeff_BEST_num = new TH1D("TZTZeff_BEST_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from BEST) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_BEST_num->Sumw2();
+   TH1D *BWBWeff_BEST_num = new TH1D("BWBWeff_BEST_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from BEST) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_BEST_num->Sumw2();
+   TH1D *BWTZeff_BEST_num = new TH1D("BWTZeff_BEST_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from BEST) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_BEST_num->Sumw2();
+   TH1D *BWTHeff_BEST_num = new TH1D("BWTHeff_BEST_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from BEST) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_BEST_num->Sumw2();
+
+   TH1D *THBWeff_DeepAK8_num = new TH1D("THBWeff_DeepAK8_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_DeepAK8_num->Sumw2();
+   TH1D *THTHeff_DeepAK8_num = new TH1D("THTHeff_DeepAK8_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_DeepAK8_num->Sumw2();
+   TH1D *THTZeff_DeepAK8_num = new TH1D("THTZeff_DeepAK8_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_DeepAK8_num->Sumw2();
+   TH1D *TZBWeff_DeepAK8_num = new TH1D("TZBWeff_DeepAK8_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_DeepAK8_num->Sumw2();
+   TH1D *TZTZeff_DeepAK8_num = new TH1D("TZTZeff_DeepAK8_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_DeepAK8_num->Sumw2();
+   TH1D *BWBWeff_DeepAK8_num = new TH1D("BWBWeff_DeepAK8_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_DeepAK8_num->Sumw2();
+   TH1D *BWTZeff_DeepAK8_num = new TH1D("BWTZeff_DeepAK8_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_DeepAK8_num->Sumw2();
+   TH1D *BWTHeff_DeepAK8_num = new TH1D("BWTHeff_DeepAK8_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_DeepAK8_num->Sumw2();
+
+   TH1D *THBWeff_DeepAK8_decorr_num = new TH1D("THBWeff_DeepAK8_decorr_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8_decorr) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTHeff_DeepAK8_decorr_num = new TH1D("THTHeff_DeepAK8_decorr_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8_decorr) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTZeff_DeepAK8_decorr_num = new TH1D("THTZeff_DeepAK8_decorr_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8_decorr) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZBWeff_DeepAK8_decorr_num = new TH1D("TZBWeff_DeepAK8_decorr_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8_decorr) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZTZeff_DeepAK8_decorr_num = new TH1D("TZTZeff_DeepAK8_decorr_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8_decorr) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWBWeff_DeepAK8_decorr_num = new TH1D("BWBWeff_DeepAK8_decorr_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8_decorr) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTZeff_DeepAK8_decorr_num = new TH1D("BWTZeff_DeepAK8_decorr_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8_decorr) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTHeff_DeepAK8_decorr_num = new TH1D("BWTHeff_DeepAK8_decorr_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8_decorr) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_DeepAK8_decorr_num->Sumw2();
+
+   // Tagging efficiency numerator histograms
    TH1D *Weff_BEST_num = new TH1D("Weff_BEST_num",";W boson pT [GeV];N(W from BEST) / N(true hadronic W)", 50, 200, 2000); Weff_BEST_num->Sumw2(); 
-   TH1D *Weff_BEST_den = new TH1D("Weff_BEST_den",";W boson pT [GeV];N(W from BEST) / N(true hadronic W)", 50, 200, 2000); Weff_BEST_den->Sumw2(); 
+   TH1D *Zeff_BEST_num = new TH1D("Zeff_BEST_num",";Z boson pT [GeV];N(Z from BEST) / N(true hadronic Z)", 50, 200, 2000); Zeff_BEST_num->Sumw2();
+   TH1D *Heff_BEST_num = new TH1D("Heff_BEST_num",";H boson pT [GeV];N(H from BEST) / N(true hadronic H)", 50, 200, 2000); Heff_BEST_num->Sumw2();
+   TH1D *Teff_BEST_num = new TH1D("Teff_BEST_num",";T boson pT [GeV];N(T from BEST) / N(true hadronic T)", 50, 200, 2000); Teff_BEST_num->Sumw2();
+   TH1D *Beff_BEST_num = new TH1D("Beff_BEST_num",";B boson pT [GeV];N(B from BEST) / N(true hadronic B)", 50, 200, 2000); Beff_BEST_num->Sumw2();
+   TH1D *Jeff_BEST_num = new TH1D("Jeff_BEST_num",";J boson pT [GeV];N(J from BEST) / N(true hadronic J)", 50, 200, 2000); Jeff_BEST_num->Sumw2();
+
+   TH1D *Weff_DeepAK8_decorr_num = new TH1D("Weff_DeepAK8_decorr_num",";W boson pT [GeV];N(W from DeepAK8_decorr) / N(true hadronic W)", 50, 200, 2000); Weff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Zeff_DeepAK8_decorr_num = new TH1D("Zeff_DeepAK8_decorr_num",";Z boson pT [GeV];N(Z from DeepAK8_decorr) / N(true hadronic Z)", 50, 200, 2000); Zeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Heff_DeepAK8_decorr_num = new TH1D("Heff_DeepAK8_decorr_num",";H boson pT [GeV];N(H from DeepAK8_decorr) / N(true hadronic H)", 50, 200, 2000); Heff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Teff_DeepAK8_decorr_num = new TH1D("Teff_DeepAK8_decorr_num",";T boson pT [GeV];N(T from DeepAK8_decorr) / N(true hadronic T)", 50, 200, 2000); Teff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Beff_DeepAK8_decorr_num = new TH1D("Beff_DeepAK8_decorr_num",";B boson pT [GeV];N(B from DeepAK8_decorr) / N(true hadronic B)", 50, 200, 2000); Beff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Jeff_DeepAK8_decorr_num = new TH1D("Jeff_DeepAK8_decorr_num",";J boson pT [GeV];N(J from DeepAK8_decorr) / N(true hadronic J)", 50, 200, 2000); Jeff_DeepAK8_decorr_num->Sumw2();
+
+   TH1D *Weff_DeepAK8_num = new TH1D("Weff_DeepAK8_num",";W boson pT [GeV];N(W from DeepAK8) / N(true hadronic W)", 50, 200, 2000); Weff_DeepAK8_num->Sumw2();
+   TH1D *Zeff_DeepAK8_num = new TH1D("Zeff_DeepAK8_num",";Z boson pT [GeV];N(Z from DeepAK8) / N(true hadronic Z)", 50, 200, 2000); Zeff_DeepAK8_num->Sumw2();
+   TH1D *Heff_DeepAK8_num = new TH1D("Heff_DeepAK8_num",";H boson pT [GeV];N(H from DeepAK8) / N(true hadronic H)", 50, 200, 2000); Heff_DeepAK8_num->Sumw2();
+   TH1D *Teff_DeepAK8_num = new TH1D("Teff_DeepAK8_num",";T boson pT [GeV];N(T from DeepAK8) / N(true hadronic T)", 50, 200, 2000); Teff_DeepAK8_num->Sumw2();
+   TH1D *Beff_DeepAK8_num = new TH1D("Beff_DeepAK8_num",";B boson pT [GeV];N(B from DeepAK8) / N(true hadronic B)", 50, 200, 2000); Beff_DeepAK8_num->Sumw2();
+   TH1D *Jeff_DeepAK8_num = new TH1D("Jeff_DeepAK8_num",";J boson pT [GeV];N(J from DeepAK8) / N(true hadronic J)", 50, 200, 2000); Jeff_DeepAK8_num->Sumw2();
+
+   TH1D *WZeff_JetSub_num = new TH1D("WZeff_JetSub_num",";W and Z boson pT [GeV];N(W and Z from JetSub) / N(true hadronic W and Z)", 50, 200, 2000); WZeff_JetSub_num->Sumw2();
+   TH1D *Heff_JetSub_num = new TH1D("Heff_JetSub_num",";H boson pT [GeV];N(H from JetSub) / N(true hadronic H)", 50, 200, 2000); Heff_JetSub_num->Sumw2();
+   TH1D *Teff_JetSub_num = new TH1D("Teff_JetSub_num",";T boson pT [GeV];N(T from JetSub) / N(true hadronic T)", 50, 200, 2000); Teff_JetSub_num->Sumw2();
+   TH1D *Beff_JetSub_num = new TH1D("Beff_JetSub_num",";B boson pT [GeV];N(B from JetSub) / N(true hadronic B)", 50, 200, 2000); Beff_JetSub_num->Sumw2();
+   TH1D *Jeff_JetSub_num = new TH1D("Jeff_JetSub_num",";J boson pT [GeV];N(J from JetSub) / N(true hadronic J)", 50, 200, 2000); Jeff_JetSub_num->Sumw2();
+
+   // Tprime agging efficiency numerator histgram
+   TH1D *THBWeff_mistag_BEST_num = new TH1D("THBWeff_mistag_BEST_num",";THBW VLQ pT [GeV];N(THBW VLQ's from BEST) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_BEST_num->Sumw2();
+   TH1D *THTHeff_mistag_BEST_num = new TH1D("THTHeff_mistag_BEST_num",";THTH VLQ pT [GeV];N(THTH VLQ's from BEST) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_BEST_num->Sumw2();
+   TH1D *THTZeff_mistag_BEST_num = new TH1D("THTZeff_mistag_BEST_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from BEST) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_BEST_num->Sumw2();
+   TH1D *TZBWeff_mistag_BEST_num = new TH1D("TZBWeff_mistag_BEST_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from BEST) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_BEST_num->Sumw2();
+   TH1D *TZTZeff_mistag_BEST_num = new TH1D("TZTZeff_mistag_BEST_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from BEST) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_BEST_num->Sumw2();
+   TH1D *BWBWeff_mistag_BEST_num = new TH1D("BWBWeff_mistag_BEST_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from BEST) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_BEST_num->Sumw2();
+   TH1D *BWTZeff_mistag_BEST_num = new TH1D("BWTZeff_mistag_BEST_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from BEST) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_BEST_num->Sumw2();
+   TH1D *BWTHeff_mistag_BEST_num = new TH1D("BWTHeff_mistag_BEST_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from BEST) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_BEST_num->Sumw2();
+
+   TH1D *THBWeff_mistag_DeepAK8_num = new TH1D("THBWeff_mistag_DeepAK8_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *THTHeff_mistag_DeepAK8_num = new TH1D("THTHeff_mistag_DeepAK8_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *THTZeff_mistag_DeepAK8_num = new TH1D("THTZeff_mistag_DeepAK8_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *TZBWeff_mistag_DeepAK8_num = new TH1D("TZBWeff_mistag_DeepAK8_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *TZTZeff_mistag_DeepAK8_num = new TH1D("TZTZeff_mistag_DeepAK8_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *BWBWeff_mistag_DeepAK8_num = new TH1D("BWBWeff_mistag_DeepAK8_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *BWTZeff_mistag_DeepAK8_num = new TH1D("BWTZeff_mistag_DeepAK8_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *BWTHeff_mistag_DeepAK8_num = new TH1D("BWTHeff_mistag_DeepAK8_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_DeepAK8_num->Sumw2();
+
+   TH1D *THBWeff_mistag_DeepAK8_decorr_num = new TH1D("THBWeff_mistag_DeepAK8_decorr_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8_decorr) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTHeff_mistag_DeepAK8_decorr_num = new TH1D("THTHeff_mistag_DeepAK8_decorr_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8_decorr) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTZeff_mistag_DeepAK8_decorr_num = new TH1D("THTZeff_mistag_DeepAK8_decorr_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8_decorr) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZBWeff_mistag_DeepAK8_decorr_num = new TH1D("TZBWeff_mistag_DeepAK8_decorr_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8_decorr) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZTZeff_mistag_DeepAK8_decorr_num = new TH1D("TZTZeff_mistag_DeepAK8_decorr_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8_decorr) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWBWeff_mistag_DeepAK8_decorr_num = new TH1D("BWBWeff_mistag_DeepAK8_decorr_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8_decorr) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTZeff_mistag_DeepAK8_decorr_num = new TH1D("BWTZeff_mistag_DeepAK8_decorr_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8_decorr) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTHeff_mistag_DeepAK8_decorr_num = new TH1D("BWTHeff_mistag_DeepAK8_decorr_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8_decorr) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_DeepAK8_decorr_num->Sumw2();
+
+   // Mistagging efficiency numerator histograms
+   TH1D *Weff_mistag_BEST_num = new TH1D("Weff_mistag_BEST_num",";W boson pT [GeV];N(W from BEST) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_BEST_num->Sumw2(); 
+   TH1D *Zeff_mistag_BEST_num = new TH1D("Zeff_mistag_BEST_num",";Z boson pT [GeV];N(Z from BEST) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_BEST_num->Sumw2();
+   TH1D *Heff_mistag_BEST_num = new TH1D("Heff_mistag_BEST_num",";H boson pT [GeV];N(H from BEST) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_BEST_num->Sumw2();
+   TH1D *Teff_mistag_BEST_num = new TH1D("Teff_mistag_BEST_num",";T boson pT [GeV];N(T from BEST) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_BEST_num->Sumw2();
+   TH1D *Beff_mistag_BEST_num = new TH1D("Beff_mistag_BEST_num",";B boson pT [GeV];N(B from BEST) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_BEST_num->Sumw2();
+   TH1D *Jeff_mistag_BEST_num = new TH1D("Jeff_mistag_BEST_num",";J boson pT [GeV];N(J from BEST) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_BEST_num->Sumw2();
+
+   TH1D *Weff_mistag_DeepAK8_decorr_num = new TH1D("Weff_mistag_DeepAK8_decorr_num",";W boson pT [GeV];N(W from DeepAK8_decorr) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Zeff_mistag_DeepAK8_decorr_num = new TH1D("Zeff_mistag_DeepAK8_decorr_num",";Z boson pT [GeV];N(Z from DeepAK8_decorr) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Heff_mistag_DeepAK8_decorr_num = new TH1D("Heff_mistag_DeepAK8_decorr_num",";H boson pT [GeV];N(H from DeepAK8_decorr) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Teff_mistag_DeepAK8_decorr_num = new TH1D("Teff_mistag_DeepAK8_decorr_num",";T boson pT [GeV];N(T from DeepAK8_decorr) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Beff_mistag_DeepAK8_decorr_num = new TH1D("Beff_mistag_DeepAK8_decorr_num",";B boson pT [GeV];N(B from DeepAK8_decorr) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Jeff_mistag_DeepAK8_decorr_num = new TH1D("Jeff_mistag_DeepAK8_decorr_num",";J boson pT [GeV];N(J from DeepAK8_decorr) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_DeepAK8_decorr_num->Sumw2();
+
+   TH1D *Weff_mistag_DeepAK8_num = new TH1D("Weff_mistag_DeepAK8_num",";W boson pT [GeV];N(W from DeepAK8) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Zeff_mistag_DeepAK8_num = new TH1D("Zeff_mistag_DeepAK8_num",";Z boson pT [GeV];N(Z from DeepAK8) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Heff_mistag_DeepAK8_num = new TH1D("Heff_mistag_DeepAK8_num",";H boson pT [GeV];N(H from DeepAK8) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Teff_mistag_DeepAK8_num = new TH1D("Teff_mistag_DeepAK8_num",";T boson pT [GeV];N(T from DeepAK8) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Beff_mistag_DeepAK8_num = new TH1D("Beff_mistag_DeepAK8_num",";B boson pT [GeV];N(B from DeepAK8) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Jeff_mistag_DeepAK8_num = new TH1D("Jeff_mistag_DeepAK8_num",";J boson pT [GeV];N(J from DeepAK8) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_DeepAK8_num->Sumw2();
+
+   TH1D *WZeff_mistag_JetSub_num = new TH1D("WZeff_mistag_JetSub_num",";W and Z boson pT [GeV];N(W and Z from JetSub) / N(true hadronic W and Z)", 50, 200, 2000); WZeff_mistag_JetSub_num->Sumw2();
+   TH1D *Heff_mistag_JetSub_num = new TH1D("Heff_mistag_JetSub_num",";H boson pT [GeV];N(H from JetSub) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_JetSub_num->Sumw2();
+   TH1D *Teff_mistag_JetSub_num = new TH1D("Teff_mistag_JetSub_num",";T boson pT [GeV];N(T from JetSub) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_JetSub_num->Sumw2();
+   TH1D *Beff_mistag_JetSub_num = new TH1D("Beff_mistag_JetSub_num",";B boson pT [GeV];N(B from JetSub) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_JetSub_num->Sumw2();
+   TH1D *Jeff_mistag_JetSub_num = new TH1D("Jeff_mistag_JetSub_num",";J boson pT [GeV];N(J from JetSub) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_JetSub_num->Sumw2();
+
+   //Tprime2 Mass Histograms
+   TH1D *Tprime2_BEST_Mass_hist = new TH1D("Tprime2_BEST_Mass_hist",";Number of entries;Tprime2 mass [GeV]",50,800,2000); Tprime2_BEST_Mass_hist->Sumw2();
+   TH1D *Tprime2_DeepAK8_Mass_hist = new TH1D("Tprime2_DeepAK8_Mass_hist",";Number of entries;Tprime2 mass [GeV]",50,800,2000); Tprime2_DeepAK8_Mass_hist->Sumw2();
+   TH1D *Tprime2_DeepAK8_decorr_Mass_hist = new TH1D("Tprime2_DeepAK8_decorr_Mass_hist",";Number of entries;Tprime2 mass [GeV]",50,800,2000); Tprime2_DeepAK8_decorr_Mass_hist->Sumw2();
+   TH1D *Tprime2_JetSub_Mass_hist = new TH1D("Tprime2_JetSub_Mass_hist",";Number of entries;Tprime2 mass [GeV]",50,800,2000); Tprime2_JetSub_Mass_hist->Sumw2();
+
+   TH2D *confusion_num_BEST = new TH2D("confusion_num_BEST","",6,0,6,6,0,6);
+   TH2D *confusion_num_DeepAK8 = new TH2D("confusion_num_DeepAK8","",6,0,6,6,0,6);
+   TH2D *confusion_num_DeepAK8_decorr = new TH2D("confusion_num_DeepAK8_decorr","",6,0,6,6,0,6);
+   TH2D *confusion_num_JetSub = new TH2D("confusion_num_JetSub","",6,0,6,6,0,6);
+   TH2D *confusion_den = new TH2D("confusion_den","",6,0,6,6,0,6);
 
   // ----------------------------------------------------------------------------
   // Define and initialize objects / cuts / efficiencies
   // ----------------------------------------------------------------------------
 
+
+
    // basic cuts
-   float metCut=50;
-   int   njetsCut=3;
-   float JetLeadPtCut=100;
-   float JetSubLeadPtCut=50;
-   float lepPtCut=50;
+   float metCut=0;
+   int   njetsCut=0;
+   float JetLeadPtCut=0;
+   float JetSubLeadPtCut=0;
+   float lepPtCut=0;
    float elEtaCut=2.5;
    float muEtaCut=2.4;
    float jetEtaCut=2.4;
@@ -376,6 +780,8 @@ void step1::Loop()
       // Filter input file by mass or decay
       // ----------------------------------------------------------------------------
 
+
+
       if(isTTincMtt0to700 && ttbarMass_TTbarMassCalc >= 700.) continue;
       if(isTTincMtt0to1000 && ttbarMass_TTbarMassCalc >= 1000.) continue;
       if(isTTincMtt700to1000 && (ttbarMass_TTbarMassCalc < 700. || ttbarMass_TTbarMassCalc >= 1000.)) continue;
@@ -402,7 +808,7 @@ void step1::Loop()
       isMuon = 0;
       if(elPt_singleLepCalc->size()==0 && muPt_singleLepCalc->size()==0){std::cout << "got no leptons, something wrong" << std::endl; continue;}
       if(elPt_singleLepCalc->size()>0 && muPt_singleLepCalc->size()>0) std::cout << "got el and mu, something wrong" << std::endl;
-      if(elPt_singleLepCalc->size()>1 && muPt_singleLepCalc->size()>1) std::cout << "got more than one el or mu, something wrong" << std::endl;
+      if(elPt_singleLepCalc->size()>1 || muPt_singleLepCalc->size()>1) std::cout << "got more than one el or mu, something wrong" << std::endl;
       if(elPt_singleLepCalc->size()>0 && muPt_singleLepCalc->size()==0) {isElectron = 1; isMuon = 0;}
       if(elPt_singleLepCalc->size()==0 && muPt_singleLepCalc->size()>0) {isElectron = 0; isMuon = 1;}
       if(isElectron==0 && isMuon==0){std::cout << "got no leptons, something wrong" << std::endl; continue;}
@@ -434,26 +840,36 @@ void step1::Loop()
       // *** SAM, put some if the WPTight triggers in these strings, check other names, same below in Data section
       if(isMC){ //MC triggers check
 	if(isElectron){
-	  std::string string_a = "Ele15_IsoVVVL_PFHT400";
-	  std::string string_b = "Ele15_IsoVVVL_PFHT350";
-	  std::string string_ORa = "Ele27_WPTight_Gsf";
-	  std::string string_ORb = "Ele30_WPTight_Gsf";
+	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
+	  std::string string_b = "Ele15_IsoVVVL_PFHT450_PFMET50";
+	  std::string string_c = "Ele50_IsoVVVL_PFHT450";
+	  std::string string_d = "Ele15_IsoVVVL_PFHT600";
+	  std::string string_ORa = "Ele35_WPTight_Gsf";
+	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+            if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_c) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+            if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
 	}
 	if(isMuon){
 	  // ***** SAM, check these names, same below in Data section
-	  std::string string_a = "Mu15_IsoVVVL_PFHT400";
-	  std::string string_b = "Mu15_IsoVVVL_PFHT350";
+	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
+	  std::string string_b = "Mu15_IsoVVVL_PFHT450_PFMET50";
+	  std::string string_c = "Mu15_IsoVVVL_PFHT450_CaloBTagCSV_4p5";
+	  std::string string_d = "Mu50_IsoVVVL_PFHT450";
+	  std::string string_e = "Mu15_IsoVVVL_PFHT600";
 	  std::string string_ORb = "Mu50";
-	  std::string string_ORc = "TkMu50";
+	  std::string string_ORc = "TkMu55";
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_singleLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+            if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_c) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+            if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+            if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_e) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_singleLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
@@ -462,25 +878,38 @@ void step1::Loop()
       }
       else{ //Data triggers check
 	if(isElectron){
-	  std::string string_a = "Ele15_IsoVVVL_PFHT400";
-	  std::string string_b = "Ele15_IsoVVVL_PFHT350";
-	  std::string string_ORa = "Ele27_WPTight_Gsf";
-	  std::string string_ORb = "Ele30_WPTight_Gsf";
+	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
+	  std::string string_b = "Ele15_IsoVVVL_PFHT450_PFMET50";
+	  std::string string_c = "Ele50_IsoVVVL_PFHT450";
+	  std::string string_d = "Ele15_IsoVVVL_PFHT600";
+	  std::string string_ORa = "Ele35_WPTight_Gsf";
+	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_singleLepCalc->size(); itrig++){
 	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+            if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+            if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersEl_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	  }
 	}
+
+
+
 	if(isMuon){
-	  std::string string_a = "Mu15_IsoVVVL_PFHT400";
-	  std::string string_b = "Mu15_IsoVVVL_PFHT350";
+	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
+	  std::string string_b = "Mu15_IsoVVVL_PFHT450_PFMET50";
+	  std::string string_c = "Mu15_IsoVVVL_PFHT450_CaloBTagCSV_4p5";
+	  std::string string_d = "Mu50_IsoVVVL_PFHT450";
+	  std::string string_e = "Mu15_IsoVVVL_PFHT600";
 	  std::string string_ORb = "Mu50";
-	  std::string string_ORc = "TkMu50";
+	  std::string string_ORc = "TkMu55";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersMu_singleLepCalc->size(); itrig++){
 	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+            if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+            if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+            if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_e) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersMu_singleLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelTriggersMu_singleLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	  }
@@ -538,31 +967,35 @@ void step1::Loop()
       // ----------------------------------------------------------------------------
       //****** ANY OTHER NEW JET VECTOR (DeepCSV?) to order by pT go here
 
+
+
       std::sort(jetptindpair.begin(), jetptindpair.end(), comparepair);
       theJetPt_JetSubCalc_PtOrdered.clear();
       theJetEta_JetSubCalc_PtOrdered.clear();
       theJetPhi_JetSubCalc_PtOrdered.clear();
       theJetEnergy_JetSubCalc_PtOrdered.clear();
-      theJetCSV_JetSubCalc_PtOrdered.clear();
+      theJetCSVb_JetSubCalc_PtOrdered.clear();
+      theJetCSVbb_JetSubCalc_PtOrdered.clear();
+      //theJetCSVc_JetSubCalc_PtOrdered.clear();
+      //theJetCSVudsg_JetSubCalc_PtOrdered.clear();
       theJetHFlav_JetSubCalc_PtOrdered.clear();
+      theJetPFlav_JetSubCalc_PtOrdered.clear();
       theJetBTag_JetSubCalc_PtOrdered.clear();
-      theJetBTag_bSFdn_JetSubCalc_PtOrdered.clear();
-      theJetBTag_bSFup_JetSubCalc_PtOrdered.clear();
-      theJetBTag_lSFdn_JetSubCalc_PtOrdered.clear();
-      theJetBTag_lSFup_JetSubCalc_PtOrdered.clear();
       for(unsigned int ijet=0; ijet < jetptindpair.size(); ijet++){
       	theJetPt_JetSubCalc_PtOrdered.push_back(theJetPt_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetEta_JetSubCalc_PtOrdered.push_back(theJetEta_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetPhi_JetSubCalc_PtOrdered.push_back(theJetPhi_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetEnergy_JetSubCalc_PtOrdered.push_back(theJetEnergy_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetCSV_JetSubCalc_PtOrdered.push_back(theJetCSV_JetSubCalc->at(jetptindpair[ijet].second));
+      	theJetCSVb_JetSubCalc_PtOrdered.push_back(theJetCSVb_JetSubCalc->at(jetptindpair[ijet].second));
+	theJetCSVbb_JetSubCalc_PtOrdered.push_back(theJetCSVbb_JetSubCalc->at(jetptindpair[ijet].second));
+	//theJetCSVc_JetSubCalc_PtOrdered.push_back(theJetCSVc_JetSubCalc->at(jetptindpair[ijet].second));
+	//theJetCSVudsg_JetSubCalc_PtOrdered.push_back(theJetCSVudsg_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetHFlav_JetSubCalc_PtOrdered.push_back(theJetHFlav_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetBTag_JetSubCalc_PtOrdered.push_back(theJetBTag_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetBTag_bSFdn_JetSubCalc_PtOrdered.push_back(theJetBTag_bSFdn_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetBTag_bSFup_JetSubCalc_PtOrdered.push_back(theJetBTag_bSFup_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetBTag_lSFdn_JetSubCalc_PtOrdered.push_back(theJetBTag_lSFdn_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetBTag_lSFup_JetSubCalc_PtOrdered.push_back(theJetBTag_lSFup_JetSubCalc->at(jetptindpair[ijet].second));
+      	theJetPFlav_JetSubCalc_PtOrdered.push_back(theJetPFlav_JetSubCalc->at(jetptindpair[ijet].second));
+	theJetBTag_JetSubCalc_PtOrdered.push_back(theJetBTag_JetSubCalc->at(jetptindpair[ijet].second));
       }
+
+
 
       // ----------------------------------------------------------------------------
       // Apply kinematic cuts
@@ -593,6 +1026,8 @@ void step1::Loop()
       AK4HTpMETpLepPt = 0;
       AK4HTpMETpLepPt = AK4HT + corr_met_singleLepCalc + leppt;
 
+
+
       // ----------------------------------------------------------------------------
       // Loop over AK8 jets for calculations and pt ordering pair
       // ----------------------------------------------------------------------------
@@ -608,8 +1043,8 @@ void step1::Loop()
         if(fabs(theJetAK8Eta_JetSubCalc->at(ijet)) > ak8EtaCut) continue;
         if(theJetAK8NjettinessTau1_JetSubCalc->at(ijet)==0) continue;
         if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
-        if(theJetAK8PUPPITau1_JetSubCalc->at(ijet)==0) continue;
-        if(theJetAK8PUPPITau2_JetSubCalc->at(ijet)==0) continue;
+        if(theJetAK8CHSTau1_JetSubCalc->at(ijet)==0) continue;
+        if(theJetAK8CHSTau2_JetSubCalc->at(ijet)==0) continue;
 
         // ----------------------------------------------------------------------------                                  
         // Counter and pt ordering pair                                                                                  
@@ -619,6 +1054,9 @@ void step1::Loop()
         jetak8ptindpair.push_back(std::make_pair(theJetAK8Pt_JetSubCalc->at(ijet),ijet));
 	
       }
+
+
+
       // ----------------------------------------------------------------------------
       // Skip failing events
       // ----------------------------------------------------------------------------
@@ -644,7 +1082,7 @@ void step1::Loop()
 	leptonPhi_singleLepCalc = elPhi_singleLepCalc->at(0);
 	leptonEnergy_singleLepCalc = elEnergy_singleLepCalc->at(0);
 	leptonMiniIso_singleLepCalc = elMiniIso_singleLepCalc->at(0);
-	leptonMVAValue_alt_singleLepCalc = elMVAValue_alt_singleLepCalc->at(0);
+	leptonMVAValue_singleLepCalc = elMVAValue_singleLepCalc->at(0);
       }
       if(isMuon){
 	leptonPt_singleLepCalc = leppt;
@@ -652,51 +1090,70 @@ void step1::Loop()
 	leptonPhi_singleLepCalc = muPhi_singleLepCalc->at(0);
 	leptonEnergy_singleLepCalc = muEnergy_singleLepCalc->at(0);
 	leptonMiniIso_singleLepCalc = muMiniIso_singleLepCalc->at(0);
-	leptonMVAValue_alt_singleLepCalc = -99.9;
+	leptonMVAValue_singleLepCalc = -99.9;
       }
 
       // ----------------------------------------------------------------------------
       // Apply pt ordering to AK8 vectors 
       // ----------------------------------------------------------------------------
 
+
+
       // **** LOTS MORE TO ORDER PROBABLY. OR MAYBE WE DON'T NEED TO ORDER AT ALL.....
       //Pt ordering for AK8
       std::sort(jetak8ptindpair.begin(), jetak8ptindpair.end(), comparepair);
+
+      maxProb_JetSubCalc_PtOrdered.clear();
+      dnn_largest_BestCalc_PtOrdered.clear();
+      dnn_largest_DeepAK8Calc_PtOrdered.clear();
+      decorr_largest_DeepAK8Calc_PtOrdered.clear();
+      theJetAK8DoubleB_JetSubCalc_PtOrdered.clear();
+      theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.clear();
+      theJetAK8SDSubjetIndex_JetSubCalc_PtOrdered.clear();
+      theJetAK8SDSubjetSize_JetSubCalc_PtOrdered.clear();
       theJetAK8Pt_JetSubCalc_PtOrdered.clear();
       theJetAK8Eta_JetSubCalc_PtOrdered.clear();
       theJetAK8Phi_JetSubCalc_PtOrdered.clear();
       theJetAK8Energy_JetSubCalc_PtOrdered.clear();
       theJetAK8Mass_JetSubCalc_PtOrdered.clear();
-      theJetAK8PrunedMass_JetSubCalc_PtOrdered.clear();
-      theJetAK8SoftDropMass_JetSubCalc_PtOrdered.clear();
-      theJetAK8PUPPISoftDropRaw_PtOrdered.clear();
-      theJetAK8PUPPISoftDropCorr_PtOrdered.clear();
-      theJetAK8PUPPISoftDrop_PtOrdered.clear();
+      theJetAK8CHSPrunedMass_JetSubCalc_PtOrdered.clear();
+      theJetAK8CHSSoftDropMass_JetSubCalc_PtOrdered.clear();
+      theJetAK8SoftDropRaw_PtOrdered.clear();
+      theJetAK8SoftDropCorr_PtOrdered.clear();
+      theJetAK8SoftDrop_PtOrdered.clear();
       theJetAK8SDSubjetNCSVM_PtOrdered.clear();
       theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.clear();
       theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.clear();
       theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.clear();
-      theJetAK8PUPPITau1_JetSubCalc_PtOrdered.clear();
-      theJetAK8PUPPITau2_JetSubCalc_PtOrdered.clear();
-      theJetAK8PUPPITau3_JetSubCalc_PtOrdered.clear();
+      theJetAK8CHSTau1_JetSubCalc_PtOrdered.clear();
+      theJetAK8CHSTau2_JetSubCalc_PtOrdered.clear();
+      theJetAK8CHSTau3_JetSubCalc_PtOrdered.clear();
       for(unsigned int ijet=0; ijet < jetak8ptindpair.size(); ijet++){
+	maxProb_JetSubCalc_PtOrdered.push_back(dnn_largest_BestCalc->at(jetak8ptindpair[ijet].second));
+      	dnn_largest_BestCalc_PtOrdered.push_back(dnn_largest_BestCalc->at(jetak8ptindpair[ijet].second));
+      	dnn_largest_DeepAK8Calc_PtOrdered.push_back(dnn_largest_DeepAK8Calc->at(jetak8ptindpair[ijet].second));
+      	decorr_largest_DeepAK8Calc_PtOrdered.push_back(decorr_largest_DeepAK8Calc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8DoubleB_JetSubCalc_PtOrdered.push_back(theJetAK8DoubleB_JetSubCalc->at(jetak8ptindpair[ijet].second));
+	theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.push_back(theJetAK8SDSubjetIndex_JetSubCalc->at(jetak8ptindpair[ijet].second));
+	theJetAK8SDSubjetIndex_JetSubCalc_PtOrdered.push_back(theJetAK8SDSubjetIndex_JetSubCalc->at(jetak8ptindpair[ijet].second));
+	theJetAK8SDSubjetSize_JetSubCalc_PtOrdered.push_back(theJetAK8SDSubjetSize_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8Pt_JetSubCalc_PtOrdered.push_back(theJetAK8Pt_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8Eta_JetSubCalc_PtOrdered.push_back(theJetAK8Eta_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8Phi_JetSubCalc_PtOrdered.push_back(theJetAK8Phi_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8Energy_JetSubCalc_PtOrdered.push_back(theJetAK8Energy_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8Mass_JetSubCalc_PtOrdered.push_back(theJetAK8Mass_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PrunedMass_JetSubCalc_PtOrdered.push_back(theJetAK8PrunedMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8SoftDropMass_JetSubCalc_PtOrdered.push_back(theJetAK8SoftDropMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PUPPISoftDropRaw_PtOrdered.push_back(theJetAK8PUPPISoftDropRaw_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PUPPISoftDropCorr_PtOrdered.push_back(theJetAK8PUPPISoftDropCorr_JetSubCalc->at(jetak8ptindpair[ijet].second));
-	theJetAK8PUPPISoftDrop_PtOrdered.push_back(theJetAK8PUPPISoftDrop_JetSubCalc->at(jetak8ptindpair[ijet].second));
-	theJetAK8SDSubjetNCSVM_PtOrdered.push_back(theJetAK8SDSubjetNCSVMSF_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8CHSPrunedMass_JetSubCalc_PtOrdered.push_back(theJetAK8CHSPrunedMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8CHSSoftDropMass_JetSubCalc_PtOrdered.push_back(theJetAK8CHSSoftDropMass_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8SoftDropRaw_PtOrdered.push_back(theJetAK8SoftDropRaw_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8SoftDropCorr_PtOrdered.push_back(theJetAK8SoftDropCorr_JetSubCalc->at(jetak8ptindpair[ijet].second));
+	theJetAK8SoftDrop_PtOrdered.push_back(theJetAK8SoftDrop_JetSubCalc->at(jetak8ptindpair[ijet].second));
+	theJetAK8SDSubjetNCSVM_PtOrdered.push_back(theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau1_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau2_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau3_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PUPPITau1_JetSubCalc_PtOrdered.push_back(theJetAK8PUPPITau1_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PUPPITau2_JetSubCalc_PtOrdered.push_back(theJetAK8PUPPITau2_JetSubCalc->at(jetak8ptindpair[ijet].second));
-      	theJetAK8PUPPITau3_JetSubCalc_PtOrdered.push_back(theJetAK8PUPPITau3_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8CHSTau1_JetSubCalc_PtOrdered.push_back(theJetAK8CHSTau1_JetSubCalc->at(jetak8ptindpair[ijet].second));      	
+	theJetAK8CHSTau2_JetSubCalc_PtOrdered.push_back(theJetAK8CHSTau2_JetSubCalc->at(jetak8ptindpair[ijet].second));
+      	theJetAK8CHSTau3_JetSubCalc_PtOrdered.push_back(theJetAK8CHSTau3_JetSubCalc->at(jetak8ptindpair[ijet].second));
       }
 
       // ----------------------------------------------------------------------------
@@ -715,8 +1172,7 @@ void step1::Loop()
 	lepM = 0.00051099891;
 	lepphi = elPhi_singleLepCalc->at(0);
 	lepton_lv.SetPtEtaPhiM(elPt_singleLepCalc->at(0),elEta_singleLepCalc->at(0),elPhi_singleLepCalc->at(0),lepM);
-      }
-      MT_lepMet = sqrt(2*leppt*corr_met_singleLepCalc*(1 - cos(lepphi - corr_met_phi_singleLepCalc)));
+      }      MT_lepMet = sqrt(2*leppt*corr_met_singleLepCalc*(1 - cos(lepphi - corr_met_phi_singleLepCalc)));
 
       // ----------------------------------------------------------------------------
       // 8TeV Top pT reweighting
@@ -755,8 +1211,11 @@ void step1::Loop()
       double nuPz_2;
       
       double DETtmp = Btmp*Btmp-4.0*Atmp*Ctmp;
+
+      bool isHadronicTprime = false;
+      bool isLeptonicTprime = false;
       
-      TLorentzVector Wlv_1, Wlv_2, Wlv,lvTop, lvXTF;
+      TLorentzVector Wlv_1, Wlv_2, Wlv, lvTop, top_lv, lvXTF;
       if(DETtmp >= 0) {
 	nuPz_1 = (-Btmp+TMath::Sqrt(DETtmp))/(2.0*Atmp);
 	nuPz_2 = (-Btmp-TMath::Sqrt(DETtmp))/(2.0*Atmp);
@@ -784,15 +1243,19 @@ void step1::Loop()
 	else Wlv_1 = Wlv_2;
       }
       
+      if (fabs(Wlv_1.M()-MW) < fabs(Wlv_2.M()-MW)) Wlv = Wlv_1;
+      else Wlv = Wlv_2;
+ 
       // ----------------------------------------------------------------------------
       // top --> W b --> l nu b using W from above
       // ----------------------------------------------------------------------------
-
+      /*
       double dMTOP = 1e8;
       unsigned int topIndex = 0;
       bool firstW = true;
       double MTop_1, MTop_2;
       for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc_PtOrdered.size(); ijet++){
+	if(theJetBTag_JetSubCalc_PtOrdered.at(topIndex) == 0){ continue;}
 	jet_lv.SetPtEtaPhiE(theJetPt_JetSubCalc_PtOrdered.at(ijet),theJetEta_JetSubCalc_PtOrdered.at(ijet),theJetPhi_JetSubCalc_PtOrdered.at(ijet),theJetEnergy_JetSubCalc_PtOrdered.at(ijet));
 	MTop_1 = (jet_lv + Wlv_1).M();
 	MTop_2 = (jet_lv + Wlv_2).M();
@@ -813,19 +1276,669 @@ void step1::Loop()
 	  topIndex = ijet;
 	  dMTOP = fabs(MTop_2 - MTOP);
 	}
+	isHadronicTprime = true;
       }
-
+      isLeptonicTprime = not isHadronicTprime;
       if(firstW) {Wlv = Wlv_1;}
       else{Wlv = Wlv_2;}
 
       jet_lv.SetPtEtaPhiE(theJetPt_JetSubCalc_PtOrdered.at(topIndex),theJetEta_JetSubCalc_PtOrdered.at(topIndex),theJetPhi_JetSubCalc_PtOrdered.at(topIndex),theJetEnergy_JetSubCalc_PtOrdered.at(topIndex));
       lvTop = jet_lv + Wlv; //Top LV
-
+      top_lv = lvTop;
+      
       topPt = lvTop.Pt();
       topMass = lvTop.M();
       topPtGen = genTopPt;
       if(fabs(lvTop.Pt() - genTopPt) > fabs(lvTop.Pt() - genAntiTopPt)) topPtGen = genAntiTopPt;
+      */
 
+      // ----------------------------------------------------------------------------
+      // T' decay
+      // ----------------------------------------------------------------------------                                                                                                           
+      if(theJetAK8Pt_JetSubCalc_PtOrdered.size() > 2){
+	float deltaR = 999;
+	int bIndex = 999;
+	for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc_PtOrdered.size(); ijet++){
+	  TLorentzVector jet_lv;
+	  jet_lv.SetPtEtaPhiE(theJetPt_JetSubCalc_PtOrdered.at(ijet),theJetEta_JetSubCalc_PtOrdered.at(ijet),theJetPhi_JetSubCalc_PtOrdered.at(ijet),theJetEnergy_JetSubCalc_PtOrdered.at(ijet));
+	  float tempdr = jet_lv.DeltaR(Wlv);
+	  if(tempdr < deltaR) {deltaR = tempdr; bIndex = ijet;}
+	}
+	
+	TLorentzVector top_lv;
+	TLorentzVector W_lv;
+	bool isLeptonicTprime = false;
+	bool isHadronicTprime = false;
+	if(deltaR < .8/* and theJetBTag_JetSubCalc_PtOrdered.at(bIndex) == 1*/){
+	  TLorentzVector bottom_lv;
+	  bottom_lv.SetPtEtaPhiE(theJetPt_JetSubCalc_PtOrdered.at(bIndex),theJetEta_JetSubCalc_PtOrdered.at(bIndex),theJetPhi_JetSubCalc_PtOrdered.at(bIndex),theJetEnergy_JetSubCalc_PtOrdered.at(bIndex));
+	  top_lv = bottom_lv + Wlv;
+	  isHadronicTprime = true;
+	} else {
+	  isLeptonicTprime = true;
+	}
+	
+	std::vector<pair<TLorentzVector,int>> jets_lv;
+	int ijet = 0;
+	while(jets_lv.size() < 3){
+	  TLorentzVector jet;
+	  jet.SetPtEtaPhiE(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),theJetAK8Energy_JetSubCalc_PtOrdered.at(ijet));
+	  if(jet.DeltaR(Wlv) > .8 and jet.DeltaR(top_lv) > .8 and isHadronicTprime) jets_lv.push_back(std::make_pair(jet,ijet));
+	  if(jet.DeltaR(Wlv) > .8 and isLeptonicTprime) jets_lv.push_back(std::make_pair(jet,ijet));
+	  ijet++;
+	  if(ijet == theJetAK8Pt_JetSubCalc_PtOrdered.size()) break;
+	}
+	if(jets_lv.size() == 3){
+
+	  highPtAK8Jet1_SoftDropCorrectedMass = theJetAK8SoftDropCorr_PtOrdered.at(jets_lv.at(0).second);
+	  highPtAK8Jet2_SoftDropCorrectedMass = theJetAK8SoftDropCorr_PtOrdered.at(jets_lv.at(1).second);
+	  highPtAK8Jet3_SoftDropCorrectedMass = theJetAK8SoftDropCorr_PtOrdered.at(jets_lv.at(2).second);
+
+	  Tprime1_BEST_Mass = 0;
+	  Tprime2_BEST_Mass = 0;
+	  Tprime1_BEST_Pt = 0;
+	  Tprime2_BEST_Pt = 0;
+	  Tprime1_BEST_Eta = 0;
+	  Tprime2_BEST_Eta = 0;
+	  Tprime1_BEST_Phi = 0;
+	  Tprime2_BEST_Phi = 0;
+	  TprimeAvg_BEST_Mass = 0;
+	  
+	  Tprime1_DeepAK8_Mass = 0;
+	  Tprime2_DeepAK8_Mass = 0;
+	  Tprime1_DeepAK8_Pt = 0;
+	  Tprime2_DeepAK8_Pt = 0;
+	  Tprime1_DeepAK8_Eta = 0;
+	  Tprime2_DeepAK8_Eta = 0;
+	  Tprime1_DeepAK8_Phi = 0;
+	  Tprime2_DeepAK8_Phi = 0;
+	  TprimeAvg_DeepAK8_Mass = 0;
+	  
+	  Tprime1_DeepAK8_decorr_Mass = 0;
+	  Tprime2_DeepAK8_decorr_Mass = 0;
+	  Tprime1_DeepAK8_decorr_Pt = 0;
+	  Tprime2_DeepAK8_decorr_Pt = 0;
+	  Tprime1_DeepAK8_decorr_Eta = 0;
+	  Tprime2_DeepAK8_decorr_Eta = 0;
+	  Tprime1_DeepAK8_decorr_Phi = 0;
+	  Tprime2_DeepAK8_decorr_Phi = 0;
+	  TprimeAvg_DeepAK8_decorr_Mass = 0;
+	  
+	  //BEST SECTION
+	  int jet1_BEST = dnn_largest_BestCalc_PtOrdered.at(jets_lv.at(0).second);
+	  int jet2_BEST = dnn_largest_BestCalc_PtOrdered.at(jets_lv.at(1).second);
+	  int jet3_BEST = dnn_largest_BestCalc_PtOrdered.at(jets_lv.at(2).second);
+	  std::vector <pair<int,int>> decayJets_BEST;
+	  decayJets_BEST.push_back(std::make_pair(jet1_BEST,0));
+	  decayJets_BEST.push_back(std::make_pair(jet2_BEST,1));
+	  decayJets_BEST.push_back(std::make_pair(jet3_BEST,2));
+	  std::sort(decayJets_BEST.begin(),decayJets_BEST.end());
+	  TLorentzVector Tprime1_BEST_lv;
+	  TLorentzVector Tprime2_BEST_lv;
+          // Start t --> b W decays
+          validDecay_BEST = false;
+	  if(isHadronicTprime and decayJets_BEST.at(0).first==2 && decayJets_BEST.at(1).first==4 && decayJets_BEST.at(2).first==5){ // TTbar --> tH and bW
+	    validDecay_BEST = true;
+	    Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(0).second).first;
+	    Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(1).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	    if(isTHBW_TpTpCalc) {THBWeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THBWeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_BEST.at(0).first==1 && decayJets_BEST.at(1).first==2 && decayJets_BEST.at(2).first==2){ // TTbar --> tH and tH
+	    validDecay_BEST = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_BEST.at(1).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_BEST.at(2).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(1).second).first; 
+	      Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	    } else {
+	      Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(2).second).first;
+	      Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+	    }
+	    if(isTHTH_TpTpCalc) {THTHeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THTHeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_BEST.at(0).first==1 && decayJets_BEST.at(1).first==2 && decayJets_BEST.at(2).first==3){ // TTbar --> tH and tZ
+	    validDecay_BEST = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_BEST.at(1).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_BEST.at(2).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(1).second).first; 
+	      Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	    } else {
+	      Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(2).second).first;
+	      Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+	    }
+	    if(isTZTH_TpTpCalc) {THTZeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THTZeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_BEST.at(0).first==3 && decayJets_BEST.at(1).first==4 && decayJets_BEST.at(2).first==5){ // TTbar --> tZ and bW
+	    Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(0).second).first;
+	    Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(1).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	    if(isTZBW_TpTpCalc) {TZBWeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { TZBWeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_BEST.at(0).first==1 && decayJets_BEST.at(1).first==3 && decayJets_BEST.at(2).first==3){ // TTbar --> tZ tZ
+	    validDecay_BEST = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_BEST.at(1).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_BEST.at(2).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(1).second).first; 
+	      Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	    } else {
+	      Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(2).second).first;
+	      Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+	    } 
+	    if(isTZTZ_TpTpCalc) {TZTZeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else {TZTZeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	    // Start T' --> b W decays
+	  }
+	  if(isLeptonicTprime and decayJets_BEST.at(0).first==4 && decayJets_BEST.at(1).first==5 && decayJets_BEST.at(2).first==5){
+	    validDecay_BEST = true;
+            float massDiff1=(Wlv+jets_lv.at(decayJets_BEST.at(1).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first).M();
+            float massDiff2=(Wlv+jets_lv.at(decayJets_BEST.at(2).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first).M();
+            if(massDiff1 < massDiff2) {
+              Tprime1_BEST_lv = Wlv+jets_lv.at(decayJets_BEST.at(1).second).first;
+              Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+            } else {
+              Tprime1_BEST_lv = Wlv+jets_lv.at(decayJets_BEST.at(2).second).first;
+              Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+            }
+	    if(isBWBW_TpTpCalc){BWBWeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { BWBWeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isLeptonicTprime and decayJets_BEST.at(0).first==1 && decayJets_BEST.at(1).first==3 && decayJets_BEST.at(2).first==5){
+	    validDecay_BEST = true;
+	    Tprime1_BEST_lv = Wlv+jets_lv.at(decayJets_BEST.at(2).second).first;
+	    Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+	    if(isTZBW_TpTpCalc){BWTZeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    }  else { BWTZeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isLeptonicTprime and decayJets_BEST.at(0).first==1 && decayJets_BEST.at(1).first==2 && decayJets_BEST.at(2).first==5){
+	    validDecay_BEST = true;	    
+            Tprime1_BEST_lv = Wlv+jets_lv.at(decayJets_BEST.at(2).second).first;
+            Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+	    if(isTHBW_TpTpCalc){BWTHeff_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    }  else { BWTHeff_mistag_BEST_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(!validDecay_BEST) {
+	    //if(isHadronicTprime) cout << "1 " << jet1_BEST << " " << jet2_BEST << " " << jet3_BEST << endl;
+	    //if(isLeptonicTprime) cout << "4 " << jet1_BEST << " " << jet2_BEST << " " << jet3_BEST << endl;
+	    if(isHadronicTprime){
+	      float massDiff1=(top_lv+jets_lv.at(decayJets_BEST.at(0).second).first).M()-(jets_lv.at(decayJets_BEST.at(1).second).first+jets_lv.at(decayJets_BEST.at(2).second).first).M();
+	      float massDiff2=(top_lv+jets_lv.at(decayJets_BEST.at(1).second).first).M()-(jets_lv.at(decayJets_BEST.at(2).second).first+jets_lv.at(decayJets_BEST.at(0).second).first).M();
+	      float massDiff3=(top_lv+jets_lv.at(decayJets_BEST.at(2).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first).M();
+	      if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+		Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(0).second).first;
+		Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(1).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	      } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(1).second).first;
+                Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	      } else {
+		Tprime1_BEST_lv = top_lv+jets_lv.at(decayJets_BEST.at(2).second).first;
+                Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+	      }
+	    }
+	    if(isLeptonicTprime){
+	      float massDiff1=(Wlv+jets_lv.at(decayJets_BEST.at(0).second).first).M()-(jets_lv.at(decayJets_BEST.at(1).second).first+jets_lv.at(decayJets_BEST.at(2).second).first).M();
+	      float massDiff2=(Wlv+jets_lv.at(decayJets_BEST.at(1).second).first).M()-(jets_lv.at(decayJets_BEST.at(2).second).first+jets_lv.at(decayJets_BEST.at(0).second).first).M();
+	      float massDiff3=(Wlv+jets_lv.at(decayJets_BEST.at(2).second).first).M()-(jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first).M();
+              if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+                Tprime1_BEST_lv = Wlv+jets_lv.at(decayJets_BEST.at(0).second).first;
+                Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(1).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+              } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_BEST_lv = Wlv+jets_lv.at(decayJets_BEST.at(1).second).first;
+                Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(2).second).first;
+	      } else {
+		Tprime1_BEST_lv = Wlv+jets_lv.at(decayJets_BEST.at(2).second).first;
+                Tprime2_BEST_lv = jets_lv.at(decayJets_BEST.at(0).second).first+jets_lv.at(decayJets_BEST.at(1).second).first;
+	      }
+	    }
+	  }
+
+	  if(Tprime1_BEST_lv.M() != 0){
+	    Tprime1_BEST_Mass = Tprime1_BEST_lv.M();
+	    Tprime2_BEST_Mass = Tprime2_BEST_lv.M(); Tprime2_BEST_Mass_hist->Fill(Tprime2_BEST_Mass);
+	    Tprime1_BEST_Pt = Tprime1_BEST_lv.Pt();
+	    Tprime2_BEST_Pt = Tprime2_BEST_lv.Pt();
+	    Tprime1_BEST_Eta = Tprime1_BEST_lv.Eta();
+	    Tprime2_BEST_Eta = Tprime2_BEST_lv.Eta();
+	    Tprime1_BEST_Phi = Tprime1_BEST_lv.Phi();
+	    Tprime2_BEST_Phi = Tprime2_BEST_lv.Phi();
+	    TprimeAvg_BEST_Mass =  (Tprime1_BEST_lv.M()+Tprime2_BEST_lv.M() ) / 2;
+	  }
+	  
+	  // DeepAK8 Section
+	  int jet1_DeepAK8 = dnn_largest_DeepAK8Calc_PtOrdered.at(jets_lv.at(0).second);
+	  int jet2_DeepAK8 = dnn_largest_DeepAK8Calc_PtOrdered.at(jets_lv.at(1).second);
+	  int jet3_DeepAK8 = dnn_largest_DeepAK8Calc_PtOrdered.at(jets_lv.at(2).second);
+	  std::vector <pair<int,int>> decayJets_DeepAK8;
+	  decayJets_DeepAK8.push_back(std::make_pair(jet1_DeepAK8,0));
+	  decayJets_DeepAK8.push_back(std::make_pair(jet2_DeepAK8,1));
+	  decayJets_DeepAK8.push_back(std::make_pair(jet3_DeepAK8,2));
+	  std::sort(decayJets_DeepAK8.begin(),decayJets_DeepAK8.end());
+	  TLorentzVector Tprime1_DeepAK8_lv;
+	  TLorentzVector Tprime2_DeepAK8_lv;
+          // Start t --> b W decays
+          validDecay_DeepAK8 = false;
+	  if(isHadronicTprime and decayJets_DeepAK8.at(0).first==2 && decayJets_DeepAK8.at(1).first==4 && decayJets_DeepAK8.at(2).first==5){ // TTbar --> tH and bW
+	    validDecay_DeepAK8 = true;
+	    Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(0).second).first;
+	    Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(1).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	    if(isTHBW_TpTpCalc){THBWeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THBWeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8.at(0).first==1 && decayJets_DeepAK8.at(1).first==2 && decayJets_DeepAK8.at(2).first==2){ // TTbar --> tH and tH
+	    validDecay_DeepAK8 = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first; 
+	      Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	    } else {
+	      Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	      Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+	    }
+	    if(isTHTH_TpTpCalc) {THTHeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	      } else { THTHeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8.at(0).first==1 && decayJets_DeepAK8.at(1).first==2 && decayJets_DeepAK8.at(2).first==3){ // TTbar --> tH and tZ
+	    validDecay_DeepAK8 = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first; 
+	      Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	    } else {
+	      Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	      Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+	    }
+	    if(isTZTH_TpTpCalc) {THTZeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THTZeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8.at(0).first==3 && decayJets_DeepAK8.at(1).first==4 && decayJets_DeepAK8.at(2).first==5){ // TTbar --> tZ and bW
+	    Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(0).second).first;
+	    Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(1).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	    if(isTZBW_TpTpCalc){TZBWeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { TZBWeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8.at(0).first==1 && decayJets_DeepAK8.at(1).first==3 && decayJets_DeepAK8.at(2).first==3){ // TTbar --> tZ tZ
+	    validDecay_DeepAK8 = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first; 
+	      Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	    } else {
+	      Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	      Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+	    } 
+	    if(isTZTZ_TpTpCalc){TZTZeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { TZTZeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	    // Start T' --> b W decays
+	  if(isLeptonicTprime and decayJets_DeepAK8.at(0).first==4 && decayJets_DeepAK8.at(1).first==5 && decayJets_DeepAK8.at(2).first==5){
+	    validDecay_DeepAK8 = true;
+            float massDiff1=(Wlv+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M();
+            float massDiff2=(Wlv+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M();
+            if(massDiff1 < massDiff2) {
+              Tprime1_DeepAK8_lv = Wlv+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+              Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+            } else {
+              Tprime1_DeepAK8_lv = Wlv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+              Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+            }
+	    if(isBWBW_TpTpCalc){BWBWeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { BWBWeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isLeptonicTprime and decayJets_DeepAK8.at(0).first==1 && decayJets_DeepAK8.at(1).first==3 && decayJets_DeepAK8.at(2).first==5){
+	    validDecay_DeepAK8 = true;
+	    Tprime1_DeepAK8_lv = Wlv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	    Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+	    if(isTZBW_TpTpCalc){BWTZeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { BWTZeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isLeptonicTprime and decayJets_DeepAK8.at(0).first==1 && decayJets_DeepAK8.at(1).first==2 && decayJets_DeepAK8.at(2).first==5){
+	    validDecay_DeepAK8 = true;	    
+            Tprime1_DeepAK8_lv = Wlv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+            Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+	    if(isTHBW_TpTpCalc){BWTHeff_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { BWTHeff_mistag_DeepAK8_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(!validDecay_DeepAK8) {
+	    //if(isHadronicTprime) cout << "1 " << jet1_DeepAK8 << " " << jet2_DeepAK8 << " " << jet3_DeepAK8 << endl;
+	    //if(isLeptonicTprime) cout << "4 " << jet1_DeepAK8 << " " << jet2_DeepAK8 << " " << jet3_DeepAK8 << endl;
+	    if(isHadronicTprime){
+	      float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8.at(0).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(1).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M();
+	      float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(2).second).first+jets_lv.at(decayJets_DeepAK8.at(0).second).first).M();
+	      float massDiff3=(top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M();
+	      if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+		Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(0).second).first;
+		Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(1).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	      } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+                Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	      } else {
+		Tprime1_DeepAK8_lv = top_lv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+                Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+	      }
+	    }
+	    if(isLeptonicTprime){
+	      float massDiff1=(Wlv+jets_lv.at(decayJets_DeepAK8.at(0).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(1).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M();
+	      float massDiff2=(Wlv+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(2).second).first+jets_lv.at(decayJets_DeepAK8.at(0).second).first).M();
+	      float massDiff3=(Wlv+jets_lv.at(decayJets_DeepAK8.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first).M();
+              if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+                Tprime1_DeepAK8_lv = Wlv+jets_lv.at(decayJets_DeepAK8.at(0).second).first;
+                Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(1).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+              } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_DeepAK8_lv = Wlv+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+                Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+	      } else {
+		Tprime1_DeepAK8_lv = Wlv+jets_lv.at(decayJets_DeepAK8.at(2).second).first;
+                Tprime2_DeepAK8_lv = jets_lv.at(decayJets_DeepAK8.at(0).second).first+jets_lv.at(decayJets_DeepAK8.at(1).second).first;
+	      }
+	    }
+	  }
+
+	  if(Tprime1_DeepAK8_lv.M() != 0){
+	    Tprime1_DeepAK8_Mass = Tprime1_DeepAK8_lv.M();
+	    Tprime2_DeepAK8_Mass = Tprime2_DeepAK8_lv.M(); Tprime2_DeepAK8_Mass_hist->Fill(Tprime2_DeepAK8_Mass);
+	    Tprime1_DeepAK8_Pt = Tprime1_DeepAK8_lv.Pt();
+	    Tprime2_DeepAK8_Pt = Tprime2_DeepAK8_lv.Pt();
+	    Tprime1_DeepAK8_Eta = Tprime1_DeepAK8_lv.Eta();
+	    Tprime2_DeepAK8_Eta = Tprime2_DeepAK8_lv.Eta();
+	    Tprime1_DeepAK8_Phi = Tprime1_DeepAK8_lv.Phi();
+	    Tprime2_DeepAK8_Phi = Tprime2_DeepAK8_lv.Phi();
+	    TprimeAvg_DeepAK8_Mass =  (Tprime1_DeepAK8_lv.M()+Tprime2_DeepAK8_lv.M() ) / 2;
+	  }
+	  
+	  // DeepAK8_decorr Section
+	  int jet1_DeepAK8_decorr = decorr_largest_DeepAK8Calc_PtOrdered.at(jets_lv.at(0).second);
+	  int jet2_DeepAK8_decorr = decorr_largest_DeepAK8Calc_PtOrdered.at(jets_lv.at(1).second);
+	  int jet3_DeepAK8_decorr = decorr_largest_DeepAK8Calc_PtOrdered.at(jets_lv.at(2).second);
+	  std::vector <pair<int,int>> decayJets_DeepAK8_decorr;
+	  decayJets_DeepAK8_decorr.push_back(std::make_pair(jet1_DeepAK8_decorr,0));
+	  decayJets_DeepAK8_decorr.push_back(std::make_pair(jet2_DeepAK8_decorr,1));
+	  decayJets_DeepAK8_decorr.push_back(std::make_pair(jet3_DeepAK8_decorr,2));
+	  std::sort(decayJets_DeepAK8_decorr.begin(),decayJets_DeepAK8_decorr.end());
+	  TLorentzVector Tprime1_DeepAK8_decorr_lv;
+	  TLorentzVector Tprime2_DeepAK8_decorr_lv;
+          // Start t --> b W decays
+          validDecay_DeepAK8_decorr = false;
+	  if(isHadronicTprime and decayJets_DeepAK8_decorr.at(0).first==2 && decayJets_DeepAK8_decorr.at(1).first==4 && decayJets_DeepAK8_decorr.at(2).first==5){ // TTbar --> tH and bW
+	    validDecay_DeepAK8_decorr = true;
+	    Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first;
+	    Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	    if(isTHBW_TpTpCalc){THBWeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THBWeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8_decorr.at(0).first==1 && decayJets_DeepAK8_decorr.at(1).first==2 && decayJets_DeepAK8_decorr.at(2).first==2){ // TTbar --> tH and tH
+	    validDecay_DeepAK8_decorr = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first; 
+	      Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	    } else {
+	      Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	      Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+	    }
+	    if(isTHTH_TpTpCalc){THTHeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THTHeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8_decorr.at(0).first==1 && decayJets_DeepAK8_decorr.at(1).first==2 && decayJets_DeepAK8_decorr.at(2).first==3){ // TTbar --> tH and tZ
+	    validDecay_DeepAK8_decorr = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first; 
+	      Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	    } else {
+	      Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	      Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+	    }
+	    if(isTZTH_TpTpCalc){THTZeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { THTZeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8_decorr.at(0).first==3 && decayJets_DeepAK8_decorr.at(1).first==4 && decayJets_DeepAK8_decorr.at(2).first==5){ // TTbar --> tZ and bW
+	    Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first;
+	    Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	    if(isTZBW_TpTpCalc){TZBWeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { TZBWeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isHadronicTprime and decayJets_DeepAK8_decorr.at(0).first==1 && decayJets_DeepAK8_decorr.at(1).first==3 && decayJets_DeepAK8_decorr.at(2).first==3){ // TTbar --> tZ tZ
+	    validDecay_DeepAK8_decorr = true;
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first; 
+	      Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	    } else {
+	      Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	      Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+	    }
+	    if(isTZTZ_TpTpCalc){TZTZeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { TZTZeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	    // Start T' --> b W decays	  
+	  if(isLeptonicTprime and decayJets_DeepAK8_decorr.at(0).first==4 && decayJets_DeepAK8_decorr.at(1).first==5 && decayJets_DeepAK8_decorr.at(2).first==5){
+	    validDecay_DeepAK8_decorr = true;
+            float massDiff1=(Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M();
+            float massDiff2=(Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M();
+            if(massDiff1 < massDiff2) {
+              Tprime1_DeepAK8_decorr_lv = Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+              Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+            } else {
+              Tprime1_DeepAK8_decorr_lv = Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+              Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+            }
+	    if(isBWBW_TpTpCalc){BWBWeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { BWBWeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isLeptonicTprime and decayJets_DeepAK8_decorr.at(0).first==1 && decayJets_DeepAK8_decorr.at(1).first==3 && decayJets_DeepAK8_decorr.at(2).first==5){
+	    validDecay_DeepAK8_decorr = true;
+	    Tprime1_DeepAK8_decorr_lv = Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	    Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+	    if(isTZBW_TpTpCalc){BWTZeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { BWTZeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(isLeptonicTprime and decayJets_DeepAK8_decorr.at(0).first==1 && decayJets_DeepAK8_decorr.at(1).first==2 && decayJets_DeepAK8_decorr.at(2).first==5){
+	    validDecay_DeepAK8_decorr = true;	    
+            Tprime1_DeepAK8_decorr_lv = Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+            Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+	    if(isTHBW_TpTpCalc){BWTHeff_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    } else { BWTHeff_mistag_DeepAK8_decorr_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);}
+	  }
+	  if(!validDecay_DeepAK8_decorr) {
+	    //if(isHadronicTprime) cout << "1 " << jet1_DeepAK8_decorr << " " << jet2_DeepAK8_decorr << " " << jet3_DeepAK8_decorr << endl;
+	    //if(isLeptonicTprime) cout << "4 " << jet1_DeepAK8_decorr << " " << jet2_DeepAK8_decorr << " " << jet3_DeepAK8_decorr << endl;
+	    if(isHadronicTprime){
+	      float massDiff1=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M();
+	      float massDiff2=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first).M();
+	      float massDiff3=(top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M();
+	      if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+		Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first;
+		Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	      } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+                Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	      } else {
+		Tprime1_DeepAK8_decorr_lv = top_lv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+                Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+	      }
+	    }
+	    if(isLeptonicTprime){
+	      float massDiff1=(Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M();
+	      float massDiff2=(Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first).M();
+	      float massDiff3=(Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first).M()-(jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first).M();
+              if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+                Tprime1_DeepAK8_decorr_lv = Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first;
+                Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+              } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_DeepAK8_decorr_lv = Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+                Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+	      } else {
+		Tprime1_DeepAK8_decorr_lv = Wlv+jets_lv.at(decayJets_DeepAK8_decorr.at(2).second).first;
+                Tprime2_DeepAK8_decorr_lv = jets_lv.at(decayJets_DeepAK8_decorr.at(0).second).first+jets_lv.at(decayJets_DeepAK8_decorr.at(1).second).first;
+	      }
+	    }
+	  }
+
+	  if(Tprime1_DeepAK8_decorr_lv.M() != 0){
+	    Tprime1_DeepAK8_decorr_Mass = Tprime1_DeepAK8_decorr_lv.M();
+	    Tprime2_DeepAK8_decorr_Mass = Tprime2_DeepAK8_decorr_lv.M(); Tprime2_DeepAK8_decorr_Mass_hist->Fill(Tprime2_DeepAK8_decorr_Mass);
+	    Tprime1_DeepAK8_decorr_Pt = Tprime1_DeepAK8_decorr_lv.Pt();
+	    Tprime2_DeepAK8_decorr_Pt = Tprime2_DeepAK8_decorr_lv.Pt();
+	    Tprime1_DeepAK8_decorr_Eta = Tprime1_DeepAK8_decorr_lv.Eta();
+	    Tprime2_DeepAK8_decorr_Eta = Tprime2_DeepAK8_decorr_lv.Eta();
+	    Tprime1_DeepAK8_decorr_Phi = Tprime1_DeepAK8_decorr_lv.Phi();
+	    Tprime2_DeepAK8_decorr_Phi = Tprime2_DeepAK8_decorr_lv.Phi();
+	    TprimeAvg_DeepAK8_decorr_Mass =  (Tprime1_DeepAK8_decorr_lv.M()+Tprime2_DeepAK8_decorr_lv.M() ) / 2;
+	  }
+
+	  /*
+	  // JetSub Section
+	  int jet1_JetSub = maxProb_JetSubCalc_PtOrdered.at(jets_lv.at(0).second);
+	  int jet2_JetSub = maxProb_JetSubCalc_PtOrdered.at(jets_lv.at(1).second);
+	  int jet3_JetSub = maxProb_JetSubCalc_PtOrdered.at(jets_lv.at(2).second);
+	  std::vector <pair<int,int>> decayJets_JetSub;
+	  decayJets_JetSub.push_back(std::make_pair(jet1_JetSub,0));
+	  decayJets_JetSub.push_back(std::make_pair(jet2_JetSub,1));
+	  decayJets_JetSub.push_back(std::make_pair(jet3_JetSub,2));
+	  std::sort(decayJets_JetSub.begin(),decayJets_JetSub.end());
+	  TLorentzVector Tprime1_JetSub_lv;
+	  TLorentzVector Tprime2_JetSub_lv;
+          // Start t --> b W decays
+          validDecay_JetSub = true;
+	  if(isHadronicTprime and decayJets_JetSub.at(0).first==2 && decayJets_JetSub.at(1).first==4 && decayJets_JetSub.at(2).first==5){ // TTbar --> tH and bW
+	    Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(0).second).first;
+	    Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(1).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	    THBWeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  } else if(isHadronicTprime and decayJets_JetSub.at(0).first==1 && decayJets_JetSub.at(1).first==2 && decayJets_JetSub.at(2).first==2){ // TTbar --> tH and tH
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first; 
+	      Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	    } else {
+	      Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	      Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+	    }
+	    THTHeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  } else if(isHadronicTprime and decayJets_JetSub.at(0).first==1 && decayJets_JetSub.at(1).first==2 && decayJets_JetSub.at(2).first==3){ // TTbar --> tH and tZ
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first; 
+	      Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	    } else {
+	      Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	      Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+	    }
+	    THTZeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  } else if(isHadronicTprime and decayJets_JetSub.at(0).first==3 && decayJets_JetSub.at(1).first==4 && decayJets_JetSub.at(2).first==5){ // TTbar --> tZ and bW
+	    Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(0).second).first;
+	    Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(1).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	    TZBWeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  } else if(isHadronicTprime and decayJets_JetSub.at(0).first==1 && decayJets_JetSub.at(1).first==3 && decayJets_JetSub.at(2).first==3){ // TTbar --> tZ tZ
+	    float massDiff1=(top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first).M();
+	    float massDiff2=(top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first).M();
+	    if(massDiff1 < massDiff2) {
+	      Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first; 
+	      Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	    } else {
+	      Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	      Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+	    } 
+	    TZTZeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	    // Start T' --> b W decays
+	  } else if(isLeptonicTprime and decayJets_JetSub.at(0).first==4 && decayJets_JetSub.at(1).first==5 && decayJets_JetSub.at(2).first==5){
+            float massDiff1=(Wlv+jets_lv.at(decayJets_JetSub.at(1).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first).M();
+            float massDiff2=(Wlv+jets_lv.at(decayJets_JetSub.at(2).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first).M();
+            if(massDiff1 < massDiff2) {
+              Tprime1_JetSub_lv = Wlv+jets_lv.at(decayJets_JetSub.at(1).second).first;
+              Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+            } else {
+              Tprime1_JetSub_lv = Wlv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+              Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+            }
+	    BWBWeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  } else if(isLeptonicTprime and decayJets_JetSub.at(0).first==1 && decayJets_JetSub.at(1).first==3 && decayJets_JetSub.at(2).first==5){
+	    Tprime1_JetSub_lv = Wlv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	    Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+	    BWTZeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  } else if(isLeptonicTprime and decayJets_JetSub.at(0).first==1 && decayJets_JetSub.at(1).first==2 && decayJets_JetSub.at(2).first==5){
+            Tprime1_JetSub_lv = Wlv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+            Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+	    BWTHeff_JetSub_num->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+          } else {
+	    validDecay_JetSub = false;
+	    //if(isHadronicTprime) cout << "1 " << jet1_JetSub << " " << jet2_JetSub << " " << jet3_JetSub << endl;
+	    //if(isLeptonicTprime) cout << "4 " << jet1_JetSub << " " << jet2_JetSub << " " << jet3_JetSub << endl;
+	    if(isHadronicTprime){
+	      float massDiff1=(top_lv+jets_lv.at(decayJets_JetSub.at(0).second).first).M()-(jets_lv.at(decayJets_JetSub.at(1).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first).M();
+	      float massDiff2=(top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first).M()-(jets_lv.at(decayJets_JetSub.at(2).second).first+jets_lv.at(decayJets_JetSub.at(0).second).first).M();
+	      float massDiff3=(top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first).M();
+	      if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+		Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(0).second).first;
+		Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(1).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	      } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(1).second).first;
+                Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	      } else {
+		Tprime1_JetSub_lv = top_lv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+                Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+	      }
+	    }
+	    if(isLeptonicTprime){
+	      float massDiff1=(Wlv+jets_lv.at(decayJets_JetSub.at(0).second).first).M()-(jets_lv.at(decayJets_JetSub.at(1).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first).M();
+	      float massDiff2=(Wlv+jets_lv.at(decayJets_JetSub.at(1).second).first).M()-(jets_lv.at(decayJets_JetSub.at(2).second).first+jets_lv.at(decayJets_JetSub.at(0).second).first).M();
+	      float massDiff3=(Wlv+jets_lv.at(decayJets_JetSub.at(2).second).first).M()-(jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first).M();
+              if(massDiff1 < massDiff2 and massDiff1 < massDiff3){
+                Tprime1_JetSub_lv = Wlv+jets_lv.at(decayJets_JetSub.at(0).second).first;
+                Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(1).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+              } else if(massDiff2 < massDiff1 and massDiff2 < massDiff3){
+                Tprime1_JetSub_lv = Wlv+jets_lv.at(decayJets_JetSub.at(1).second).first;
+                Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(2).second).first;
+	      } else {
+		Tprime1_JetSub_lv = Wlv+jets_lv.at(decayJets_JetSub.at(2).second).first;
+                Tprime2_JetSub_lv = jets_lv.at(decayJets_JetSub.at(0).second).first+jets_lv.at(decayJets_JetSub.at(1).second).first;
+	      }
+	    }
+	  }
+
+	  if(Tprime1_JetSub_lv.M() != 0){
+	    Tprime1_JetSub_Mass = Tprime1_JetSub_lv.M();
+	    Tprime2_JetSub_Mass = Tprime2_JetSub_lv.M(); Tprime2_JetSub_Mass_hist->Fill(Tprime2_JetSub_Mass);
+	    Tprime1_JetSub_Pt = Tprime1_JetSub_lv.Pt();
+	    Tprime2_JetSub_Pt = Tprime2_JetSub_lv.Pt();
+	    Tprime1_JetSub_Eta = Tprime1_JetSub_lv.Eta();
+	    Tprime2_JetSub_Eta = Tprime2_JetSub_lv.Eta();
+	    Tprime1_JetSub_Phi = Tprime1_JetSub_lv.Phi();
+	    Tprime2_JetSub_Phi = Tprime2_JetSub_lv.Phi();
+	    TprimeAvg_JetSub_Mass =  (Tprime1_DeepAK8_decorr_lv.M()+Tprime2_DeepAK8_lv.M() ) / 2;
+	  }
+	  */
+	  // Filling denominator histograms
+	  if(isTHBW_TpTpCalc) THBWeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else THBWeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  if(isTHTH_TpTpCalc) THTHeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else THTHeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  if(isTZTH_TpTpCalc) THTZeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else THTZeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  if(isTZBW_TpTpCalc) TZBWeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else TZBWeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  if(isTZTZ_TpTpCalc) TZTZeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else TZTZeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  if(isBWBW_TpTpCalc) BWBWeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else BWBWeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  if(isTZBW_TpTpCalc) BWTZeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else BWTZeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  if(isTHBW_TpTpCalc) BWTHeff_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	  else BWTHeff_mistag_den->Fill(tPrimePt_TpTpCalc->at(0)/2 + tPrimePt_TpTpCalc->at(1)/2);
+	}	
+      }
+      
       // ----------------------------------------------------------------------------
       // AK8 Jet - lepton associations, Top and W taggging
       // ----------------------------------------------------------------------------
@@ -879,11 +1992,8 @@ void step1::Loop()
 	
 	ak8_lv.SetPtEtaPhiE(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),theJetAK8Energy_JetSubCalc_PtOrdered.at(ijet));
 	if(ijet == 0) leadak8 = ak8_lv;
-
 	deltaR_lepAK8s.push_back(lepton_lv.DeltaR(ak8_lv));
-
 	if(lepton_lv.DeltaR(ak8_lv) < minDR_lepAK8) minDR_lepAK8 = lepton_lv.DeltaR(ak8_lv);
-
 	if(ijet > 0){
 	  float tempdr = leadak8.DeltaR(ak8_lv);
 	  if(tempdr < minDR_leadAK8otherAK8){
@@ -891,16 +2001,15 @@ void step1::Loop()
 	  }
 	}
 
+
+
 	// ----------------------------------------------------------------------------
 	// W & top tagging on MC
 	// ----------------------------------------------------------------------------
 	
 	float tau21 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(ijet);
-	float Ptau21 = theJetAK8PUPPITau2_JetSubCalc_PtOrdered.at(ijet)/theJetAK8PUPPITau1_JetSubCalc_PtOrdered.at(ijet);
 	float tau32 = theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.at(ijet)/theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(ijet);
-	float mass = theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.at(ijet);
-	float massSD = theJetAK8SoftDropMass_JetSubCalc_PtOrdered.at(ijet);
-	float massPSD = theJetAK8PUPPISoftDrop_PtOrdered.at(ijet);
+
 
 	// ------------------------------------------------------------------------------------------------------------------
 	// MC Calculation first
@@ -918,6 +2027,8 @@ void step1::Loop()
 	  bool isHmatched = false;
 	  bool isZmatched = false;
 	  bool isTmatched = false;
+	  bool isJmatched = false;
+	  bool isBmatched = false;
 	  TLorentzVector trueW,d1,d2,d3;
 
 	  for(unsigned int iW = 0; iW < HadronicVHtPt_JetSubCalc->size(); iW++){
@@ -949,89 +2060,430 @@ void step1::Loop()
 	  if(isWmatched || isZmatched || isHmatched || isTmatched) theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(matchedPt);
 	  else theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(-99.0);
 
-	  // ***** EXAMPLE of filling denominators
-	  if(isWmatched) Weff_BEST_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	  
-
-	  // ------------------------------------------------------------------------------------------------------------------
-	  // TOP TAGGING
-	  // ------------------------------------------------------------------------------------------------------------------
-	  float topTau81SF = 1.0;
-	  double topTau81Eff = 1.0;
-	    
-	  // Set the initial tagged/untagged state
-	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
-	  if(isTagged) NJetsTtagged_0p81 += tag_topTau81;
-	  
-	  // ------------------------------------------------------------------------------------------------------------------
-	  // Variable for top tagged jets
-	  // ------------------------------------------------------------------------------------------------------------------
-	  
-	  if(isTagged){
-	    TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	  }
-
-	  // ------------------------------------------------------------------------------------------------------------------
-	  // W TAGGING
-	  // ------------------------------------------------------------------------------------------------------------------
-	  
-	  // Set the initial tagged/untagged state
-	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  bool isPWtagged = (massPSD > 65) && (massPSD < 105) && (Ptau21 < 0.55) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  
-	  // Now increase the tag count in the right variable	  
-	  if(isWtagged){ 
-	    NJetsWtagged_0p6 += tag_tau0p6;
-	    NJetsWtagged_0p6_notTtagged += int(isWtagged)-int(isTtagged);
-
-	    // ***** EXAMPLE of filling numerators (bad example, this is the baseline W-tagging, not BEST W-tagging)
-	    if(isWmatched) Weff_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
-	  }
-	    
-	  if(isPWtagged) NPuppiWtagged_0p55 += tag_Ptau0p55;	  
-	    
-	  // ------------------------------------------------------------------------------------------------------------------
-	  // Variables for W tagged jets
-	  // ------------------------------------------------------------------------------------------------------------------
-	  
-	  if(isWtagged){
-	    if(NJetsWtagged_0p6 == 1){
-	      WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	  if (not isWmatched && not isZmatched && not isTmatched && not isHmatched) {
+	    int firstsub = theJetAK8SDSubjetIndex_JetSubCalc_PtOrdered.at(ijet);
+	    int nsubs = theJetAK8SDSubjetSize_JetSubCalc_PtOrdered.at(ijet);
+	    for(int isub = firstsub; isub < firstsub + nsubs; isub++){
+	      if( theJetAK8SDSubjetHFlav_JetSubCalc->at(isub) == 5 ) isBmatched = true;
 	    }
+	    if ( not isBmatched ) isJmatched = true;
 	  }
+
+	  // ------------------------------------------------------------------------------------------------------------------
+	  // FILLING HISTOGRAMS
+	  // ------------------------------------------------------------------------------------------------------------------
+
+	  if (isBmatched) {
+	    confusion_den->Fill(0.0,0.0);
+	    confusion_den->Fill(1.0,0.0);
+	    confusion_den->Fill(2.0,0.0);
+	    confusion_den->Fill(3.0,0.0);
+	    confusion_den->Fill(4.0,0.0);
+	    confusion_den->Fill(5.0,0.0); }
+	  else if (isTmatched) {
+	    confusion_den->Fill(0.0,1.0);
+	    confusion_den->Fill(1.0,1.0);
+	    confusion_den->Fill(2.0,1.0);
+	    confusion_den->Fill(3.0,1.0);
+	    confusion_den->Fill(4.0,1.0);
+	    confusion_den->Fill(5.0,1.0); }
+	  else if (isHmatched) {
+	    confusion_den->Fill(0.0,2.0);
+	    confusion_den->Fill(1.0,2.0);
+	    confusion_den->Fill(2.0,2.0);
+	    confusion_den->Fill(3.0,2.0);
+	    confusion_den->Fill(4.0,2.0);
+	    confusion_den->Fill(5.0,2.0); }
+	  else if (isZmatched) {
+	    confusion_den->Fill(0.0,3.0);
+	    confusion_den->Fill(1.0,3.0);
+	    confusion_den->Fill(2.0,3.0);
+	    confusion_den->Fill(3.0,3.0);
+	    confusion_den->Fill(4.0,3.0);
+	    confusion_den->Fill(5.0,3.0); }
+	  else if (isWmatched) {
+	    confusion_den->Fill(0.0,4.0);
+	    confusion_den->Fill(1.0,4.0);
+	    confusion_den->Fill(2.0,4.0);
+	    confusion_den->Fill(3.0,4.0);
+	    confusion_den->Fill(4.0,4.0);
+	    confusion_den->Fill(5.0,4.0); }
+	  else {
+	    confusion_den->Fill(0.0,5.0);
+	    confusion_den->Fill(1.0,5.0);
+	    confusion_den->Fill(2.0,5.0);
+	    confusion_den->Fill(3.0,5.0);
+	    confusion_den->Fill(4.0,5.0);
+	    confusion_den->Fill(5.0,5.0); }
+
+	  // 0 = J, 1 = T, 2 = H, 3 = Z, 4 = W, 5 = B
+	  // BEST confusion matrix
+	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 0) { // J
+	    if (isBmatched) confusion_num_BEST->Fill(0.0,0.0);
+	    else if (isTmatched) confusion_num_BEST->Fill(0.0,1);
+	    else if (isHmatched) confusion_num_BEST->Fill(0.0,2);
+	    else if (isZmatched) confusion_num_BEST->Fill(0.0,3);
+	    else if (isWmatched) confusion_num_BEST->Fill(0.0,4.0);
+	    else confusion_num_BEST->Fill(0.0,5); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 4) { // W
+	    if (isBmatched) confusion_num_BEST->Fill(1,0.0);
+	    else if (isTmatched) confusion_num_BEST->Fill(1,1);
+	    else if (isHmatched) confusion_num_BEST->Fill(1,2);
+	    else if (isZmatched) confusion_num_BEST->Fill(1,3);
+	    else if (isWmatched) confusion_num_BEST->Fill(1,4.0);
+	    else confusion_num_BEST->Fill(1,5); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 3) { // Z
+	    if (isBmatched) confusion_num_BEST->Fill(2,0.0);
+	    else if (isTmatched) confusion_num_BEST->Fill(2,1);
+	    else if (isHmatched) confusion_num_BEST->Fill(2,2);
+	    else if (isZmatched) confusion_num_BEST->Fill(2,3);
+	    else if (isWmatched) confusion_num_BEST->Fill(2,4);
+	    else confusion_num_BEST->Fill(2,5); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 2) { // H
+	    if (isBmatched) confusion_num_BEST->Fill(3,0.0);
+	    else if (isTmatched) confusion_num_BEST->Fill(3,1);
+	    else if (isHmatched) confusion_num_BEST->Fill(3,2);
+	    else if (isZmatched) confusion_num_BEST->Fill(3,3);
+	    else if (isWmatched) confusion_num_BEST->Fill(3,4);
+	    else confusion_num_BEST->Fill(3,5); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 1) { // T
+	    if (isBmatched) confusion_num_BEST->Fill(4,0.0);
+	    else if (isTmatched) confusion_num_BEST->Fill(4,1);
+	    else if (isHmatched) confusion_num_BEST->Fill(4,2);
+	    else if (isZmatched) confusion_num_BEST->Fill(4,3);
+	    else if (isWmatched) confusion_num_BEST->Fill(4,4);
+	    else confusion_num_BEST->Fill(4,5); }
+	  else {                                                  // B
+	    if (isBmatched) confusion_num_BEST->Fill(5,0.0);
+	    else if (isTmatched) confusion_num_BEST->Fill(5,1);
+	    else if (isHmatched) confusion_num_BEST->Fill(5,2);
+	    else if (isZmatched) confusion_num_BEST->Fill(5,3);
+	    else if (isWmatched) confusion_num_BEST->Fill(5,4);
+	    else confusion_num_BEST->Fill(5,5); }
+	  
+	  // DeepAK8 confusion matrix
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 0.0) { // J
+	    if (isBmatched) confusion_num_DeepAK8->Fill(0.0,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8->Fill(0.0,1);
+	    else if (isHmatched) confusion_num_DeepAK8->Fill(0.0,2);
+	    else if (isZmatched) confusion_num_DeepAK8->Fill(0.0,3);
+	    else if (isWmatched) confusion_num_DeepAK8->Fill(0.0,4);
+	    else confusion_num_DeepAK8->Fill(0.0,5); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
+	    if (isBmatched) confusion_num_DeepAK8->Fill(1,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8->Fill(1,1);
+	    else if (isHmatched) confusion_num_DeepAK8->Fill(1,2);
+	    else if (isZmatched) confusion_num_DeepAK8->Fill(1,3);
+	    else if (isWmatched) confusion_num_DeepAK8->Fill(1,4);
+	    else confusion_num_DeepAK8->Fill(1,5); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { //Z
+	    if (isBmatched) confusion_num_DeepAK8->Fill(2,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8->Fill(2,1);
+	    else if (isHmatched) confusion_num_DeepAK8->Fill(2,2);
+	    else if (isZmatched) confusion_num_DeepAK8->Fill(2,3);
+	    else if (isWmatched) confusion_num_DeepAK8->Fill(2,4);
+	    else confusion_num_DeepAK8->Fill(2,5); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { //H
+	    if (isBmatched) confusion_num_DeepAK8->Fill(3,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8->Fill(3,1);
+	    else if (isHmatched) confusion_num_DeepAK8->Fill(3,2);
+	    else if (isZmatched) confusion_num_DeepAK8->Fill(3,3);
+	    else if (isWmatched) confusion_num_DeepAK8->Fill(3,4);
+	    else confusion_num_DeepAK8->Fill(3,5); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
+	    if (isBmatched) confusion_num_DeepAK8->Fill(4,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8->Fill(4,1);
+	    else if (isHmatched) confusion_num_DeepAK8->Fill(4,2);
+	    else if (isZmatched) confusion_num_DeepAK8->Fill(4,3);
+	    else if (isWmatched) confusion_num_DeepAK8->Fill(4,4);
+	    else confusion_num_DeepAK8->Fill(4,5); }
+	  else {                                                      // B
+	    if (isBmatched) confusion_num_DeepAK8->Fill(5,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8->Fill(5,1);
+	    else if (isHmatched) confusion_num_DeepAK8->Fill(5,2);
+	    else if (isZmatched) confusion_num_DeepAK8->Fill(5,3);
+	    else if (isWmatched) confusion_num_DeepAK8->Fill(5,4);
+	    else confusion_num_DeepAK8->Fill(5,5); }
+	  
+	  // DeepAK8_decorr confusion matrix
+	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 0.0) { // J
+	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(0.0,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8_decorr->Fill(0.0,1);
+	    else if (isHmatched) confusion_num_DeepAK8_decorr->Fill(0.0,2);
+	    else if (isZmatched) confusion_num_DeepAK8_decorr->Fill(0.0,3);
+	    else if (isWmatched) confusion_num_DeepAK8_decorr->Fill(0.0,4);
+	    else confusion_num_DeepAK8_decorr->Fill(0.0,5); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
+	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(1,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8_decorr->Fill(1,1);
+	    else if (isHmatched) confusion_num_DeepAK8_decorr->Fill(1,2);
+	    else if (isZmatched) confusion_num_DeepAK8_decorr->Fill(1,3);
+	    else if (isWmatched) confusion_num_DeepAK8_decorr->Fill(1,4);
+	    else confusion_num_DeepAK8_decorr->Fill(1,5); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { // Z
+	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(2,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8_decorr->Fill(2,1);
+	    else if (isHmatched) confusion_num_DeepAK8_decorr->Fill(2,2);
+	    else if (isZmatched) confusion_num_DeepAK8_decorr->Fill(2,3);
+	    else if (isWmatched) confusion_num_DeepAK8_decorr->Fill(2,4);
+	    else confusion_num_DeepAK8_decorr->Fill(2,5); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { // H
+	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(3,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8_decorr->Fill(3,1);
+	    else if (isHmatched) confusion_num_DeepAK8_decorr->Fill(3,2);
+	    else if (isZmatched) confusion_num_DeepAK8_decorr->Fill(3,3);
+	    else if (isWmatched) confusion_num_DeepAK8_decorr->Fill(3,4);
+	    else confusion_num_DeepAK8_decorr->Fill(3,5); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
+	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(4,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8_decorr->Fill(4,1);
+	    else if (isHmatched) confusion_num_DeepAK8_decorr->Fill(4,2);
+	    else if (isZmatched) confusion_num_DeepAK8_decorr->Fill(4,3);
+	    else if (isWmatched) confusion_num_DeepAK8_decorr->Fill(4,4);
+	    else confusion_num_DeepAK8_decorr->Fill(4,5); }
+	  else {                                                          // B
+	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(5,0.0);
+	    else if (isTmatched) confusion_num_DeepAK8_decorr->Fill(5,1);
+	    else if (isHmatched) confusion_num_DeepAK8_decorr->Fill(5,2);
+	    else if (isZmatched) confusion_num_DeepAK8_decorr->Fill(5,3);
+	    else if (isWmatched) confusion_num_DeepAK8_decorr->Fill(5,4);
+	    else confusion_num_DeepAK8_decorr->Fill(5,5); }
+
+	  //JetSub confusion matrix
+	  if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 105 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 65 && tau21 < 0.55) { // W or Z
+	    if (isBmatched) {
+	      confusion_num_JetSub->Fill(1,0.0);
+	      confusion_num_JetSub->Fill(2,0.0); }
+	    else if (isTmatched) {
+	      confusion_num_JetSub->Fill(1,1);
+	      confusion_num_JetSub->Fill(2,1); }
+	    else if (isHmatched) {
+	      confusion_num_JetSub->Fill(1,2);
+	      confusion_num_JetSub->Fill(2,2); }
+	    else if (isZmatched) {
+	      confusion_num_JetSub->Fill(1,3);
+	      confusion_num_JetSub->Fill(2,3); }
+	    else if (isWmatched) { 
+	      confusion_num_JetSub->Fill(1,4);
+	      confusion_num_JetSub->Fill(2,4); }
+	    else {
+	      confusion_num_JetSub->Fill(1,5);
+	      confusion_num_JetSub->Fill(2,5); } }
+	  else if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 135 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 105 && theJetAK8DoubleB_JetSubCalc_PtOrdered.at(ijet) > 0.6) { //H
+	    if (isBmatched) confusion_num_JetSub->Fill(3,0);
+	    else if (isTmatched) confusion_num_JetSub->Fill(3,1);
+	    else if (isHmatched) confusion_num_JetSub->Fill(3,2);
+	    else if (isZmatched) confusion_num_JetSub->Fill(3,3);
+	    else if (isWmatched) confusion_num_JetSub->Fill(3,4);
+	    else confusion_num_JetSub->Fill(3,5); } 
+	  else if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 105 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 210 && tau32 < 0.65) { // T
+	    if (isBmatched) confusion_num_JetSub->Fill(4,0);
+	    else if (isTmatched) confusion_num_JetSub->Fill(4,1);
+	    else if (isHmatched) confusion_num_JetSub->Fill(4,2);
+	    else if (isZmatched) confusion_num_JetSub->Fill(4,3);
+	    else if (isWmatched) confusion_num_JetSub->Fill(4,4);
+	    else confusion_num_JetSub->Fill(4,5); }
+	  else {                                                  // B
+	    if (theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.at(ijet) > 0) {
+	      if (isBmatched) confusion_num_JetSub->Fill(5,0);
+	      else if (isTmatched) confusion_num_JetSub->Fill(5,1);
+	      else if (isHmatched) confusion_num_JetSub->Fill(5,2);
+	      else if (isZmatched) confusion_num_JetSub->Fill(5,3);
+	      else if (isWmatched) confusion_num_JetSub->Fill(5,4);
+	      else confusion_num_JetSub->Fill(5,5); }
+	    if (theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.at(ijet) == 0) { // J
+	      if (isBmatched) confusion_num_JetSub->Fill(0.0,0.0);
+	      else if (isTmatched) confusion_num_JetSub->Fill(0.0,1.0);
+	      else if (isHmatched) confusion_num_JetSub->Fill(0.0,2.0);
+	      else if (isZmatched) confusion_num_JetSub->Fill(0.0,3.0);
+	      else if (isWmatched) confusion_num_JetSub->Fill(0.0,4.0);
+	      else confusion_num_JetSub->Fill(0.0,5.0); } }
+
+	  // ***** EXAMPLE of filling denominators
+	  if(isWmatched && matchedPt > 200) Weff_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          else Weff_mistag_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          if(isZmatched && matchedPt > 200) Zeff_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          else Zeff_mistag_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          if(isHmatched && matchedPt > 300) Heff_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          else Heff_mistag_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          if(isTmatched && matchedPt > 400) Teff_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          else Teff_mistag_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+
+
+
+          if(isBmatched) Beff_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          else Beff_mistag_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          if(isJmatched) Jeff_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+          else Jeff_mistag_den->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+
+
+	
+	  // Filling Numerators
+	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 4) {
+	    if (isWmatched && matchedPt > 200) Weff_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Weff_mistag_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 3) { 
+	    if (isZmatched && matchedPt > 200) Zeff_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Zeff_mistag_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 1) { 
+	    if (isTmatched && matchedPt > 400) Teff_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Teff_mistag_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 2) { 
+	    if (isHmatched && matchedPt > 300) Heff_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Heff_mistag_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 5) {
+	    if (isBmatched) Beff_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Beff_mistag_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 0) {
+	    if (isJmatched) Jeff_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Jeff_mistag_BEST_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+
+
+	  
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) {
+	    if (isWmatched && matchedPt > 200) Weff_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Weff_mistag_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) {
+	    if (isZmatched && matchedPt > 200) Zeff_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Zeff_mistag_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) {
+	    if (isTmatched && matchedPt > 400) Teff_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Teff_mistag_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) {
+	    if (isHmatched && matchedPt > 300) Heff_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Heff_mistag_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 5) {
+	    if (isBmatched) Beff_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Beff_mistag_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 0) {
+	    if (isJmatched) Jeff_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Jeff_mistag_DeepAK8_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+
+
+	  
+	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) {
+	    if (isWmatched && matchedPt > 200) Weff_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Weff_mistag_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) {
+	    if (isZmatched && matchedPt > 200) Zeff_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Zeff_mistag_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) {
+	    if (isTmatched && matchedPt > 400) Teff_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Teff_mistag_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) {
+	    if (isHmatched && matchedPt > 300) Heff_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));	
+	    else Heff_mistag_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 5) {
+	    if (isBmatched) Beff_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Beff_mistag_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 0) {
+	    if (isJmatched) Jeff_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Jeff_mistag_DeepAK8_decorr_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+
+
+
+	  bool mark = true;
+	  if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 105 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 65 && tau21 < 0.55) {
+	    if ( (isWmatched || isZmatched) && matchedPt > 200) WZeff_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else WZeff_mistag_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    mark = false; }
+	  if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 135 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 105 && theJetAK8DoubleB_JetSubCalc_PtOrdered.at(ijet) > 0.6) {
+	    if (isHmatched && matchedPt > 300) Heff_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Heff_mistag_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    mark = false; }
+	  if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 105 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 210 && tau32 < 0.65) {
+	    if (isTmatched && matchedPt > 400) Teff_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    else Teff_mistag_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	    mark = false; }
+	  if (mark) { 
+	    if (theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.at(ijet) > 0) {
+	      if (isBmatched) Beff_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	      else Beff_mistag_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	    if (theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.at(ijet) == 0) {
+	      if (isJmatched) Jeff_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet));
+	      else Jeff_mistag_JetSub_num->Fill(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet)); }
+	  }
+
+
+
+      
+
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  // // TOP TAGGING
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  // float topTau81SF = 1.0;
+	  // double topTau81Eff = 1.0;
+	    
+	  // // Set the initial tagged/untagged state
+	  // bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
+	  // if(isTtagged) NJetsTtagged_0p81 += 1;
+	  
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  // // Variable for top tagged jets
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  
+	  // if(isTtagged){
+	  //   TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	  // }
+
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  // // W TAGGING
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  
+	  // // Set the initial tagged/untagged state
+	  // bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
+	  // bool isPWtagged = (massPSD > 65) && (massPSD < 105) && (Ptau21 < 0.55) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
+	  
+	  // // Now increase the tag count in the right variable	  
+	  // if(isWtagged){ 
+	  //   NJetsWtagged_0p6 += 1;
+	  //   NJetsWtagged_0p6_notTtagged += int(isWtagged)-int(isTtagged);
+	  // }
+
+	  // if(isPWtagged) NPuppiWtagged_0p55 += 1;	  
+	    
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  // // Variables for W tagged jets
+	  // // ------------------------------------------------------------------------------------------------------------------
+	  
+	  // if(isWtagged){
+	  //   if(NJetsWtagged_0p6 == 1){
+	  //     WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	  //   }
+	  // }
 	}
 	 
 	// ------------------------------------------------------------------------------------------------------------------
 	// DATA Calculation second
 	// ------------------------------------------------------------------------------------------------------------------
-	else{
+	// else{
 	  
-	  theJetAK8Wmatch_JetSubCalc_PtOrdered.push_back(0);
-	  theJetAK8Hmatch_JetSubCalc_PtOrdered.push_back(0);
-	  theJetAK8Zmatch_JetSubCalc_PtOrdered.push_back(0);
-	  theJetAK8Tmatch_JetSubCalc_PtOrdered.push_back(0);
+	//   theJetAK8Wmatch_JetSubCalc_PtOrdered.push_back(0);
+	//   theJetAK8Hmatch_JetSubCalc_PtOrdered.push_back(0);
+	//   theJetAK8Zmatch_JetSubCalc_PtOrdered.push_back(0);
+	//   theJetAK8Tmatch_JetSubCalc_PtOrdered.push_back(0);
 	  
-	  bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
+	//   bool isTtagged = (massSD > 105) && (massSD < 220) && (tau32 < 0.81) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 400);
 	  
-	  NJetsTtagged_0p81 += isTtagged;
-	  if(NJetsTtagged_0p81 == 1){
-	    TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	    tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
-				  theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
-	    deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
-	    deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
-	  }
+	//   NJetsTtagged_0p81 += isTtagged;
+	//   if(NJetsTtagged_0p81 == 1){
+	//     TJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	//     tjet1_lv.SetPtEtaPhiM(theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet),theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),
+	// 			  theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),massSD);
+	//     deltaRlepTjet = tjet1_lv.DeltaR(lepton_lv);
+	//     deltaPhilepTjet = tjet1_lv.DeltaPhi(lepton_lv);
+	//   }
 	  
-	  bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
-	  bool isPWtagged = (massPSD > 65) && (massPSD < 105) && (Ptau21 < 0.55) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
+	//   bool isWtagged = (mass > 65) && (mass < 105) && (tau21 < 0.6) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
+	//   bool isPWtagged = (massPSD > 65) && (massPSD < 105) && (Ptau21 < 0.55) && (theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) >= 200);
 	  
-	  NJetsWtagged_0p6 += isWtagged;
-	  NPuppiWtagged_0p55 += isPWtagged;
-	  if(isWtagged){NJetsWtagged_0p6_notTtagged += isWtagged-isTtagged;}
-	  if(NJetsWtagged_0p6 == 1){
-	    WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	  }
-	}
+	//   NJetsWtagged_0p6 += isWtagged;
+	//   NPuppiWtagged_0p55 += isPWtagged;
+	//   if(isWtagged){NJetsWtagged_0p6_notTtagged += isWtagged-isTtagged;}
+	//   if(NJetsWtagged_0p6 == 1){
+	//     WJetLeadPt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	//   }
+	// }
 
         // ----------------------------------------------------------------------------                                  
         // Count Higgs tags                                                                                              
@@ -1046,21 +2498,21 @@ void step1::Loop()
         //   if(isub != firstsub && theJetAK8SDSubjetPt_JetSubCalc->at(isub) == theJetAK8SDSubjetPt_JetSubCalc->at(firstsub)) cout << "subjets have matching pT, something's wrong" << endl;
         // }
 	// Now options are pruning+CHS or softdrop+PUPPI
-        double sdmass = theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.at(ijet);
-        double pt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
-	tempTLV.SetPtEtaPhiE(pt,theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),theJetAK8Energy_JetSubCalc_PtOrdered.at(ijet));
-        if(pt > 300 && sdmass > 60 && sdmass < 160){
-          if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) >= 1) HtagTLVs.push_back(tempTLV);
-          if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) == 1) NJetsH1btagged += 1;                                  
-          if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) > 1) NJetsH2btagged += 1;                                   
-	}
+        // double sdmass = theJetAK8PrunedMassWtagUncerts_JetSubCalc_PtOrdered.at(ijet);
+        // double pt = theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet);
+	// tempTLV.SetPtEtaPhiE(pt,theJetAK8Eta_JetSubCalc_PtOrdered.at(ijet),theJetAK8Phi_JetSubCalc_PtOrdered.at(ijet),theJetAK8Energy_JetSubCalc_PtOrdered.at(ijet));
+        // if(pt > 300 && sdmass > 60 && sdmass < 160){
+        //   if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) >= 1) HtagTLVs.push_back(tempTLV);
+        //   if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) == 1) NJetsH1btagged += 1;                                  
+        //   if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) > 1) NJetsH2btagged += 1;                                   
+	// }
 	
-	double puppisdmass = theJetAK8PUPPISoftDrop_PtOrdered.at(ijet); //corrmass + Rand.Gaus(0,puppisdres*sqrt(pow(puppisdsf,2) - 1.0));
-        if(pt > 300 && puppisdmass > 60 && puppisdmass < 160){
-          if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) >= 1) PHtagTLVs.push_back(tempTLV);
-          if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) == 1) NPuppiH1btagged += 1;                                  
-          if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) > 1) NPuppiH2btagged += 1;                                   
-	}
+	// double puppisdmass = theJetAK8SoftDrop_PtOrdered.at(ijet); //corrmass + Rand.Gaus(0,puppisdres*sqrt(pow(puppisdsf,2) - 1.0));
+        // if(pt > 300 && puppisdmass > 60 && puppisdmass < 160){
+        //   if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) >= 1) PHtagTLVs.push_back(tempTLV);
+        //   if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) == 1) NPuppiH1btagged += 1;                                  
+        //   if(theJetAK8SDSubjetNCSVM_PtOrdered.at(ijet) > 1) NPuppiH2btagged += 1;                                   
+	// }
       }
 
       // ----------------------------------------------------------------------------
@@ -1079,6 +2531,8 @@ void step1::Loop()
       deltaR_lepJets.clear();
       deltaR_lepBJets.clear();
 
+
+
       for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc_PtOrdered.size(); ijet++){
         jet_lv.SetPtEtaPhiE(theJetPt_JetSubCalc_PtOrdered.at(ijet),theJetEta_JetSubCalc_PtOrdered.at(ijet),theJetPhi_JetSubCalc_PtOrdered.at(ijet),theJetEnergy_JetSubCalc_PtOrdered.at(ijet));
 	if((lepton_lv + jet_lv).M() < minMleppJet) {
@@ -1090,7 +2544,7 @@ void step1::Loop()
 	deltaR_lepJets.push_back(lepton_lv.DeltaR(jet_lv));
 
         // FOR NOW DON'T USE THE SCALE FACTORS               **** NEED TO CHANGE TO DEEPCSV probb + probbb > 0.4941                          
-	if(theJetCSV_JetSubCalc_PtOrdered.at(ijet) > 0.8484){
+	if(theJetCSVb_JetSubCalc_PtOrdered.at(ijet) + theJetCSVbb_JetSubCalc_PtOrdered.at(ijet) > 0.4941){
           NJetsCSV_JetSubCalc += 1;
         }
 	// OK, we're back to using SFs
@@ -1142,9 +2596,169 @@ void step1::Loop()
    std::cout<<"Npassed_MuEta          = "<<npass_MuEta<<" / "<<nentries<<std::endl;
    std::cout<<"Npassed_ALL            = "<<npass_all<<" / "<<nentries<<std::endl;
 
+
+
    //***** EXAMPLE OF WRITING HISTOGRAMS TO THE FILE
+   // Tprime Tagging Efficiency denominator Histograms
+   THBWeff_den->Write();
+   THTHeff_den->Write();
+   THTZeff_den->Write();
+   TZBWeff_den->Write();
+   TZTZeff_den->Write();
+   BWBWeff_den->Write();
+   BWTZeff_den->Write();
+   BWTHeff_den->Write();
+
+   // Tprime Mistagging Efficiency denominator Histograms
+   THBWeff_mistag_den->Write();
+   THTHeff_mistag_den->Write();
+   THTZeff_mistag_den->Write();
+   TZBWeff_mistag_den->Write();
+   TZTZeff_mistag_den->Write();
+   BWBWeff_mistag_den->Write();
+   BWTZeff_mistag_den->Write();
+   BWTHeff_mistag_den->Write();
+
+   // Tagging efficiency denominator histograms
+   Weff_den->Write();
+   Zeff_den->Write();
+   Heff_den->Write();
+   Teff_den->Write();
+   Beff_den->Write();
+   Jeff_den->Write();
+   
+   // Mistagging efficiency denominator histograms
+   Weff_mistag_den->Write();
+   Zeff_mistag_den->Write();
+   Heff_mistag_den->Write();
+   Teff_mistag_den->Write();
+   Beff_mistag_den->Write();
+   Jeff_mistag_den->Write();
+
+   // Tprime Tagging Efficiency numerator histograms
+   THBWeff_BEST_num->Write();
+   THTHeff_BEST_num->Write();
+   THTZeff_BEST_num->Write();
+   TZBWeff_BEST_num->Write();
+   TZTZeff_BEST_num->Write();
+   BWBWeff_BEST_num->Write();
+   BWTZeff_BEST_num->Write();
+   BWTHeff_BEST_num->Write();
+
+   THBWeff_DeepAK8_num->Write();
+   THTHeff_DeepAK8_num->Write();
+   THTZeff_DeepAK8_num->Write();
+   TZBWeff_DeepAK8_num->Write();
+   TZTZeff_DeepAK8_num->Write();
+   BWBWeff_DeepAK8_num->Write();
+   BWTZeff_DeepAK8_num->Write();
+   BWTHeff_DeepAK8_num->Write();
+
+   THBWeff_DeepAK8_decorr_num->Write();
+   THTHeff_DeepAK8_decorr_num->Write();
+   THTZeff_DeepAK8_decorr_num->Write();
+   TZBWeff_DeepAK8_decorr_num->Write();
+   TZTZeff_DeepAK8_decorr_num->Write();
+   BWBWeff_DeepAK8_decorr_num->Write();
+   BWTZeff_DeepAK8_decorr_num->Write();
+   BWTHeff_DeepAK8_decorr_num->Write();
+
+   // Tprime Tagging Efficiency numerator histograms
+   THBWeff_mistag_BEST_num->Write();
+   THTHeff_mistag_BEST_num->Write();
+   THTZeff_mistag_BEST_num->Write();
+   TZBWeff_mistag_BEST_num->Write();
+   TZTZeff_mistag_BEST_num->Write();
+   BWBWeff_mistag_BEST_num->Write();
+   BWTZeff_mistag_BEST_num->Write();
+   BWTHeff_mistag_BEST_num->Write();
+   
+   THBWeff_mistag_DeepAK8_num->Write();
+   THTHeff_mistag_DeepAK8_num->Write();
+   THTZeff_mistag_DeepAK8_num->Write();
+   TZBWeff_mistag_DeepAK8_num->Write();
+   TZTZeff_mistag_DeepAK8_num->Write();
+   BWBWeff_mistag_DeepAK8_num->Write();
+   BWTZeff_mistag_DeepAK8_num->Write();
+   BWTHeff_mistag_DeepAK8_num->Write();
+
+   THBWeff_mistag_DeepAK8_decorr_num->Write();
+   THTHeff_mistag_DeepAK8_decorr_num->Write();
+   THTZeff_mistag_DeepAK8_decorr_num->Write();
+   TZBWeff_mistag_DeepAK8_decorr_num->Write();
+   TZTZeff_mistag_DeepAK8_decorr_num->Write();
+   BWBWeff_mistag_DeepAK8_decorr_num->Write();
+   BWTZeff_mistag_DeepAK8_decorr_num->Write();
+   BWTHeff_mistag_DeepAK8_decorr_num->Write();
+   
+   // Tagging efficiency numerator histograms
    Weff_BEST_num->Write();
-   Weff_BEST_den->Write();
+   Zeff_BEST_num->Write();
+   Heff_BEST_num->Write();
+   Teff_BEST_num->Write();
+   Beff_BEST_num->Write();
+   Jeff_BEST_num->Write();
+
+   Weff_DeepAK8_num->Write();
+   Zeff_DeepAK8_num->Write();
+   Heff_DeepAK8_num->Write();
+   Teff_DeepAK8_num->Write();
+   Beff_DeepAK8_num->Write();
+   Jeff_DeepAK8_num->Write();
+
+   Weff_DeepAK8_decorr_num->Write();
+   Zeff_DeepAK8_decorr_num->Write();
+   Heff_DeepAK8_decorr_num->Write();
+   Teff_DeepAK8_decorr_num->Write();
+   Beff_DeepAK8_decorr_num->Write();
+   Jeff_DeepAK8_decorr_num->Write();
+
+   WZeff_JetSub_num->Write();
+   Heff_JetSub_num->Write();
+   Teff_JetSub_num->Write();
+   Beff_JetSub_num->Write();
+   Jeff_JetSub_num->Write();
+
+
+
+   // Mistgging efficiency numerator histograms                                                                                                                                                    
+   Weff_mistag_BEST_num->Write();
+   Zeff_mistag_BEST_num->Write();
+   Heff_mistag_BEST_num->Write();
+   Teff_mistag_BEST_num->Write();
+   Beff_mistag_BEST_num->Write();
+   Jeff_mistag_BEST_num->Write();
+
+   Weff_mistag_DeepAK8_num->Write();
+   Zeff_mistag_DeepAK8_num->Write();
+   Heff_mistag_DeepAK8_num->Write();
+   Teff_mistag_DeepAK8_num->Write();
+   Beff_mistag_DeepAK8_num->Write();
+   Jeff_mistag_DeepAK8_num->Write();
+
+   Weff_mistag_DeepAK8_decorr_num->Write();
+   Zeff_mistag_DeepAK8_decorr_num->Write();
+   Heff_mistag_DeepAK8_decorr_num->Write();
+   Teff_mistag_DeepAK8_decorr_num->Write();
+   Beff_mistag_DeepAK8_decorr_num->Write();
+   Jeff_mistag_DeepAK8_decorr_num->Write();
+
+   WZeff_mistag_JetSub_num->Write();
+   Heff_mistag_JetSub_num->Write();
+   Teff_mistag_JetSub_num->Write();
+   Beff_mistag_JetSub_num->Write();
+   Jeff_mistag_JetSub_num->Write();
+
+   Tprime2_BEST_Mass_hist->Write();
+   Tprime2_DeepAK8_Mass_hist->Write();
+   Tprime2_DeepAK8_decorr_Mass_hist->Write();
+   //Tprime2_JetSub_Mass_hist->Write();
+
+   confusion_den->Write();
+   confusion_num_BEST->Write();
+   confusion_num_DeepAK8->Write();
+   confusion_num_DeepAK8_decorr->Write();
+   confusion_num_JetSub->Write();
 
    outputTree->Write();
 
