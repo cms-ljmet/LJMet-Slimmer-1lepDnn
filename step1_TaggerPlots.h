@@ -63,7 +63,7 @@ public :
    // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // NEW BRANCHES
-   vector<double> theJetAK8Truth_JetSubCalc_PtOrdered;
+   vector<int> theJetAK8Truth_JetSubCalc_PtOrdered;
 
    double Tprime1_BEST_Mass;
    double Tprime2_BEST_Mass;
