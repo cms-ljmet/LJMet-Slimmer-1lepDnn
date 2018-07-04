@@ -83,6 +83,7 @@ public :
    double Tprime2_DeepAK8_Phi;
    double TprimeAvg_DeepAK8_Mass;
 
+<<<<<<< HEAD
    double Tprime1_DeepAK8_decorr_Mass;
    double Tprime2_DeepAK8_decorr_Mass;
    double Tprime1_DeepAK8_decorr_Pt;
@@ -158,7 +159,9 @@ public :
    Int_t           NJetsCSVwithSF_JetSubCalc;
    Int_t           NJetsCSVnotH_JetSubCalc;
    Int_t           NJetsCSVnotPH_JetSubCalc;
+
    vector<int>     maxProb_JetSubCalc_PtOrdered;
+
    vector<int>     dnn_largest_BestCalc_PtOrdered;
    vector<int>     dnn_largest_DeepAK8Calc_PtOrdered;
    vector<int>     decorr_largest_DeepAK8Calc_PtOrdered;
@@ -178,6 +181,9 @@ public :
    vector<int>     theJetBTag_bSFdn_JetSubCalc_PtOrdered;
    vector<int>     theJetBTag_lSFup_JetSubCalc_PtOrdered;
    vector<int>     theJetBTag_lSFdn_JetSubCalc_PtOrdered;
+
+   //double tmass;
+   //double wmass;
    Float_t         AK4HTpMETpLepPt;
    Float_t         AK4HT;
 
@@ -341,6 +347,8 @@ public :
    Float_t         topPt;
    Float_t         topPtGen;
    Float_t         topMass;
+   Float_t         tmass;
+   Float_t         wmass;
    Float_t         genTopPt;
    Float_t         genAntiTopPt;
    Float_t         topPtWeight13TeV;
