@@ -1085,7 +1085,7 @@ void step1::Loop()
 	  theJetAK8Energy_JetSubCalc->at(ijet) = newAK8_lv.E();
 	  n_jetsnearlep++;
 	}
-	if(theJetAK8Pt_JetSubCalc->at(ijet) < 200) {cout << theJetAK8Pt_JetSubCalc->at(ijet) << endl;/* continue;*/}
+	if(theJetAK8Pt_JetSubCalc->at(ijet) < 200) continue;
 	n_jetspassed++;
 
         // ----------------------------------------------------------------------------                                  
