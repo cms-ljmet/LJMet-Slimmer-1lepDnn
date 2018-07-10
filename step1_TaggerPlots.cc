@@ -524,152 +524,152 @@ void step1::Loop()
    // ******* TH1D *name = new TH1D("name","title;x-axis title;y-axis title",nbins,xmin,xmax)
 
    // Tprime tagging denominator histogram
-   TH1D *THBWeff_den = new TH1D("THBWeff_den",";T VLQ pT [GeV];N(THBW VLQ's from Tagging Algorithm) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_den->Sumw2();
-   TH1D *THTHeff_den = new TH1D("THTHeff_den",";T VLQ pT [GeV];N(THTH VLQ's from Tagging Algorithm) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_den->Sumw2();
-   TH1D *THTZeff_den = new TH1D("THTZeff_den",";T VLQ pT [GeV];N(THTZ VLQ's from Tagging Algorithm) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_den->Sumw2();
-   TH1D *TZBWeff_den = new TH1D("TZBWeff_den",";T VLQ pT [GeV];N(TZBW VLQ's from Tagging Algorithm) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_den->Sumw2();
-   TH1D *TZTZeff_den = new TH1D("TZTZeff_den",";T VLQ pT [GeV];N(TZTZ VLQ's from Tagging Algorithm) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_den->Sumw2();
-   TH1D *BWBWeff_den = new TH1D("BWBWeff_den",";T VLQ pT [GeV];N(BWBW VLQ's from Tagging Algorithm) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_den->Sumw2();
-   TH1D *BWTZeff_den = new TH1D("BWTZeff_den",";T VLQ pT [GeV];N(BWTZ VLQ's from Tagging Algorithm) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_den->Sumw2();
-   TH1D *BWTHeff_den = new TH1D("BWTHeff_den",";T VLQ pT [GeV];N(BWTH VLQ's from Tagging Algorithm) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_den->Sumw2();
+   TH1D *THBWeff_den = new TH1D("THBWeff_den",";T VLQ pT [GeV];N(THBW VLQ's from Tagging Algorithm) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_den->Sumw2();
+   TH1D *THTHeff_den = new TH1D("THTHeff_den",";T VLQ pT [GeV];N(THTH VLQ's from Tagging Algorithm) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_den->Sumw2();
+   TH1D *THTZeff_den = new TH1D("THTZeff_den",";T VLQ pT [GeV];N(THTZ VLQ's from Tagging Algorithm) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_den->Sumw2();
+   TH1D *TZBWeff_den = new TH1D("TZBWeff_den",";T VLQ pT [GeV];N(TZBW VLQ's from Tagging Algorithm) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_den->Sumw2();
+   TH1D *TZTZeff_den = new TH1D("TZTZeff_den",";T VLQ pT [GeV];N(TZTZ VLQ's from Tagging Algorithm) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_den->Sumw2();
+   TH1D *BWBWeff_den = new TH1D("BWBWeff_den",";T VLQ pT [GeV];N(BWBW VLQ's from Tagging Algorithm) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_den->Sumw2();
+   TH1D *BWTZeff_den = new TH1D("BWTZeff_den",";T VLQ pT [GeV];N(BWTZ VLQ's from Tagging Algorithm) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_den->Sumw2();
+   TH1D *BWTHeff_den = new TH1D("BWTHeff_den",";T VLQ pT [GeV];N(BWTH VLQ's from Tagging Algorithm) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_den->Sumw2();
 
    // Tprime mistagging denominator histogram
-   TH1D *THBWeff_mistag_den = new TH1D("THBWeff_mistag_den",";T VLQ pT [GeV];N(THBW VLQ's from Tagging Algorithm) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_den->Sumw2();
-   TH1D *THTHeff_mistag_den = new TH1D("THTHeff_mistag_den",";T VLQ pT [GeV];N(THTH VLQ's from Tagging Algorithm) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_den->Sumw2();
-   TH1D *THTZeff_mistag_den = new TH1D("THTZeff_mistag_den",";T VLQ pT [GeV];N(THTZ VLQ's from Tagging Algorithm) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_den->Sumw2();
-   TH1D *TZBWeff_mistag_den = new TH1D("TZBWeff_mistag_den",";T VLQ pT [GeV];N(TZBW VLQ's from Tagging Algorithm) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_den->Sumw2();
-   TH1D *TZTZeff_mistag_den = new TH1D("TZTZeff_mistag_den",";T VLQ pT [GeV];N(TZTZ VLQ's from Tagging Algorithm) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_den->Sumw2();
-   TH1D *BWBWeff_mistag_den = new TH1D("BWBWeff_mistag_den",";T VLQ pT [GeV];N(BWBW VLQ's from Tagging Algorithm) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_den->Sumw2();
-   TH1D *BWTZeff_mistag_den = new TH1D("BWTZeff_mistag_den",";T VLQ pT [GeV];N(BWTZ VLQ's from Tagging Algorithm) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_den->Sumw2();
-   TH1D *BWTHeff_mistag_den = new TH1D("BWTHeff_mistag_den",";T VLQ pT [GeV];N(BWTH VLQ's from Tagging Algorithm) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_den->Sumw2();
+   TH1D *THBWeff_mistag_den = new TH1D("THBWeff_mistag_den",";T VLQ pT [GeV];N(THBW VLQ's from Tagging Algorithm) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_mistag_den->Sumw2();
+   TH1D *THTHeff_mistag_den = new TH1D("THTHeff_mistag_den",";T VLQ pT [GeV];N(THTH VLQ's from Tagging Algorithm) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_mistag_den->Sumw2();
+   TH1D *THTZeff_mistag_den = new TH1D("THTZeff_mistag_den",";T VLQ pT [GeV];N(THTZ VLQ's from Tagging Algorithm) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_mistag_den->Sumw2();
+   TH1D *TZBWeff_mistag_den = new TH1D("TZBWeff_mistag_den",";T VLQ pT [GeV];N(TZBW VLQ's from Tagging Algorithm) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_mistag_den->Sumw2();
+   TH1D *TZTZeff_mistag_den = new TH1D("TZTZeff_mistag_den",";T VLQ pT [GeV];N(TZTZ VLQ's from Tagging Algorithm) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_mistag_den->Sumw2();
+   TH1D *BWBWeff_mistag_den = new TH1D("BWBWeff_mistag_den",";T VLQ pT [GeV];N(BWBW VLQ's from Tagging Algorithm) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_mistag_den->Sumw2();
+   TH1D *BWTZeff_mistag_den = new TH1D("BWTZeff_mistag_den",";T VLQ pT [GeV];N(BWTZ VLQ's from Tagging Algorithm) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_mistag_den->Sumw2();
+   TH1D *BWTHeff_mistag_den = new TH1D("BWTHeff_mistag_den",";T VLQ pT [GeV];N(BWTH VLQ's from Tagging Algorithm) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_mistag_den->Sumw2();
 
    // Tagging Efficiency denominator histograms
-   TH1D *Weff_den = new TH1D("Weff_den",";W boson pT [GeV];N(W from Tagging Algorithm) / N(true hadronic W)", 50, 200, 2000); Weff_den->Sumw2(); 
-   TH1D *Zeff_den = new TH1D("Zeff_den",";Z boson pT [GeV];N(Z from Tagging Algorithm) / N(true hadronic Z)", 50, 200, 2000); Zeff_den->Sumw2(); 
-   TH1D *Heff_den = new TH1D("Heff_den",";H boson pT [GeV];N(H from Tagging Algorithm) / N(true hadronic H)", 50, 200, 2000); Heff_den->Sumw2(); 
-   TH1D *Teff_den = new TH1D("Teff_den",";T boson pT [GeV];N(T from Tagging Algorithm) / N(true hadronic T)", 50, 200, 2000); Teff_den->Sumw2(); 
-   TH1D *Beff_den = new TH1D("Beff_den",";B boson pT [GeV];N(B from Tagging Algorithm) / N(true hadronic B)", 50, 200, 2000); Beff_den->Sumw2(); 
-   TH1D *Jeff_den = new TH1D("Jeff_den",";J boson pT [GeV];N(J from Tagging Algorithm) / N(true hadronic J)", 50, 200, 2000); Jeff_den->Sumw2(); 
+   TH1D *Weff_den = new TH1D("Weff_den",";W boson pT [GeV];N(W from Tagging Algorithm) / N(true hadronic W)", 36, 200, 2000); Weff_den->Sumw2(); 
+   TH1D *Zeff_den = new TH1D("Zeff_den",";Z boson pT [GeV];N(Z from Tagging Algorithm) / N(true hadronic Z)", 36, 200, 2000); Zeff_den->Sumw2(); 
+   TH1D *Heff_den = new TH1D("Heff_den",";H boson pT [GeV];N(H from Tagging Algorithm) / N(true hadronic H)", 36, 200, 2000); Heff_den->Sumw2(); 
+   TH1D *Teff_den = new TH1D("Teff_den",";T boson pT [GeV];N(T from Tagging Algorithm) / N(true hadronic T)", 36, 200, 2000); Teff_den->Sumw2(); 
+   TH1D *Beff_den = new TH1D("Beff_den",";B boson pT [GeV];N(B from Tagging Algorithm) / N(true hadronic B)", 36, 200, 2000); Beff_den->Sumw2(); 
+   TH1D *Jeff_den = new TH1D("Jeff_den",";J boson pT [GeV];N(J from Tagging Algorithm) / N(true hadronic J)", 36, 200, 2000); Jeff_den->Sumw2(); 
 
    // Mistagging efficiency denominator histograms
-   TH1D *Weff_mistag_den = new TH1D("Weff_mistag_den",";W boson pT [GeV];N(W from Tagging Algorithm) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_den->Sumw2();
-   TH1D *Zeff_mistag_den = new TH1D("Zeff_mistag_den",";Z boson pT [GeV];N(Z from Tagging Algorithm) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_den->Sumw2();
-   TH1D *Heff_mistag_den = new TH1D("Heff_mistag_den",";H boson pT [GeV];N(H from Tagging Algorithm) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_den->Sumw2();
-   TH1D *Teff_mistag_den = new TH1D("Teff_mistag_den",";T boson pT [GeV];N(T from Tagging Algorithm) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_den->Sumw2();
-   TH1D *Beff_mistag_den = new TH1D("Beff_mistag_den",";B boson pT [GeV];N(B from Tagging Algorithm) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_den->Sumw2();
-   TH1D *Jeff_mistag_den = new TH1D("Jeff_mistag_den",";J boson pT [GeV];N(J from Tagging Algorithm) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_den->Sumw2();
+   TH1D *Weff_mistag_den = new TH1D("Weff_mistag_den",";W boson pT [GeV];N(W from Tagging Algorithm) / N(true hadronic W)", 36, 200, 2000); Weff_mistag_den->Sumw2();
+   TH1D *Zeff_mistag_den = new TH1D("Zeff_mistag_den",";Z boson pT [GeV];N(Z from Tagging Algorithm) / N(true hadronic Z)", 36, 200, 2000); Zeff_mistag_den->Sumw2();
+   TH1D *Heff_mistag_den = new TH1D("Heff_mistag_den",";H boson pT [GeV];N(H from Tagging Algorithm) / N(true hadronic H)", 36, 200, 2000); Heff_mistag_den->Sumw2();
+   TH1D *Teff_mistag_den = new TH1D("Teff_mistag_den",";T boson pT [GeV];N(T from Tagging Algorithm) / N(true hadronic T)", 36, 200, 2000); Teff_mistag_den->Sumw2();
+   TH1D *Beff_mistag_den = new TH1D("Beff_mistag_den",";B boson pT [GeV];N(B from Tagging Algorithm) / N(true hadronic B)", 36, 200, 2000); Beff_mistag_den->Sumw2();
+   TH1D *Jeff_mistag_den = new TH1D("Jeff_mistag_den",";J boson pT [GeV];N(J from Tagging Algorithm) / N(true hadronic J)", 36, 200, 2000); Jeff_mistag_den->Sumw2();
 
    // Tprime agging efficiency numerator histgram
-   TH1D *THBWeff_BEST_num = new TH1D("THBWeff_BEST_num",";THBW VLQ pT [GeV];N(THBW VLQ's from BEST) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_BEST_num->Sumw2();
-   TH1D *THTHeff_BEST_num = new TH1D("THTHeff_BEST_num",";THTH VLQ pT [GeV];N(THTH VLQ's from BEST) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_BEST_num->Sumw2();
-   TH1D *THTZeff_BEST_num = new TH1D("THTZeff_BEST_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from BEST) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_BEST_num->Sumw2();
-   TH1D *TZBWeff_BEST_num = new TH1D("TZBWeff_BEST_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from BEST) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_BEST_num->Sumw2();
-   TH1D *TZTZeff_BEST_num = new TH1D("TZTZeff_BEST_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from BEST) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_BEST_num->Sumw2();
-   TH1D *BWBWeff_BEST_num = new TH1D("BWBWeff_BEST_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from BEST) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_BEST_num->Sumw2();
-   TH1D *BWTZeff_BEST_num = new TH1D("BWTZeff_BEST_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from BEST) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_BEST_num->Sumw2();
-   TH1D *BWTHeff_BEST_num = new TH1D("BWTHeff_BEST_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from BEST) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_BEST_num->Sumw2();
+   TH1D *THBWeff_BEST_num = new TH1D("THBWeff_BEST_num",";THBW VLQ pT [GeV];N(THBW VLQ's from BEST) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_BEST_num->Sumw2();
+   TH1D *THTHeff_BEST_num = new TH1D("THTHeff_BEST_num",";THTH VLQ pT [GeV];N(THTH VLQ's from BEST) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_BEST_num->Sumw2();
+   TH1D *THTZeff_BEST_num = new TH1D("THTZeff_BEST_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from BEST) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_BEST_num->Sumw2();
+   TH1D *TZBWeff_BEST_num = new TH1D("TZBWeff_BEST_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from BEST) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_BEST_num->Sumw2();
+   TH1D *TZTZeff_BEST_num = new TH1D("TZTZeff_BEST_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from BEST) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_BEST_num->Sumw2();
+   TH1D *BWBWeff_BEST_num = new TH1D("BWBWeff_BEST_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from BEST) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_BEST_num->Sumw2();
+   TH1D *BWTZeff_BEST_num = new TH1D("BWTZeff_BEST_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from BEST) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_BEST_num->Sumw2();
+   TH1D *BWTHeff_BEST_num = new TH1D("BWTHeff_BEST_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from BEST) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_BEST_num->Sumw2();
 
-   TH1D *THBWeff_DeepAK8_num = new TH1D("THBWeff_DeepAK8_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_DeepAK8_num->Sumw2();
-   TH1D *THTHeff_DeepAK8_num = new TH1D("THTHeff_DeepAK8_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_DeepAK8_num->Sumw2();
-   TH1D *THTZeff_DeepAK8_num = new TH1D("THTZeff_DeepAK8_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_DeepAK8_num->Sumw2();
-   TH1D *TZBWeff_DeepAK8_num = new TH1D("TZBWeff_DeepAK8_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_DeepAK8_num->Sumw2();
-   TH1D *TZTZeff_DeepAK8_num = new TH1D("TZTZeff_DeepAK8_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_DeepAK8_num->Sumw2();
-   TH1D *BWBWeff_DeepAK8_num = new TH1D("BWBWeff_DeepAK8_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_DeepAK8_num->Sumw2();
-   TH1D *BWTZeff_DeepAK8_num = new TH1D("BWTZeff_DeepAK8_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_DeepAK8_num->Sumw2();
-   TH1D *BWTHeff_DeepAK8_num = new TH1D("BWTHeff_DeepAK8_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_DeepAK8_num->Sumw2();
+   TH1D *THBWeff_DeepAK8_num = new TH1D("THBWeff_DeepAK8_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_DeepAK8_num->Sumw2();
+   TH1D *THTHeff_DeepAK8_num = new TH1D("THTHeff_DeepAK8_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_DeepAK8_num->Sumw2();
+   TH1D *THTZeff_DeepAK8_num = new TH1D("THTZeff_DeepAK8_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_DeepAK8_num->Sumw2();
+   TH1D *TZBWeff_DeepAK8_num = new TH1D("TZBWeff_DeepAK8_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_DeepAK8_num->Sumw2();
+   TH1D *TZTZeff_DeepAK8_num = new TH1D("TZTZeff_DeepAK8_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_DeepAK8_num->Sumw2();
+   TH1D *BWBWeff_DeepAK8_num = new TH1D("BWBWeff_DeepAK8_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_DeepAK8_num->Sumw2();
+   TH1D *BWTZeff_DeepAK8_num = new TH1D("BWTZeff_DeepAK8_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_DeepAK8_num->Sumw2();
+   TH1D *BWTHeff_DeepAK8_num = new TH1D("BWTHeff_DeepAK8_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_DeepAK8_num->Sumw2();
 
-   TH1D *THBWeff_DeepAK8_decorr_num = new TH1D("THBWeff_DeepAK8_decorr_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8_decorr) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *THTHeff_DeepAK8_decorr_num = new TH1D("THTHeff_DeepAK8_decorr_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8_decorr) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *THTZeff_DeepAK8_decorr_num = new TH1D("THTZeff_DeepAK8_decorr_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8_decorr) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *TZBWeff_DeepAK8_decorr_num = new TH1D("TZBWeff_DeepAK8_decorr_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8_decorr) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *TZTZeff_DeepAK8_decorr_num = new TH1D("TZTZeff_DeepAK8_decorr_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8_decorr) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *BWBWeff_DeepAK8_decorr_num = new TH1D("BWBWeff_DeepAK8_decorr_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8_decorr) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *BWTZeff_DeepAK8_decorr_num = new TH1D("BWTZeff_DeepAK8_decorr_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8_decorr) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *BWTHeff_DeepAK8_decorr_num = new TH1D("BWTHeff_DeepAK8_decorr_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8_decorr) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *THBWeff_DeepAK8_decorr_num = new TH1D("THBWeff_DeepAK8_decorr_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8_decorr) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTHeff_DeepAK8_decorr_num = new TH1D("THTHeff_DeepAK8_decorr_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8_decorr) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTZeff_DeepAK8_decorr_num = new TH1D("THTZeff_DeepAK8_decorr_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8_decorr) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZBWeff_DeepAK8_decorr_num = new TH1D("TZBWeff_DeepAK8_decorr_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8_decorr) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZTZeff_DeepAK8_decorr_num = new TH1D("TZTZeff_DeepAK8_decorr_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8_decorr) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWBWeff_DeepAK8_decorr_num = new TH1D("BWBWeff_DeepAK8_decorr_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8_decorr) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTZeff_DeepAK8_decorr_num = new TH1D("BWTZeff_DeepAK8_decorr_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8_decorr) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTHeff_DeepAK8_decorr_num = new TH1D("BWTHeff_DeepAK8_decorr_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8_decorr) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_DeepAK8_decorr_num->Sumw2();
 
    // Tagging efficiency numerator histograms
-   TH1D *Weff_BEST_num = new TH1D("Weff_BEST_num",";W boson pT [GeV];N(W from BEST) / N(true hadronic W)", 50, 200, 2000); Weff_BEST_num->Sumw2(); 
-   TH1D *Zeff_BEST_num = new TH1D("Zeff_BEST_num",";Z boson pT [GeV];N(Z from BEST) / N(true hadronic Z)", 50, 200, 2000); Zeff_BEST_num->Sumw2();
-   TH1D *Heff_BEST_num = new TH1D("Heff_BEST_num",";H boson pT [GeV];N(H from BEST) / N(true hadronic H)", 50, 200, 2000); Heff_BEST_num->Sumw2();
-   TH1D *Teff_BEST_num = new TH1D("Teff_BEST_num",";T boson pT [GeV];N(T from BEST) / N(true hadronic T)", 50, 200, 2000); Teff_BEST_num->Sumw2();
-   TH1D *Beff_BEST_num = new TH1D("Beff_BEST_num",";B boson pT [GeV];N(B from BEST) / N(true hadronic B)", 50, 200, 2000); Beff_BEST_num->Sumw2();
-   TH1D *Jeff_BEST_num = new TH1D("Jeff_BEST_num",";J boson pT [GeV];N(J from BEST) / N(true hadronic J)", 50, 200, 2000); Jeff_BEST_num->Sumw2();
+   TH1D *Weff_BEST_num = new TH1D("Weff_BEST_num",";W boson pT [GeV];N(W from BEST) / N(true hadronic W)", 36, 200, 2000); Weff_BEST_num->Sumw2(); 
+   TH1D *Zeff_BEST_num = new TH1D("Zeff_BEST_num",";Z boson pT [GeV];N(Z from BEST) / N(true hadronic Z)", 36, 200, 2000); Zeff_BEST_num->Sumw2();
+   TH1D *Heff_BEST_num = new TH1D("Heff_BEST_num",";H boson pT [GeV];N(H from BEST) / N(true hadronic H)", 36, 200, 2000); Heff_BEST_num->Sumw2();
+   TH1D *Teff_BEST_num = new TH1D("Teff_BEST_num",";T boson pT [GeV];N(T from BEST) / N(true hadronic T)", 36, 200, 2000); Teff_BEST_num->Sumw2();
+   TH1D *Beff_BEST_num = new TH1D("Beff_BEST_num",";B boson pT [GeV];N(B from BEST) / N(true hadronic B)", 36, 200, 2000); Beff_BEST_num->Sumw2();
+   TH1D *Jeff_BEST_num = new TH1D("Jeff_BEST_num",";J boson pT [GeV];N(J from BEST) / N(true hadronic J)", 36, 200, 2000); Jeff_BEST_num->Sumw2();
 
-   TH1D *Weff_DeepAK8_decorr_num = new TH1D("Weff_DeepAK8_decorr_num",";W boson pT [GeV];N(W from DeepAK8_decorr) / N(true hadronic W)", 50, 200, 2000); Weff_DeepAK8_decorr_num->Sumw2();
-   TH1D *Zeff_DeepAK8_decorr_num = new TH1D("Zeff_DeepAK8_decorr_num",";Z boson pT [GeV];N(Z from DeepAK8_decorr) / N(true hadronic Z)", 50, 200, 2000); Zeff_DeepAK8_decorr_num->Sumw2();
-   TH1D *Heff_DeepAK8_decorr_num = new TH1D("Heff_DeepAK8_decorr_num",";H boson pT [GeV];N(H from DeepAK8_decorr) / N(true hadronic H)", 50, 200, 2000); Heff_DeepAK8_decorr_num->Sumw2();
-   TH1D *Teff_DeepAK8_decorr_num = new TH1D("Teff_DeepAK8_decorr_num",";T boson pT [GeV];N(T from DeepAK8_decorr) / N(true hadronic T)", 50, 200, 2000); Teff_DeepAK8_decorr_num->Sumw2();
-   TH1D *Beff_DeepAK8_decorr_num = new TH1D("Beff_DeepAK8_decorr_num",";B boson pT [GeV];N(B from DeepAK8_decorr) / N(true hadronic B)", 50, 200, 2000); Beff_DeepAK8_decorr_num->Sumw2();
-   TH1D *Jeff_DeepAK8_decorr_num = new TH1D("Jeff_DeepAK8_decorr_num",";J boson pT [GeV];N(J from DeepAK8_decorr) / N(true hadronic J)", 50, 200, 2000); Jeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Weff_DeepAK8_decorr_num = new TH1D("Weff_DeepAK8_decorr_num",";W boson pT [GeV];N(W from DeepAK8_decorr) / N(true hadronic W)", 36, 200, 2000); Weff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Zeff_DeepAK8_decorr_num = new TH1D("Zeff_DeepAK8_decorr_num",";Z boson pT [GeV];N(Z from DeepAK8_decorr) / N(true hadronic Z)", 36, 200, 2000); Zeff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Heff_DeepAK8_decorr_num = new TH1D("Heff_DeepAK8_decorr_num",";H boson pT [GeV];N(H from DeepAK8_decorr) / N(true hadronic H)", 36, 200, 2000); Heff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Teff_DeepAK8_decorr_num = new TH1D("Teff_DeepAK8_decorr_num",";T boson pT [GeV];N(T from DeepAK8_decorr) / N(true hadronic T)", 36, 200, 2000); Teff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Beff_DeepAK8_decorr_num = new TH1D("Beff_DeepAK8_decorr_num",";B boson pT [GeV];N(B from DeepAK8_decorr) / N(true hadronic B)", 36, 200, 2000); Beff_DeepAK8_decorr_num->Sumw2();
+   TH1D *Jeff_DeepAK8_decorr_num = new TH1D("Jeff_DeepAK8_decorr_num",";J boson pT [GeV];N(J from DeepAK8_decorr) / N(true hadronic J)", 36, 200, 2000); Jeff_DeepAK8_decorr_num->Sumw2();
 
-   TH1D *Weff_DeepAK8_num = new TH1D("Weff_DeepAK8_num",";W boson pT [GeV];N(W from DeepAK8) / N(true hadronic W)", 50, 200, 2000); Weff_DeepAK8_num->Sumw2();
-   TH1D *Zeff_DeepAK8_num = new TH1D("Zeff_DeepAK8_num",";Z boson pT [GeV];N(Z from DeepAK8) / N(true hadronic Z)", 50, 200, 2000); Zeff_DeepAK8_num->Sumw2();
-   TH1D *Heff_DeepAK8_num = new TH1D("Heff_DeepAK8_num",";H boson pT [GeV];N(H from DeepAK8) / N(true hadronic H)", 50, 200, 2000); Heff_DeepAK8_num->Sumw2();
-   TH1D *Teff_DeepAK8_num = new TH1D("Teff_DeepAK8_num",";T boson pT [GeV];N(T from DeepAK8) / N(true hadronic T)", 50, 200, 2000); Teff_DeepAK8_num->Sumw2();
-   TH1D *Beff_DeepAK8_num = new TH1D("Beff_DeepAK8_num",";B boson pT [GeV];N(B from DeepAK8) / N(true hadronic B)", 50, 200, 2000); Beff_DeepAK8_num->Sumw2();
-   TH1D *Jeff_DeepAK8_num = new TH1D("Jeff_DeepAK8_num",";J boson pT [GeV];N(J from DeepAK8) / N(true hadronic J)", 50, 200, 2000); Jeff_DeepAK8_num->Sumw2();
+   TH1D *Weff_DeepAK8_num = new TH1D("Weff_DeepAK8_num",";W boson pT [GeV];N(W from DeepAK8) / N(true hadronic W)", 36, 200, 2000); Weff_DeepAK8_num->Sumw2();
+   TH1D *Zeff_DeepAK8_num = new TH1D("Zeff_DeepAK8_num",";Z boson pT [GeV];N(Z from DeepAK8) / N(true hadronic Z)", 36, 200, 2000); Zeff_DeepAK8_num->Sumw2();
+   TH1D *Heff_DeepAK8_num = new TH1D("Heff_DeepAK8_num",";H boson pT [GeV];N(H from DeepAK8) / N(true hadronic H)", 36, 200, 2000); Heff_DeepAK8_num->Sumw2();
+   TH1D *Teff_DeepAK8_num = new TH1D("Teff_DeepAK8_num",";T boson pT [GeV];N(T from DeepAK8) / N(true hadronic T)", 36, 200, 2000); Teff_DeepAK8_num->Sumw2();
+   TH1D *Beff_DeepAK8_num = new TH1D("Beff_DeepAK8_num",";B boson pT [GeV];N(B from DeepAK8) / N(true hadronic B)", 36, 200, 2000); Beff_DeepAK8_num->Sumw2();
+   TH1D *Jeff_DeepAK8_num = new TH1D("Jeff_DeepAK8_num",";J boson pT [GeV];N(J from DeepAK8) / N(true hadronic J)", 36, 200, 2000); Jeff_DeepAK8_num->Sumw2();
 
-   TH1D *WZeff_JetSub_num = new TH1D("WZeff_JetSub_num",";W and Z boson pT [GeV];N(W and Z from JetSub) / N(true hadronic W and Z)", 50, 200, 2000); WZeff_JetSub_num->Sumw2();
-   TH1D *Heff_JetSub_num = new TH1D("Heff_JetSub_num",";H boson pT [GeV];N(H from JetSub) / N(true hadronic H)", 50, 200, 2000); Heff_JetSub_num->Sumw2();
-   TH1D *Teff_JetSub_num = new TH1D("Teff_JetSub_num",";T boson pT [GeV];N(T from JetSub) / N(true hadronic T)", 50, 200, 2000); Teff_JetSub_num->Sumw2();
-   TH1D *Beff_JetSub_num = new TH1D("Beff_JetSub_num",";B boson pT [GeV];N(B from JetSub) / N(true hadronic B)", 50, 200, 2000); Beff_JetSub_num->Sumw2();
-   TH1D *Jeff_JetSub_num = new TH1D("Jeff_JetSub_num",";J boson pT [GeV];N(J from JetSub) / N(true hadronic J)", 50, 200, 2000); Jeff_JetSub_num->Sumw2();
+   TH1D *WZeff_JetSub_num = new TH1D("WZeff_JetSub_num",";W and Z boson pT [GeV];N(W and Z from JetSub) / N(true hadronic W and Z)", 36, 200, 2000); WZeff_JetSub_num->Sumw2();
+   TH1D *Heff_JetSub_num = new TH1D("Heff_JetSub_num",";H boson pT [GeV];N(H from JetSub) / N(true hadronic H)", 36, 200, 2000); Heff_JetSub_num->Sumw2();
+   TH1D *Teff_JetSub_num = new TH1D("Teff_JetSub_num",";T boson pT [GeV];N(T from JetSub) / N(true hadronic T)", 36, 200, 2000); Teff_JetSub_num->Sumw2();
+   TH1D *Beff_JetSub_num = new TH1D("Beff_JetSub_num",";B boson pT [GeV];N(B from JetSub) / N(true hadronic B)", 36, 200, 2000); Beff_JetSub_num->Sumw2();
+   TH1D *Jeff_JetSub_num = new TH1D("Jeff_JetSub_num",";J boson pT [GeV];N(J from JetSub) / N(true hadronic J)", 36, 200, 2000); Jeff_JetSub_num->Sumw2();
 
    // Tprime agging efficiency numerator histgram
-   TH1D *THBWeff_mistag_BEST_num = new TH1D("THBWeff_mistag_BEST_num",";THBW VLQ pT [GeV];N(THBW VLQ's from BEST) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_BEST_num->Sumw2();
-   TH1D *THTHeff_mistag_BEST_num = new TH1D("THTHeff_mistag_BEST_num",";THTH VLQ pT [GeV];N(THTH VLQ's from BEST) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_BEST_num->Sumw2();
-   TH1D *THTZeff_mistag_BEST_num = new TH1D("THTZeff_mistag_BEST_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from BEST) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_BEST_num->Sumw2();
-   TH1D *TZBWeff_mistag_BEST_num = new TH1D("TZBWeff_mistag_BEST_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from BEST) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_BEST_num->Sumw2();
-   TH1D *TZTZeff_mistag_BEST_num = new TH1D("TZTZeff_mistag_BEST_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from BEST) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_BEST_num->Sumw2();
-   TH1D *BWBWeff_mistag_BEST_num = new TH1D("BWBWeff_mistag_BEST_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from BEST) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_BEST_num->Sumw2();
-   TH1D *BWTZeff_mistag_BEST_num = new TH1D("BWTZeff_mistag_BEST_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from BEST) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_BEST_num->Sumw2();
-   TH1D *BWTHeff_mistag_BEST_num = new TH1D("BWTHeff_mistag_BEST_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from BEST) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_BEST_num->Sumw2();
+   TH1D *THBWeff_mistag_BEST_num = new TH1D("THBWeff_mistag_BEST_num",";THBW VLQ pT [GeV];N(THBW VLQ's from BEST) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_mistag_BEST_num->Sumw2();
+   TH1D *THTHeff_mistag_BEST_num = new TH1D("THTHeff_mistag_BEST_num",";THTH VLQ pT [GeV];N(THTH VLQ's from BEST) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_mistag_BEST_num->Sumw2();
+   TH1D *THTZeff_mistag_BEST_num = new TH1D("THTZeff_mistag_BEST_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from BEST) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_mistag_BEST_num->Sumw2();
+   TH1D *TZBWeff_mistag_BEST_num = new TH1D("TZBWeff_mistag_BEST_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from BEST) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_mistag_BEST_num->Sumw2();
+   TH1D *TZTZeff_mistag_BEST_num = new TH1D("TZTZeff_mistag_BEST_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from BEST) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_mistag_BEST_num->Sumw2();
+   TH1D *BWBWeff_mistag_BEST_num = new TH1D("BWBWeff_mistag_BEST_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from BEST) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_mistag_BEST_num->Sumw2();
+   TH1D *BWTZeff_mistag_BEST_num = new TH1D("BWTZeff_mistag_BEST_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from BEST) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_mistag_BEST_num->Sumw2();
+   TH1D *BWTHeff_mistag_BEST_num = new TH1D("BWTHeff_mistag_BEST_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from BEST) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_mistag_BEST_num->Sumw2();
 
-   TH1D *THBWeff_mistag_DeepAK8_num = new TH1D("THBWeff_mistag_DeepAK8_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *THTHeff_mistag_DeepAK8_num = new TH1D("THTHeff_mistag_DeepAK8_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *THTZeff_mistag_DeepAK8_num = new TH1D("THTZeff_mistag_DeepAK8_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *TZBWeff_mistag_DeepAK8_num = new TH1D("TZBWeff_mistag_DeepAK8_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *TZTZeff_mistag_DeepAK8_num = new TH1D("TZTZeff_mistag_DeepAK8_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *BWBWeff_mistag_DeepAK8_num = new TH1D("BWBWeff_mistag_DeepAK8_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *BWTZeff_mistag_DeepAK8_num = new TH1D("BWTZeff_mistag_DeepAK8_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *BWTHeff_mistag_DeepAK8_num = new TH1D("BWTHeff_mistag_DeepAK8_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *THBWeff_mistag_DeepAK8_num = new TH1D("THBWeff_mistag_DeepAK8_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *THTHeff_mistag_DeepAK8_num = new TH1D("THTHeff_mistag_DeepAK8_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *THTZeff_mistag_DeepAK8_num = new TH1D("THTZeff_mistag_DeepAK8_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *TZBWeff_mistag_DeepAK8_num = new TH1D("TZBWeff_mistag_DeepAK8_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *TZTZeff_mistag_DeepAK8_num = new TH1D("TZTZeff_mistag_DeepAK8_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *BWBWeff_mistag_DeepAK8_num = new TH1D("BWBWeff_mistag_DeepAK8_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *BWTZeff_mistag_DeepAK8_num = new TH1D("BWTZeff_mistag_DeepAK8_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *BWTHeff_mistag_DeepAK8_num = new TH1D("BWTHeff_mistag_DeepAK8_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_mistag_DeepAK8_num->Sumw2();
 
-   TH1D *THBWeff_mistag_DeepAK8_decorr_num = new TH1D("THBWeff_mistag_DeepAK8_decorr_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8_decorr) / N(true hadronic THBW VLQ's)", 50, 200, 2000); THBWeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *THTHeff_mistag_DeepAK8_decorr_num = new TH1D("THTHeff_mistag_DeepAK8_decorr_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8_decorr) / N(true hadronic THTH VLQ's)", 50, 200, 2000); THTHeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *THTZeff_mistag_DeepAK8_decorr_num = new TH1D("THTZeff_mistag_DeepAK8_decorr_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8_decorr) / N(true hadronic THTZ VLQ's)", 50, 200, 2000); THTZeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *TZBWeff_mistag_DeepAK8_decorr_num = new TH1D("TZBWeff_mistag_DeepAK8_decorr_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8_decorr) / N(true hadronic TZBW VLQ's)", 50, 200, 2000); TZBWeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *TZTZeff_mistag_DeepAK8_decorr_num = new TH1D("TZTZeff_mistag_DeepAK8_decorr_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8_decorr) / N(true hadronic TZTZ VLQ's)", 50, 200, 2000); TZTZeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *BWBWeff_mistag_DeepAK8_decorr_num = new TH1D("BWBWeff_mistag_DeepAK8_decorr_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8_decorr) / N(true hadronic BWBW VLQ's)", 50, 200, 2000); BWBWeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *BWTZeff_mistag_DeepAK8_decorr_num = new TH1D("BWTZeff_mistag_DeepAK8_decorr_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8_decorr) / N(true hadronic BWTZ VLQ's)", 50, 200, 2000); BWTZeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *BWTHeff_mistag_DeepAK8_decorr_num = new TH1D("BWTHeff_mistag_DeepAK8_decorr_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8_decorr) / N(true hadronic BWTH VLQ's)", 50, 200, 2000); BWTHeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *THBWeff_mistag_DeepAK8_decorr_num = new TH1D("THBWeff_mistag_DeepAK8_decorr_num",";THBW VLQ pT [GeV];N(THBW VLQ's from DeepAK8_decorr) / N(true hadronic THBW VLQ's)", 36, 200, 2000); THBWeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTHeff_mistag_DeepAK8_decorr_num = new TH1D("THTHeff_mistag_DeepAK8_decorr_num",";THTH VLQ pT [GeV];N(THTH VLQ's from DeepAK8_decorr) / N(true hadronic THTH VLQ's)", 36, 200, 2000); THTHeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *THTZeff_mistag_DeepAK8_decorr_num = new TH1D("THTZeff_mistag_DeepAK8_decorr_num",";THTZ VLQ pT [GeV];N(THTZ VLQ's from DeepAK8_decorr) / N(true hadronic THTZ VLQ's)", 36, 200, 2000); THTZeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZBWeff_mistag_DeepAK8_decorr_num = new TH1D("TZBWeff_mistag_DeepAK8_decorr_num",";TZBW VLQ pT [GeV];N(TZBW VLQ's from DeepAK8_decorr) / N(true hadronic TZBW VLQ's)", 36, 200, 2000); TZBWeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *TZTZeff_mistag_DeepAK8_decorr_num = new TH1D("TZTZeff_mistag_DeepAK8_decorr_num",";TZTZ VLQ pT [GeV];N(TZTZ VLQ's from DeepAK8_decorr) / N(true hadronic TZTZ VLQ's)", 36, 200, 2000); TZTZeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWBWeff_mistag_DeepAK8_decorr_num = new TH1D("BWBWeff_mistag_DeepAK8_decorr_num",";BWBW VLQ pT [GeV];N(BWBW VLQ's from DeepAK8_decorr) / N(true hadronic BWBW VLQ's)", 36, 200, 2000); BWBWeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTZeff_mistag_DeepAK8_decorr_num = new TH1D("BWTZeff_mistag_DeepAK8_decorr_num",";BWTZ VLQ pT [GeV];N(BWTZ VLQ's from DeepAK8_decorr) / N(true hadronic BWTZ VLQ's)", 36, 200, 2000); BWTZeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *BWTHeff_mistag_DeepAK8_decorr_num = new TH1D("BWTHeff_mistag_DeepAK8_decorr_num",";BWTH VLQ pT [GeV];N(BWTH VLQ's from DeepAK8_decorr) / N(true hadronic BWTH VLQ's)", 36, 200, 2000); BWTHeff_mistag_DeepAK8_decorr_num->Sumw2();
 
    // Mistagging efficiency numerator histograms
-   TH1D *Weff_mistag_BEST_num = new TH1D("Weff_mistag_BEST_num",";W boson pT [GeV];N(W from BEST) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_BEST_num->Sumw2(); 
-   TH1D *Zeff_mistag_BEST_num = new TH1D("Zeff_mistag_BEST_num",";Z boson pT [GeV];N(Z from BEST) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_BEST_num->Sumw2();
-   TH1D *Heff_mistag_BEST_num = new TH1D("Heff_mistag_BEST_num",";H boson pT [GeV];N(H from BEST) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_BEST_num->Sumw2();
-   TH1D *Teff_mistag_BEST_num = new TH1D("Teff_mistag_BEST_num",";T boson pT [GeV];N(T from BEST) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_BEST_num->Sumw2();
-   TH1D *Beff_mistag_BEST_num = new TH1D("Beff_mistag_BEST_num",";B boson pT [GeV];N(B from BEST) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_BEST_num->Sumw2();
-   TH1D *Jeff_mistag_BEST_num = new TH1D("Jeff_mistag_BEST_num",";J boson pT [GeV];N(J from BEST) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_BEST_num->Sumw2();
+   TH1D *Weff_mistag_BEST_num = new TH1D("Weff_mistag_BEST_num",";W boson pT [GeV];N(W from BEST) / N(true hadronic W)", 36, 200, 2000); Weff_mistag_BEST_num->Sumw2(); 
+   TH1D *Zeff_mistag_BEST_num = new TH1D("Zeff_mistag_BEST_num",";Z boson pT [GeV];N(Z from BEST) / N(true hadronic Z)", 36, 200, 2000); Zeff_mistag_BEST_num->Sumw2();
+   TH1D *Heff_mistag_BEST_num = new TH1D("Heff_mistag_BEST_num",";H boson pT [GeV];N(H from BEST) / N(true hadronic H)", 36, 200, 2000); Heff_mistag_BEST_num->Sumw2();
+   TH1D *Teff_mistag_BEST_num = new TH1D("Teff_mistag_BEST_num",";T boson pT [GeV];N(T from BEST) / N(true hadronic T)", 36, 200, 2000); Teff_mistag_BEST_num->Sumw2();
+   TH1D *Beff_mistag_BEST_num = new TH1D("Beff_mistag_BEST_num",";B boson pT [GeV];N(B from BEST) / N(true hadronic B)", 36, 200, 2000); Beff_mistag_BEST_num->Sumw2();
+   TH1D *Jeff_mistag_BEST_num = new TH1D("Jeff_mistag_BEST_num",";J boson pT [GeV];N(J from BEST) / N(true hadronic J)", 36, 200, 2000); Jeff_mistag_BEST_num->Sumw2();
 
-   TH1D *Weff_mistag_DeepAK8_decorr_num = new TH1D("Weff_mistag_DeepAK8_decorr_num",";W boson pT [GeV];N(W from DeepAK8_decorr) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *Zeff_mistag_DeepAK8_decorr_num = new TH1D("Zeff_mistag_DeepAK8_decorr_num",";Z boson pT [GeV];N(Z from DeepAK8_decorr) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *Heff_mistag_DeepAK8_decorr_num = new TH1D("Heff_mistag_DeepAK8_decorr_num",";H boson pT [GeV];N(H from DeepAK8_decorr) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *Teff_mistag_DeepAK8_decorr_num = new TH1D("Teff_mistag_DeepAK8_decorr_num",";T boson pT [GeV];N(T from DeepAK8_decorr) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *Beff_mistag_DeepAK8_decorr_num = new TH1D("Beff_mistag_DeepAK8_decorr_num",";B boson pT [GeV];N(B from DeepAK8_decorr) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_DeepAK8_decorr_num->Sumw2();
-   TH1D *Jeff_mistag_DeepAK8_decorr_num = new TH1D("Jeff_mistag_DeepAK8_decorr_num",";J boson pT [GeV];N(J from DeepAK8_decorr) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Weff_mistag_DeepAK8_decorr_num = new TH1D("Weff_mistag_DeepAK8_decorr_num",";W boson pT [GeV];N(W from DeepAK8_decorr) / N(true hadronic W)", 36, 200, 2000); Weff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Zeff_mistag_DeepAK8_decorr_num = new TH1D("Zeff_mistag_DeepAK8_decorr_num",";Z boson pT [GeV];N(Z from DeepAK8_decorr) / N(true hadronic Z)", 36, 200, 2000); Zeff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Heff_mistag_DeepAK8_decorr_num = new TH1D("Heff_mistag_DeepAK8_decorr_num",";H boson pT [GeV];N(H from DeepAK8_decorr) / N(true hadronic H)", 36, 200, 2000); Heff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Teff_mistag_DeepAK8_decorr_num = new TH1D("Teff_mistag_DeepAK8_decorr_num",";T boson pT [GeV];N(T from DeepAK8_decorr) / N(true hadronic T)", 36, 200, 2000); Teff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Beff_mistag_DeepAK8_decorr_num = new TH1D("Beff_mistag_DeepAK8_decorr_num",";B boson pT [GeV];N(B from DeepAK8_decorr) / N(true hadronic B)", 36, 200, 2000); Beff_mistag_DeepAK8_decorr_num->Sumw2();
+   TH1D *Jeff_mistag_DeepAK8_decorr_num = new TH1D("Jeff_mistag_DeepAK8_decorr_num",";J boson pT [GeV];N(J from DeepAK8_decorr) / N(true hadronic J)", 36, 200, 2000); Jeff_mistag_DeepAK8_decorr_num->Sumw2();
 
-   TH1D *Weff_mistag_DeepAK8_num = new TH1D("Weff_mistag_DeepAK8_num",";W boson pT [GeV];N(W from DeepAK8) / N(true hadronic W)", 50, 200, 2000); Weff_mistag_DeepAK8_num->Sumw2();
-   TH1D *Zeff_mistag_DeepAK8_num = new TH1D("Zeff_mistag_DeepAK8_num",";Z boson pT [GeV];N(Z from DeepAK8) / N(true hadronic Z)", 50, 200, 2000); Zeff_mistag_DeepAK8_num->Sumw2();
-   TH1D *Heff_mistag_DeepAK8_num = new TH1D("Heff_mistag_DeepAK8_num",";H boson pT [GeV];N(H from DeepAK8) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_DeepAK8_num->Sumw2();
-   TH1D *Teff_mistag_DeepAK8_num = new TH1D("Teff_mistag_DeepAK8_num",";T boson pT [GeV];N(T from DeepAK8) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_DeepAK8_num->Sumw2();
-   TH1D *Beff_mistag_DeepAK8_num = new TH1D("Beff_mistag_DeepAK8_num",";B boson pT [GeV];N(B from DeepAK8) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_DeepAK8_num->Sumw2();
-   TH1D *Jeff_mistag_DeepAK8_num = new TH1D("Jeff_mistag_DeepAK8_num",";J boson pT [GeV];N(J from DeepAK8) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Weff_mistag_DeepAK8_num = new TH1D("Weff_mistag_DeepAK8_num",";W boson pT [GeV];N(W from DeepAK8) / N(true hadronic W)", 36, 200, 2000); Weff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Zeff_mistag_DeepAK8_num = new TH1D("Zeff_mistag_DeepAK8_num",";Z boson pT [GeV];N(Z from DeepAK8) / N(true hadronic Z)", 36, 200, 2000); Zeff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Heff_mistag_DeepAK8_num = new TH1D("Heff_mistag_DeepAK8_num",";H boson pT [GeV];N(H from DeepAK8) / N(true hadronic H)", 36, 200, 2000); Heff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Teff_mistag_DeepAK8_num = new TH1D("Teff_mistag_DeepAK8_num",";T boson pT [GeV];N(T from DeepAK8) / N(true hadronic T)", 36, 200, 2000); Teff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Beff_mistag_DeepAK8_num = new TH1D("Beff_mistag_DeepAK8_num",";B boson pT [GeV];N(B from DeepAK8) / N(true hadronic B)", 36, 200, 2000); Beff_mistag_DeepAK8_num->Sumw2();
+   TH1D *Jeff_mistag_DeepAK8_num = new TH1D("Jeff_mistag_DeepAK8_num",";J boson pT [GeV];N(J from DeepAK8) / N(true hadronic J)", 36, 200, 2000); Jeff_mistag_DeepAK8_num->Sumw2();
 
-   TH1D *WZeff_mistag_JetSub_num = new TH1D("WZeff_mistag_JetSub_num",";W and Z boson pT [GeV];N(W and Z from JetSub) / N(true hadronic W and Z)", 50, 200, 2000); WZeff_mistag_JetSub_num->Sumw2();
-   TH1D *Heff_mistag_JetSub_num = new TH1D("Heff_mistag_JetSub_num",";H boson pT [GeV];N(H from JetSub) / N(true hadronic H)", 50, 200, 2000); Heff_mistag_JetSub_num->Sumw2();
-   TH1D *Teff_mistag_JetSub_num = new TH1D("Teff_mistag_JetSub_num",";T boson pT [GeV];N(T from JetSub) / N(true hadronic T)", 50, 200, 2000); Teff_mistag_JetSub_num->Sumw2();
-   TH1D *Beff_mistag_JetSub_num = new TH1D("Beff_mistag_JetSub_num",";B boson pT [GeV];N(B from JetSub) / N(true hadronic B)", 50, 200, 2000); Beff_mistag_JetSub_num->Sumw2();
-   TH1D *Jeff_mistag_JetSub_num = new TH1D("Jeff_mistag_JetSub_num",";J boson pT [GeV];N(J from JetSub) / N(true hadronic J)", 50, 200, 2000); Jeff_mistag_JetSub_num->Sumw2();
+   TH1D *WZeff_mistag_JetSub_num = new TH1D("WZeff_mistag_JetSub_num",";W and Z boson pT [GeV];N(W and Z from JetSub) / N(true hadronic W and Z)", 36, 200, 2000); WZeff_mistag_JetSub_num->Sumw2();
+   TH1D *Heff_mistag_JetSub_num = new TH1D("Heff_mistag_JetSub_num",";H boson pT [GeV];N(H from JetSub) / N(true hadronic H)", 36, 200, 2000); Heff_mistag_JetSub_num->Sumw2();
+   TH1D *Teff_mistag_JetSub_num = new TH1D("Teff_mistag_JetSub_num",";T boson pT [GeV];N(T from JetSub) / N(true hadronic T)", 36, 200, 2000); Teff_mistag_JetSub_num->Sumw2();
+   TH1D *Beff_mistag_JetSub_num = new TH1D("Beff_mistag_JetSub_num",";B boson pT [GeV];N(B from JetSub) / N(true hadronic B)", 36, 200, 2000); Beff_mistag_JetSub_num->Sumw2();
+   TH1D *Jeff_mistag_JetSub_num = new TH1D("Jeff_mistag_JetSub_num",";J boson pT [GeV];N(J from JetSub) / N(true hadronic J)", 36, 200, 2000); Jeff_mistag_JetSub_num->Sumw2();
 
    //Tprime2 Mass Histograms
    TH1D *Tprime2_BEST_Mass_hist = new TH1D("Tprime2_BEST_Mass_hist",";Number of entries;Tprime2 mass [GeV]",50,800,2000); Tprime2_BEST_Mass_hist->Sumw2();
@@ -702,6 +702,9 @@ void step1::Loop()
    float jetPtCut=30;
 
    // counters
+   int n_jetstotal        = 0;
+   int n_jetsnearlep      = 0;
+   int n_jetspassed       = 0;
    int npass_ThreeJets    = 0;
    int npass_trigger      = 0;
    int npass_mu500        = 0;
@@ -1030,8 +1033,24 @@ void step1::Loop()
       AK4HTpMETpLepPt = 0;
       AK4HTpMETpLepPt = AK4HT + corr_met_singleLepCalc + leppt;
 
+      // ----------------------------------------------------------------------------
+      // Lepton 4-vectors, calculate MT and electron trigger presel value
+      // ----------------------------------------------------------------------------
 
-
+      // Set lepton 4-vectors
+      double lepM;
+      double lepphi;
+      if (isMuon){ 
+	lepM = 0.105658367;
+	lepphi = muPhi_singleLepCalc->at(0);
+	lepton_lv.SetPtEtaPhiM(muPt_singleLepCalc->at(0),muEta_singleLepCalc->at(0),muPhi_singleLepCalc->at(0),lepM);
+      }
+      else{
+	lepM = 0.00051099891;
+	lepphi = elPhi_singleLepCalc->at(0);
+	lepton_lv.SetPtEtaPhiM(elPt_singleLepCalc->at(0),elEta_singleLepCalc->at(0),elPhi_singleLepCalc->at(0),lepM);
+      }      MT_lepMet = sqrt(2*leppt*corr_met_singleLepCalc*(1 - cos(lepphi - corr_met_phi_singleLepCalc)));
+      
       // ----------------------------------------------------------------------------
       // Loop over AK8 jets for calculations and pt ordering pair
       // ----------------------------------------------------------------------------
@@ -1039,7 +1058,7 @@ void step1::Loop()
       NJetsAK8_JetSubCalc = 0;
       vector<pair<double,int>> jetak8ptindpair;      
       for(unsigned int ijet=0; ijet < theJetAK8Pt_JetSubCalc->size(); ijet++){
-	
+
         // ----------------------------------------------------------------------------                                  
         // Basic cuts                                                                                                    
         // ----------------------------------------------------------------------------                                  
@@ -1049,6 +1068,25 @@ void step1::Loop()
         if(theJetAK8NjettinessTau2_JetSubCalc->at(ijet)==0) continue;
         if(theJetAK8CHSTau1_JetSubCalc->at(ijet)==0) continue;
         if(theJetAK8CHSTau2_JetSubCalc->at(ijet)==0) continue;
+
+	// Add to total jets counter
+	n_jetstotal++;
+
+	// ----------------------------------------------------------------------------
+	// Check if lepton is "close" to jet
+	// ---------------------------------------------------------------------------- 
+	TLorentzVector AK8_lv, newAK8_lv;
+	AK8_lv.SetPtEtaPhiE(theJetAK8Pt_JetSubCalc->at(ijet),theJetAK8Eta_JetSubCalc->at(ijet),theJetAK8Phi_JetSubCalc->at(ijet),theJetAK8Energy_JetSubCalc->at(ijet));
+	if(lepton_lv.DeltaR(AK8_lv) < 0.6){
+	  newAK8_lv = AK8_lv - lepton_lv;
+	  theJetAK8Pt_JetSubCalc->at(ijet)     = newAK8_lv.Pt();
+	  theJetAK8Eta_JetSubCalc->at(ijet)    = newAK8_lv.Eta();
+	  theJetAK8Phi_JetSubCalc->at(ijet)    = newAK8_lv.Phi();
+	  theJetAK8Energy_JetSubCalc->at(ijet) = newAK8_lv.E();
+	  n_jetsnearlep++;
+	}
+	if(theJetAK8Pt_JetSubCalc->at(ijet) < 200) {cout << theJetAK8Pt_JetSubCalc->at(ijet) << endl;/* continue;*/}
+	n_jetspassed++;
 
         // ----------------------------------------------------------------------------                                  
         // Counter and pt ordering pair                                                                                  
@@ -1064,17 +1102,17 @@ void step1::Loop()
       // ----------------------------------------------------------------------------
       // Skip failing events
       // ----------------------------------------------------------------------------
-
-
+      
+      
       if(!(isPastMETcut && isPastNJetsCut && isPastJetLeadPtCut && isPastLepPtCut && (isPastElEtaCut || isPastMuEtaCut) && isPastJetSubLeadPtCut)) continue;
       npass_all+=1;
-
+      
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////// ONLY ON SELECTED EVENTS ////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
-
+      
       // ----------------------------------------------------------------------------
       // Combine lepton variables into one set
       // ----------------------------------------------------------------------------
@@ -1133,6 +1171,7 @@ void step1::Loop()
       theJetAK8CHSTau2_JetSubCalc_PtOrdered.clear();
       theJetAK8CHSTau3_JetSubCalc_PtOrdered.clear();
       for(unsigned int ijet=0; ijet < jetak8ptindpair.size(); ijet++){
+
 	maxProb_JetSubCalc_PtOrdered.push_back(dnn_largest_BestCalc->at(jetak8ptindpair[ijet].second));
       	dnn_largest_BestCalc_PtOrdered.push_back(dnn_largest_BestCalc->at(jetak8ptindpair[ijet].second));
       	dnn_largest_DeepAK8Calc_PtOrdered.push_back(dnn_largest_DeepAK8Calc->at(jetak8ptindpair[ijet].second));
@@ -1297,6 +1336,7 @@ void step1::Loop()
 	  if(isZmatched) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(3);
 	  if(isWmatched) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(4);
 	  if(isBmatched) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(5);
+	  
 
 	  // ------------------------------------------------------------------------------------------------------------------
 	  // FILLING HISTOGRAMS
@@ -1746,25 +1786,7 @@ void step1::Loop()
       }
 
       if(theJetAK8Pt_JetSubCalc_PtOrdered.size() < 3) continue;
-
-      // ----------------------------------------------------------------------------
-      // Lepton 4-vectors, calculate MT and electron trigger presel value
-      // ----------------------------------------------------------------------------
-
-      // Set lepton 4-vectors
-      double lepM;
-      double lepphi;
-     if (isMuon){ 
-	lepM = 0.105658367;
-	lepphi = muPhi_singleLepCalc->at(0);
-	lepton_lv.SetPtEtaPhiM(muPt_singleLepCalc->at(0),muEta_singleLepCalc->at(0),muPhi_singleLepCalc->at(0),lepM);
-      }
-      else{
-	lepM = 0.00051099891;
-	lepphi = elPhi_singleLepCalc->at(0);
-	lepton_lv.SetPtEtaPhiM(elPt_singleLepCalc->at(0),elEta_singleLepCalc->at(0),elPhi_singleLepCalc->at(0),lepM);
-      }      MT_lepMet = sqrt(2*leppt*corr_met_singleLepCalc*(1 - cos(lepphi - corr_met_phi_singleLepCalc)));
-
+     
       // ----------------------------------------------------------------------------
       // 8TeV Top pT reweighting
       // ----------------------------------------------------------------------------
@@ -2623,6 +2645,8 @@ void step1::Loop()
       
       outputTree->Fill();
    }
+   std::cout<<"Npassed_jets           = "<<n_jetspassed<<" / "<<n_jetstotal<<std::endl;
+   std::cout<<"Npassed_jetsnearlep    = "<<n_jetsnearlep<<" / "<<n_jetstotal<<std::endl;
    std::cout<<"Npassed_ThreeJets      = "<<npass_ThreeJets<<" / "<<nentries<<std::endl;
    std::cout<<"Nelectrons             = "<<Nelectrons<<" / "<<nentries<<std::endl;
    std::cout<<"Nmuons                 = "<<Nmuons<<" / "<<nentries<<std::endl;
