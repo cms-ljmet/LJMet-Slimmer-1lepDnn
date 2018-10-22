@@ -481,6 +481,7 @@ void step1::Loop()
    outputTree->Branch("elIsLooseEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsLooseEndCap_singleLepCalc/F");
    outputTree->Branch("elIsVetoEndCap_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsVetoEndCap_singleLepCalc/F");
 
+<<<<<<< HEAD
    outputTree->Branch("probSum_BEST_decay",&probSum_BEST_decay);
    outputTree->Branch("probSum_DeepAK8_decay",&probSum_DeepAK8_decay);
    outputTree->Branch("probSum_DeepAK8_decorr_decay",&probSum_DeepAK8_decorr_decay);
@@ -508,6 +509,7 @@ void step1::Loop()
    outputTree->Branch("nT_DeepAK8_decorr",&nT_DeepAK8_decorr);
    outputTree->Branch("nW_DeepAK8_decorr",&nW_DeepAK8_decorr);
    outputTree->Branch("nZ_DeepAK8_decorr",&nZ_DeepAK8_decorr);
+
    outputTree->Branch("theJetAK8Truth_JetSubCalc_PtOrdered",&theJetAK8Truth_JetSubCalc_PtOrdered);
    outputTree->Branch("deltaR_leptonicparticle_AK8_PtOrdered",&deltaR_leptonicparticle_AK8_PtOrdered);
    outputTree->Branch("Tprime1_BEST_Mass",&Tprime1_BEST_Mass);
@@ -1200,6 +1202,7 @@ void step1::Loop()
       //Pt ordering for AK8
       std::sort(jetak8ptindpair.begin(), jetak8ptindpair.end(), comparepair);
 
+
       dnn_Higgs_BestCalc_PtOrdered.clear();
       dnn_Top_BestCalc_PtOrdered.clear();
       dnn_W_BestCalc_PtOrdered.clear();
@@ -1245,6 +1248,7 @@ void step1::Loop()
       theJetAK8CHSTau2_JetSubCalc_PtOrdered.clear();
       theJetAK8CHSTau3_JetSubCalc_PtOrdered.clear();
       for(unsigned int ijet=0; ijet < jetak8ptindpair.size(); ijet++){
+
 	dnn_Higgs_BestCalc_PtOrdered.push_back(dnn_Higgs_BestCalc->at(jetak8ptindpair[ijet].second));
 	dnn_Top_BestCalc_PtOrdered.push_back(dnn_Top_BestCalc->at(jetak8ptindpair[ijet].second));
 	dnn_W_BestCalc_PtOrdered.push_back(dnn_W_BestCalc->at(jetak8ptindpair[ijet].second));
@@ -1290,6 +1294,7 @@ void step1::Loop()
 	theJetAK8CHSTau2_JetSubCalc_PtOrdered.push_back(theJetAK8CHSTau2_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8CHSTau3_JetSubCalc_PtOrdered.push_back(theJetAK8CHSTau3_JetSubCalc->at(jetak8ptindpair[ijet].second));
       }
+
 
       // Add probabilities
       probSum_BEST_all = 0;
@@ -1502,6 +1507,7 @@ void step1::Loop()
 	  if(isWmatched && matchedPt > 200) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(4);
 	  if(isBmatched) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(5);
 
+
 	  // ----------------------------------------------------------------------------
 	  // Filling 3D probability histograms
 	  // ----------------------------------------------------------------------------
@@ -1654,7 +1660,6 @@ void step1::Loop()
       highPtAK8Jet1_SoftDropCorrectedMass = -999;
       highPtAK8Jet2_SoftDropCorrectedMass = -999;
       highPtAK8Jet3_SoftDropCorrectedMass = -999;
-
       leptonicTprimeJetID_BEST = -999;
       leptonicTprimeJetID_DeepAK8 = -999;
       leptonicTprimeJetID_DeepAK8_decorr = -999;
@@ -1761,6 +1766,7 @@ void step1::Loop()
 	if(isLeptonic_t) {taggedXXXX_BEST={1,decayJets_BEST.at(0).first,decayJets_BEST.at(1).first,decayJets_BEST.at(2).first};}
 	if(isLeptonic_W) {taggedXXXX_BEST={4,decayJets_BEST.at(0).first,decayJets_BEST.at(1).first,decayJets_BEST.at(2).first};}
 	std::sort(taggedXXXX_BEST.begin(),taggedXXXX_BEST.end());
+
 	TLorentzVector Tprime1_BEST_lv;
 	TLorentzVector Tprime2_BEST_lv;
 	// Start t --> b W decays
