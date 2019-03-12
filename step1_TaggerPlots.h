@@ -257,11 +257,12 @@ public :
    vector<double>  theJetAK8PUPPISoftDrop_JMSdn_PtOrdered;
    vector<double>  theJetAK8PUPPISoftDrop_JMRup_PtOrdered;
    vector<double>  theJetAK8PUPPISoftDrop_JMRdn_PtOrdered;
-   vector<double>  theJetAK8SDSubjetNCSVM_PtOrdered;
-   vector<double>  theJetAK8SDSubjetNCSVM_bSFup_PtOrdered;
-   vector<double>  theJetAK8SDSubjetNCSVM_bSFdn_PtOrdered;
-   vector<double>  theJetAK8SDSubjetNCSVM_lSFup_PtOrdered;
-   vector<double>  theJetAK8SDSubjetNCSVM_lSFdn_PtOrdered;
+   vector<double>  theJetAK8SDSubjetNDeepCSVMSF_PtOrdered;
+   vector<double>  theJetAK8SDSubjetNDeepCSVL_PtOrdered;
+   vector<double>  theJetAK8SDSubjetNDeepCSVM_bSFup_PtOrdered;
+   vector<double>  theJetAK8SDSubjetNDeepCSVM_bSFdn_PtOrdered;
+   vector<double>  theJetAK8SDSubjetNDeepCSVM_lSFup_PtOrdered;
+   vector<double>  theJetAK8SDSubjetNDeepCSVM_lSFdn_PtOrdered;
    vector<int>     theJetAK8Wmatch_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8Tmatch_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8Zmatch_JetSubCalc_PtOrdered;
@@ -860,10 +861,10 @@ public :
    vector<double>  *theJetAK8SoftDropn2b2_JetSubCalc;
    vector<double>  *theJetAK8SoftDropn3b1_JetSubCalc;
    vector<double>  *theJetAK8SoftDropn3b2_JetSubCalc;
-   vector<double>  *theJetCSVb_JetSubCalc;
-   vector<double>  *theJetCSVbb_JetSubCalc;
-   vector<double>  theJetCSVb_JetSubCalc_PtOrdered;
-   vector<double>  theJetCSVbb_JetSubCalc_PtOrdered;
+   vector<double>  *theJetDeepCSVb_JetSubCalc;
+   vector<double>  *theJetDeepCSVbb_JetSubCalc;
+   vector<double>  theJetDeepCSVb_JetSubCalc_PtOrdered;
+   vector<double>  theJetDeepCSVbb_JetSubCalc_PtOrdered;
    vector<double>  *theJetEnergy_JetSubCalc;
    vector<double>  *theJetEta_JetSubCalc;
    vector<double>  *theJetPhi_JetSubCalc;
@@ -1397,8 +1398,8 @@ public :
    TBranch        *b_theJetAK8SoftDropn2b2_JetSubCalc;   //!
    TBranch        *b_theJetAK8SoftDropn3b1_JetSubCalc;   //!
    TBranch        *b_theJetAK8SoftDropn3b2_JetSubCalc;   //!
-   TBranch        *b_theJetCSVb_JetSubCalc;   //!
-   TBranch        *b_theJetCSVbb_JetSubCalc;   //!
+   TBranch        *b_theJetDeepCSVb_JetSubCalc;   //!
+   TBranch        *b_theJetDeepCSVbb_JetSubCalc;   //!
    //TBranch        *b_theJetCSVc_JetSubCalc;   //!
    //TBranch        *b_theJetCSVudsg_JetSubCalc;   //!
    TBranch        *b_theJetEnergy_JetSubCalc;   //!
@@ -1974,8 +1975,8 @@ void step1::Init(TTree *tree)
    theJetAK8SoftDropn2b2_JetSubCalc = 0;
    theJetAK8SoftDropn3b1_JetSubCalc = 0;
    theJetAK8SoftDropn3b2_JetSubCalc = 0;
-   theJetCSVb_JetSubCalc = 0;
-   theJetCSVbb_JetSubCalc = 0;
+   theJetDeepCSVb_JetSubCalc = 0;
+   theJetDeepCSVbb_JetSubCalc = 0;
    //theJetCSVc_JetSubCalc = 0;
    //theJetCSVudsg_JetSubCalc = 0;
    theJetEnergy_JetSubCalc = 0;
@@ -2516,8 +2517,8 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("theJetAK8SoftDropn2b2_JetSubCalc", &theJetAK8SoftDropn2b2_JetSubCalc, &b_theJetAK8SoftDropn2b2_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8SoftDropn3b1_JetSubCalc", &theJetAK8SoftDropn3b1_JetSubCalc, &b_theJetAK8SoftDropn3b1_JetSubCalc);
    inputTree->SetBranchAddress("theJetAK8SoftDropn3b2_JetSubCalc", &theJetAK8SoftDropn3b2_JetSubCalc, &b_theJetAK8SoftDropn3b2_JetSubCalc);
-   inputTree->SetBranchAddress("theJetCSVb_JetSubCalc", &theJetCSVb_JetSubCalc, &b_theJetCSVb_JetSubCalc);
-   inputTree->SetBranchAddress("theJetCSVbb_JetSubCalc", &theJetCSVbb_JetSubCalc, &b_theJetCSVbb_JetSubCalc);
+   inputTree->SetBranchAddress("theJetDeepCSVb_JetSubCalc", &theJetDeepCSVb_JetSubCalc, &b_theJetDeepCSVb_JetSubCalc);
+   inputTree->SetBranchAddress("theJetDeepCSVbb_JetSubCalc", &theJetDeepCSVbb_JetSubCalc, &b_theJetDeepCSVbb_JetSubCalc);
    //inputTree->SetBranchAddress("theJetCSVc_JetSubCalc", &theJetCSVc_JetSubCalc, &b_theJetCSVc_JetSubCalc);
    //inputTree->SetBranchAddress("theJetCSVudsg_JetSubCalc", &theJetCSVudsg_JetSubCalc, &b_theJetCSVudsg_JetSubCalc);
    inputTree->SetBranchAddress("theJetEnergy_JetSubCalc", &theJetEnergy_JetSubCalc, &b_theJetEnergy_JetSubCalc);

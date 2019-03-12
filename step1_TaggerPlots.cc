@@ -136,11 +136,9 @@ void step1::Loop()
    inputTree->SetBranchStatus("theJetEta_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetPhi_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetEnergy_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetCSVb_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetCSVbb_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetDeepCSVb_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetDeepCSVbb_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8DoubleB_JetSubCalc",1);
-   //inputTree->SetBranchStatus("theJetCSVc_JetSubCalc",1);
-   //inputTree->SetBranchStatus("theJetCSVudsg_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetBTag_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8Pt_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8Eta_JetSubCalc",1);
@@ -159,96 +157,35 @@ void step1::Loop()
    inputTree->SetBranchStatus("theJetAK8SoftDropCorr_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SoftDrop_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc",1);
-   /* inputTree->SetBranchStatus("theJetAK8SDSubjetPt_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SDSubjetEta_JetSubCalc",1);
+   inputTree->SetBranchStatus("theJetAK8SDSubjetNDeepCSVL_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SDSubjetCSVb_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SDSubjetCSVbb_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SDSubjetCSVc_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetAK8SDSubjetCSVudsg_JetSubCalc",1);*/
    inputTree->SetBranchStatus("theJetAK8SDSubjetHFlav_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SDSubjetIndex_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetAK8SDSubjetSize_JetSubCalc",1);
 
    //BEST
-   /*inputTree->SetBranchStatus("AK8JetPt_BestCalc",1);
-   inputTree->SetBranchStatus("AK8JetEta_BestCalc",1);
-   inputTree->SetBranchStatus("AK8JetPhi_BestCalc",1);
-   inputTree->SetBranchStatus("AK8JetEnergy_BestCalc",1);
-   inputTree->SetBranchStatus("AK8JetCSV_BestCalc",1);
-   inputTree->SetBranchStatus("dnn_QCD_BestCalc",1);
-   inputTree->SetBranchStatus("dnn_Top_BestCalc",1);
-   inputTree->SetBranchStatus("dnn_Higgs_BestCalc",1);
-   inputTree->SetBranchStatus("dnn_Z_BestCalc",1);
-   inputTree->SetBranchStatus("dnn_W_BestCalc",1);*/
    inputTree->SetBranchStatus("dnn_largest_BestCalc",1);
-   /*inputTree->SetBranchStatus("bDisc_BestCalc",1);
-   inputTree->SetBranchStatus("bDisc1_BestCalc",1);
-   inputTree->SetBranchStatus("bDisc2_BestCalc",1);
-   inputTree->SetBranchStatus("et_BestCalc",1);
-   inputTree->SetBranchStatus("eta_BestCalc",1);
-   inputTree->SetBranchStatus("mass_BestCalc",1);
-   inputTree->SetBranchStatus("SDmass_BestCalc",1);
-   inputTree->SetBranchStatus("tau32_BestCalc",1);
-   inputTree->SetBranchStatus("tau21_BestCalc",1);
-   inputTree->SetBranchStatus("q_BestCalc",1);
-   inputTree->SetBranchStatus("m1234_jet_BestCalc",1);
-   inputTree->SetBranchStatus("m12_jet_BestCalc",1);
-   inputTree->SetBranchStatus("m23_jet_BestCalc",1);
-   inputTree->SetBranchStatus("m13_jet_BestCalc",1);
-   inputTree->SetBranchStatus("m1234top_BestCalc",1);
-   inputTree->SetBranchStatus("m12top_BestCalc",1);
-   inputTree->SetBranchStatus("m23top_BestCalc",1);
-   inputTree->SetBranchStatus("m13top_BestCalc",1);
-   inputTree->SetBranchStatus("m1234W_BestCalc",1);
-   inputTree->SetBranchStatus("m12W_BestCalc",1);
-   inputTree->SetBranchStatus("m23W_BestCalc",1);
-   inputTree->SetBranchStatus("m13W_BestCalc",1);
-   inputTree->SetBranchStatus("m1234Z_BestCalc",1);
-   inputTree->SetBranchStatus("m12Z_BestCalc",1);
-   inputTree->SetBranchStatus("m23Z_BestCalc",1);
-   inputTree->SetBranchStatus("m13Z_BestCalc",1);
-   inputTree->SetBranchStatus("m1234H_BestCalc",1);
-   inputTree->SetBranchStatus("m12H_BestCalc",1);
-   inputTree->SetBranchStatus("m23H_BestCalc",1);
-   inputTree->SetBranchStatus("m13H_BestCalc",1);
-   inputTree->SetBranchStatus("pzOverp_top_BestCalc",1);
-   inputTree->SetBranchStatus("pzOverp_W_BestCalc",1);
-   inputTree->SetBranchStatus("pzOverp_Z_BestCalc",1);
-   inputTree->SetBranchStatus("pzOverp_H_BestCalc",1);
-   inputTree->SetBranchStatus("pzOverp_jet_BestCalc",1);
-   inputTree->SetBranchStatus("Njets_top_BestCalc",1);
-   inputTree->SetBranchStatus("Njets_W_BestCalc",1);
-   inputTree->SetBranchStatus("Njets_Z_BestCalc",1);
-   inputTree->SetBranchStatus("Njets_H_BestCalc",1);
-   inputTree->SetBranchStatus("Njets_jet_BestCalc",1);
-   inputTree->SetBranchStatus("Njets_orig_BestCalc",1);*/
-
-
 
    //DeepAK8
-   /*inputTree->SetBranchStatus("dnn_B_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("dnn_B_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("dnn_C_DeepAK8Calc",1);
    inputTree->SetBranchStatus("dnn_J_DeepAK8Calc",1);
    inputTree->SetBranchStatus("dnn_W_DeepAK8Calc",1);
    inputTree->SetBranchStatus("dnn_Z_DeepAK8Calc",1);
-   inputTree->SetBranchStatus("dnn_H_DeepAK8Calc",1);*/
+   inputTree->SetBranchStatus("dnn_H_DeepAK8Calc",1);
    inputTree->SetBranchStatus("dnn_largest_DeepAK8Calc",1);
    inputTree->SetBranchStatus("decorr_largest_DeepAK8Calc",1);
-   /*inputTree->SetBranchStatus("dnn_T_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("dnn_T_DeepAK8Calc",1);
    inputTree->SetBranchStatus("decorr_B_DeepAK8Calc",1);
+   inputTree->SetBranchStatus("decorr_C_DeepAK8Calc",1);
    inputTree->SetBranchStatus("decorr_J_DeepAK8Calc",1);
    inputTree->SetBranchStatus("decorr_W_DeepAK8Calc",1);
    inputTree->SetBranchStatus("decorr_Z_DeepAK8Calc",1);
    inputTree->SetBranchStatus("decorr_H_DeepAK8Calc",1);
-   inputTree->SetBranchStatus("decorr_T_DeepAK8Calc",1);*/
+   inputTree->SetBranchStatus("decorr_T_DeepAK8Calc",1);
 
    //JetSubCalc
    inputTree->SetBranchStatus("maxProb_JetSubCalc",1);
-
-   //adding DeepCSV from singleLepCalc
-   //inputTree->SetBranchStatus("AK8JetDeepCSVb_singleLepCalc",1);
-   //inputTree->SetBranchStatus("AK8JetDeepCSVbb_singleLepCalc",1);
-   //   inputTree->SetBranchStatus("AK8JetDeepCSVc_singleLepCalc",1);
-   //inputTree->SetBranchStatus("AK8JetDeepCSVudsg_singleLepCalc",1);
    
    //top
    inputTree->SetBranchStatus("ttbarMass_TTbarMassCalc",1);
@@ -264,7 +201,8 @@ void step1::Loop()
   // ----------------------------------------------------------------------------
   // Create output tree and define branches
   // ----------------------------------------------------------------------------
-   
+
+   /*   
    // OUTPUT FILE
    outputFile->cd();
    TTree *outputTree = new TTree("ljmet","ljmet");
@@ -315,10 +253,8 @@ void step1::Loop()
    outputTree->Branch("theJetEta_JetSubCalc_PtOrdered",&theJetEta_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetPhi_JetSubCalc_PtOrdered",&theJetPhi_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetEnergy_JetSubCalc_PtOrdered",&theJetEnergy_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetCSVb_JetSubCalc_PtOrdered",&theJetCSVb_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetCSVbb_JetSubCalc_PtOrdered",&theJetCSVbb_JetSubCalc_PtOrdered);
-   //outputTree->Branch("theJetCSVc_JetSubCalc_PtOrdered",&theJetCSVc_JetSubCalc_PtOrdered);
-   //outputTree->Branch("theJetCSVudsg_JetSubCalc_PtOrdered",&theJetCSVudsg_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetDeepCSVb_JetSubCalc_PtOrdered",&theJetDeepCSVb_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetDeepCSVbb_JetSubCalc_PtOrdered",&theJetDeepCSVbb_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetHFlav_JetSubCalc_PtOrdered",&theJetHFlav_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetPFlav_JetSubCalc_PtOrdered",&theJetPFlav_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetBTag_JetSubCalc_PtOrdered",&theJetBTag_JetSubCalc_PtOrdered);
@@ -397,59 +333,6 @@ void step1::Loop()
    outputTree->Branch("muIsMedium_singleLepCalc",&muIsMedium_singleLepCalc);
    outputTree->Branch("muIsMediumPrompt_singleLepCalc",&muIsMediumPrompt_singleLepCalc);
    outputTree->Branch("muIsTight_singleLepCalc",&muIsTight_singleLepCalc);
-   outputTree->Branch("AK8JetPt_BestCalc",&AK8JetPt_BestCalc);
-   outputTree->Branch("AK8JetEta_BestCalc",&AK8JetEta_BestCalc);
-   outputTree->Branch("AK8JetPhi_BestCalc",&AK8JetPhi_BestCalc);
-   outputTree->Branch("AK8JetEnergy_BestCalc",&AK8JetEnergy_BestCalc);
-   outputTree->Branch("AK8JetCSV_BestCalc",&AK8JetCSV_BestCalc);
-   outputTree->Branch("dnn_QCD_BestCalc",&dnn_QCD_BestCalc);
-   outputTree->Branch("dnn_Top_BestCalc",&dnn_Top_BestCalc);
-   outputTree->Branch("dnn_Higgs_BestCalc",&dnn_Higgs_BestCalc);
-   outputTree->Branch("dnn_Z_BestCalc",&dnn_Z_BestCalc);
-   outputTree->Branch("dnn_W_BestCalc",&dnn_W_BestCalc);
-   outputTree->Branch("maxProb_JetSubCalc",&maxProb_JetSubCalc);
-   outputTree->Branch("dnn_largest_BestCalc",&dnn_largest_BestCalc);
-   outputTree->Branch("bDisc_BestCalc",&bDisc_BestCalc);
-   outputTree->Branch("bDisc1_BestCalc",&bDisc1_BestCalc);
-   outputTree->Branch("bDisc2_BestCalc",&bDisc2_BestCalc);
-   outputTree->Branch("et_BestCalc",&et_BestCalc);
-   outputTree->Branch("eta_BestCalc",&eta_BestCalc);
-   outputTree->Branch("mass_BestCalc",&mass_BestCalc);
-   outputTree->Branch("SDmass_BestCalc",&SDmass_BestCalc);
-   outputTree->Branch("tau32_BestCalc",&tau32_BestCalc);
-   outputTree->Branch("tau21_BestCalc",&tau21_BestCalc);
-   outputTree->Branch("q_BestCalc",&q_BestCalc);
-   outputTree->Branch("m1234_jet_BestCalc",&m1234_jet_BestCalc);
-   outputTree->Branch("m12_jet_BestCalc",&m12_jet_BestCalc);
-   outputTree->Branch("m23_jet_BestCalc",&m23_jet_BestCalc);
-   outputTree->Branch("m13_jet_BestCalc",&m13_jet_BestCalc);
-   outputTree->Branch("m1234top_BestCalc",&m1234top_BestCalc);
-   outputTree->Branch("m12top_BestCalc",&m12top_BestCalc);
-   outputTree->Branch("m23top_BestCalc",&m23top_BestCalc);
-   outputTree->Branch("m13top_BestCalc",&m13top_BestCalc);
-   outputTree->Branch("m1234W_BestCalc",&m1234W_BestCalc);
-   outputTree->Branch("m12W_BestCalc",&m12W_BestCalc);
-   outputTree->Branch("m23W_BestCalc",&m23W_BestCalc);
-   outputTree->Branch("m13W_BestCalc",&m13W_BestCalc);
-   outputTree->Branch("m1234Z_BestCalc",&m1234Z_BestCalc);
-   outputTree->Branch("m12Z_BestCalc",&m12Z_BestCalc);
-   outputTree->Branch("m23Z_BestCalc",&m23Z_BestCalc);
-   outputTree->Branch("m13Z_BestCalc",&m13Z_BestCalc);
-   outputTree->Branch("m1234H_BestCalc",&m1234H_BestCalc);
-   outputTree->Branch("m12H_BestCalc",&m12H_BestCalc);
-   outputTree->Branch("m23H_BestCalc",&m23H_BestCalc);
-   outputTree->Branch("m13H_BestCalc",&m13H_BestCalc);
-   outputTree->Branch("pzOverp_top_BestCalc",&pzOverp_top_BestCalc);
-   outputTree->Branch("pzOverp_W_BestCalc",&pzOverp_W_BestCalc);
-   outputTree->Branch("pzOverp_Z_BestCalc",&pzOverp_Z_BestCalc);
-   outputTree->Branch("pzOverp_H_BestCalc",&pzOverp_H_BestCalc);
-   outputTree->Branch("pzOverp_jet_BestCalc",&pzOverp_jet_BestCalc);
-   outputTree->Branch("Njets_top_BestCalc",&Njets_top_BestCalc);
-   outputTree->Branch("Njets_W_BestCalc",&Njets_W_BestCalc);
-   outputTree->Branch("Njets_Z_BestCalc",&Njets_Z_BestCalc);
-   outputTree->Branch("Njets_H_BestCalc",&Njets_H_BestCalc);
-   outputTree->Branch("Njets_jet_BestCalc",&Njets_jet_BestCalc);
-   outputTree->Branch("Njets_orig_BestCalc",&Njets_orig_BestCalc);
    outputTree->Branch("dnn_B_DeepAK8Calc",&dnn_B_DeepAK8Calc);
    outputTree->Branch("dnn_J_DeepAK8Calc",&dnn_J_DeepAK8Calc);
    outputTree->Branch("dnn_W_DeepAK8Calc",&dnn_W_DeepAK8Calc);
@@ -464,10 +347,6 @@ void step1::Loop()
    outputTree->Branch("decorr_Z_DeepAK8Calc",&decorr_Z_DeepAK8Calc);
    outputTree->Branch("decorr_H_DeepAK8Calc",&decorr_H_DeepAK8Calc);
    outputTree->Branch("decorr_T_DeepAK8Calc",&decorr_T_DeepAK8Calc);
-   //outputTree->Branch("AK8JetDeepCSVb_singleLepCalc",&AK8JetDeepCSVb_singleLepCalc);
-   //outputTree->Branch("AK8JetDeepCSVbb_singleLepCalc",&AK8JetDeepCSVbb_singleLepCalc);
-   //outputTree->Branch("AK8JetDeepCSVc_singleLepCalc",&AK8JetDeepCSVc_singleLepCalc);
-   //outputTree->Branch("AK8JetDeepCSVudsg_singleLepCalc",&AK8JetDeepCSVudsg_singleLepCalc);
    outputTree->Branch("theJetAK8SDSubjetHFlav_JetSubCalc",&theJetAK8SDSubjetHFlav_JetSubCalc);
    outputTree->Branch("elIsTightBarrel_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsTightBarrel_singleLepCalc/F");
    outputTree->Branch("elIsMediumBarrel_singleLepCalc",&elIsTightBarrel_singleLepCalc,"elIsMediumBarrel_singleLepCalc/F");
@@ -519,7 +398,7 @@ void step1::Loop()
    outputTree->Branch("highPtAK8Jet3_SoftDropCorrectedMass",&highPtAK8Jet3_SoftDropCorrectedMass);
 
    outputTree->Branch("W_mass",&W_mass);
-
+   */
    // ******* HERE's an example histogram definition that could go in the file ********
    // ******* TH1D *name = new TH1D("name","title;x-axis title;y-axis title",nbins,xmin,xmax)
 
@@ -679,6 +558,9 @@ void step1::Loop()
 
    TH2D *confusion_num_BEST = new TH2D("confusion_num_BEST","",6,0,6,6,0,6);
    TH2D *confusion_num_DeepAK8 = new TH2D("confusion_num_DeepAK8","",6,0,6,6,0,6);
+   TH2D *confusion_num_DeepAK8LC = new TH2D("confusion_num_DeepAK8LC","",6,0,6,6,0,6);
+   TH2D *confusion_num_DeepAK8SubJet = new TH2D("confusion_num_DeepAK8SubJet","",6,0,6,6,0,6);
+   TH2D *confusion_num_DeepAK8SubJet2 = new TH2D("confusion_num_DeepAK8SubJet2","",6,0,6,6,0,6);
    TH2D *confusion_num_DeepAK8_decorr = new TH2D("confusion_num_DeepAK8_decorr","",6,0,6,6,0,6);
    TH2D *confusion_num_JetSub = new TH2D("confusion_num_JetSub","",6,0,6,6,0,6);
    TH2D *confusion_den = new TH2D("confusion_den","",6,0,6,6,0,6);
@@ -981,8 +863,8 @@ void step1::Loop()
       theJetEta_JetSubCalc_PtOrdered.clear();
       theJetPhi_JetSubCalc_PtOrdered.clear();
       theJetEnergy_JetSubCalc_PtOrdered.clear();
-      theJetCSVb_JetSubCalc_PtOrdered.clear();
-      theJetCSVbb_JetSubCalc_PtOrdered.clear();
+      theJetDeepCSVb_JetSubCalc_PtOrdered.clear();
+      theJetDeepCSVbb_JetSubCalc_PtOrdered.clear();
       //theJetCSVc_JetSubCalc_PtOrdered.clear();
       //theJetCSVudsg_JetSubCalc_PtOrdered.clear();
       theJetHFlav_JetSubCalc_PtOrdered.clear();
@@ -993,8 +875,8 @@ void step1::Loop()
       	theJetEta_JetSubCalc_PtOrdered.push_back(theJetEta_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetPhi_JetSubCalc_PtOrdered.push_back(theJetPhi_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetEnergy_JetSubCalc_PtOrdered.push_back(theJetEnergy_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetCSVb_JetSubCalc_PtOrdered.push_back(theJetCSVb_JetSubCalc->at(jetptindpair[ijet].second));
-	theJetCSVbb_JetSubCalc_PtOrdered.push_back(theJetCSVbb_JetSubCalc->at(jetptindpair[ijet].second));
+      	theJetDeepCSVb_JetSubCalc_PtOrdered.push_back(theJetDeepCSVb_JetSubCalc->at(jetptindpair[ijet].second));
+	theJetDeepCSVbb_JetSubCalc_PtOrdered.push_back(theJetDeepCSVbb_JetSubCalc->at(jetptindpair[ijet].second));
 	//theJetCSVc_JetSubCalc_PtOrdered.push_back(theJetCSVc_JetSubCalc->at(jetptindpair[ijet].second));
 	//theJetCSVudsg_JetSubCalc_PtOrdered.push_back(theJetCSVudsg_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetHFlav_JetSubCalc_PtOrdered.push_back(theJetHFlav_JetSubCalc->at(jetptindpair[ijet].second));
@@ -1163,7 +1045,8 @@ void step1::Loop()
       theJetAK8SoftDropRaw_PtOrdered.clear();
       theJetAK8SoftDropCorr_PtOrdered.clear();
       theJetAK8SoftDrop_PtOrdered.clear();
-      theJetAK8SDSubjetNCSVM_PtOrdered.clear();
+      theJetAK8SDSubjetNDeepCSVMSF_PtOrdered.clear();
+      theJetAK8SDSubjetNDeepCSVL_PtOrdered.clear();
       theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.clear();
       theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.clear();
       theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.clear();
@@ -1190,7 +1073,8 @@ void step1::Loop()
       	theJetAK8SoftDropRaw_PtOrdered.push_back(theJetAK8SoftDropRaw_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8SoftDropCorr_PtOrdered.push_back(theJetAK8SoftDropCorr_JetSubCalc->at(jetak8ptindpair[ijet].second));
 	theJetAK8SoftDrop_PtOrdered.push_back(theJetAK8SoftDrop_JetSubCalc->at(jetak8ptindpair[ijet].second));
-	theJetAK8SDSubjetNCSVM_PtOrdered.push_back(theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc->at(jetak8ptindpair[ijet].second));
+	theJetAK8SDSubjetNDeepCSVMSF_PtOrdered.push_back(theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc->at(jetak8ptindpair[ijet].second));
+	theJetAK8SDSubjetNDeepCSVL_PtOrdered.push_back(theJetAK8SDSubjetNDeepCSVL_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau1_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau2_JetSubCalc->at(jetak8ptindpair[ijet].second));
       	theJetAK8NjettinessTau3_JetSubCalc_PtOrdered.push_back(theJetAK8NjettinessTau3_JetSubCalc->at(jetak8ptindpair[ijet].second));
@@ -1321,15 +1205,21 @@ void step1::Loop()
 	  if(isWmatched || isZmatched || isHmatched || isTmatched) theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(matchedPt);
 	  else theJetAK8MatchedPt_JetSubCalc_PtOrdered.push_back(-99.0);
 
-	  if (not isWmatched && not isZmatched && not isTmatched && not isHmatched) {
+	  if (not (isWmatched && matchedPt > 200) && not (isZmatched && matchedPt > 200) &&
+	      not (isTmatched && matchedPt > 400) && not (isHmatched && matchedPt > 300)) {
 	    int firstsub = theJetAK8SDSubjetIndex_JetSubCalc_PtOrdered.at(ijet);
 	    int nsubs = theJetAK8SDSubjetSize_JetSubCalc_PtOrdered.at(ijet);
+	    //std::cout << "-----------------------------------------------" << std::endl;
 	    for(int isub = firstsub; isub < firstsub + nsubs; isub++){
+	      //std::cout << "Subjet " << isub-firstsub << " of " << nsubs << std::endl;
+	      //std::cout << "   DeepCSVL = " << (theJetAK8SDSubjetCSVb_JetSubCalc->at(isub) > 0.1522) << ", DeepCSVM = " << (theJetAK8SDSubjetCSVb_JetSubCalc->at(isub) > 0.4941) << std::endl;
+	      //std::cout << "   Flavor = " << theJetAK8SDSubjetHFlav_JetSubCalc->at(isub) << std::endl;
 	      if( theJetAK8SDSubjetHFlav_JetSubCalc->at(isub) == 5 ) isBmatched = true;
 	    }
 	    if ( not isBmatched ) isJmatched = true;
+	    //std::cout << "Bmatched = " << isBmatched << ", Jmatched = " << isJmatched << std::endl;
 	  }
-
+	  
 	  if(isJmatched) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(0);
 	  if(isTmatched) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(1);
 	  if(isHmatched) theJetAK8Truth_JetSubCalc_PtOrdered.push_back(2);
@@ -1342,14 +1232,7 @@ void step1::Loop()
 	  // FILLING HISTOGRAMS
 	  // ------------------------------------------------------------------------------------------------------------------
 
-	  if (isBmatched) {
-	    confusion_den->Fill(0.0,0.0);
-	    confusion_den->Fill(1.0,0.0);
-	    confusion_den->Fill(2.0,0.0);
-	    confusion_den->Fill(3.0,0.0);
-	    confusion_den->Fill(4.0,0.0);
-	    confusion_den->Fill(5.0,0.0); }
-	  else if (isTmatched && matchedPt > 400) {
+	  if (isTmatched && matchedPt > 400) {
 	    confusion_den->Fill(0.0,1.0);
 	    confusion_den->Fill(1.0,1.0);
 	    confusion_den->Fill(2.0,1.0);
@@ -1377,196 +1260,339 @@ void step1::Loop()
 	    confusion_den->Fill(3.0,4.0);
 	    confusion_den->Fill(4.0,4.0);
 	    confusion_den->Fill(5.0,4.0); }
-	  else {
+	  else if (isBmatched) {
 	    confusion_den->Fill(0.0,5.0);
 	    confusion_den->Fill(1.0,5.0);
 	    confusion_den->Fill(2.0,5.0);
 	    confusion_den->Fill(3.0,5.0);
 	    confusion_den->Fill(4.0,5.0);
 	    confusion_den->Fill(5.0,5.0); }
+	  else {
+	    confusion_den->Fill(0.0,0.0);
+	    confusion_den->Fill(1.0,0.0);
+	    confusion_den->Fill(2.0,0.0);
+	    confusion_den->Fill(3.0,0.0);
+	    confusion_den->Fill(4.0,0.0);
+	    confusion_den->Fill(5.0,0.0); }
 	  
 	  // 0 = J, 1 = T, 2 = H, 3 = Z, 4 = W, 5 = B
 	  // BEST confusion matrix
 	  if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 0) { // J
-	    if (isBmatched) confusion_num_BEST->Fill(0.0,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(0.0,1);
+ 	    if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(0.0,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_BEST->Fill(0.0,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_BEST->Fill(0.0,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_BEST->Fill(0.0,4.0);
-	    else confusion_num_BEST->Fill(0.0,5); }
-	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 4) { // W
-	    if (isBmatched) confusion_num_BEST->Fill(1,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(1,1);
+	    else if (isBmatched) confusion_num_BEST->Fill(0.0,5.0);
+	    else confusion_num_BEST->Fill(0.0,0); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 1) { // T
+	    if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(1,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_BEST->Fill(1,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_BEST->Fill(1,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_BEST->Fill(1,4.0);
-	    else confusion_num_BEST->Fill(1,5); }
-	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 3) { // Z
-	    if (isBmatched) confusion_num_BEST->Fill(2,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(2,1);
+	    else if (isBmatched) confusion_num_BEST->Fill(1,5.0);
+	    else confusion_num_BEST->Fill(1,0); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 2) { // H
+	    if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(2,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_BEST->Fill(2,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_BEST->Fill(2,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_BEST->Fill(2,4);
-	    else confusion_num_BEST->Fill(2,5); }
-	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 2) { // H
-	    if (isBmatched) confusion_num_BEST->Fill(3,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(3,1);
+	    else if (isBmatched) confusion_num_BEST->Fill(2,5.0);
+	    else confusion_num_BEST->Fill(2,0); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 3) { // Z
+	    if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(3,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_BEST->Fill(3,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_BEST->Fill(3,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_BEST->Fill(3,4);
-	    else confusion_num_BEST->Fill(3,5); }
-	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 1) { // T
-	    if (isBmatched) confusion_num_BEST->Fill(4,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(4,1);
+	    else if (isBmatched) confusion_num_BEST->Fill(3,5.0);
+	    else confusion_num_BEST->Fill(3,0); }
+	  else if (dnn_largest_BestCalc_PtOrdered.at(ijet) == 4) { // W
+	    if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(4,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_BEST->Fill(4,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_BEST->Fill(4,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_BEST->Fill(4,4);
-	    else confusion_num_BEST->Fill(4,5); }
+	    else if (isBmatched) confusion_num_BEST->Fill(4,5.0);
+	    else confusion_num_BEST->Fill(4,0); }
 	  else {                                                  // B
-	    if (isBmatched) confusion_num_BEST->Fill(5,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(5,1);
+	    if (isTmatched && matchedPt > 400) confusion_num_BEST->Fill(5,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_BEST->Fill(5,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_BEST->Fill(5,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_BEST->Fill(5,4);
-	    else confusion_num_BEST->Fill(5,5); }
+	    else if (isBmatched) confusion_num_BEST->Fill(5,5.0);
+	    else confusion_num_BEST->Fill(5,0); }
 	  
 	  // DeepAK8 confusion matrix
 	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 0.0) { // J
-	    if (isBmatched) confusion_num_DeepAK8->Fill(0.0,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(0.0,1);
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(0.0,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8->Fill(0.0,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(0.0,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(0.0,4);
-	    else confusion_num_DeepAK8->Fill(0.0,5); }
-	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
-	    if (isBmatched) confusion_num_DeepAK8->Fill(1,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(1,1);
+	    else if (isBmatched) confusion_num_DeepAK8->Fill(0.0,5.0);
+	    else confusion_num_DeepAK8->Fill(0.0,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(1,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8->Fill(1,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(1,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(1,4);
-	    else confusion_num_DeepAK8->Fill(1,5); }
-	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { //Z
-	    if (isBmatched) confusion_num_DeepAK8->Fill(2,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(2,1);
+	    else if (isBmatched) confusion_num_DeepAK8->Fill(1,5.0);
+	    else confusion_num_DeepAK8->Fill(1,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { //H
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(2,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8->Fill(2,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(2,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(2,4);
-	    else confusion_num_DeepAK8->Fill(2,5); }
-	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { //H
-	    if (isBmatched) confusion_num_DeepAK8->Fill(3,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(3,1);
+	    else if (isBmatched) confusion_num_DeepAK8->Fill(2,5.0);
+	    else confusion_num_DeepAK8->Fill(2,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { //Z
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(3,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8->Fill(3,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(3,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(3,4);
-	    else confusion_num_DeepAK8->Fill(3,5); }
-	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
-	    if (isBmatched) confusion_num_DeepAK8->Fill(4,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(4,1);
+	    else if (isBmatched) confusion_num_DeepAK8->Fill(3,5.0);
+	    else confusion_num_DeepAK8->Fill(3,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(4,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8->Fill(4,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(4,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(4,4);
-	    else confusion_num_DeepAK8->Fill(4,5); }
-	  else {                                                      // B
-	    if (isBmatched) confusion_num_DeepAK8->Fill(5,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(5,1);
+	    else if (isBmatched) confusion_num_DeepAK8->Fill(4,5.0);
+	    else confusion_num_DeepAK8->Fill(4,0); }
+	  else {                                                      // B/C
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8->Fill(5,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8->Fill(5,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(5,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8->Fill(5,4);
-	    else confusion_num_DeepAK8->Fill(5,5); }
-	  
+	    else if (isBmatched) confusion_num_DeepAK8->Fill(5,5.0);
+	    else confusion_num_DeepAK8->Fill(5,0); }
+
+	  // DeepAK8 confusion matrix -- old way with CL combined
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 0.0 || dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 6.0) { // J/C
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8LC->Fill(0.0,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8LC->Fill(0.0,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(0.0,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(0.0,4);
+	    else if (isBmatched) confusion_num_DeepAK8LC->Fill(0.0,5.0);
+	    else confusion_num_DeepAK8LC->Fill(0.0,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8LC->Fill(1,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8LC->Fill(1,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(1,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(1,4);
+	    else if (isBmatched) confusion_num_DeepAK8LC->Fill(1,5.0);
+	    else confusion_num_DeepAK8LC->Fill(1,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { //H
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8LC->Fill(2,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8LC->Fill(2,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(2,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(2,4);
+	    else if (isBmatched) confusion_num_DeepAK8LC->Fill(2,5.0);
+	    else confusion_num_DeepAK8LC->Fill(2,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { //Z
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8LC->Fill(3,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8LC->Fill(3,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(3,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(3,4);
+	    else if (isBmatched) confusion_num_DeepAK8LC->Fill(3,5.0);
+	    else confusion_num_DeepAK8LC->Fill(3,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8LC->Fill(4,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8LC->Fill(4,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(4,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(4,4);
+	    else if (isBmatched) confusion_num_DeepAK8LC->Fill(4,5.0);
+	    else confusion_num_DeepAK8LC->Fill(4,0); }
+	  else {                                                      // B
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8LC->Fill(5,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8LC->Fill(5,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(5,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8LC->Fill(5,4);
+	    else if (isBmatched) confusion_num_DeepAK8LC->Fill(5,5.0);
+	    else confusion_num_DeepAK8LC->Fill(5,0); }
+
+	  // DeepAK8 confusion matrix w/ B/Light subjet
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet->Fill(1,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet->Fill(1,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(1,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(1,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet->Fill(1,5.0);
+	    else confusion_num_DeepAK8SubJet->Fill(1,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { //H
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet->Fill(2,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet->Fill(2,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(2,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(2,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet->Fill(2,5.0);
+	    else confusion_num_DeepAK8SubJet->Fill(2,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { //Z
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet->Fill(3,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet->Fill(3,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(3,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(3,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet->Fill(3,5.0);
+	    else confusion_num_DeepAK8SubJet->Fill(3,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet->Fill(4,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet->Fill(4,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(4,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(4,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet->Fill(4,5.0);
+	    else confusion_num_DeepAK8SubJet->Fill(4,0); }
+	  else { // not heavy
+	    if (theJetAK8SDSubjetNDeepCSVMSF_PtOrdered.at(ijet) == 0){ // J
+	      if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet->Fill(0.0,1);
+	      else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet->Fill(0.0,2);
+	      else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(0.0,3);
+	      else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(0.0,4);
+              else if (isBmatched) confusion_num_DeepAK8SubJet->Fill(0.0,5.0);
+	      else confusion_num_DeepAK8SubJet->Fill(0.0,0); }
+	    else{ // B
+	      if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet->Fill(5,1);
+	      else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet->Fill(5,2);
+	      else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(5,3);
+	      else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet->Fill(5,4);
+	      else if (isBmatched) confusion_num_DeepAK8SubJet->Fill(5,5.0);
+	      else confusion_num_DeepAK8SubJet->Fill(5,0); }
+	  }
+
+	  // DeepAK8 confusion matrix w/ B/Light subjet, use Loose
+	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet2->Fill(1,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet2->Fill(1,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(1,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(1,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet2->Fill(1,5.0);
+	    else confusion_num_DeepAK8SubJet2->Fill(1,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { //H
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet2->Fill(2,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet2->Fill(2,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(2,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(2,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet2->Fill(2,5.0);
+	    else confusion_num_DeepAK8SubJet2->Fill(2,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { //Z
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet2->Fill(3,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet2->Fill(3,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(3,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(3,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet2->Fill(3,5.0);
+	    else confusion_num_DeepAK8SubJet2->Fill(3,0); }
+	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet2->Fill(4,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet2->Fill(4,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(4,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(4,4);
+	    else if (isBmatched) confusion_num_DeepAK8SubJet2->Fill(4,5.0);
+	    else confusion_num_DeepAK8SubJet2->Fill(4,0); }
+	  else { // not heavy
+	    if (theJetAK8SDSubjetNDeepCSVL_PtOrdered.at(ijet) == 0){ // J
+	      if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet2->Fill(0.0,1);
+	      else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet2->Fill(0.0,2);
+	      else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(0.0,3);
+	      else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(0.0,4);
+              else if (isBmatched) confusion_num_DeepAK8SubJet2->Fill(0.0,5.0);
+	      else confusion_num_DeepAK8SubJet2->Fill(0.0,0); }
+	    else{ // B
+	      if (isTmatched && matchedPt > 400) confusion_num_DeepAK8SubJet2->Fill(5,1);
+	      else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8SubJet2->Fill(5,2);
+	      else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(5,3);
+	      else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8SubJet2->Fill(5,4);
+	      else if (isBmatched) confusion_num_DeepAK8SubJet2->Fill(5,5.0);
+	      else confusion_num_DeepAK8SubJet2->Fill(5,0); }
+	  }
+
 	  // DeepAK8_decorr confusion matrix
 	  if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 0.0) { // J
-	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(0.0,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(0.0,1);
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(0.0,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8_decorr->Fill(0.0,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(0.0,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(0.0,4);
-	    else confusion_num_DeepAK8_decorr->Fill(0.0,5); }
-	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
-	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(1,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(1,1);
+	    else if (isBmatched) confusion_num_DeepAK8_decorr->Fill(0.0,5.0);
+	    else confusion_num_DeepAK8_decorr->Fill(0.0,0); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(1,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8_decorr->Fill(1,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(1,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(1,4);
-	    else confusion_num_DeepAK8_decorr->Fill(1,5); }
-	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { // Z
-	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(2,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(2,1);
+	    else if (isBmatched) confusion_num_DeepAK8_decorr->Fill(1,5.0);
+	    else confusion_num_DeepAK8_decorr->Fill(1,0); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { // H
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(2,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8_decorr->Fill(2,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(2,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(2,4);
-	    else confusion_num_DeepAK8_decorr->Fill(2,5); }
-	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2) { // H
-	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(3,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(3,1);
+	    else if (isBmatched) confusion_num_DeepAK8_decorr->Fill(2,5.0);
+	    else confusion_num_DeepAK8_decorr->Fill(2,0); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3) { // Z
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(3,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8_decorr->Fill(3,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(3,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(3,4);
-	    else confusion_num_DeepAK8_decorr->Fill(3,5); }
-	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1) { // T
-	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(4,0.0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(4,1);
+	    else if (isBmatched) confusion_num_DeepAK8_decorr->Fill(3,5.0);
+	    else confusion_num_DeepAK8_decorr->Fill(3,0); }
+	  else if (decorr_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4) { // W
+	    if (isTmatched && matchedPt > 400) confusion_num_DeepAK8_decorr->Fill(4,1);
 	    else if (isHmatched && matchedPt > 300) confusion_num_DeepAK8_decorr->Fill(4,2);
 	    else if (isZmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(4,3);
 	    else if (isWmatched && matchedPt > 200) confusion_num_DeepAK8_decorr->Fill(4,4);
-	    else confusion_num_DeepAK8_decorr->Fill(4,5); }
-	  else {                                                          // B
-	    if (isBmatched) confusion_num_DeepAK8_decorr->Fill(5,0.0);
-	    else if (isTmatched) confusion_num_DeepAK8_decorr->Fill(5,1);
+	    else if (isBmatched) confusion_num_DeepAK8_decorr->Fill(4,5.0);
+	    else confusion_num_DeepAK8_decorr->Fill(4,0); }
+	  else {                                                          // B/C
+	    if (isTmatched) confusion_num_DeepAK8_decorr->Fill(5,1);
 	    else if (isHmatched) confusion_num_DeepAK8_decorr->Fill(5,2);
 	    else if (isZmatched) confusion_num_DeepAK8_decorr->Fill(5,3);
 	    else if (isWmatched) confusion_num_DeepAK8_decorr->Fill(5,4);
-	    else confusion_num_DeepAK8_decorr->Fill(5,5); } //}
+	    else if (isBmatched) confusion_num_DeepAK8_decorr->Fill(5,5.0);
+	    else confusion_num_DeepAK8_decorr->Fill(5,0); } //}
 	  
 	  //JetSub confusion matrix
 	  if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 105 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 65 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) > 200 && tau21 < 0.55) { // W or Z
 	    if (isBmatched) {
-	      confusion_num_JetSub->Fill(1,0.0);
-	      confusion_num_JetSub->Fill(2,0.0); }
+	      confusion_num_JetSub->Fill(3,5.0);
+	      confusion_num_JetSub->Fill(4,5.0); }
 	    else if (isTmatched && matchedPt > 400) {
-	      confusion_num_JetSub->Fill(1,1);
-	      confusion_num_JetSub->Fill(2,1); }
+	      confusion_num_JetSub->Fill(3,1);
+	      confusion_num_JetSub->Fill(4,1); }
 	    else if (isHmatched && matchedPt > 300) {
-	      confusion_num_JetSub->Fill(1,2);
-	      confusion_num_JetSub->Fill(2,2); }
+	      confusion_num_JetSub->Fill(3,2);
+	      confusion_num_JetSub->Fill(4,2); }
 	    else if (isZmatched && matchedPt > 200) {
-	      confusion_num_JetSub->Fill(1,3);
-	      confusion_num_JetSub->Fill(2,3); }
+	      confusion_num_JetSub->Fill(3,3);
+	      confusion_num_JetSub->Fill(4,3); }
 	    else if (isWmatched && matchedPt > 200) { 
-	      confusion_num_JetSub->Fill(1,4);
-	      confusion_num_JetSub->Fill(2,4); }
+	      confusion_num_JetSub->Fill(3,4);
+	      confusion_num_JetSub->Fill(4,4); }
 	    else {
-	      confusion_num_JetSub->Fill(1,5);
-	      confusion_num_JetSub->Fill(2,5); } }
+	      confusion_num_JetSub->Fill(1,0);
+	      confusion_num_JetSub->Fill(2,0); } }
 	  else if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 135 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 105 && theJetAK8DoubleB_JetSubCalc_PtOrdered.at(ijet) > 0.6 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) > 300) { //H
-	    if (isBmatched) confusion_num_JetSub->Fill(3,0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_JetSub->Fill(3,1);
-	    else if (isHmatched && matchedPt > 300) confusion_num_JetSub->Fill(3,2);
-	    else if (isZmatched && matchedPt > 200) confusion_num_JetSub->Fill(3,3);
-	    else if (isWmatched && matchedPt > 200) confusion_num_JetSub->Fill(3,4);
-	    else confusion_num_JetSub->Fill(3,5); } 
+	    if (isBmatched) confusion_num_JetSub->Fill(2,5);
+	    else if (isTmatched && matchedPt > 400) confusion_num_JetSub->Fill(2,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_JetSub->Fill(2,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_JetSub->Fill(2,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_JetSub->Fill(2,4);
+	    else confusion_num_JetSub->Fill(2,0); } 
 	  else if (theJetAK8SoftDropCorr_PtOrdered.at(ijet) < 210 && theJetAK8SoftDropCorr_PtOrdered.at(ijet) > 105 && theJetAK8Pt_JetSubCalc_PtOrdered.at(ijet) > 400 && tau32 < 0.65) { // T
-	    if (isBmatched) confusion_num_JetSub->Fill(4,0);
-	    else if (isTmatched && matchedPt > 400) confusion_num_JetSub->Fill(4,1);
-	    else if (isHmatched && matchedPt > 300) confusion_num_JetSub->Fill(4,2);
-	    else if (isZmatched && matchedPt > 200) confusion_num_JetSub->Fill(4,3);
-	    else if (isWmatched && matchedPt > 200) confusion_num_JetSub->Fill(4,4);
-	    else confusion_num_JetSub->Fill(4,5); }
+	    if (isBmatched) confusion_num_JetSub->Fill(1,5);
+	    else if (isTmatched && matchedPt > 400) confusion_num_JetSub->Fill(1,1);
+	    else if (isHmatched && matchedPt > 300) confusion_num_JetSub->Fill(1,2);
+	    else if (isZmatched && matchedPt > 200) confusion_num_JetSub->Fill(1,3);
+	    else if (isWmatched && matchedPt > 200) confusion_num_JetSub->Fill(1,4);
+	    else confusion_num_JetSub->Fill(1,0); }
 	  else {                                                  // B
 	    if (theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.at(ijet) > 0) {
-	      if (isBmatched) confusion_num_JetSub->Fill(5,0);
+	      if (isBmatched) confusion_num_JetSub->Fill(5,5);
 	      else if (isTmatched && matchedPt > 400) confusion_num_JetSub->Fill(5,1);
 	      else if (isHmatched && matchedPt > 300) confusion_num_JetSub->Fill(5,2);
 	      else if (isZmatched && matchedPt > 200) confusion_num_JetSub->Fill(5,3);
 	      else if (isWmatched && matchedPt > 200) confusion_num_JetSub->Fill(5,4);
-	      else confusion_num_JetSub->Fill(5,5); }
+	      else confusion_num_JetSub->Fill(5,0); }
 	    if (theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered.at(ijet) == 0) { // J
-	      if (isBmatched) confusion_num_JetSub->Fill(0.0,0.0);
+	      if (isBmatched) confusion_num_JetSub->Fill(0.0,5.0);
 	      else if (isTmatched && matchedPt > 400) confusion_num_JetSub->Fill(0.0,1.0);
 	      else if (isHmatched && matchedPt > 300) confusion_num_JetSub->Fill(0.0,2.0);
 	      else if (isZmatched && matchedPt > 200) confusion_num_JetSub->Fill(0.0,3.0);
 	      else if (isWmatched && matchedPt > 200) confusion_num_JetSub->Fill(0.0,4.0);
-	      else confusion_num_JetSub->Fill(0.0,5.0); } }
+	      else confusion_num_JetSub->Fill(0.0,0.0); } }
 
 
 	  // ***** EXAMPLE of filling denominators
@@ -2607,7 +2633,7 @@ void step1::Loop()
 	deltaR_lepJets.push_back(lepton_lv.DeltaR(jet_lv));
 
         // FOR NOW DON'T USE THE SCALE FACTORS               **** NEED TO CHANGE TO DEEPCSV probb + probbb > 0.4941                          
-	if(theJetCSVb_JetSubCalc_PtOrdered.at(ijet) + theJetCSVbb_JetSubCalc_PtOrdered.at(ijet) > 0.4941){
+	if(theJetDeepCSVb_JetSubCalc_PtOrdered.at(ijet) + theJetDeepCSVbb_JetSubCalc_PtOrdered.at(ijet) > 0.4941){
           NJetsCSV_JetSubCalc += 1;
         }
 	// OK, we're back to using SFs
@@ -2644,7 +2670,7 @@ void step1::Loop()
       // DONE!! Write the tree
       // ----------------------------------------------------------------------------
       
-      outputTree->Fill();
+      //      outputTree->Fill();
    }
    std::cout<<"Npassed_jets           = "<<n_jetspassed<<" / "<<n_jetstotal<<std::endl;
    std::cout<<"Npassed_jetsnearlep    = "<<n_jetsnearlep<<" / "<<n_jetstotal<<std::endl;
@@ -2823,9 +2849,12 @@ void step1::Loop()
    confusion_den->Write();
    confusion_num_BEST->Write();
    confusion_num_DeepAK8->Write();
+   confusion_num_DeepAK8LC->Write();
+   confusion_num_DeepAK8SubJet->Write();
+   confusion_num_DeepAK8SubJet2->Write();
    confusion_num_DeepAK8_decorr->Write();
    confusion_num_JetSub->Write();
 
-   outputTree->Write();
+   //   outputTree->Write();
 
 }
