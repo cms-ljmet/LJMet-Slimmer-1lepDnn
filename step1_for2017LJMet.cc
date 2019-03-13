@@ -57,6 +57,9 @@ void step1::Loop()
    inputTree->SetBranchStatus("LHEweightids_singleLepCalc",1);
    inputTree->SetBranchStatus("LHEweights_singleLepCalc",1);
    inputTree->SetBranchStatus("HTfromHEPUEP_singleLepCalc",1);
+   inputTree->SetBranchStatus("L1NonPrefiringProb_CommonCalc",1);
+   inputTree->SetBranchStatus("L1NonPrefiringProbUp_CommonCalc",1);
+   inputTree->SetBranchStatus("L1NonPrefiringProbDown_CommonCalc",1);
 
    inputTree->SetBranchStatus("isTHBW_TpTpCalc",1);
    inputTree->SetBranchStatus("isTHTH_TpTpCalc",1);
@@ -114,6 +117,8 @@ void step1::Loop()
    //missing et
    inputTree->SetBranchStatus("corr_met_singleLepCalc",1);
    inputTree->SetBranchStatus("corr_met_phi_singleLepCalc",1);
+   inputTree->SetBranchStatus("corr_metmod_singleLepCalc",1);
+   inputTree->SetBranchStatus("corr_metmod_phi_singleLepCalc",1);
 
    //boosted truth
    inputTree->SetBranchStatus("HadronicVHtPt_JetSubCalc",1);
