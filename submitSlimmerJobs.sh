@@ -32,6 +32,30 @@ python -u runCondorSlimmerJobs.py JERdown
 
 sleep 5
 
+echo "SUBMITTING BTAGup"
+
+python -u runCondorSlimmerJobs.py BTAGup
+
+sleep 5
+
+echo "SUBMITTING BTAGdown"
+
+python -u runCondorSlimmerJobs.py BTAGdown
+
+sleep 5
+
+echo "SUBMITTING LTAGup"
+
+python -u runCondorSlimmerJobs.py LTAGup
+
+sleep 5
+
+echo "SUBMITTING LTAGdown"
+
+python -u runCondorSlimmerJobs.py LTAGdown
+
+sleep 5
+
 echo "DONE"
 
 date
