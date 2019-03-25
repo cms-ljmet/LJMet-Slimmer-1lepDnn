@@ -59,7 +59,11 @@ public :
    Bool_t          outBZBZ;
    Bool_t          outBHBH;
    Int_t           SigMass;
-   Int_t           pileupIndex;
+   Bool_t          isNominal;
+   Bool_t          isBUp;
+   Bool_t          isBDn;
+   Bool_t          isLUp;
+   Bool_t          isLDn;
    
    // Fixed size dimensions of array or collections stored in the TTree if any.
 
@@ -70,15 +74,10 @@ public :
 
    vector<int>    theJetAK8Truth_JetSubCalc_PtOrdered;
    vector<double> deltaR_leptonicparticle_AK8_PtOrdered; 
-   vector<int>    taggedXXXX_BEST;
-   vector<int>    taggedXXXX_DeepAK8;
-   vector<int>    taggedXXXX_DeepAK8_decorr;
-   vector<int>    leptonicTprimeJetIDs_BEST;
    vector<int>    leptonicTprimeJetIDs_DeepAK8;
-   vector<int>    leptonicTprimeJetIDs_DeepAK8_decorr;
-   vector<int>    hadronicTprimeJetIDs_BEST;
    vector<int>    hadronicTprimeJetIDs_DeepAK8;
-   vector<int>    hadronicTprimeJetIDs_DeepAK8_decorr;
+   vector<int>    leptonicBprimeJetIDs_DeepAK8;
+   vector<int>    hadronicBprimeJetIDs_DeepAK8;
 
    vector<double> dnn_B_DeepAK8Calc_PtOrdered;
    vector<double> dnn_T_DeepAK8Calc_PtOrdered;
@@ -87,105 +86,57 @@ public :
    vector<double> dnn_Z_DeepAK8Calc_PtOrdered;
    vector<double> dnn_J_DeepAK8Calc_PtOrdered;
 
-   vector<double> dnn_QCD_BestCalc_PtOrdered;
-   vector<double> dnn_Top_BestCalc_PtOrdered;
-   vector<double> dnn_Higgs_BestCalc_PtOrdered;
-   vector<double> dnn_W_BestCalc_PtOrdered;
-   vector<double> dnn_Z_BestCalc_PtOrdered;
-   vector<double> dnn_B_BestCalc_PtOrdered;
+   Float_t Tprime1_DeepAK8_Mass;
+   Float_t Tprime2_DeepAK8_Mass;
+   Float_t Tprime1_DeepAK8_Pt;
+   Float_t Tprime2_DeepAK8_Pt;
+   Float_t Tprime1_DeepAK8_Eta;
+   Float_t Tprime2_DeepAK8_Eta;
+   Float_t Tprime1_DeepAK8_Phi;
+   Float_t Tprime2_DeepAK8_Phi;
+   Float_t Tprime1_DeepAK8_deltaR;
+   Float_t Tprime2_DeepAK8_deltaR;
+   Float_t Bprime1_DeepAK8_Mass;
+   Float_t Bprime2_DeepAK8_Mass;
+   Float_t Bprime1_DeepAK8_Pt;
+   Float_t Bprime2_DeepAK8_Pt;
+   Float_t Bprime1_DeepAK8_Eta;
+   Float_t Bprime2_DeepAK8_Eta;
+   Float_t Bprime1_DeepAK8_Phi;
+   Float_t Bprime2_DeepAK8_Phi;
+   Float_t Bprime1_DeepAK8_deltaR;
+   Float_t Bprime2_DeepAK8_deltaR;
 
-   vector<double> decorr_B_DeepAK8Calc_PtOrdered;
-   vector<double> decorr_T_DeepAK8Calc_PtOrdered;
-   vector<double> decorr_H_DeepAK8Calc_PtOrdered;
-   vector<double> decorr_W_DeepAK8Calc_PtOrdered;
-   vector<double> decorr_Z_DeepAK8Calc_PtOrdered;
-   vector<double> decorr_J_DeepAK8Calc_PtOrdered;
-   
-   double Tprime1_BEST_Mass;
-   double Tprime2_BEST_Mass;
-   double Tprime1_BEST_Pt;
-   double Tprime2_BEST_Pt;
-   double Tprime1_BEST_Eta;
-   double Tprime2_BEST_Eta;
-   double Tprime1_BEST_Phi;
-   double Tprime2_BEST_Phi;
-   double Tprime1_BEST_deltaR;
-   double Tprime2_BEST_deltaR;
-   double TprimeAvg_BEST_Mass;
+   Bool_t validTDecay_DeepAK8;
+   Bool_t validBDecay_DeepAK8;
 
-   double Tprime1_DeepAK8_Mass;
-   double Tprime2_DeepAK8_Mass;
-   double Tprime1_DeepAK8_Pt;
-   double Tprime2_DeepAK8_Pt;
-   double Tprime1_DeepAK8_Eta;
-   double Tprime2_DeepAK8_Eta;
-   double Tprime1_DeepAK8_Phi;
-   double Tprime2_DeepAK8_Phi;
-   double Tprime1_DeepAK8_deltaR;
-   double Tprime2_DeepAK8_deltaR;
-   double TprimeAvg_DeepAK8_Mass;
+   Bool_t isLeptonic_t;
+   Bool_t isLeptonic_W;
 
-   double Tprime1_DeepAK8_decorr_Mass;
-   double Tprime2_DeepAK8_decorr_Mass;
-   double Tprime1_DeepAK8_decorr_Pt;
-   double Tprime2_DeepAK8_decorr_Pt;
-   double Tprime1_DeepAK8_decorr_Eta;
-   double Tprime2_DeepAK8_decorr_Eta;
-   double Tprime1_DeepAK8_decorr_Phi;
-   double Tprime2_DeepAK8_decorr_Phi;
-   double Tprime1_DeepAK8_decorr_deltaR;
-   double Tprime2_DeepAK8_decorr_deltaR;
-   double TprimeAvg_DeepAK8_decorr_Mass;
+   Bool_t taggedBWBW_DeepAK8;
+   Bool_t taggedTHBW_DeepAK8;
+   Bool_t taggedTHTH_DeepAK8;
+   Bool_t taggedTZBW_DeepAK8;
+   Bool_t taggedTZTH_DeepAK8;
+   Bool_t taggedTZTZ_DeepAK8;
+   Bool_t taggedTWTW_DeepAK8;
+   Bool_t taggedBHTW_DeepAK8;
+   Bool_t taggedBZTW_DeepAK8;
 
-   bool validDecay_BEST;
-   bool validDecay_DeepAK8;
-   bool validDecay_DeepAK8_decorr;
+   Float_t highPtAK8Jet1_SoftDropCorrectedMass;
+   Float_t highPtAK8Jet2_SoftDropCorrectedMass;
+   Float_t highPtAK8Jet3_SoftDropCorrectedMass;
 
-   bool isLeptonic_t;
-   bool isLeptonic_W;
+   Float_t W_mass;
+   Float_t t_mass;
+   Float_t W_pt;
+   Float_t t_pt;
+   Float_t W_dRLep;
+   Float_t t_dRWb;
 
-   bool taggedBWBW_BEST;
-   bool taggedTHBW_BEST;
-   bool taggedTHTH_BEST;
-   bool taggedTZBW_BEST;
-   bool taggedTZTH_BEST;
-   bool taggedTZTZ_BEST;
-   bool taggedBWBW_DeepAK8;
-   bool taggedTHBW_DeepAK8;
-   bool taggedTHTH_DeepAK8;
-   bool taggedTZBW_DeepAK8;
-   bool taggedTZTH_DeepAK8;
-   bool taggedTZTZ_DeepAK8;
-   bool taggedBWBW_DeepAK8_decorr;
-   bool taggedTHBW_DeepAK8_decorr;
-   bool taggedTHTH_DeepAK8_decorr;
-   bool taggedTZBW_DeepAK8_decorr;
-   bool taggedTZTH_DeepAK8_decorr;
-   bool taggedTZTZ_DeepAK8_decorr;
-
-   double highPtAK8Jet1_SoftDropCorrectedMass;
-   double highPtAK8Jet2_SoftDropCorrectedMass;
-   double highPtAK8Jet3_SoftDropCorrectedMass;
-
-   double W_mass;
-   double t_mass;
-
-   double probSum_BEST_decay;
-   double probSum_DeepAK8_decay;
-   double probSum_DeepAK8_decorr_decay;
-   double probSum_BEST_all;
-   double probSum_DeepAK8_all;
-   double probSum_DeepAK8_decorr_all;
-   double probSum_BEST_four;
-   double probSum_DeepAK8_four;
-   double probSum_DeepAK8_decorr_four;
-
-   Int_t nB_BEST;
-   Int_t nH_BEST;
-   Int_t nJ_BEST;
-   Int_t nT_BEST;
-   Int_t nW_BEST;
-   Int_t nZ_BEST;
+   Float_t probSum_DeepAK8_decay;
+   Float_t probSum_DeepAK8_all;
+   Float_t probSum_DeepAK8_four;
 
    Int_t nB_DeepAK8;
    Int_t nH_DeepAK8;
@@ -193,13 +144,6 @@ public :
    Int_t nT_DeepAK8;
    Int_t nW_DeepAK8;
    Int_t nZ_DeepAK8;
-
-   Int_t nB_DeepAK8_decorr;
-   Int_t nH_DeepAK8_decorr;
-   Int_t nJ_DeepAK8_decorr;
-   Int_t nT_DeepAK8_decorr;
-   Int_t nW_DeepAK8_decorr;
-   Int_t nZ_DeepAK8_decorr;
 
    Int_t           isElectron;
    Int_t           isMuon;
@@ -286,8 +230,7 @@ public :
    Float_t         AK4HT;
 
    Float_t         minMleppJet;
-   Float_t         deltaRlepJetInMinMljet;
-   Float_t         deltaPhilepJetInMinMljet;
+   Float_t         deltaR_lepMinMlj;
    Float_t         minDR_lepJet;
    Float_t         ptRel_lepJet;
    Float_t         ptRel_lepAK8;
@@ -301,13 +244,10 @@ public :
    Float_t         BJetLeadPt;
    Float_t         minMleppBjetPt;
    Float_t         minMleppBjet;
-   Float_t         deltaRlepbJetInMinMlb;
-   Float_t         deltaPhilepbJetInMinMlb;
+   Float_t         deltaR_lepMinMlb;
    vector<double>  BJetLeadPt_shifts;
    vector<double>  minMleppBjetPt_shifts;
    vector<double>  minMleppBjet_shifts;
-   vector<double>  deltaRlepbJetInMinMlb_shifts;
-   vector<double>  deltaPhilepbJetInMinMlb_shifts;
    vector<double>  deltaR_lepBJets;
    vector<double>  deltaR_lepBJets_bSFup;
    vector<double>  deltaR_lepBJets_bSFdn;
@@ -368,82 +308,7 @@ public :
    vector<double>  theJetAK8MatchedPt_JetSubCalc_PtOrdered;
    vector<double>  theJetAK8SoftDropCorr_JetSubCalc_PtOrdered;
    vector<int>     theJetAK8SDSubjetNDeepCSVMSF_JetSubCalc_PtOrdered;
-   /*
-   vector<double>("elIsTightBarrel_singleLepCalc",1);
-   vector<double>("elIsMediumBarrel_singleLepCalc",1);
-   vector<double>("elIsLooseBarrel_singleLepCalc",1);
-   vector<double>("elIsVetoBarrel_singleLepCalc",1);
-   vector<double>("elIsTIghtEndCap_singleLepCalc",1);
-   vector<double>("elIsMediumEndCap_singleLepCalc",1);
-   vector<double>("elIsLooseEndCap_singleLepCalc",1);
-   vector<double>("elIsVetoEndCap_singleLepCalc",1);
-
-   vector<double>("muIsTight_singleLepCalc",1);
-   vector<double>("muIsMedium_singleLepCalc",1);
-   vector<double>("muIsMediumPrompt_singleLepCalc",1);
-   vector<double>("muIsLoose_singleLepCalc",1);
-
-   vector<double>("dnn_QCD_BestCalc",1);
-   vector<double>("dnn_Top_BestCalc",1);
-   vector<double>("dnn_Higgs_BestCalc",1);
-   vector<double>("dnn_Z_BestCalc",1);
-   vector<double>("dnn_W_BestCalc",1);*/
-   //vector<int> dnn_largest_BestCalc;
-
-   /*   vector<double>("dnn_B_DeepAK8Calc",1);
-   vector<double>("dnn_J_DeepAK8Calc",1);
-   vector<double>("dnn_W_DeepAK8Calc",1);
-   vector<double>("dnn_Z_DeepAK8Calc",1);
-   vector<double>("dnn_H_DeepAK8Calc",1);*/
-   //   vector<int>dnn_largest_DeepAK8Calc;
-   //vector<int>decorr_largest_DeepAK8Calc;/*
-   /*vector<double>("dnn_T_DeepAK8Calc",1);
-   vector<double>("decorr_B_DeepAK8Calc",1);
-   vector<double>("decorr_J_DeepAK8Calc",1);
-   vector<double>("decorr_W_DeepAK8Calc",1);
-   vector<double>("decorr_Z_DeepAK8Calc",1);
-   vector<double>("decorr_H_DeepAK8Calc",1);
-   vector<double>("decorr_T_DeepAK8Calc",1);*/
-
-   //vector<double>*AK8JetDeepCSVb_singleLepCalc;
-   //vector<double>*AK8JetDeepCSVbb_singleLepCalc;
-   //vector<double>("AK8JetDeepCSVc_singleLepCalc",1);
-   //vector<double>("AK8JetDeepCSVudsg_singleLepCalc",1);
-
-   Int_t           NJetsWtagged_0p6;
-   Int_t           NPuppiWtagged_0p55;
-   Int_t           NJetsWtagged_0p6_notTtagged;
-   Float_t         WJetLeadPt;
-   Float_t         deltaRtopWjet;
-   Float_t         deltaPhitopWjet;
-   Float_t         deltaRlepWjet;
-   Float_t         deltaPhilepWjet;
-   vector<int>     NJetsWtagged_0p6_shifts;
-   vector<int>     NPuppiWtagged_0p55_shifts;
-   vector<int>     NJetsWtagged_0p6_notTtagged_shifts;
-   vector<double>  WJetLeadPt_shifts;
-   vector<double>  deltaRtopWjet_shifts;  
-   vector<double>  deltaPhitopWjet_shifts; 
-   vector<double>  deltaRlepWjet_shifts;  
-   vector<double>  deltaPhilepWjet_shifts; 
-
-   Int_t           NJetsTtagged_0p81;
-   Float_t         TJetLeadPt;
-   Float_t         deltaRlepTjet;
-   Float_t         deltaPhilepTjet;
-   vector<int>     NJetsTtagged_0p81_shifts;
-   vector<double>  TJetLeadPt_shifts;
-   vector<double>  deltaRlepTjet_shifts;  
-   vector<double>  deltaPhilepTjet_shifts; 
-
-   Int_t           NJetsH1btagged;
-   vector<int>     NJetsH1btagged_shifts;
-   Int_t           NJetsH2btagged;
-   vector<int>     NJetsH2btagged_shifts;
-   Int_t           NPuppiH1btagged;
-   vector<int>     NPuppiH1btagged_shifts;
-   Int_t           NPuppiH2btagged;
-   vector<int>     NPuppiH2btagged_shifts;
+   vector<int>     theJetAK8SDSubjetNDeepCSVL_JetSubCalc_PtOrdered;
 
    Float_t         topPt;
    Float_t         topPtGen;
@@ -1505,53 +1370,32 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
     else if(inputFileName.Contains("_M-800")) SigMass = 1;
     else if(inputFileName.Contains("_M-900")) SigMass = 2;
     else if(inputFileName.Contains("_M-1000")) SigMass = 3;
-    else if(inputFileName.Contains("_M-1100")) {SigMass = 4; pileupIndex = 20;}
-    else if(inputFileName.Contains("_M-1200")) {SigMass = 5; pileupIndex = 21;}
-    else if(inputFileName.Contains("_M-1300")) {SigMass = 6; pileupIndex = 22;}
-    else if(inputFileName.Contains("_M-1400")) {SigMass = 7; pileupIndex = 23;}
-    else if(inputFileName.Contains("_M-1500")) {SigMass = 8; pileupIndex = 24;}
-    else if(inputFileName.Contains("_M-1600")) {SigMass = 9; pileupIndex = 25;}
-    else if(inputFileName.Contains("_M-1700")) {SigMass = 10; pileupIndex = 26;}
-    else if(inputFileName.Contains("_M-1800")) {SigMass = 11; pileupIndex = 27;}
+    else if(inputFileName.Contains("_M-1100")) SigMass = 4;
+    else if(inputFileName.Contains("_M-1200")) SigMass = 5;
+    else if(inputFileName.Contains("_M-1300")) SigMass = 6;
+    else if(inputFileName.Contains("_M-1400")) SigMass = 7;
+    else if(inputFileName.Contains("_M-1500")) SigMass = 8;
+    else if(inputFileName.Contains("_M-1600")) SigMass = 9;
+    else if(inputFileName.Contains("_M-1700")) SigMass = 10;
+    else if(inputFileName.Contains("_M-1800")) SigMass = 11;
     else SigMass = -1;
   }  
   isMadgraphBkg = (inputFileName.Contains("QCD") || inputFileName.Contains("madgraphMLM"));
-  isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("TTZ") || inputFileName.Contains("TTW") || inputFileName.Contains("TTTo"));
+  isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("ttZ") || inputFileName.Contains("ttW") || inputFileName.Contains("ttH") || inputFileName.Contains("TTTo"));
   isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt") || inputFileName.Contains("TTTo"));
   isSTt = inputFileName.Contains("ST_t-channel");
   isSTtW = inputFileName.Contains("ST_tW");
-  isTTV = (inputFileName.Contains("tZ") || inputFileName.Contains("ttW"));
+  isTTV = (inputFileName.Contains("ttZ") || inputFileName.Contains("ttW") || inputFileName.Contains("ttH"));
   isVV = (inputFileName.Contains("WW_") || inputFileName.Contains("WZ_") || inputFileName.Contains("ZZ_"));
   isMC = !(inputFileName.Contains("Single") || inputFileName.Contains("Data18"));
   isSM = inputFileName.Contains("SingleMuon");
   isSE = (inputFileName.Contains("SingleElectron") || inputFileName.Contains("EGamma"));
 
-  if(inputFileName.Contains("DYJets")) pileupIndex = 1;
-  else if(inputFileName.Contains("QCD_HT1000")) pileupIndex = 2;
-  else if(inputFileName.Contains("QCD_HT1500")) pileupIndex = 3;
-  else if(inputFileName.Contains("QCD_HT2000")) pileupIndex = 4;
-  else if(inputFileName.Contains("QCD_HT300")) pileupIndex = 5;
-  else if(inputFileName.Contains("QCD_HT500")) pileupIndex = 6;
-  else if(inputFileName.Contains("QCD_HT700")) pileupIndex = 7;
-  else if(inputFileName.Contains("ST_s-channel")) pileupIndex = 8;
-  else if(inputFileName.Contains("ST_t-channel_top")) pileupIndex = 9;
-  else if(inputFileName.Contains("ST_t-channel_anti")) pileupIndex = 10;
-  else if(inputFileName.Contains("ST_tW_top")) pileupIndex = 11;
-  else if(inputFileName.Contains("ST_tW_anti")) pileupIndex = 12;
-  else if(inputFileName.Contains("TT_Mtt-1000")) pileupIndex = 13;
-  else if(inputFileName.Contains("TTToSemi")) pileupIndex = 14;
-  else if(inputFileName.Contains("TTTo2L2Nu")) pileupIndex = 15;
-  else if(inputFileName.Contains("TT_Mtt-700")) pileupIndex = 16;
-  else if(inputFileName.Contains("TTWJetsToLNu")) pileupIndex = 17;
-  else if(inputFileName.Contains("TTZToLL")) pileupIndex = 18;
-  else if(inputFileName.Contains("TTToHadronic")) pileupIndex = 19;
-  else if(inputFileName.Contains("WJetsToLNu_HT-1200")) pileupIndex = 28;
-  else if(inputFileName.Contains("WJetsToLNu_HT-200")) pileupIndex = 29;
-  else if(inputFileName.Contains("WJetsToLNu_HT-2500")) pileupIndex = 30;
-  else if(inputFileName.Contains("WJetsToLNu_HT-400")) pileupIndex = 31;
-  else if(inputFileName.Contains("WJetsToLNu_HT-600")) pileupIndex = 32;
-  else if(inputFileName.Contains("WJetsToLNu_HT-800")) pileupIndex = 32;
-
+  isBUp = (outputFileName.Contains("BTAGup"));
+  isBDn = (outputFileName.Contains("BTAGdown"));
+  isLUp = (outputFileName.Contains("LTAGup"));
+  isLDn = (outputFileName.Contains("LTAGdown"));
+  isNominal = (outputFileName.Contains("nominal"));
   isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
   isTTincMtt0to1000   = outputFileName.Contains("Mtt0to1000");
   isTTincMtt700to1000 = outputFileName.Contains("Mtt700to1000");
