@@ -52,15 +52,15 @@ for sample in signalList:
             print haddcommand
 
 signalList = [
-    'BprimeBprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1100_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1200_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1300_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1400_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1500_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1600_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    #'BprimeBprime_M-1700_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1800_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
+    #'BprimeBprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
     ]
 
 signalOutList = ['TWTW','BZTW','BHTW','BZBH','BZBZ','BHBH']
