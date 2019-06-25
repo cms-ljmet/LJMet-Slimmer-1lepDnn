@@ -1,18 +1,18 @@
 import os,shutil,datetime,time
 import getpass
+import glob
 from ROOT import *
 execfile("/uscms_data/d3/jmanagan/EOSSafeUtils.py")
 
 start_time = time.time()
 
-shift = sys.argv[1]
-
 #IO directories must be full paths
 
-relbase = '/uscms_data/d3/jmanagan/CMSSW_9_4_6_patch1/'
-inputDir='/eos/uscms/store/user/lpcljm/2018/LJMet94X_1lep_013019/'+shift+'/'
-outputDir='/eos/uscms/store/user/lpcljm/2018/LJMet94X_1lepTT_confusionplots_031219/'+shift+'/'
-condorDir='/uscms_data/d3/jmanagan/LJMet94X_1lepTT_confusionplots_031219/'+shift+'/'
+finalStateYear = 'singleLep2017' # or 2018
+relbase = '/uscms_data/d3/jmanagan/CMSSW_10_2_10/'
+inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017_052219/' # or 2018
+outputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
+condorDir='/uscms_data/d3/jmanagan/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
 
 runDir=os.getcwd()
 # Can change the file directory if needed
@@ -32,7 +32,7 @@ outDir=outputDir[10:]
 print 'Starting submission'
 count=0
 
-signalList = [
+dirList = [
     'TprimeTprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
@@ -42,57 +42,6 @@ signalList = [
     'TprimeTprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1800_TuneCP5_13TeV-madgraph-pythia8'
-    ]
-
-signalOutList = ['BWBW','TZBW','THBW','TZTH','TZTZ','THTH']
-
-for sample in signalList:
-    rootfiles = EOSlist_root_files(inputDir+sample)
-    relPath = sample        
-    for outlabel in signalOutList:
-        os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+sample+'_'+outlabel)
-        os.system('mkdir -p '+condorDir+sample+'_'+outlabel)
-
-        tmpcount = 0
-        for i in range(0,len(rootfiles),20):            
-            rawname = relPath
-            count+=1
-            tmpcount += 1
-
-            idlist = (rootfiles[i].split('.')[0]).split('_')[-1]+' '
-            for j in range(i+1,i+20):
-                if j >= len(rootfiles): continue
-                idlist += (rootfiles[j].split('.')[0]).split('_')[-1]+' '
-            idlist = idlist.strip()
-            print idlist
-
-            dict={'RUNDIR':runDir, 'POST':runDirPost, 'RELPATH':relPath, 'LABEL':outlabel, 'CONDORDIR':condorDir, 'INPUTDIR':inDir, 'FILENAME':rawname, 'CMSSWBASE':relbase, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount}
-            jdfName=condorDir+'/%(RELPATH)s_%(LABEL)s/%(FILENAME)s_%(LABEL)s_%(ID)s.job'%dict
-            print jdfName
-            jdf=open(jdfName,'w')
-            jdf.write(
-                """use_x509userproxy = true
-universe = vanilla
-Executable = %(RUNDIR)s/makeStep1.sh
-Should_Transfer_Files = YES
-WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = %(RUNDIR)s/makeStep1.C, %(RUNDIR)s/%(POST)s/step1.cc, %(RUNDIR)s/%(POST)s/step1.h, %(RUNDIR)s/%(POST)s/step1_cc.d, %(RUNDIR)s/%(POST)s/step1_cc.so
-Output = %(FILENAME)s_%(LABEL)s_%(ID)s.out
-Error = %(FILENAME)s_%(LABEL)s_%(ID)s.err
-Log = %(FILENAME)s_%(LABEL)s_%(ID)s.log
-Notification = Never
-Arguments = "%(FILENAME)s %(FILENAME)s_%(LABEL)s %(INPUTDIR)s/%(RELPATH)s %(OUTPUTDIR)s/%(RELPATH)s_%(LABEL)s '%(LIST)s'"
-
-Queue 1"""%dict)
-            jdf.close()
-            os.chdir('%s/%s_%s'%(condorDir,relPath,outlabel))
-            os.system('condor_submit %(FILENAME)s_%(LABEL)s_%(ID)s.job'%dict)
-            os.system('sleep 0.5')                                
-            os.chdir('%s'%(runDir))
-            print count, "jobs submitted!!!"
-
-
-signalList = [
     'BprimeBprime_M-900_TuneCUETP8M1_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1100_TuneCUETP8M1_13TeV-madgraph-pythia8',
@@ -103,56 +52,9 @@ signalList = [
     'BprimeBprime_M-1600_TuneCUETP8M1_13TeV-madgraph-pythia8',
     #'BprimeBprime_M-1700_TuneCUETP8M1_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1800_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    ]
-
-signalOutList = ['TWTW','BZTW','BHTW','BZBH','BZBZ','BHBH']
-
-for sample in signalList:
-    rootfiles = EOSlist_root_files(inputDir+sample)
-    relPath = sample        
-    for outlabel in signalOutList:
-        os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+sample+'_'+outlabel)
-        os.system('mkdir -p '+condorDir+sample+'_'+outlabel)
-
-        tmpcount = 0
-        for i in range(0,len(rootfiles),20):            
-            rawname = relPath
-            count+=1
-            tmpcount += 1
-
-            idlist = (rootfiles[i].split('.')[0]).split('_')[-1]+' '
-            for j in range(i+1,i+20):
-                if j >= len(rootfiles): continue
-                idlist += (rootfiles[j].split('.')[0]).split('_')[-1]+' '
-            idlist = idlist.strip()
-            print idlist
-
-            dict={'RUNDIR':runDir, 'POST':runDirPost, 'RELPATH':relPath, 'LABEL':outlabel, 'CONDORDIR':condorDir, 'INPUTDIR':inDir, 'FILENAME':rawname, 'CMSSWBASE':relbase, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount}
-            jdfName=condorDir+'/%(RELPATH)s_%(LABEL)s/%(FILENAME)s_%(LABEL)s_%(ID)s.job'%dict
-            print jdfName
-            jdf=open(jdfName,'w')
-            jdf.write(
-                """use_x509userproxy = true
-universe = vanilla
-Executable = %(RUNDIR)s/makeStep1.sh
-Should_Transfer_Files = YES
-WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = %(RUNDIR)s/makeStep1.C, %(RUNDIR)s/%(POST)s/step1.cc, %(RUNDIR)s/%(POST)s/step1.h, %(RUNDIR)s/%(POST)s/step1_cc.d, %(RUNDIR)s/%(POST)s/step1_cc.so
-Output = %(FILENAME)s_%(LABEL)s_%(ID)s.out
-Error = %(FILENAME)s_%(LABEL)s_%(ID)s.err
-Log = %(FILENAME)s_%(LABEL)s_%(ID)s.log
-Notification = Never
-Arguments = "%(FILENAME)s %(FILENAME)s_%(LABEL)s %(INPUTDIR)s/%(RELPATH)s %(OUTPUTDIR)s/%(RELPATH)s_%(LABEL)s '%(LIST)s'"
-
-Queue 1"""%dict)
-            jdf.close()
-            os.chdir('%s/%s_%s'%(condorDir,relPath,outlabel))
-            os.system('condor_submit %(FILENAME)s_%(LABEL)s_%(ID)s.job'%dict)
-            os.system('sleep 0.5')                                
-            os.chdir('%s'%(runDir))
-            print count, "jobs submitted!!!"
-
-dirList = [
+    'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8'
     'WW_TuneCP5_13TeV-pythia8',
     'WZ_TuneCP5_13TeV-pythia8',
     'ZZ_TuneCP5_13TeV-pythia8',
@@ -181,108 +83,97 @@ dirList = [
     'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
     'TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TT_Mtt-700to1000_TuneCP5_13TeV-powheg-pythia8',
+    'SingleElectron_Mar2018'
+    'SingleMuon_Mar2018'
 ]
-if shift == 'nominal':
-    dirList.append('SingleElectron_Mar2018')
-    dirList.append('SingleMuon_Mar2018')
+
 
 for sample in dirList:
-    os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+sample)
-    os.system('mkdir -p '+condorDir+sample)
-    relPath = sample
+    print "------------ Sample:",sample,"---------------"
+    outList = ['none']
+    if 'Tprime' in sample: outList = ['BWBW','TZBW','THBW','TZTH','TZTZ','THTH']
+    elif 'Bprime' in sample: outList = ['TWTW','BZTW','BHTW','BZBH','BZBZ','BHBH']
+    elif 'TTTo' in sample: outList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
 
-    rootfiles = EOSlist_root_files(inputDir+sample)
+    isData = False
+    if 'Single' in sample or 'EGamma' in sample: isData = True
+
     tmpcount = 0
-    for i in range(0,len(rootfiles),20):            
-        rawname = relPath
-        count+=1
-        tmpcount += 1
+    for outlabel in outList:
 
-        idlist = (rootfiles[i].split('.')[0]).split('_')[-1]+' '
-        for j in range(i+1,i+20):
-            if j >= len(rootfiles): continue
-            idlist += (rootfiles[j].split('.')[0]).split('_')[-1]+' '
-        idlist = idlist.strip()
-        print idlist
+        outsample = sample+'_'+outlabel
+        if outlabel == 'none': outsample = sample
 
-        dict={'RUNDIR':runDir, 'POST':runDirPost, 'RELPATH':relPath, 'LABEL':outlabel, 'CONDORDIR':condorDir, 'INPUTDIR':inDir, 'FILENAME':rawname, 'CMSSWBASE':relbase, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount}
-        jdfName=condorDir+'/%(RELPATH)s/%(FILENAME)s_%(ID)s.job'%dict
-        print jdfName
-        jdf=open(jdfName,'w')
-        jdf.write(
-            """use_x509userproxy = true
+        os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+outsample)
+        os.system('mkdir -p '+condorDir+outsample)
+
+        runlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/')
+        print "Running",len(runlist),"crab directories"
+
+        for run in runlist:
+            numlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/')
+            
+            for num in numlist:
+                numpath = inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/'+num
+                pathsuffix = numpath.split('/')[-3:]
+                pathsuffix = '/'.join(pathsuffix)
+                print "Running path",pathsuffix
+
+                rootfiles = EOSlist_root_files(numpath)            
+
+                for i in range(0,len(rootfiles),10):
+                    count+=1
+                    tmpcount += 1
+
+                    segment1 = (rootfiles[i].split('.')[0]).split('_')[-1]
+                    segment2 = (rootfiles[i].split('.')[0]).split('_')[-2]
+
+                    if isData:    # need unique IDs across eras
+                        idlist = segment2[-1]+segment1+' '
+                        for j in range(i+1,i+10):
+                            if j >= len(rootfiles): continue
+                            idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
+                            idlist += idparts[0][-1]+idparts[1]+' '
+                    elif 'ext' in segment2:     # need unique IDs across extensions
+                        idlist = segment2[-4:]+segment1+' '
+                        for j in range(i+1,i+10):
+                            if j >= len(rootfiles): continue
+                            idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
+                            idlist = idparts[0][-4:]+idparts[1]+' '
+                    else:
+                        idlist = segment1+' '
+                        for j in range(i+1,i+10):
+                            if j >= len(rootfiles): continue
+                            idlist += (rootfiles[j].split('.')[0]).split('_')[-1]+' '
+                        
+                    idlist = idlist.strip()
+                    print "Running IDs",idlist
+                
+                    dict={'RUNDIR':runDir, 'POST':runDirPost, 'INPATHSUFFIX':pathsuffix, 'CONDORDIR':condorDir, 'INPUTDIR':inDir, 'FILENAME':sample, 'OUTFILENAME':outsample, 'CMSSWBASE':relbase, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount}
+                    jdfName=condorDir+'/%(FILENAME)s/%(OUTFILENAME)s_%(ID)s.job'%dict
+                    print jdfName
+                    jdf=open(jdfName,'w')
+                    jdf.write(
+                        """use_x509userproxy = true
 universe = vanilla
-Executable = %(RUNDIR)s/makeStep1.sh
+Executable = %(RUNDIR)s/makeStep1Dnn.sh
 Should_Transfer_Files = YES
 WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = %(RUNDIR)s/makeStep1.C, %(RUNDIR)s/%(POST)s/step1.cc, %(RUNDIR)s/%(POST)s/step1.h, %(RUNDIR)s/%(POST)s/step1_cc.d, %(RUNDIR)s/%(POST)s/step1_cc.so
-Output = %(FILENAME)s_%(ID)s.out
-Error = %(FILENAME)s_%(ID)s.err
-Log = %(FILENAME)s_%(ID)s.log
+Transfer_Input_Files = /uscms_data/d3/jmanagan/slimmerdnn.tar
+Output = %(OUTFILENAME)s_%(ID)s.out
+Error = %(OUTFILENAME)s_%(ID)s.err
+Log = %(OUTFILENAME)s_%(ID)s.log
 Notification = Never
-Arguments = "%(FILENAME)s %(FILENAME)s %(INPUTDIR)s/%(RELPATH)s %(OUTPUTDIR)s/%(RELPATH)s '%(LIST)s'"
+Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(FILENAME)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s'"
 
 Queue 1"""%dict)
-        jdf.close()
-        os.chdir('%s/%s'%(condorDir,relPath))
-        os.system('condor_submit %(FILENAME)s_%(ID)s.job'%dict)
-        os.system('sleep 0.5')                                
-        os.chdir('%s'%(runDir))
-        print count, "jobs submitted!!!"
-
-dirList = [
-    'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8'
-    ]
-TTOutList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
-
-for sample in dirList:
-    rootfiles = EOSlist_root_files(inputDir+sample)
-    relPath = sample        
-    for outlabel in TTOutList:
-        os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+sample+'_'+outlabel)
-        os.system('mkdir -p '+condorDir+sample+'_'+outlabel)
-
-        tmpcount = 0
-        for i in range(0,len(rootfiles),20):            
-            rawname = relPath
-            count+=1
-            tmpcount += 1
-
-            idlist = (rootfiles[i].split('.')[0]).split('_')[-1]+' '
-            for j in range(i+1,i+20):
-                if j >= len(rootfiles): continue
-                idlist += (rootfiles[j].split('.')[0]).split('_')[-1]+' '
-            idlist = idlist.strip()
-            print idlist
-
-            dict={'RUNDIR':runDir, 'POST':runDirPost, 'RELPATH':relPath, 'LABEL':outlabel, 'CONDORDIR':condorDir, 'INPUTDIR':inDir, 'FILENAME':rawname, 'CMSSWBASE':relbase, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount}
-            jdfName=condorDir+'/%(RELPATH)s_%(LABEL)s/%(FILENAME)s_%(LABEL)s_%(ID)s.job'%dict
-            print jdfName
-            jdf=open(jdfName,'w')
-            jdf.write(
-                """use_x509userproxy = true
-universe = vanilla
-Executable = %(RUNDIR)s/makeStep1.sh
-Should_Transfer_Files = YES
-WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = %(RUNDIR)s/makeStep1.C, %(RUNDIR)s/%(POST)s/step1.cc, %(RUNDIR)s/%(POST)s/step1.h, %(RUNDIR)s/%(POST)s/step1_cc.d, %(RUNDIR)s/%(POST)s/step1_cc.so
-Output = %(FILENAME)s_%(LABEL)s_%(ID)s.out
-Error = %(FILENAME)s_%(LABEL)s_%(ID)s.err
-Log = %(FILENAME)s_%(LABEL)s_%(ID)s.log
-Notification = Never
-Arguments = "%(FILENAME)s %(FILENAME)s_%(LABEL)s %(INPUTDIR)s/%(RELPATH)s %(OUTPUTDIR)s/%(RELPATH)s_%(LABEL)s '%(LIST)s'"
-
-Queue 1"""%dict)
-            jdf.close()
-            os.chdir('%s/%s_%s'%(condorDir,relPath,outlabel))
-            os.system('condor_submit %(FILENAME)s_%(LABEL)s_%(ID)s.job'%dict)
-            os.system('sleep 0.5')                                
-            os.chdir('%s'%(runDir))
-            print count, "jobs submitted!!!"
-
-
+                    jdf.close()
+                    os.chdir('%s/%s'%(condorDir,outsample))
+                    os.system('condor_submit %(OUTFILENAME)s_%(ID)s.job'%dict)
+                    os.system('sleep 0.5')                                
+                    os.chdir('%s'%(runDir))
+                    print count, "jobs submitted!!!"
+        
 print("--- %s minutes ---" % (round(time.time() - start_time, 2)/60))
 
 
