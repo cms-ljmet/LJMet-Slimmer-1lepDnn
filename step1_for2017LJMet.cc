@@ -711,7 +711,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (lepeta < 1.442) EGammaGsfSF = 0.985;
 	    else if (lepeta < 1.566) EGammaGsfSF = 1.010;
 	    else EGammaGsfSF = 0.990; }
-
           //Scale Factor 2: https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2017_ElectronMVA90noiso_2D.pdf
 	  if (leppt < 20) {
 	    if (lepeta < -2.0) lepIdSF = 0.943;
@@ -779,6 +778,49 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (lepeta < 1.566) lepIdSF = 1.000;
 	    else if (lepeta < 2.0) lepIdSF = 0.949;
 	    else lepIdSF = 1.057; }
+	  // mini isolation scale factors:  https://indico.cern.ch/event/820185/contributions/3427809/attachments/1845276/3027274/quick_update.pdf
+	  if (leppt < 30){
+            if (fabs(lepeta) < 0.8) isoSF = 0.99784;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.00109;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.02922;
+            else if (fabs(lepeta) < 2) isoSF = 0.99356;
+            else isoSF = 0.99678;}
+	  else if (leppt < 40){
+            if (fabs(lepeta) < 0.8) isoSF = 0.99691;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.99896;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.01636;
+            else if (fabs(lepeta) < 2) isoSF = 0.99690;
+            else isoSF = 0.99483;}
+	  else if (leppt < 50){
+            if (fabs(lepeta) < 0.8) isoSF = 0.99899;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.99797;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.00763;
+            else if (fabs(lepeta) < 2) isoSF = 0.99797;
+            else isoSF = 0.99593;}
+	  else if (leppt < 60){
+            if (fabs(lepeta) < 0.8) isoSF = 0.99899;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.99899;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.02320;
+            else if (fabs(lepeta) < 2) isoSF = 0.99899;
+            else isoSF = 1.00000;}
+	  else if (leppt < 100){
+            if (fabs(lepeta) < 0.8) isoSF = 1.00000;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.00000;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.03027;
+            else if (fabs(lepeta) < 2) isoSF = 1.00201;
+            else isoSF = 1.00000;}
+	  else if (leppt < 200){
+            if (fabs(lepeta) < 0.8) isoSF = 1.00201;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.00201;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.01139;
+            else if (fabs(lepeta) < 2) isoSF = 1.00100;
+            else isoSF = 1.00100;}
+	  else{
+            if (fabs(lepeta) < 0.8) isoSF = 1.00100;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.00000;
+            else if (fabs(lepeta) < 1.566) isoSF = 0.99598;
+            else if (fabs(lepeta) < 2) isoSF = 1.00100;
+            else isoSF = 0.99900;}
 	}
 	if(isMuon){
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
@@ -795,37 +837,81 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
+	  // MiniIsoTight/Tight
+	  // https://wiwong.web.cern.ch/wiwong/Muon_Eff_Plots/2017_Efficiency20_miniTight_Tight_abseta/20_miniIsoTight_SF.json
+	  if(leppt < 30){
+            if(fabs(lepeta) < 0.9) isoSF= 1.027698;
+            else if(fabs(lepeta) <  1.2) isoSF= 1.026264;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.018457;
+            else if(fabs(lepeta) <  2.4) isoSF= 1.008373;
+          }
+          else if(leppt < 40){
+            if(fabs(lepeta) < 0.9) isoSF= 1.013940;
+            else if(fabs(lepeta) <  1.2) isoSF= 1.013229;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.009491;
+            else if(fabs(lepeta) <  2.4) isoSF= 1.004073;
+          }
+          else if(leppt < 50){
+            if(fabs(lepeta) < 0.9) isoSF= 1.004970;
+            else if(fabs(lepeta) <  1.2) isoSF= 1.004221;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.003037;
+            else if(fabs(lepeta) <  2.4) isoSF= 1.001450;
+          }
+          else if(leppt < 60){
+            if(fabs(lepeta) < 0.9) isoSF= 1.002595;
+            else if(fabs(lepeta) <  1.2) isoSF= 1.002115;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.001620;
+            else if(fabs(lepeta) <  2.4) isoSF= 1.001054;
+          }
+          else if(leppt < 120){
+            if(fabs(lepeta) < 0.9) isoSF= 1.000577;
+            else if(fabs(lepeta) <  1.2) isoSF= 1.000272;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.001289;
+            else if(fabs(lepeta) <  2.4) isoSF= 1.001343;
+          }
+	  else{
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999416;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.998657;
+            else if(fabs(lepeta) <  2.1) isoSF= 0.998686;
+            else if(fabs(lepeta) <  2.4) isoSF= 0.996060;
+	  }
+	  
 	  // Cut based tight id
-	  if (fabs(lepeta) < 2.10 && fabs(lepeta) > 1.20) {
-	    if (leppt < 25.0 && leppt > 20.0) lepIdSF = 0.9924252719877384;
-	    else if (leppt < 60.0 && leppt > 50.0) lepIdSF = 0.9906364222943529;
-	    else if (leppt < 30.0 && leppt > 25.0) lepIdSF = 0.9890884461284933;
-	    else if (leppt < 120.0 && leppt > 60.0) lepIdSF = 0.9920464322143979;
-	    else if (leppt < 40.0 && leppt > 30.0) lepIdSF = 0.9946469069883841;
-	    else if (leppt < 50.0 && leppt > 40.0) lepIdSF = 0.9926528825155183; }
-	  else if (fabs(lepeta) < 2.40 && leppt > 2.10) {
-	    if (leppt < 25.0 && leppt > 20.0) lepIdSF = 0.9758095839531763;
-	    else if (leppt < 60.0 && leppt > 50.0) lepIdSF = 0.9673568416097894;
-	    else if (leppt < 30.0 && leppt > 25.0) lepIdSF = 0.9745153594179884;
-	    else if (leppt < 120.0 && leppt > 60.0) lepIdSF = 0.9766311856731202;
-	    else if (leppt < 40.0 && leppt > 30.0) lepIdSF = 0.9787410500158746;
-	    else if (leppt < 50.0 && leppt > 40.0) lepIdSF = 0.978189122919501; }
-	  else if (fabs(lepeta) < 1.20 && fabs(lepeta) > 0.90) {
-	    if (leppt < 25.0 && leppt > 20.0) lepIdSF = 0.9927389275515244;
-	    else if (leppt < 60.0 && leppt > 50.0) lepIdSF = 0.9839056384760008;
-	    else if (leppt < 30.0 && leppt > 25.0) lepIdSF = 0.985063939762512;
-	    else if (leppt < 120.0 && leppt > 60.0) lepIdSF = 0.984060403143468;
-	    else if (leppt < 40.0 && leppt > 30.0) lepIdSF = 0.9865359464182247;
-	    else if (leppt < 50.0 && leppt > 40.0) lepIdSF = 0.984913093101493; }
-	  else if (fabs(lepeta) < 0.90 && fabs(lepeta) > 0.0) {
-	    if (leppt < 25.0 && leppt > 20.0) lepIdSF = 0.9910777627756951;
-	    else if (leppt < 60.0 && leppt > 50.0) lepIdSF = 0.9855545160334763;
-	    else if (leppt < 30.0 && leppt > 25.0) lepIdSF = 0.987410468262084;
-	    else if (leppt < 120.0 && leppt > 60.0) lepIdSF = 0.9898057377093389;
-	    else if (leppt < 40.0 && leppt > 30.0) lepIdSF = 0.9907753279135898;
-	    else if (leppt < 50.0 && leppt > 40.0) lepIdSF = 0.9892483588952047; }
+	  // Scale Factor 3: https://twiki.cern.ch/twiki/pub/CMS/MuonReferenceEffs2017/RunBCDEF_SF_ID.json
+	  if (fabs(lepeta) < 0.90) {
+	    if (leppt < 25.0) lepIdSF = 0.9910777627756951;
+	    else if (leppt < 30.0) lepIdSF = 0.987410468262084;
+	    else if (leppt < 40.0) lepIdSF = 0.9907753279135898;
+	    else if (leppt < 50.0) lepIdSF = 0.9892483588952047;
+	    else if (leppt < 60.0) lepIdSF = 0.9855545160334763;
+	    else (leppt < 120.0) lepIdSF = 0.9898057377093389; 
+	  }
+	  else if (fabs(lepeta) < 1.20) {
+	    if (leppt < 25.0) lepIdSF = 0.9927389275515244;
+	    else if (leppt < 30.0) lepIdSF = 0.985063939762512;
+	    else if (leppt < 40.0) lepIdSF = 0.9865359464182247;
+	    else if (leppt < 50.0) lepIdSF = 0.984913093101493;
+	    else if (leppt < 60.0) lepIdSF = 0.9839056384760008;
+	    else (leppt < 120.0) lepIdSF = 0.984060403143468; 
+	  }  
+	  else if (fabs(lepeta) < 2.10) {
+	    if (leppt < 25.0) lepIdSF = 0.9924252719877384;
+	    else if (leppt < 30.0) lepIdSF = 0.9890884461284933;
+	    else if (leppt < 40.0) lepIdSF = 0.9946469069883841;
+	    else if (leppt < 50.0) lepIdSF = 0.9926528825155183;
+	    else if (leppt < 60.0) lepIdSF = 0.9906364222943529;
+	    else (leppt < 120.0) lepIdSF = 0.9920464322143979; 
+	  }
+	  else {
+	    if (leppt < 25.0) lepIdSF = 0.9758095839531763;
+	    else if (leppt < 30.0) lepIdSF = 0.9745153594179884;
+	    else if (leppt < 40.0) lepIdSF = 0.9787410500158746;
+	    else if (leppt < 50.0) lepIdSF = 0.978189122919501;
+	    else if (leppt < 60.0) lepIdSF = 0.9673568416097894;
+	    else (leppt < 120.0) lepIdSF = 0.9766311856731202; 
+	  }
+	  DataPastTrigger = 1;
 	}
-	DataPastTrigger = 1;
       }
       else{ //Data triggers check
 	if(isElectron){
