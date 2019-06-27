@@ -32,15 +32,15 @@ XRDpath=root://cmseos.fnal.gov/$inputDir
 echo "Running step1 over list: ${idlist}"
 for iFile in $idlist; do
     inFile=${iFile}
-    if [[ iFile == ext* ]] ;
+    if [[ $iFile == ext* ]] ;
     then
 	inFile=${iFile:4}
-    elif [[ iFile == [ABCDEF]* ]] ;
+    elif [[ $iFile == [ABCDEF]* ]] ;
     then
 	inFile=${iFile:1}
     fi
 
-    echo "creating ${outfilename}_${iFile}.root"
+    echo "creating ${outfilename}_${iFile}.root by reading ${infilename}_${inFile}"
     root -l -b -q runStep1Dnn.C\(\"$macroDir\",\"$XRDpath/${infilename}_${inFile}.root\",\"${outfilename}_${iFile}.root\",\"${outputDir}\"\)
 done
 

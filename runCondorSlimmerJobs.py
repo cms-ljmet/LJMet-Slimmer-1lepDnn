@@ -31,7 +31,7 @@ os.chdir(relbase)
 # YOU NEED TO EXCLUDE ANYTHING ELSE THAT MIGHT LIVE IN THE SAME CMSSW RELEASE, MY LIST IS SUPER LONG
 print 'tar --exclude="src/.git" --exclude="tmp/" --exclude="src/PhysicsTools" --exclude="src/FWLJMET" --exclude="src/RecoEgamma" --exclude="src/RecoMET" --exclude="src/TopTagger" --exclude="src/RecoJets" --exclude=".SCRAM" --exclude="src/singleLepAnalyzer" --exclude="src/LJMet-Slimmer-1lepDnn/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/*.png" --exclude="src/LJMet-Slimmer-1lepDnn/*/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/.git" -zcf '+tarfile+' ./*'
 os.system('tar --exclude="src/.git" --exclude="tmp/" --exclude="src/PhysicsTools" --exclude="src/FWLJMET" --exclude="src/RecoEgamma" --exclude="src/RecoMET" --exclude="src/TopTagger" --exclude="src/RecoJets" --exclude=".SCRAM" --exclude="src/singleLepAnalyzer" --exclude="src/LJMet-Slimmer-1lepDnn/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/*.png" --exclude="src/LJMet-Slimmer-1lepDnn/*/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/.git" -zcf '+tarfile+' ./*')
-os.chdir(thisDir)
+os.chdir(runDir)
 
 print 'Starting submission'
 count=0
@@ -140,7 +140,7 @@ for sample in dirList:
                     count+=1
                     tmpcount += 1
 
-                    if tmpcount > 10: continue
+                    if tmpcount > 1: continue
 
                     segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1
                     segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C

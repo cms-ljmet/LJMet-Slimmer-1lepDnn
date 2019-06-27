@@ -12,7 +12,7 @@ void makeStep1Dnn(TString inputFile, TString outputFile, TString outputDir){
   if(isData) t.Loop("ljmet","ljmet");
   else{
     t.saveHistograms();
-    vector<TString> shifts = {"ljmet","ljmet_JECup","ljmet_JECdown","ljmet_JETup","ljmet_JERdown"};
+    vector<TString> shifts = {"ljmet","ljmet_JECup","ljmet_JECdown","ljmet_JERup","ljmet_JERdown"};
     for(size_t i = 0; i < shifts.size(); i++){
       cout << "\nRunning shift " << shifts[i] << endl;
       t.Loop(shifts[i],shifts[i]);
