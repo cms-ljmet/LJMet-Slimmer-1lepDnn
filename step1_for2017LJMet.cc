@@ -48,6 +48,11 @@ void step1::saveHistograms()
   wgthist->Write();
 }
 
+TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
+TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
+TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
+TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
+
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
@@ -59,14 +64,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
   // More histograms and load input tree
   // ----------------------------------------------------------------------------
   
-  TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
-  TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
-  TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
-  TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
-  
-  std::map<std::string,double> myMap;
-  std::map<std::string,double> varMap;
-  
   inputTree = (TTree*)inputFile->Get(inTreeName+"/"+inTreeName);
   if (inputTree == 0) return;
   if(inputTree->GetEntries() == 0){
@@ -75,6 +72,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
   }
 
   Init(inputTree);
+
+  std::map<std::string,double> myMap;
+  std::map<std::string,double> varMap;
   
   // ----------------------------------------------------------------------------
   // Turn on input tree branches
@@ -884,7 +884,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (leppt < 40.0) lepIdSF = 0.9907753279135898;
 	    else if (leppt < 50.0) lepIdSF = 0.9892483588952047;
 	    else if (leppt < 60.0) lepIdSF = 0.9855545160334763;
-	    else (leppt < 120.0) lepIdSF = 0.9898057377093389; 
+	    else lepIdSF = 0.9898057377093389; 
 	  }
 	  else if (fabs(lepeta) < 1.20) {
 	    if (leppt < 25.0) lepIdSF = 0.9927389275515244;
@@ -892,7 +892,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (leppt < 40.0) lepIdSF = 0.9865359464182247;
 	    else if (leppt < 50.0) lepIdSF = 0.984913093101493;
 	    else if (leppt < 60.0) lepIdSF = 0.9839056384760008;
-	    else (leppt < 120.0) lepIdSF = 0.984060403143468; 
+	    else lepIdSF = 0.984060403143468; 
 	  }  
 	  else if (fabs(lepeta) < 2.10) {
 	    if (leppt < 25.0) lepIdSF = 0.9924252719877384;
@@ -900,7 +900,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (leppt < 40.0) lepIdSF = 0.9946469069883841;
 	    else if (leppt < 50.0) lepIdSF = 0.9926528825155183;
 	    else if (leppt < 60.0) lepIdSF = 0.9906364222943529;
-	    else (leppt < 120.0) lepIdSF = 0.9920464322143979; 
+	    else lepIdSF = 0.9920464322143979; 
 	  }
 	  else {
 	    if (leppt < 25.0) lepIdSF = 0.9758095839531763;
@@ -908,7 +908,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (leppt < 40.0) lepIdSF = 0.9787410500158746;
 	    else if (leppt < 50.0) lepIdSF = 0.978189122919501;
 	    else if (leppt < 60.0) lepIdSF = 0.9673568416097894;
-	    else (leppt < 120.0) lepIdSF = 0.9766311856731202; 
+	    else lepIdSF = 0.9766311856731202; 
 	  }
 	  DataPastTrigger = 1;
 	}
@@ -1147,7 +1147,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
 
-      if(isSig){
+      if(isSig && inTreeName.EqualTo("ljmet")){
 	if(confusionTruth < 6.0){
 	  TTconfusionD->Fill(0.5,confusionTruth);
 	  TTconfusionD->Fill(1.5,confusionTruth);
@@ -2250,7 +2250,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	}
 
 	// Numerator of confusion matrix
-	if(isSig){
+	if(isSig && inTreeName.EqualTo("ljmet")){
 	  if(confusionTruth < 6.0){
 	    if(taggedBWBW_DeepAK8) TTconfusionN->Fill(0.5,confusionTruth);
 	    else if(taggedTZBW_DeepAK8) TTconfusionN->Fill(1.5,confusionTruth);
@@ -2375,7 +2375,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    std::cout<<"Npassed_ALL            = "<<npass_all<<" / "<<nentries<<std::endl;
    std::cout<<"Npassed_ThreeJets      = "<<npass_ThreeJets<<" / "<<nentries<<std::endl;
    
-   if(isSig){
+   if(isSig && inTreeName.EqualTo("ljmet")){
      TTconfusionD->Write();
      TTconfusionN->Write();
      BBconfusionD->Write();
