@@ -1,24 +1,24 @@
 #!/bin/bash
 
 hostname
+date
 
 infilename=${1}
 outfilename=${2}
 inputDir=${3}
 outputDir=${4}
 idlist=${5}
-
 scratch=${PWD}
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-scramv1 project CMSSW CMSSW_9_4_6_patch1
-cd CMSSW_9_4_6_patch1
+scramv1 project CMSSW CMSSW_10_2_10
+cd CMSSW_10_2_10
 
 echo "unpacking tar"
 tar -xf ${scratch}/slimmerdnn.tar
 rm ${scratch}/slimmerdnn.tar
 
-cd src/LJMet-Slimmer/DnnInStep1/
+cd src/LJMet-Slimmer-1lepDnn/
 
 echo "cmsenv"
 eval `scramv1 runtime -sh`
@@ -31,8 +31,17 @@ XRDpath=root://cmseos.fnal.gov/$inputDir
 
 echo "Running step1 over list: ${idlist}"
 for iFile in $idlist; do
+    inFile=${iFile}
+    if [[ iFile == ext* ]] ;
+    then
+	inFile=${iFile:4}
+    elif [[ iFile == [ABCDEF]* ]] ;
+    then
+	inFile=${iFile:1}
+    fi
+
     echo "creating ${outfilename}_${iFile}.root"
-    root -l -b -q runStep1Dnn.C\(\"$macroDir\",\"$XRDpath/${infilename}_${iFile}.root\",\"${outfilename}_${iFile}.root\",\"${outputDir}\"\)
+    root -l -b -q runStep1Dnn.C\(\"$macroDir\",\"$XRDpath/${infilename}_${inFile}.root\",\"${outfilename}_${iFile}.root\",\"${outputDir}\"\)
 done
 
 rm *.json
