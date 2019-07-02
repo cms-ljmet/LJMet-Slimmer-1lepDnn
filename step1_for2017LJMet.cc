@@ -664,7 +664,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_MultiLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	    // if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
@@ -859,6 +859,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if (leppt < 200) {trigSFB = 0.828; trigSFCDEF = 1.041}
             else {trigSFB = 0.562; trigSFCDEF = 0.814}
 	  }
+	  triggerSF = (4.823*trigSFB + 36.734*trigSFCDEF)/41.557;
 	}
 	if(isMuon){
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
@@ -869,7 +870,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORc = "TkMu50";
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_MultiLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	    // if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_e) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
@@ -948,12 +949,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (leppt < 60.0) lepIdSF = 0.9673568416097894;
 	    else lepIdSF = 0.9766311856731202; 
 	  }
-	  DataPastTrigger = 1;
-	}
-
-        // Trigger SF Muon 
-        float triggerSFB = 1.0;
-        float triggerSFCDEF = 1.0; 
+	  float triggerSFB = 1.0;
+          float triggerSFCDEF = 1.0;
         if (fabs(lepeta) < 0.90){
           if (leppt < 50.0){
             triggerSFB = 1.0;
@@ -967,13 +964,13 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             triggerSFB = 0.978;
             triggerSFCDEF = 1.026;
           }
-          else if (leppt < 70.0){ 
+          else if (leppt < 70.0){
             triggerSFB = 1.003;
             triggerSFCDEF = 1.021;
           }
           else if (leppt < 100){
             triggerSFB = 0.990;
-            triggerSFCDEF = 1.013;  
+            triggerSFCDEF = 1.013;
           }
           else if (leppt < 200){
             triggerSFB = 0.979;
@@ -1072,10 +1069,15 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           else{
             triggerSFB = 0.835;
             triggerSFCDEF = 1.136;
-        }        
-      }
+          }
+	}
+	triggerSF = (4.823*triggerSFB+36.734*triggerSFCDEF)/41.557;
 
-      triggerSF = (4.823*triggerSFB+36.734*triggerSFCDEF)/41.557;
+	  DataPastTrigger = 1;
+	}
+
+        // Trigger SF Muon 
+      }
       
       else{ //Data triggers check
 	if(isElectron){
@@ -1087,7 +1089,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_MultiLepCalc->size(); itrig++){
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    // if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
@@ -1106,7 +1108,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORc = "TkMu50";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersMu_MultiLepCalc->size(); itrig++){
 	    if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	    // if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_e) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
