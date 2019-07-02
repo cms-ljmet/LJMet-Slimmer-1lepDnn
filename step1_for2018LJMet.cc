@@ -57,7 +57,7 @@ void step1::saveHistograms()
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
 
-void step1::Loop(Tstring inTreeName, Tstring outTreeName) 
+void step1::Loop(TString inTreeName, TString outTreeName) 
 {
   
   // ----------------------------------------------------------------------------
