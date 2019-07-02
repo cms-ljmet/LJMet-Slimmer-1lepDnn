@@ -11,16 +11,10 @@ finalStateYear = 'singleLep2017' # or 2018
 relbase = '/uscms_data/d3/jmanagan/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/jmanagan/slimmerdnn.tar'
 inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017_052219/' # or 2018
-outputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
+outputDir='/eos/uscms/store/user/jmanagan/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
 condorDir='/uscms_data/d3/jmanagan/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
 
 runDir=os.getcwd()
-# Can change the file directory if needed
-#if '' not in shift: runDirPost = ''
-#else: runDirPost = shift+'Files'
-runDirPost = ''
-print 'Files from',runDirPost
-
 inDir=inputDir[10:]
 outDir=outputDir[10:]
 
@@ -37,67 +31,66 @@ print 'Starting submission'
 count=0
 
 dirList = [
-    # 'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
-    # 'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
-    # 'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'QCD_HT1000to1500_TuneCP5_13TeV-madgraph-pythia8',
-    # 'QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8',
-    # 'QCD_HT2000toInf_TuneCP5_13TeV-madgraph-pythia8',
-    # 'QCD_HT200to300_TuneCP5_13TeV-madgraph-pythia8',
-    # 'QCD_HT300to500_TuneCP5_13TeV-madgraph-pythia8',
-    # 'QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8',
-    # 'QCD_HT700to1000_TuneCP5_13TeV-madgraph-pythia8',
-    # 'ST_s-channel_antitop_leptonDecays_13TeV-PSweights_powheg-pythia',
-    # 'ST_s-channel_top_leptonDecays_13TeV-PSweights_powheg-pythia',
-    # 'ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'ST_t-channel_top_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'ST_tW_top_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'SingleElectron',
+    'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
+    'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'QCD_HT1000to1500_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT2000toInf_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT200to300_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT300to500_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT700to1000_TuneCP5_13TeV-madgraph-pythia8',
+    'ST_s-channel_antitop_leptonDecays_13TeV-PSweights_powheg-pythia',
+    'ST_s-channel_top_leptonDecays_13TeV-PSweights_powheg-pythia',
+    'ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'ST_t-channel_top_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'ST_tW_top_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'SingleElectron',
     'SingleMuon',
-    # 'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'TTWH_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
-    # 'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
-    # 'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
-    # 'TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    # 'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
+    'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
+    'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
+    'TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TprimeTprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
-    # 'TprimeTprime_M-700_TuneCP5_13TeV-madgraph-pythia8',
-    # 'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
-    # 'WW_TuneCP5_13TeV-pythia8',
-    # 'WZ_TuneCP5_13TeV-pythia8',
-    # 'ZZ_TuneCP5_13TeV-pythia8',
-    # 'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
-    # 'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
+    'TprimeTprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-700_TuneCP5_13TeV-madgraph-pythia8',
+    'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WW_TuneCP5_13TeV-pythia8',
+    'WZ_TuneCP5_13TeV-pythia8',
+    'ZZ_TuneCP5_13TeV-pythia8',
+    'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
+    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
 ]
 
 
@@ -140,10 +133,10 @@ for sample in dirList:
                     count+=1
                     tmpcount += 1
 
-                    if tmpcount > 1: continue
+                    #if tmpcount > 1: continue ## test job
 
-                    segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1
-                    segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C
+                    segment1 = (rootfiles[i].split('.')[0]).split('_')[-1]
+                    segment2 = (rootfiles[i].split('.')[0]).split('_')[-2]
 
                     if isData:    # need unique IDs across eras
                         idlist = segment2[-1]+segment1+' '
@@ -166,7 +159,7 @@ for sample in dirList:
                     idlist = idlist.strip()
                     print "Running IDs",idlist
                 
-                    dict={'RUNDIR':runDir, 'POST':runDirPost, 'SAMPLE':sample, 'INPATHSUFFIX':pathsuffix, 'CONDORDIR':condorDir, 'INPUTDIR':inDir, 'FILENAME':basefilename, 'OUTFILENAME':outsample, 'CMSSWBASE':relbase, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount}
+                    dict={'RUNDIR':runDir, 'SAMPLE':sample, 'INPATHSUFFIX':pathsuffix, 'INPUTDIR':inDir, 'FILENAME':basefilename, 'OUTFILENAME':outsample, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount, 'TARBALL':tarfile}
                     jdfName=condorDir+'/%(OUTFILENAME)s/%(OUTFILENAME)s_%(ID)s.job'%dict
                     print jdfName
                     jdf=open(jdfName,'w')
@@ -176,7 +169,7 @@ universe = vanilla
 Executable = %(RUNDIR)s/makeStep1Dnn.sh
 Should_Transfer_Files = YES
 WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = /uscms_data/d3/jmanagan/slimmerdnn.tar
+Transfer_Input_Files = %(TARBLL)s
 Output = %(OUTFILENAME)s_%(ID)s.out
 Error = %(OUTFILENAME)s_%(ID)s.err
 Log = %(OUTFILENAME)s_%(ID)s.log

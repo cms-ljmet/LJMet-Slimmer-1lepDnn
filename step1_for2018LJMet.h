@@ -1244,6 +1244,8 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
     else if(inputFileName.Contains("_M-1800")) SigMass = 11;
     else SigMass = -1;
   }  
+  else SigMass = -1;
+
   isMadgraphBkg = (inputFileName.Contains("QCD") || inputFileName.Contains("madgraphMLM"));
   isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("ttZ") || inputFileName.Contains("ttW") || inputFileName.Contains("ttH") || inputFileName.Contains("TTTo"));
   isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt") || inputFileName.Contains("TTTo"));
@@ -1257,11 +1259,11 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
   
   std::cout << "output = " << outputDir << "/" << outputFileName << std::endl;
 
-  isBUp = (outputFileName.Contains("BTAGup"));
-  isBDn = (outputFileName.Contains("BTAGdown"));
-  isLUp = (outputFileName.Contains("LTAGup"));
-  isLDn = (outputFileName.Contains("LTAGdown"));
-  isNominal = !(outputDir.Contains("BTAGup") || outputDir.Contains("BTAGdown") || outputDir.Contains("LTAGup") || outputDir.Contains("LTAGdown"));
+  isBUp = false; // these will now get changed in makeStep1Dnn.C
+  isBDn = false;
+  isLUp = false; 
+  isLDn = false;
+  isNominal = true;
   isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
   isTTincMtt0to1000   = outputFileName.Contains("Mtt0to1000");
   isTTincMtt700to1000 = outputFileName.Contains("Mtt700to1000");

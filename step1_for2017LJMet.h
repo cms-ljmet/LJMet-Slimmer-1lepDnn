@@ -1215,6 +1215,8 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
 
+  pileupIndex = -1;
+
   isSig  = (inputFileName.Contains("prime") || inputFileName.Contains("X53") || inputFileName.Contains("ChargedHiggs_Hplus"));
   if(isSig){
     if(inputFileName.Contains("Tprime")) isTpTp = true;
@@ -1235,6 +1237,7 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
     else if(inputFileName.Contains("_M-1800")) {SigMass = 11; pileupIndex = 33;}
     else SigMass = -1;
   }  
+  else SigMass = -1;
 
   isMadgraphBkg = (inputFileName.Contains("QCD") || inputFileName.Contains("madgraphMLM"));
   isTOP = (inputFileName.Contains("Mtt") || inputFileName.Contains("ST") || inputFileName.Contains("ttZ") || inputFileName.Contains("ttW") || inputFileName.Contains("ttH") || inputFileName.Contains("TTTo"));
@@ -1279,11 +1282,11 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
 
   std::cout << "output = " << outputDir << "/" << outputFileName << std::endl;
 
-  isBUp = (outputDir.Contains("BTAGup"));
-  isBDn = (outputDir.Contains("BTAGdown"));
-  isLUp = (outputDir.Contains("LTAGup"));
-  isLDn = (outputDir.Contains("LTAGdown"));
-  isNominal = !(outputDir.Contains("BTAGup") || outputDir.Contains("BTAGdown") || outputDir.Contains("LTAGup") || outputDir.Contains("LTAGdown"));
+  isBUp = false; // these will now get changed in makeStep1Dnn.C
+  isBDn = false;
+  isLUp = false;
+  isLDn = false;
+  isNominal = true;
   isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
   isTTincMtt0to1000   = outputFileName.Contains("Mtt0to1000");
   isTTincMtt700to1000 = outputFileName.Contains("Mtt700to1000");
