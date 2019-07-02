@@ -196,6 +196,7 @@ public :
    Float_t         lepIdSF;
    Float_t         MuTrkSF;
    Float_t         EGammaGsfSF;
+   Float_t         triggerSF;
    Float_t         JetSF_80X;
    Float_t         JetSFup_80X;
    Float_t         JetSFdn_80X;

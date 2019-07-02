@@ -469,7 +469,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
    // basic cuts
    float metCut=50;
-   int   htCut=450;
+   int   htCut=510;
    int   nAK8jetsCut=0;
    float lepPtCut=50;
    float elEtaCut=2.5;
@@ -821,6 +821,43 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if (fabs(lepeta) < 1.566) isoSF = 0.99598;
             else if (fabs(lepeta) < 2) isoSF = 1.00100;
             else isoSF = 0.99900;}
+	  // Trigger Scale Factors, SF2017B_Bkg_LepPtEta_EOR.png & SF2017CDEF_Bkg_LepPtEta_EOR.png
+	  float trigSFB = 1.0;
+	  float trigSFCDEF = 1.0;
+	  if (fabs(lepeta) < 0.8){
+	    if (leppt < 50) {trigSFB = 1.0; trigSFCDEF = 1.0}
+	    else if (leppt < 55) {trigSFB = 0.800; trigSFCDEF = 1.009}
+	    else if (leppt < 60) {trigSFB = 0.797; trigSFCDEF = 1.000}
+	    else if (leppt < 70) {trigSFB = 0.796; trigSFCDEF = 1.003}
+	    else if (leppt < 100) {trigSFB = 0.795; trigSFCDEF = 1.016}
+	    else if (leppt < 200) {trigSFB = 0.780; trigSFCDEF = 1.006}
+	    else {trigSFB = 0.785; trigSFCDEF = 0.988}
+	  }else if (fabs(lepeta) < 1.442){
+            if (leppt < 50) {trigSFB = 1.0; trigSFCDEF = 1.0}
+            else if (leppt < 55) {trigSFB = 0.824; trigSFCDEF = 1.007}
+            else if (leppt < 60) {trigSFB = 0.795; trigSFCDEF = 1.024}
+            else if (leppt < 70) {trigSFB = 0.727; trigSFCDEF = 1.015}
+            else if (leppt < 100) {trigSFB = 0.764; trigSFCDEF = 0.991}
+            else if (leppt < 200) {trigSFB = 0.783; trigSFCDEF = 0.999}
+            else {trigSFB = 0.756; trigSFCDEF = 0.962}
+	  }else if (fabs(lepeta) < 1.566) {trigSFB = 1.0; trigSFCDEF = 1.0}
+	  else if (fabs(lepeta) < 2.0){
+            if (leppt < 50) {trigSFB = 1.0; trigSFCDEF = 1.0}
+            else if (leppt < 55) {trigSFB = 0.764; trigSFCDEF = 0.952}
+            else if (leppt < 60) {trigSFB = 0.685; trigSFCDEF = 0.984}
+            else if (leppt < 70) {trigSFB = 0.764; trigSFCDEF = 0.972}
+            else if (leppt < 100) {trigSFB = 0.780; trigSFCDEF = 0.940}
+            else if (leppt < 200) {trigSFB = 0.693; trigSFCDEF = 0.938}
+            else {trigSFB = 0.562; trigSFCDEF = 0.726}
+	  }else {
+            if (leppt < 50) {trigSFB = 1.0; trigSFCDEF = 1.0}
+            else if (leppt < 55) {trigSFB = 0.713; trigSFCDEF = 1.022}
+            else if (leppt < 60) {trigSFB = 0.773; trigSFCDEF = 1.027}
+            else if (leppt < 70) {trigSFB = 0.670; trigSFCDEF = 1.031}
+            else if (leppt < 100) {trigSFB = 0.868; trigSFCDEF = 1.088}
+            else if (leppt < 200) {trigSFB = 0.828; trigSFCDEF = 1.041}
+            else {trigSFB = 0.562; trigSFCDEF = 0.814}
+	  }
 	}
 	if(isMuon){
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
