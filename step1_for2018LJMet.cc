@@ -48,22 +48,22 @@ void step1::saveHistograms()
   wgthist->Write();
 }
 
+ TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
+ TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
+ TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
+ TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
 
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
 
-void step1::Loop() 
+void step1::Loop(TString inTreeName, TString outTreeName) 
 {
   
   // ----------------------------------------------------------------------------
   // Turn on input tree branches
   // ----------------------------------------------------------------------------
   
-   TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
-   TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
-   TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
-   TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
 
    inputTree = (TTree*)inputFile->Get(inTreeName+"/"+inTreeName);
    if (inputTree == 0) return;
@@ -72,8 +72,9 @@ void step1::Loop()
      return;
    }
 
-  Init(inputTree);
-   
+   Init(inputTree);
+   std::map<std::string,double> myMap;
+   std::map<std::string,double> varMap;
    inputTree->SetBranchStatus("*",0);
 
    //Event info
