@@ -918,7 +918,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
         float triggerSFB = 1.0;
         float triggerSFCDEF = 1.0; 
         if (fabs(lepeta) < 0.90){
-          else if (leppt < 50.0){
+          if (leppt < 50.0){
             triggerSFB = 1.0;
             triggerSFCDEF = 1.027;
           }
@@ -982,7 +982,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             trigger SFB = 1.0;
             triggerSFCDEF = 1.052;
           }
-          if (leppt < 55.0){
+         else if (leppt < 55.0){
             triggerSFB = 0.800;
             triggerSFCDEF = 1.064;
           }
@@ -1008,11 +1008,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }
         }
         else{
-           if (leppt < 50.0){
+          if (leppt < 50.0){
             trigger SFB = 1.0;
             triggerSFCDEF = 1.109;
           }
-          if (leppt < 55.0){
+          else  if (leppt < 55.0){
             triggerSFB = 1.0;
             triggerSFCDEF = 1.061;
           }
