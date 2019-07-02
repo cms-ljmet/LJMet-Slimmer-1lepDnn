@@ -23,7 +23,7 @@ using namespace std;
 // DNN stuff
 // ----------------------------------------------------------------------------
 
-std::string dnnFile = "vlq_mlp_3by11_013019.json";
+std::string dnnFile = "vlq_mlp_3by10_062819.json";
 std::ifstream input_cfg( dnnFile );
 lwt::JSONConfig cfg = lwt::parse_json(input_cfg);
 lwt::LightweightNeuralNetwork* lwtnn = new lwt::LightweightNeuralNetwork(cfg.inputs, cfg.layers, cfg.outputs);
@@ -1475,17 +1475,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	{"AK4HT", -999},
 	{"NJets", -999},
 	{"NJetsAK8", -999},
-	{"deltaRAK8", -999},
-	{"nH_DeepAK8", -999},
-	{"nT_DeepAK8", -999},
 	{"jetPt_1", -999},
 	{"jetPt_2", -999},
 	{"jetPt_3", -999},
-	{"sdMass_1", -999},
-	{"sdMass_2", -999},
-	{"sdMass_3", -999},
-	{"dnnLargest_2", -999},
-	{"dnnLargest_3", -999},
 	{"dnnJ_1", -999},
 	{"dnnJ_2", -999},
 	{"dnnJ_3", -999},
@@ -1526,17 +1518,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  {"AK4HT", AK4HT},
 	  {"NJets", NJets_JetSubCalc},
 	  {"NJetsAK8", NJetsAK8_JetSubCalc},
-	  {"deltaRAK8", minDR_leadAK8otherAK8},
-	  {"nH_DeepAK8", nH_DeepAK8},
-	  {"nT_DeepAK8", nT_DeepAK8},
 	  {"jetPt_1", jetPt_1},
 	  {"jetPt_2", jetPt_2},
 	  {"jetPt_3", jetPt_3},
-	  {"sdMass_1", sdMass_1},
-	  {"sdMass_2", sdMass_2},
-	  {"sdMass_3", sdMass_3},
-	  {"dnnLargest_2", dnnLargest_2},
-	  {"dnnLargest_3", dnnLargest_3},
 	  {"dnnJ_1", dnnJ_1},
 	  {"dnnJ_2", dnnJ_2},
 	  {"dnnJ_3", dnnJ_3},
