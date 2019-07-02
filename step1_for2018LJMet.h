@@ -1196,7 +1196,7 @@ public :
    TBranch        *b_vsSelTriggersEl_MultiLepCalc;   //!
    TBranch        *b_vsSelTriggersMu_MultiLepCalc;   //!
  
-   step1(TString inputFileName, TString outputFileName);
+   step1(TString inputFileName, TString outputFileName, TString outputDir);
    virtual ~step1();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -1218,7 +1218,7 @@ public :
 #endif
 
 #ifdef step1_cxx
-step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inputFile(0), outputFile(0) 
+step1::step1(TString inputFileName, TString outputFileName, TString outputDir) : inputTree(0), inputFile(0), outputFile(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
@@ -1254,12 +1254,14 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
   isMC = !(inputFileName.Contains("Single") || inputFileName.Contains("Data18"));
   isSM = inputFileName.Contains("SingleMuon");
   isSE = (inputFileName.Contains("SingleElectron") || inputFileName.Contains("EGamma"));
+  
+  std::cout << "output = " << outputDir << "/" << outputFileName << std::endl;
 
   isBUp = (outputFileName.Contains("BTAGup"));
   isBDn = (outputFileName.Contains("BTAGdown"));
   isLUp = (outputFileName.Contains("LTAGup"));
   isLDn = (outputFileName.Contains("LTAGdown"));
-  isNominal = (outputFileName.Contains("nominal"));
+  isNominal = !(outputDir.Contains("BTAGup") || outputDir.Contains("BTAGdown") || outputDir.Contains("LTAGup") || outputDir.Contains("LTAGdown"));
   isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
   isTTincMtt0to1000   = outputFileName.Contains("Mtt0to1000");
   isTTincMtt700to1000 = outputFileName.Contains("Mtt700to1000");
