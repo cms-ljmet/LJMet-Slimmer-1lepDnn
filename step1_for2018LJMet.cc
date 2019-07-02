@@ -442,7 +442,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
    // basic cuts
    float metCut=50;
-   int   htCut=450;
+   int   htCut=510;
    int   nAK8jetsCut=0;
    float lepPtCut=50;
    float elEtaCut=2.5;
