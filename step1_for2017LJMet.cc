@@ -277,6 +277,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");
    outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
    outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
+   outputTree->Branch("triggerSF",&triggerSF,"triggerSF/F");
 
    // ttbar generator
    outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
@@ -652,7 +653,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       MCPastTrigger = 0;
       EGammaGsfSF = 1.0;
       lepIdSF = 1.0;
-
+      triggerSF = 1.0;
       if(isMC){ //MC triggers check
 	if(isElectron){
 	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
@@ -912,7 +913,133 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  }
 	  DataPastTrigger = 1;
 	}
+
+        // Trigger SF Muon 
+        float triggerSFB = 1.0;
+        float triggerSFCDEF = 1.0; 
+        if (fabs(lepeta) < 0.90){
+          else if (leppt < 50.0){
+            triggerSFB = 1.0;
+            triggerSFCDEF = 1.027;
+          }
+          else if (leppt < 55.0){
+            triggerSFB = 0.872;
+            triggerSFCDEF = 1.014;
+          }
+          else if (leppt < 60.0){
+            triggerSFB = 0.978;
+            triggerSFCDEF = 1.026;
+          }
+          else if (leppt < 70.0){ 
+            triggerSFB = 1.003;
+            triggerSFCDEF = 1.021;
+          }
+          else if (leppt < 100){
+            triggerSFB = 0.990;
+            triggerSFCDEF = 1.013;  
+          }
+          else if (leppt < 200){
+            triggerSFB = 0.979;
+            triggerSFCDEF = 1.014;
+          }
+          else{
+            triggerSFB = 0.949;
+            triggerSFCDEF = 1.006;
+          }
+        }
+        else if (fabs(lepeta) < 1.20){
+          if (leppt < 50.0){
+            trigger SFB = 1.0;
+            triggerSFCDEF = 1.020;
+          }
+          else if (leppt < 55.0){
+            triggerSFB = 0.897;
+            triggerSFCDEF = 1.015;
+          }
+          else if (leppt < 60.0){
+            triggerSFB = 1.024;
+            triggerSFCDEF = 0.995;
+          }
+          else if (leppt < 70.0){
+            triggerSFB = 0.958;
+            triggerSFCDEF = 0.995;
+          }
+          else if (leppt < 100){
+            triggerSFB = 0.990;
+            triggerSFCDEF = 1.004;
+          }
+          else if (leppt < 200){
+            triggerSFB = 0.951;
+            triggerSFCDEF = 1.000;
+          }
+          else{
+            triggerSFB = 0.884;
+            triggerSFCDEF = 0.994;
+          }
+        }
+        else if (fabs(lepeta) < 2.10){
+         if (leppt < 50.0){
+            trigger SFB = 1.0;
+            triggerSFCDEF = 1.052;
+          }
+          if (leppt < 55.0){
+            triggerSFB = 0.800;
+            triggerSFCDEF = 1.064;
+          }
+          else if (leppt < 60.0){
+            triggerSFB = 0.936;
+            triggerSFCDEF = 1.052;
+          }
+          else if (leppt < 70.0){
+            triggerSFB = 0.993;
+            triggerSFCDEF = 1.038;
+          }
+          else if (leppt < 100){
+            triggerSFB = 0.984;
+            triggerSFCDEF = 1.041;
+          }
+          else if (leppt < 200){
+            triggerSFB = 0.963;
+            triggerSFCDEF = 1.024;
+          }
+          else{
+            triggerSFB = 0.991;
+            triggerSFCDEF = 1.018;
+          }
+        }
+        else{
+           if (leppt < 50.0){
+            trigger SFB = 1.0;
+            triggerSFCDEF = 1.109;
+          }
+          if (leppt < 55.0){
+            triggerSFB = 1.0;
+            triggerSFCDEF = 1.061;
+          }
+          else if (leppt < 60.0){
+            triggerSFB = 0.751;
+            triggerSFCDEF = 1.086;
+          }
+          else if (leppt < 70.0){
+            triggerSFB = 0.804;
+            triggerSFCDEF = 1.113;
+          }
+          else if (leppt < 100){
+            triggerSFB = 0.915;
+            triggerSFCDEF = 1.105;
+          }
+          else if (leppt < 200){
+            triggerSFB = 1.032;
+            triggerSFCDEF = 1.146;
+          }
+          else{
+            triggerSFB = 0.835;
+            triggerSFCDEF = 1.136;
+        }        
       }
+
+      triggerSF = (4.823*triggerSFB+36.734*triggerSFCDEF)/41.557;
+      
       else{ //Data triggers check
 	if(isElectron){
 	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
