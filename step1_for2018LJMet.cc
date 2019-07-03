@@ -1474,11 +1474,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       };
 
       varMap = {
-	{"corr_met", -999},
+	{"corr_met_singleLepCalc", -999},
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
-	{"NJets", -999},
-	{"NJetsAK8", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
 	{"jetPt_1", -999},
 	{"jetPt_2", -999},
 	{"jetPt_3", -999},
@@ -1517,11 +1517,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	else dnnJ_3 = -9;
 
 	varMap = {
-	  {"corr_met", corr_met_MultiLepCalc},
+	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
 	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
 	  {"AK4HT", AK4HT},
-	  {"NJets", NJets_JetSubCalc},
-	  {"NJetsAK8", NJetsAK8_JetSubCalc},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
 	  {"jetPt_1", jetPt_1},
 	  {"jetPt_2", jetPt_2},
 	  {"jetPt_3", jetPt_3},
