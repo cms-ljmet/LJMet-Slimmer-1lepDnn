@@ -8,6 +8,7 @@ void makeStep1Dnn(TString inputFile, TString outputFile, TString outputDir){
   step1 t(inputFile,outputFile,outputDir);
 
   bool isData = (inputFile.Contains("Single") || inputFile.Contains("EGamma"));
+  bool isBUp, isBDn, isLUp, isLDn, isNominal;
 
   if(isData) t.Loop("ljmet","ljmet");
   else{
