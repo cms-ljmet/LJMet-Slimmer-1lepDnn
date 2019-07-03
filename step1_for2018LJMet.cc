@@ -73,6 +73,13 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    }
 
    Init(inputTree);
+
+   if(outTreeName.Contains("BTAGup")) {isBUp = true; isBDn = false; isLUp = false; isLDn = false; isNominal = false;}
+   else if(outTreeName.Contains("BTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = false; isNominal = false;}
+   else if(outTreeName.Contains("LTAGup")) {isBUp = false; isBDn = true; isLUp = true; isLDn = false; isNominal = false;}
+   else if(outTreeName.Contains("LTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = true; isNominal = false;}
+   else {isBUp = false; isBDn = false; isLUp = false; isLDn = false; isNominal = true;}  
+   
    std::map<std::string,double> myMap;
    std::map<std::string,double> varMap;
    inputTree->SetBranchStatus("*",0);
@@ -479,9 +486,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    
 
    // Pileup distributions -- 31Mar2018 Data vs RunIIFall17MC  PLACEHOLDER IN 2018!!!
-   std::vector<std::vector<float>> pileupweight;
-   std::vector<std::vector<float>> pileupweightUp;
-   std::vector<std::vector<float>> pileupweightDn;
+   std::vector<float> pileupweight;
+   std::vector<float> pileupweightUp;
+   std::vector<float> pileupweightDn;
 
    pileupweight = { 2.326E-04, 2.787E-02, 3.339E-02, 5.035E-02, 6.247E-02, 9.966E-02, 1.074E-01, 1.442E-01, 1.041E-01, 3.121E-01, 4.634E-01, 6.124E-01, 6.707E-01, 6.990E-01, 7.462E-01, 8.168E-01, 9.110E-01, 1.022E+00, 1.100E+00, 1.156E+00, 1.212E+00, 1.261E+00, 1.307E+00, 1.336E+00, 1.353E+00, 1.354E+00, 1.353E+00, 1.360E+00, 1.376E+00, 1.354E+00, 1.326E+00, 1.264E+00, 1.198E+00, 1.132E+00, 1.062E+00, 9.996E-01, 9.498E-01, 9.122E-01, 8.609E-01, 8.217E-01, 8.276E-01, 8.657E-01, 9.451E-01, 1.048E+00, 1.196E+00, 1.360E+00, 1.538E+00, 1.600E+00, 1.634E+00, 1.581E+00, 1.403E+00, 1.211E+00, 9.999E-01, 7.865E-01, 5.984E-01, 4.296E-01, 3.034E-01, 2.107E-01, 1.463E-01, 1.024E-01, 7.337E-02, 5.378E-02, 4.052E-02, 3.077E-02, 2.339E-02, 1.753E-02, 1.269E-02, 1.092E-02, 9.353E-03, 9.002E-03, 7.919E-03, 4.869E-03, 6.104E-03, 4.942E-03, 3.426E-03, 2.660E-03, 2.304E-03, 2.039E-03, 1.059E-03, 5.481E-04}; // TT1L.root // 69200 ub
 
@@ -527,7 +534,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    cout << "isSig = " << isSig << ", SigMass = " << SigMass << endl;
    cout << "For W's: isTT = " << isTT << ", isSTt = " << isSTt << ", isSTtW = " << isSTtW << endl;
    cout << "Fot jets & PDF: isTOP = " << isTOP << ", isMadgraphBkg = " << isMadgraphBkg << endl;
-   cout << "Pileup index: " << pileupIndex << endl;
+   //   cout << "Pileup index: " << pileupIndex << endl;
+   cout << "Shift (Bup,Bdn,Lup,Ldn,None) = (" << isBUp << "," << isBDn << "," << isLUp << "," << isLDn << "," << isNominal << ")" << endl;
    
    Long64_t nentries = inputTree->GetEntriesFast();
 
@@ -906,7 +914,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if (leppt > 50.00 && leppt < 60.00) lepIdSF = 0.9907796746368196;
             else {lepIdSF = 0.9886366722532979;}
           }
-          else if{
+          else{
             if (leppt >20.00 && leppt < 25.00) lepIdSF = 0.9762336613870103;
             else if (leppt > 25.00 && leppt < 30.00) lepIdSF = 0.9735941110201962;
             else if (leppt > 30.00 && leppt < 40.00) lepIdSF = 0.973964994647057;
@@ -1474,11 +1482,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       };
 
       varMap = {
-	{"corr_met", -999},
+	{"corr_met_singleLepCalc", -999},
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
-	{"NJets", -999},
-	{"NJetsAK8", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
 	{"jetPt_1", -999},
 	{"jetPt_2", -999},
 	{"jetPt_3", -999},
@@ -1517,11 +1525,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	else dnnJ_3 = -9;
 
 	varMap = {
-	  {"corr_met", corr_met_MultiLepCalc},
+	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
 	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
 	  {"AK4HT", AK4HT},
-	  {"NJets", NJets_JetSubCalc},
-	  {"NJetsAK8", NJetsAK8_JetSubCalc},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
 	  {"jetPt_1", jetPt_1},
 	  {"jetPt_2", jetPt_2},
 	  {"jetPt_3", jetPt_3},
