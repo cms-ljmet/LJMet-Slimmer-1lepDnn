@@ -73,6 +73,12 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
   Init(inputTree);
 
+  if(outTreeName.Contains("BTAGup")) {isBUp = true; isBDn = false; isLUp = false; isLDn = false; isNominal = false;}
+  else if(outTreeName.Contains("BTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = false; isNominal = false;}
+  else if(outTreeName.Contains("LTAGup")) {isBUp = false; isBDn = true; isLUp = true; isLDn = false; isNominal = false;}
+  else if(outTreeName.Contains("LTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = true; isNominal = false;}
+  else {isBUp = false; isBDn = false; isLUp = false; isLDn = false; isNominal = true;}  
+
   std::map<std::string,double> myMap;
   std::map<std::string,double> varMap;
   
@@ -543,6 +549,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    cout << "For W's: isTT = " << isTT << ", isSTt = " << isSTt << ", isSTtW = " << isSTtW << endl;
    cout << "Fot jets & PDF: isTOP = " << isTOP << ", isMadgraphBkg = " << isMadgraphBkg << endl;
    cout << "Pileup index: " << pileupIndex << endl;
+   cout << "Shift (Bup,Bdn,Lup,Ldn,None) = (" << isBUp << "," << isBDn << "," << isLUp << "," << isLDn << "," << isNominal << ")" << endl;
    
    Long64_t nentries = inputTree->GetEntriesFast();
 
