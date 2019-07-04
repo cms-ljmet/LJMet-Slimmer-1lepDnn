@@ -121,7 +121,11 @@ for sample in dirList:
         runlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/')
         print "Running",len(runlist),"crab directories"
 
+        runnamelist =['W','X','Y','Z'] ## arbitrary run era labels, they mean nothing!
+        runcount = 0
         for run in runlist:
+            runletter = runnamelist[runcounter]
+            runcounter += 1
             numlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/')
             
             for num in numlist:
@@ -140,15 +144,21 @@ for sample in dirList:
 
                     #if tmpcount > 1: continue
 
-                    segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1
-                    segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C
+                    segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1, 78
+                    segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C, cmsRun_FWLJMET_DATA_1Lep
 
                     if isData:    # need unique IDs across eras
-                        idlist = segment2[-1]+segment1+' '
-                        for j in range(i+1,i+10):
-                            if j >= len(rootfiles): continue
-                            idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
-                            idlist += idparts[0][-1]+idparts[1]+' '
+                        if sample == 'SingleElectron':
+                            idlist = runletter+segment1+' '
+                            for j in range(i+1,i+10):
+                                if j >= len(rootfiles): continue
+                                idlist += runletter+(rootfiles[j].split('.')[0]).split('_')[-1]+' '
+                        else:
+                            idlist = segment2[-1]+segment1+' '
+                            for j in range(i+1,i+10):
+                                if j >= len(rootfiles): continue
+                                idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
+                                idlist += idparts[0][-1]+idparts[1]+' '
                     elif 'ext' in segment2:     # WON'T WORK in FWLJMET 052219, but ok since no samples need it
                         idlist = segment2[-4:]+segment1+' '
                         for j in range(i+1,i+10):
@@ -190,6 +200,7 @@ Queue 1"""%dict)
                     print count, "jobs submitted!!!"
         
 print("--- %s minutes ---" % (round(time.time() - start_time, 2)/60))
+
 
 
 
