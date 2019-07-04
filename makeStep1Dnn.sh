@@ -35,7 +35,7 @@ for iFile in $idlist; do
     if [[ $iFile == ext* ]] ;
     then
 	inFile=${iFile:4}
-    elif [[ $iFile == [ABCDEF]* ]] ;
+    elif [[ $iFile == [ABCDEFWXYZ]* ]] ;
     then
 	inFile=${iFile:1}
     fi
