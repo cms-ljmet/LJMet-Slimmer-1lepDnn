@@ -1,4 +1,4 @@
-import os,sys,datetime,time
+import os,sys,datetime,time, subprocess, math
 from ROOT import *
 execfile("/uscms_data/d3/jmanagan/EOSSafeUtils.py")
 
@@ -75,7 +75,7 @@ dirList = [
     'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
     'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
-    'SingleElectron',  ## 'EGamma' in 2018
+    'SingleElectron',
     'SingleMuon',
     ]
 
@@ -95,18 +95,29 @@ for sample in dirList:
         print "------------ hadding Sample:",outsample,"---------------"
         print 'N root files in',outsample,'=',len(rootfiles)
 
-        nFilesPerHadd = 600
+
+        nFilesPerHadd = 900
+
+        onefile = ' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[-1]
+        manyfiles = nFilesPerHadd*onefile
+        lengthcheck = len('hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '+manyfiles)
+        if lengthcheck > 126000.:
+            toolong = lengthcheck - 126000.
+            num2remove = math.ceil(toolong/len(onefile))
+            nFilesPerHadd = int(nFilesPerHadd - num2remove)
+            print 'Length estimate reduced from',lengthcheck,'by',toolong,'via removing',num2remove,'files for nFilesPerHadd of',nFilesPerHadd
 
         if len(rootfiles) < nFilesPerHadd:
             haddcommand = 'hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '
             for file in rootfiles:
                 haddcommand+=' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+file
-            os.system(haddcommand)
+            print 'Length of hadd command =',len(haddcommand)
+            subprocess.call(haddcommand,shell=True)
 
             if bool(EOSisfile(outDir+'/'+outsample+'_hadd.root')) != True:
                 print haddcommand
         else:
-            for i in range(int(len(rootfiles)/nFilesPerHadd)+1):
+            for i in range(int(math.ceil(len(rootfiles)/float(nFilesPerHadd)))):
                 haddcommand = 'hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root '
 
                 begin=i*nFilesPerHadd
@@ -116,7 +127,8 @@ for sample in dirList:
 
                 for j in range(begin,end):
                     haddcommand+=' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[j]
-                os.system(haddcommand)
+                print 'Length of hadd command =',len(haddcommand)
+                subprocess.call(haddcommand,shell=True)
 
                 if bool(EOSisfile(outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root')) != True:
                     print haddcommand
