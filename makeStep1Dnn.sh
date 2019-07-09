@@ -11,6 +11,7 @@ idlist=${5}
 scratch=${PWD}
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
+export SCRAM_ARCH=slc6_amd64_gcc700
 scramv1 project CMSSW CMSSW_10_2_10
 cd CMSSW_10_2_10
 
