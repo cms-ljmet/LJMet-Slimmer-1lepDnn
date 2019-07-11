@@ -75,8 +75,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
   if(outTreeName.Contains("BTAGup")) {isBUp = true; isBDn = false; isLUp = false; isLDn = false; isNominal = false;}
   else if(outTreeName.Contains("BTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = false; isNominal = false;}
-  else if(outTreeName.Contains("LTAGup")) {isBUp = false; isBDn = true; isLUp = true; isLDn = false; isNominal = false;}
-  else if(outTreeName.Contains("LTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = true; isNominal = false;}
+  else if(outTreeName.Contains("LTAGup")) {isBUp = false; isBDn = false; isLUp = true; isLDn = false; isNominal = false;}
+  else if(outTreeName.Contains("LTAGdown")) {isBUp = false; isBDn = false; isLUp = false; isLDn = true; isNominal = false;}
   else {isBUp = false; isBDn = false; isLUp = false; isLDn = false; isNominal = true;}  
 
   std::map<std::string,double> myMap;

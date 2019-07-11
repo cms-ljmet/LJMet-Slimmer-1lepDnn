@@ -140,7 +140,7 @@ for sample in dirList:
                     count+=1
                     tmpcount += 1
 
-                    if tmpcount > 1: continue
+                    # if tmpcount > 1: continue
 
                     segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1
                     segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C
