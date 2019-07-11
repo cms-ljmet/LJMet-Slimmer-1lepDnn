@@ -11,7 +11,7 @@ finalStateYear = 'singleLep2017' # or 2018
 relbase = '/uscms_data/d3/escharni/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/escharni/slimmerdnn.tar'
 inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017_052219/' # or 2018
-outputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
+outputDir='/eos/uscms/store/user/escharni/FWLJMET102X_1lep2017Dnn_070219_step1/' # or 2018
 condorDir='/uscms_data/d3/escharni/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
 
 runDir=os.getcwd()
@@ -38,7 +38,7 @@ count=0
 
 dirList = [
     'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
-''' 'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
@@ -97,7 +97,7 @@ dirList = [
     'WZ_TuneCP5_13TeV-pythia8',
     'ZZ_TuneCP5_13TeV-pythia8',
     'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
-    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8','''
+    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
 ]
 
 
@@ -140,7 +140,7 @@ for sample in dirList:
                     count+=1
                     tmpcount += 1
 
-                    if tmpcount > 1: continue
+                    # if tmpcount > 1: continue
 
                     segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1
                     segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C
