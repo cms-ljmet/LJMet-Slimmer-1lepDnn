@@ -685,7 +685,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       pileupWeightDown = 1.0;
 	
       if(isMC){
-	if(nTrueInteractions_MultiLepCalc > 79) nTrueInteractions_MultiLepCalc = 79;
+	if(nTrueInteractions_MultiLepCalc > 99) nTrueInteractions_MultiLepCalc = 99;
 	if(nTrueInteractions_MultiLepCalc < 0) nTrueInteractions_MultiLepCalc = 0;
 	pileupWeight = pileupweight[nTrueInteractions_MultiLepCalc];
 	pileupWeightUp = pileupweightUp[nTrueInteractions_MultiLepCalc];
