@@ -48,11 +48,6 @@ void step1::saveHistograms()
   wgthist->Write();
 }
 
-TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
-TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
-TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
-TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
-
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
@@ -237,6 +232,10 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    // OUTPUT FILE
    outputFile->cd();
    TTree *outputTree = new TTree(outTreeName,outTreeName);
+   TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
+   TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
+   TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
+   TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
 
    // Common things
    outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
@@ -2539,7 +2538,14 @@ void step1::Loop(TString inTreeName, TString outTreeName)
      BBconfusionN->Write();
    }
    outputTree->Write();
-
+   delete outputTree;
+   delete TTconfusionD;
+   delete TTconfusionN;
+   delete BBconfusionD;
+   delete BBconfusionN;
+   delete poly;
+   delete polyU;
+   delete polyD;
 }
 
 
