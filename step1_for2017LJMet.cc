@@ -48,11 +48,6 @@ void step1::saveHistograms()
   wgthist->Write();
 }
 
-TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
-TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
-TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
-TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
-
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
@@ -237,6 +232,10 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    // OUTPUT FILE
    outputFile->cd();
    TTree *outputTree = new TTree(outTreeName,outTreeName);
+   TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
+   TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
+   TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
+   TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
 
    // Common things
    outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
@@ -641,15 +640,16 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       pileupWeightDown = 1.0;
 	
       if(isMC){
-	if(nTrueInteractions_MultiLepCalc > 79) nTrueInteractions_MultiLepCalc = 79;
+	if(nTrueInteractions_MultiLepCalc > 99) nTrueInteractions_MultiLepCalc = 99;
+        if(nTrueInteractions_MultiLepCalc > 79 && isSig) nTrueInteractions_MultiLepCalc = 79;
 	if(nTrueInteractions_MultiLepCalc < 0) nTrueInteractions_MultiLepCalc = 0;
-	if(pileupIndex < 1 || pileupIndex > 39){
+	if(pileupIndex < 0 || pileupIndex > 60){
 	  std::cout << "I don't know this pileup sample, using TTToSemiLeptonic's" << std::endl;
 	  pileupIndex = 14;
 	}
-	pileupWeight = pileupweight[pileupIndex-1][nTrueInteractions_MultiLepCalc];
-	pileupWeightUp = pileupweightUp[pileupIndex-1][nTrueInteractions_MultiLepCalc];
-	pileupWeightDown = pileupweightDn[pileupIndex-1][nTrueInteractions_MultiLepCalc];
+	pileupWeight = pileupweight[pileupIndex][nTrueInteractions_MultiLepCalc];
+	pileupWeightUp = pileupweightUp[pileupIndex][nTrueInteractions_MultiLepCalc];
+	pileupWeightDown = pileupweightDn[pileupIndex][nTrueInteractions_MultiLepCalc];
       }
 
       // ----------------------------------------------------------------------------
@@ -2539,7 +2539,14 @@ void step1::Loop(TString inTreeName, TString outTreeName)
      BBconfusionN->Write();
    }
    outputTree->Write();
-
+   delete outputTree;
+   delete TTconfusionD;
+   delete TTconfusionN;
+   delete BBconfusionD;
+   delete BBconfusionN;
+   delete poly;
+   delete polyU;
+   delete polyD;
 }
 
 

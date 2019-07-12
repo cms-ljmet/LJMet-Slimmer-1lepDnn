@@ -48,11 +48,6 @@ void step1::saveHistograms()
   wgthist->Write();
 }
 
- TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
- TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
- TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
- TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
-
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
@@ -234,6 +229,10 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    // OUTPUT FILE
    outputFile->cd();
    TTree *outputTree = new TTree(outTreeName,outTreeName);
+   TH2D *TTconfusionD = new TH2D("TTconfusionD",";tagged decay;true decay",10,0,10,6,0,6);
+   TH2D *TTconfusionN = new TH2D("TTconfusionN",";tagged decay;true decay",10,0,10,6,0,6);
+   TH2D *BBconfusionD = new TH2D("BBconfusionD",";tagged decay;true decay",7,0,7,6,0,6);
+   TH2D *BBconfusionN = new TH2D("BBconfusionN",";tagged decay;true decay",7,0,7,6,0,6);
 
    // Common things
    outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
@@ -387,6 +386,30 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("nT_DeepAK8",&nT_DeepAK8,"nT_DeepAK8/I");
    outputTree->Branch("nW_DeepAK8",&nW_DeepAK8,"nW_DeepAK8/I");
    outputTree->Branch("nZ_DeepAK8",&nZ_DeepAK8,"nZ_DeepAK8/I");
+   outputTree->Branch("DeepAK8SF_TeffUp",&DeepAK8SF_TeffUp,"DeepAK8SF_TeffUp/F");
+   outputTree->Branch("DeepAK8SF_HeffUp",&DeepAK8SF_HeffUp,"DeepAK8SF_HeffUp/F");
+   outputTree->Branch("DeepAK8SF_ZeffUp",&DeepAK8SF_ZeffUp,"DeepAK8SF_ZeffUp/F");
+   outputTree->Branch("DeepAK8SF_WeffUp",&DeepAK8SF_WeffUp,"DeepAK8SF_WeffUp/F");
+   outputTree->Branch("DeepAK8SF_BeffUp",&DeepAK8SF_BeffUp,"DeepAK8SF_BeffUp/F");
+   outputTree->Branch("DeepAK8SF_JeffUp",&DeepAK8SF_JeffUp,"DeepAK8SF_JeffUp/F");
+   outputTree->Branch("DeepAK8SF_TmisUp",&DeepAK8SF_TmisUp,"DeepAK8SF_TmisUp/F");
+   outputTree->Branch("DeepAK8SF_HmisUp",&DeepAK8SF_HmisUp,"DeepAK8SF_HmisUp/F");
+   outputTree->Branch("DeepAK8SF_ZmisUp",&DeepAK8SF_ZmisUp,"DeepAK8SF_ZmisUp/F");
+   outputTree->Branch("DeepAK8SF_WmisUp",&DeepAK8SF_WmisUp,"DeepAK8SF_WmisUp/F");
+   outputTree->Branch("DeepAK8SF_BmisUp",&DeepAK8SF_BmisUp,"DeepAK8SF_BmisUp/F");
+   outputTree->Branch("DeepAK8SF_JmisUp",&DeepAK8SF_JmisUp,"DeepAK8SF_JmisUp/F");
+   outputTree->Branch("DeepAK8SF_TeffDn",&DeepAK8SF_TeffDn,"DeepAK8SF_TeffDn/F");
+   outputTree->Branch("DeepAK8SF_HeffDn",&DeepAK8SF_HeffDn,"DeepAK8SF_HeffDn/F");
+   outputTree->Branch("DeepAK8SF_ZeffDn",&DeepAK8SF_ZeffDn,"DeepAK8SF_ZeffDn/F");
+   outputTree->Branch("DeepAK8SF_WeffDn",&DeepAK8SF_WeffDn,"DeepAK8SF_WeffDn/F");
+   outputTree->Branch("DeepAK8SF_BeffDn",&DeepAK8SF_BeffDn,"DeepAK8SF_BeffDn/F");
+   outputTree->Branch("DeepAK8SF_JeffDn",&DeepAK8SF_JeffDn,"DeepAK8SF_JeffDn/F");
+   outputTree->Branch("DeepAK8SF_TmisDn",&DeepAK8SF_TmisDn,"DeepAK8SF_TmisDn/F");
+   outputTree->Branch("DeepAK8SF_HmisDn",&DeepAK8SF_HmisDn,"DeepAK8SF_HmisDn/F");
+   outputTree->Branch("DeepAK8SF_ZmisDn",&DeepAK8SF_ZmisDn,"DeepAK8SF_ZmisDn/F");
+   outputTree->Branch("DeepAK8SF_WmisDn",&DeepAK8SF_WmisDn,"DeepAK8SF_WmisDn/F");
+   outputTree->Branch("DeepAK8SF_BmisDn",&DeepAK8SF_BmisDn,"DeepAK8SF_BmisDn/F");
+   outputTree->Branch("DeepAK8SF_JmisDn",&DeepAK8SF_JmisDn,"DeepAK8SF_JmisDn/F");
 
    // VLQ reco   
    outputTree->Branch("W_mass",&W_mass,"W_mass/F");
@@ -664,7 +687,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_MultiLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+//	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
@@ -845,7 +868,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORc = "TkMu50";
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_MultiLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+      //	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_e) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
@@ -935,7 +958,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_MultiLepCalc->size(); itrig++){
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	  //  if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
@@ -954,7 +977,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORc = "TkMu50";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersMu_MultiLepCalc->size(); itrig++){
 	    if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+	 //   if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_b) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
             if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_e) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
@@ -2379,5 +2402,13 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    }
 
    outputTree->Write();
+   delete outputTree;
+   delete TTconfusionD;
+   delete TTconfusionN;
+   delete BBconfusionD;
+   delete BBconfusionN;
+   delete poly;
+   delete polyU;
+   delete polyD;
 
 }
