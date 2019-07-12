@@ -640,15 +640,16 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       pileupWeightDown = 1.0;
 	
       if(isMC){
-	if(nTrueInteractions_MultiLepCalc > 79) nTrueInteractions_MultiLepCalc = 79;
+	if(nTrueInteractions_MultiLepCalc > 99) nTrueInteractions_MultiLepCalc = 99;
+        if(nTrueInteractions_MultiLepCalc > 79 && isSig) nTrueInteractions_MultiLepCalc = 79;
 	if(nTrueInteractions_MultiLepCalc < 0) nTrueInteractions_MultiLepCalc = 0;
-	if(pileupIndex < 1 || pileupIndex > 39){
+	if(pileupIndex < 0 || pileupIndex > 60){
 	  std::cout << "I don't know this pileup sample, using TTToSemiLeptonic's" << std::endl;
-	  pileupIndex = 14;
+	  pileupIndex = 26;
 	}
-	pileupWeight = pileupweight[pileupIndex-1][nTrueInteractions_MultiLepCalc];
-	pileupWeightUp = pileupweightUp[pileupIndex-1][nTrueInteractions_MultiLepCalc];
-	pileupWeightDown = pileupweightDn[pileupIndex-1][nTrueInteractions_MultiLepCalc];
+	pileupWeight = pileupweight[pileupIndex][nTrueInteractions_MultiLepCalc];
+	pileupWeightUp = pileupweightUp[pileupIndex][nTrueInteractions_MultiLepCalc];
+	pileupWeightDown = pileupweightDn[pileupIndex][nTrueInteractions_MultiLepCalc];
       }
 
       // ----------------------------------------------------------------------------
