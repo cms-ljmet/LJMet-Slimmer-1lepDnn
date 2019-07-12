@@ -11,16 +11,10 @@ finalStateYear = 'singleLep2017' # or 2018
 relbase = '/uscms_data/d3/escharni/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/escharni/slimmerdnn.tar'
 inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017_052219/' # or 2018
-outputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
+outputDir='/eos/uscms/store/user/escharni/FWLJMET102X_1lep2017Dnn_070219_step1/' # or 2018
 condorDir='/uscms_data/d3/escharni/FWLJMET102X_1lep2017Dnn_070119_step1/' # or 2018
 
 runDir=os.getcwd()
-# Can change the file directory if needed
-#if '' not in shift: runDirPost = ''
-#else: runDirPost = shift+'Files'
-runDirPost = ''
-print 'Files from',runDirPost
-
 inDir=inputDir[10:]
 outDir=outputDir[10:]
 
@@ -38,7 +32,7 @@ count=0
 
 dirList = [
     'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
-''' 'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
@@ -97,7 +91,7 @@ dirList = [
     'WZ_TuneCP5_13TeV-pythia8',
     'ZZ_TuneCP5_13TeV-pythia8',
     'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
-    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8','''
+    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
 ]
 
 
@@ -140,7 +134,7 @@ for sample in dirList:
                     count+=1
                     tmpcount += 1
 
-                    if tmpcount > 1: continue
+                    # if tmpcount > 1: continue
 
                     segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1
                     segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C
@@ -166,7 +160,7 @@ for sample in dirList:
                     idlist = idlist.strip()
                     print "Running IDs",idlist
                 
-                    dict={'RUNDIR':runDir, 'POST':runDirPost, 'SAMPLE':sample, 'INPATHSUFFIX':pathsuffix, 'CONDORDIR':condorDir, 'INPUTDIR':inDir, 'FILENAME':basefilename, 'OUTFILENAME':outsample, 'CMSSWBASE':relbase, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount}
+                    dict={'RUNDIR':runDir, 'SAMPLE':sample, 'INPATHSUFFIX':pathsuffix, 'INPUTDIR':inDir, 'FILENAME':basefilename, 'OUTFILENAME':outsample, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount, 'TARBALL':tarfile}
                     jdfName=condorDir+'/%(OUTFILENAME)s/%(OUTFILENAME)s_%(ID)s.job'%dict
                     print jdfName
                     jdf=open(jdfName,'w')
@@ -176,7 +170,7 @@ universe = vanilla
 Executable = %(RUNDIR)s/makeStep1Dnn.sh
 Should_Transfer_Files = YES
 WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = /uscms_data/d3/escharni/slimmerdnn.tar
+Transfer_Input_Files = %(TARBALL)s
 Output = %(OUTFILENAME)s_%(ID)s.out
 Error = %(OUTFILENAME)s_%(ID)s.err
 Log = %(OUTFILENAME)s_%(ID)s.log

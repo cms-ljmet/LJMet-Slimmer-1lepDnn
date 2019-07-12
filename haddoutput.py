@@ -79,7 +79,6 @@ dirList = [
  ##    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
    
 ]
-
 for sample in dirList:
     outList = ['none']
     if 'Tprime' in sample: outList = ['BWBW','TZBW','THBW','TZTH','TZTZ','THTH']
@@ -98,7 +97,6 @@ for sample in dirList:
 
 
         nFilesPerHadd = 600
-
         onefile = ' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[-1]
         manyfiles = nFilesPerHadd*onefile
         lengthcheck = len('hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '+manyfiles)
@@ -118,7 +116,7 @@ for sample in dirList:
             if bool(EOSisfile(outDir+'/'+outsample+'_hadd.root')) != True:
                 print haddcommand
         else:
-            for i in range(int(math.ceil(len(rootfiles)/nFilesPerHadd))):
+            for i in range(int(math.ceil(len(rootfiles)/float(nFilesPerHadd)))):
                 haddcommand = 'hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root '
 
                 begin=i*nFilesPerHadd
