@@ -11,8 +11,8 @@ finalStateYear = 'singleLep2018' # or 2018
 relbase = '/uscms_data/d3/cholz/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/cholz/slimmerdnn.tar'
 inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2018_052219/' # or 2018
-outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018Dnn_070219_step1/' # or 2018
-condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018Dnn_070219_step1/' # or 2018
+outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018Dnn_071519_step1/' # or 2018
+condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018Dnn_071519_step1/' # or 2018
 
 runDir=os.getcwd()
 inDir=inputDir[10:]
@@ -70,15 +70,15 @@ dirList = [
      'TT_Mtt-1000toInf_TuneCP5_13TeV-powheg-pythia8',
      'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
      'TprimeTprime_M-1000_TuneCP5_PSweights_13TeV-madgraph-pythia8',
- #   # 'TprimeTprime_M-1100_TuneCP5_PSweights_13TeV-madgraph-pythia8',
- #   # 'TprimeTprime_M-1200_TuneCP5_PSweights_13TeV-madgraph-pythia8',
- #   # 'TprimeTprime_M-1300_TuneCP5_PSweights_13TeV-madgraph-pythia8',
- #   # 'TprimeTprime_M-1400_TuneCP5_PSweights_13TeV-madgraph-pythia8',
- #   # 'TprimeTprime_M-1500_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+     'TprimeTprime_M-1100_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+     'TprimeTprime_M-1200_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+     'TprimeTprime_M-1300_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+     'TprimeTprime_M-1400_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+     'TprimeTprime_M-1500_TuneCP5_PSweights_13TeV-madgraph-pythia8',
      'TprimeTprime_M-1600_TuneCP5_PSweights_13TeV-madgraph-pythia8',
      'TprimeTprime_M-1700_TuneCP5_PSweights_13TeV-madgraph-pythia8',
- #   # 'TprimeTprime_M-1800_TuneCP5_PSweights_13TeV-madgraph-pythia8',
- #   # 'TprimeTprime_M-700_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+     'TprimeTprime_M-1800_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+     'TprimeTprime_M-700_TuneCP5_PSweights_13TeV-madgraph-pythia8',
      'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
      'WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8',
      'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
@@ -131,7 +131,7 @@ for sample in dirList:
                 basefilename = '_'.join(basefilename)
                 print "Running path:",pathsuffix,"\tBase filenames:",basefilename
 
-                for i in range(0,len(rootfiles),10):
+                for i in range(0,len(rootfiles),20):
                     count+=1
                     tmpcount += 1
 
@@ -143,24 +143,24 @@ for sample in dirList:
                     if isData:    # need unique IDs across eras
                         if sample == 'SingleElectron':
                             idlist = runletter+segment1+' '
-                            for j in range(i+1,i+10):
+                            for j in range(i+1,i+20):
                                 if j >= len(rootfiles): continue
                                 idlist += runletter+(rootfiles[j].split('.')[0]).split('_')[-1]+' '
                         else:
                             idlist = segment2[-1]+segment1+' '
-                            for j in range(i+1,i+10):
+                            for j in range(i+1,i+20):
                                 if j >= len(rootfiles): continue
                                 idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
                                 idlist += idparts[0][-1]+idparts[1]+' '
                     elif 'ext' in segment2:     # WON'T WORK in FWLJMET 052219, but ok since no samples need it
                         idlist = segment2[-4:]+segment1+' '
-                        for j in range(i+1,i+10):
+                        for j in range(i+1,i+20):
                             if j >= len(rootfiles): continue
                             idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
-                            idlist = idparts[0][-4:]+idparts[1]+' '
+                            idlist += idparts[0][-4:]+idparts[1]+' '
                     else:
                         idlist = segment1+' '
-                        for j in range(i+1,i+10):
+                        for j in range(i+1,i+20):
                             if j >= len(rootfiles): continue
                             idlist += (rootfiles[j].split('.')[0]).split('_')[-1]+' '
                         

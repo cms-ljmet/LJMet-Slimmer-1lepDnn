@@ -17,21 +17,21 @@ outDir=outputDir[10:]
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
 
 dirList = [
-#    'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
-#    'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
+    'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8',
     'QCD_HT1000to1500_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8',
@@ -97,8 +97,7 @@ for sample in dirList:
         print 'N root files in',outsample,'=',len(rootfiles)
 
 
-        nFilesPerHadd = 900
-
+        nFilesPerHadd = 600
         onefile = ' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[-1]
         manyfiles = nFilesPerHadd*onefile
         lengthcheck = len('hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '+manyfiles)
