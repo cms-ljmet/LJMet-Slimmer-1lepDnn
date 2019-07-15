@@ -283,6 +283,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
    outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
    outputTree->Branch("triggerSF",&triggerSF,"triggerSF/F");
+   outputTree->Branch("isoSF",&isoSF,"isoSF/F");
 
    // ttbar generator
    outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
@@ -661,6 +662,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       EGammaGsfSF = 1.0;
       lepIdSF = 1.0;
       triggerSF = 1.0;
+      isoSF = 1.0;
       if(isMC){ //MC triggers check
 	if(isElectron){
 	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
@@ -2544,9 +2546,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    delete TTconfusionN;
    delete BBconfusionD;
    delete BBconfusionN;
-   delete poly;
-   delete polyU;
-   delete polyD;
+   delete poly2;
+   delete poly2U;
+   delete poly2D;
 }
 
 
