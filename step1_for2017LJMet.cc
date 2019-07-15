@@ -283,6 +283,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
    outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
    outputTree->Branch("triggerSF",&triggerSF,"triggerSF/F");
+   outputTree->Branch("isoSF",&isoSF,"isoSF/F");
 
    // ttbar generator
    outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
@@ -640,15 +641,16 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       pileupWeightDown = 1.0;
 	
       if(isMC){
-	if(nTrueInteractions_MultiLepCalc > 79) nTrueInteractions_MultiLepCalc = 79;
+	if(nTrueInteractions_MultiLepCalc > 99) nTrueInteractions_MultiLepCalc = 99;
+        if(nTrueInteractions_MultiLepCalc > 79 && isSig) nTrueInteractions_MultiLepCalc = 79;
 	if(nTrueInteractions_MultiLepCalc < 0) nTrueInteractions_MultiLepCalc = 0;
-	if(pileupIndex < 1 || pileupIndex > 39){
+	if(pileupIndex < 0 || pileupIndex > 60){
 	  std::cout << "I don't know this pileup sample, using TTToSemiLeptonic's" << std::endl;
-	  pileupIndex = 14;
+	  pileupIndex = 26;
 	}
-	pileupWeight = pileupweight[pileupIndex-1][nTrueInteractions_MultiLepCalc];
-	pileupWeightUp = pileupweightUp[pileupIndex-1][nTrueInteractions_MultiLepCalc];
-	pileupWeightDown = pileupweightDn[pileupIndex-1][nTrueInteractions_MultiLepCalc];
+	pileupWeight = pileupweight[pileupIndex][nTrueInteractions_MultiLepCalc];
+	pileupWeightUp = pileupweightUp[pileupIndex][nTrueInteractions_MultiLepCalc];
+	pileupWeightDown = pileupweightDn[pileupIndex][nTrueInteractions_MultiLepCalc];
       }
 
       // ----------------------------------------------------------------------------
@@ -660,6 +662,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       EGammaGsfSF = 1.0;
       lepIdSF = 1.0;
       triggerSF = 1.0;
+      isoSF = 1.0;
       if(isMC){ //MC triggers check
 	if(isElectron){
 	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
@@ -2543,9 +2546,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    delete TTconfusionN;
    delete BBconfusionD;
    delete BBconfusionN;
-   delete poly;
-   delete polyU;
-   delete polyD;
+   delete poly2;
+   delete poly2U;
+   delete poly2D;
 }
 
 
