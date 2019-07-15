@@ -279,6 +279,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");
    outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
    outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
+   outputTree->Branch("isoSF",&isoSF,"isoSF/F");
+   outputTree->Branch("triggSF",&triggSF,"triggSF/F");
 
    // ttbar generator
    outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
@@ -523,7 +525,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 		    1.889e-02,  1.652e-02,  1.344e-02,  1.173e-02,  9.423e-03,  8.155e-03,  6.671e-03,  5.637e-03,  4.504e-03,  3.920e-03,  
 		    3.007e-03,  2.567e-03,  1.909e-03,  1.425e-03,  1.084e-03,  8.974e-04,  8.267e-04,  4.805e-04,  2.814e-04,  1.588e-04,  
 		    1.206e-04,  6.816e-05,  2.870e-05,  1.436e-05,  7.136e-06,  4.702e-06,  1.107e-06,  1.723e-06,  1.079e-06,  1.269e-07,  0.000e+00,  }; // TTToSemiLeptonic
-   pileupweightDown = { 0.000e+00,  1.447e+01,  5.931e+01,  2.226e+01,  1.397e+01,  1.063e+01,  7.865e+00,  5.773e+00,  4.367e+00,  3.362e+00,  
+   pileupweightDn = { 0.000e+00,  1.447e+01,  5.931e+01,  2.226e+01,  1.397e+01,  1.063e+01,  7.865e+00,  5.773e+00,  4.367e+00,  3.362e+00,  
 			2.793e+00,  2.408e+00,  2.153e+00,  1.999e+00,  1.907e+00,  1.857e+00,  1.824e+00,  1.805e+00,  1.789e+00,  1.761e+00,  
 			1.710e+00,  1.645e+00,  1.572e+00,  1.493e+00,  1.423e+00,  1.358e+00,  1.306e+00,  1.264e+00,  1.232e+00,  1.206e+00,  
 			1.185e+00,  1.166e+00,  1.148e+00,  1.131e+00,  1.111e+00,  1.085e+00,  1.054e+00,  1.014e+00,  9.643e-01,  9.065e-01,  
@@ -700,6 +702,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       MCPastTrigger = 0;
       EGammaGsfSF = 1.0;
       lepIdSF = 1.0;
+      triggSF = 1.0;
+      isoSF = 1.0;
 
       if(isMC){ //MC triggers check
 	if(isElectron){
@@ -882,7 +886,48 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if (fabs(lepeta) < 1.566) isoSF = 1.00403;
             else if (fabs(lepeta) < 2) isoSF = 1.00200;
             else isoSF = 1.00301;}
-	}
+
+          //Trigger SF calculated by JHogan
+          if (fabs(lepeta) < 0.8){
+            if (leppt < 50) triggSF = 0.964;
+            else if (leppt < 55) triggSF = 0.990;
+            else if (leppt < 60) triggSF = 0.984;
+            else if (leppt < 70) triggSF = 0.970;
+            else if (leppt < 100) triggSF = 0.981;
+            else if (leppt < 200) triggSF = 0.975;
+            else triggSF = 0.974;
+	  }
+          else if (fabs(lepeta) < 1.442){
+            if (leppt < 50) triggSF = 0.971;
+            else if (leppt < 55) triggSF = 0.980;
+            else if (leppt < 60) triggSF = 0.970;
+            else if (leppt < 70) triggSF = 0.968;
+            else if (leppt < 100) triggSF = 0.972;
+            else if (leppt < 200) triggSF = 0.965;
+            else triggSF = 0.952;
+       	  }
+          else if (fabs(lepeta) < 1.556) triggSF = 0.0;
+          
+          else if (fabs(lepeta) < 2.0){ 
+            if (leppt < 50) triggSF = 0.881;
+            else if (leppt < 55) triggSF = 0.875;
+            else if (leppt < 60) triggSF = 0.886;
+            else if (leppt < 70) triggSF = 0.901;
+            else if (leppt < 100) triggSF = 0.877;
+            else if (leppt < 200) triggSF = 0.823;
+            else triggSF = 0.753;
+          }	  
+          else{ 
+           if (leppt < 50) triggSF = 0.885;
+           else if (leppt < 55) triggSF = 0.874;
+           else if (leppt < 60) triggSF = 0.828;
+           else if (leppt < 70) triggSF = 0.868;
+           else if (leppt < 100) triggSF = 0.895;
+           else if (leppt < 200) triggSF = 0.796;
+           else triggSF = 0.741;
+         }
+        }	  
+          
 	if(isMuon){
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
 	  std::string string_b = "Mu15_IsoVVVL_PFHT450_PFMET50";
@@ -969,6 +1014,44 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if (leppt > 50.00 && leppt < 60.00) lepIdSF = 0.9737076412350453;
             else {lepIdSF = 0.9677501192438909;}
           }
+          
+          if (fabs(lepeta) < 0.9){ 
+            if (leppt < 50) triggSF = 0.991;
+            else if (leppt < 55) triggSF = 0.990;
+            else if (leppt < 60) triggSF = 0.982;
+            else if (leppt < 70) triggSF = 0.985;
+            else if (leppt < 100) triggSF = 0.983;
+            else if (leppt < 200) triggSF = 0.971;
+            else triggSF = 0.974;
+          }	  
+          else if (fabs(lepeta) < 1.2){ 
+            if (leppt < 50) triggSF = 0.988;
+            else if (leppt < 55) triggSF = 0.999;
+            else if (leppt < 60) triggSF = 0.994;
+            else if (leppt < 70) triggSF = 0.982;
+            else if (leppt < 100) triggSF = 0.984;
+            else if (leppt < 200) triggSF = 0.976;
+            else triggSF = 0.977;
+          }
+          else if (fabs(lepeta) < 2.1){ 
+            if (leppt < 50) triggSF = 0.988;
+            else if (leppt < 55) triggSF = 0.998;
+            else if (leppt < 60) triggSF = 0.995;
+            else if (leppt < 70) triggSF = 0.990;
+            else if (leppt < 100) triggSF = 0.982;
+            else if (leppt < 200) triggSF = 0.982;
+            else triggSF = 0.984;
+          }	  
+          else{
+            if (leppt < 50) triggSF = 1.031;
+            else if (leppt < 55) triggSF = 1.021;
+            else if (leppt < 60) triggSF = 1.006;
+            else if (leppt < 70) triggSF = 0.987;
+            else if (leppt < 100) triggSF = 1.010;
+            else if (leppt < 200) triggSF = 1.022;
+            else triggSF = 1.019;
+         }	  
+          
 	}
 	DataPastTrigger = 1;
       }
@@ -2431,8 +2514,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    delete TTconfusionN;
    delete BBconfusionD;
    delete BBconfusionN;
-   delete poly;
-   delete polyU;
-   delete polyD;
+   delete poly2;
+   delete poly2U;
+   delete poly2D;
 
 }
