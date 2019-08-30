@@ -23,10 +23,15 @@ using namespace std;
 // DNN stuff
 // ----------------------------------------------------------------------------
 
-std::string dnnFile = "vlq_mlp_3by10_062819.json";
-std::ifstream input_cfg( dnnFile );
-lwt::JSONConfig cfg = lwt::parse_json(input_cfg);
-lwt::LightweightNeuralNetwork* lwtnn = new lwt::LightweightNeuralNetwork(cfg.inputs, cfg.layers, cfg.outputs);
+std::string dnnFileTT = "vlq_mlp_3by10_080719_TT2018.json";
+std::ifstream input_cfgTT( dnnFileTT );
+lwt::JSONConfig cfgTT = lwt::parse_json(input_cfgTT);
+lwt::LightweightNeuralNetwork* lwtnnTT = new lwt::LightweightNeuralNetwork(cfgTT.inputs, cfgTT.layers, cfgTT.outputs);
+
+std::string dnnFileBB = "vlq_mlp_3by10_080719_BB2018.json";
+std::ifstream input_cfgBB( dnnFileBB );
+lwt::JSONConfig cfgBB = lwt::parse_json(input_cfgBB);
+lwt::LightweightNeuralNetwork* lwtnnBB = new lwt::LightweightNeuralNetwork(cfgBB.inputs, cfgBB.layers, cfgBB.outputs);
 
 // ----------------------------------------------------------------------------
 // Define functions
@@ -75,8 +80,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    else if(outTreeName.Contains("LTAGdown")) {isBUp = false; isBDn = false; isLUp = false; isLDn = true; isNominal = false;}
    else {isBUp = false; isBDn = false; isLUp = false; isLDn = false; isNominal = true;}  
    
-   std::map<std::string,double> myMap;
-   std::map<std::string,double> varMap;
+   std::map<std::string,double> myMapTT;
+   std::map<std::string,double> varMapTT;
+   std::map<std::string,double> myMapBB;
+   std::map<std::string,double> varMapBB;
+
    inputTree->SetBranchStatus("*",0);
 
    //Event info
@@ -467,6 +475,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("dnn_WJets",&dnn_WJets,"dnn_WJets/F");
    outputTree->Branch("dnn_ttbar",&dnn_ttbar,"dnn_ttbar/F");
    outputTree->Branch("dnn_Tprime",&dnn_Tprime,"dnn_Tprime/F");
+   outputTree->Branch("dnn_WJetsBB",&dnn_WJetsBB,"dnn_WJetsBB/F");
+   outputTree->Branch("dnn_ttbarBB",&dnn_ttbarBB,"dnn_ttbarBB/F");
+   outputTree->Branch("dnn_Bprime",&dnn_Bprime,"dnn_Bprime/F");
 
    // ----------------------------------------------------------------------------
    // Define and initialize objects / cuts / efficiencies
@@ -943,42 +954,43 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
-           //https://wiwong.web.cern.ch/wiwong/Muon_Eff_Plots/2018_Efficiency20_miniTight_Tight_abseta/20_miniTight_Tight_abseta_SF.json
+
+	  //Miniisolation SF, Jess Wong approved in MUO 8/26/19, slide 38 upper left
           if(leppt < 30){ // 25-30
-           if(fabs(lepeta) < 0.9) isoSF= 0.991502;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.990496;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.012578;
-            else isoSF= 1.016434;
+           if(fabs(lepeta) < 0.9) isoSF= 0.9925;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9932;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0124;
+            else isoSF= 1.0202;
           }
           else if(leppt < 40){
-            if(fabs(lepeta) < 0.9) isoSF= 0.995874;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.995758;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.007955;
-            else isoSF= 1.009848;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9959;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9957;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0076;
+            else isoSF= 1.0101;
           }
           else if(leppt < 50){
-            if(fabs(lepeta) < 0.9) isoSF= 0.997380;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.997219;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.003569;
-            else isoSF= 1.004825;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9981;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9978;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0040;
+            else isoSF= 1.0059;
           }
           else if(leppt < 60){
-            if(fabs(lepeta) < 0.9) isoSF= 0.998509;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.998332;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.001423;
-            else isoSF= 1.001671;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9989;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9982;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0019;
+            else isoSF= 1.0029;
           }
           else if(leppt < 120){
-            if(fabs(lepeta) < 0.9) isoSF= 0.999033;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.998499;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.999867;
-            else isoSF= 1.000000;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9997;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9995;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0001;
+            else isoSF= 1.0003;
           }
-          else{ //120-200
-           if(fabs(lepeta) < 0.9) isoSF= 1.000047;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.998008;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.997934;
-            else isoSF= 1.0;
+          else{ //120-200, ignoring 200-300 for low stats
+           if(fabs(lepeta) < 0.9) isoSF= 1.0000;
+            else if(fabs(lepeta) <  1.2) isoSF= 1.0016;
+            else if(fabs(lepeta) <  2.1) isoSF= 0.9983;
+            else isoSF= 1.0000;
           }
             
           //cut based tight id: https://gitlab.cern.ch/cms-muonPOG/MuonReferenceEfficiencies/blob/master/EfficienciesStudies/2018/jsonfiles/RunABCD_SF_ID.json
@@ -1605,14 +1617,42 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       // Evaluate the VLQ / ttbar / WJets DNN
       // ----------------------------------------------------------------------------
       
-      myMap = {
+      myMapTT = {
 	{"Wjets",  -999},
 	{"ttbar",  -999},
 	{"Tprime",-999},
       };
+      
+      varMapTT = {
+	{"corr_met_MultiLepCalc", -999},
+	{"AK4HTpMETpLepPt", -999},
+	{"AK4HT", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
+	{"minDR_leadAK8otherAK8", -999},
+	{"nH_DeepAK8", -999},
+	{"nT_DeepAK8", -999},
+	{"jetPt_1", -999},
+	{"jetPt_2", -999},
+	{"jetPt_3", -999},
+	{"sdMass_1", -999},
+	{"sdMass_2", -999},
+	{"sdMass_3", -999},
+	{"dnnLargest_2", -999},
+	{"dnnLargest_3", -999},
+	{"dnnJ_1", -999},
+	{"dnnJ_2", -999},
+	{"dnnJ_3", -999},
+      };
 
-      varMap = {
-	{"corr_met_singleLepCalc", -999},
+      myMapBB = {
+	{"WjetsBB",  -999},
+	{"ttbarBB",  -999},
+	{"Bprime",-999},
+      };
+    
+      varMapBB = {
+	{"corr_met_MultiLepCalc", -999},
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
 	{"NJets_JetSubCalc", -999},
@@ -1624,10 +1664,13 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	{"dnnJ_2", -999},
 	{"dnnJ_3", -999},
       };
-
+  
       dnn_WJets = -1;
       dnn_ttbar = -1;
       dnn_Tprime = -1;
+      dnn_WJetsBB = -1;
+      dnn_ttbarBB = -1;
+      dnn_Bprime = -1;
 
       if(NJetsAK8_JetSubCalc > 1){
 	float jetPt_1, jetPt_2, jetPt_3;
@@ -1654,8 +1697,30 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	if(NJetsAK8_JetSubCalc > 2) dnnJ_3 = dnn_J_DeepAK8Calc_PtOrdered.at(2);
 	else dnnJ_3 = -9;
 
-	varMap = {
-	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
+	varMapTT = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
+	  {"AK4HT", AK4HT},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+	  {"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
+	  {"nH_DeepAK8", nH_DeepAK8},
+	  {"nT_DeepAK8", nT_DeepAK8},
+	  {"jetPt_1", jetPt_1},
+	  {"jetPt_2", jetPt_2},
+	  {"jetPt_3", jetPt_3},
+	  {"sdMass_1", sdMass_1},
+	  {"sdMass_2", sdMass_2},
+	  {"sdMass_3", sdMass_3},
+	  {"dnnLargest_2", dnnLargest_2},
+	  {"dnnLargest_3", dnnLargest_3},
+	  {"dnnJ_1", dnnJ_1},
+	  {"dnnJ_2", dnnJ_2},
+	  {"dnnJ_3", dnnJ_3},
+	};
+	
+	varMapBB = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
 	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
 	  {"AK4HT", AK4HT},
 	  {"NJets_JetSubCalc", NJets_JetSubCalc},
@@ -1668,11 +1733,16 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  {"dnnJ_3", dnnJ_3},
 	};
 	
-	myMap = lwtnn->compute(varMap);      
+	myMapTT = lwtnnTT->compute(varMapTT);      
+	myMapBB = lwtnnBB->compute(varMapBB);      
 
-	dnn_WJets = myMap["Wjets"];
-	dnn_ttbar = myMap["ttbar"];
-	dnn_Tprime = myMap["Tprime"];
+	dnn_WJets = myMapTT["Wjets"];
+	dnn_ttbar = myMapTT["ttbar"];
+	dnn_Tprime = myMapTT["Tprime"];
+	dnn_WJetsBB = myMapBB["WjetsBB"];
+	dnn_ttbarBB = myMapBB["ttbarBB"];
+	dnn_Bprime = myMapBB["Bprime"];
+
       }
 
       // ----------------------------------------------------------------------------
@@ -1809,28 +1879,28 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  // ------------------------------------------------------------------------------------------------------------------
 
 	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1){
-	    if(isTmatched) DeepAK8SF_TeffUp += 0.05;
-	    else DeepAK8SF_TmisUp += 0.05;
+	    if(isTmatched) DeepAK8SF_TeffUp += 0.10;
+	    else DeepAK8SF_TmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2){
-	    if(isHmatched) DeepAK8SF_HeffUp += 0.05;
-	    else DeepAK8SF_HmisUp += 0.05;
+	    if(isHmatched) DeepAK8SF_HeffUp += 0.10;
+	    else DeepAK8SF_HmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3){
-	    if(isZmatched) DeepAK8SF_ZeffUp += 0.05;
-	    else DeepAK8SF_ZmisUp += 0.05;
+	    if(isZmatched) DeepAK8SF_ZeffUp += 0.10;
+	    else DeepAK8SF_ZmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4){
-	    if(isWmatched) DeepAK8SF_WeffUp += 0.05;
-	    else DeepAK8SF_WmisUp += 0.05;
+	    if(isWmatched) DeepAK8SF_WeffUp += 0.10;
+	    else DeepAK8SF_WmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 5){
-	    if(isBmatched) DeepAK8SF_BeffUp += 0.05;
-	    else DeepAK8SF_BmisUp += 0.05;
+	    if(isBmatched) DeepAK8SF_BeffUp += 0.10;
+	    else DeepAK8SF_BmisUp += 0.10;
 	  }
 	  else{
-	    if(isJmatched) DeepAK8SF_JeffUp += 0.05;
-	    else DeepAK8SF_JmisUp += 0.05;
+	    if(isJmatched) DeepAK8SF_JeffUp += 0.10;
+	    else DeepAK8SF_JmisUp += 0.10;
 	  }
 	}
       }
