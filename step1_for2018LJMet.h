@@ -191,6 +191,7 @@ public :
    Float_t         TrigEffWeightUncert;
    Float_t         isoSF;
    Float_t         triggSF;
+   Float_t         triggSFUncert;
    Float_t         lepIdSF;
    Float_t         MuTrkSF;
    Float_t         EGammaGsfSF;
