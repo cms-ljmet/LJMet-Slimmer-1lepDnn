@@ -11,8 +11,8 @@ finalStateYear = 'singleLep2017' # or 2018
 relbase = '/uscms_data/d3/escharni/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/escharni/slimmerdnn.tar'
 inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2017_052219/' # or 2018
-outputDir='/eos/uscms/store/user/escharni/FWLJMET102X_1lep2017Dnn_071519_step1/' # or 2018
-condorDir='/uscms_data/d3/escharni/FWLJMET102X_1lep2017Dnn_071519_step1/' # or 2018
+outputDir='/eos/uscms/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1/' # or 2018
+condorDir='/uscms_data/d3/escharni/FWLJMET102X_1lep2017Dnn_101519_step1/' # or 2018
 
 runDir=os.getcwd()
 inDir=inputDir[10:]
@@ -65,7 +65,6 @@ dirList = [
     'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    'TTWH_TuneCP5_13TeV-madgraph-pythia8',
     'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
     'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
     'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
@@ -186,7 +185,3 @@ Queue 1"""%dict)
                     print count, "jobs submitted!!!"
         
 print("--- %s minutes ---" % (round(time.time() - start_time, 2)/60))
-
-
-
-
