@@ -673,7 +673,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       EGammaGsfSF = 1.0;
       lepIdSF = 1.0;
       triggerSF = 1.0;
-      triggerSFlep = 1.0;
+      triggerSFUncert = 0.0;
       isoSF = 1.0;
       if(isMC){ //MC triggers check
 	if(isElectron){
@@ -836,37 +836,37 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  float trigSFBunc = 0.0;
 	  float trigSFCDEFunc = 0.0;
 	  if (fabs(lepeta) < 0.8){
-	    if (leppt < 50) {trigSFB = 0.741; trigSFBunc = 0.079; trigSFCDEF = 1.051; trigSFCDEFunc = 0.018}
-	    else if (leppt < 60) {trigSFB = 0.830; trigSFBunc = 0.075; trigSFCDEF = 1.029; trigSFCDEFunc = 0.016}
-	    else if (leppt < 70) {trigSFB = 0.722; trigSFBunc = 0.092;  trigSFCDEF = 0.988; trigSFCDEFunc = 0.019}
-	    else if (leppt < 100) {trigSFB = 0.718; trigSFBunc = 0.053;  trigSFCDEF = 0.972; trigSFCDEFunc = 0.012}
-	    else if (leppt < 200) {trigSFB = 0.698; trigSFBunc = 0.050;  trigSFCDEF = 0.972; trigSFCDEFunc = 0.01}
-	    else {trigSFB = 1.021; trigSFBunc = 0.01;  trigSFCDEF = 0.964; trigSFCDEFunc = 0.019}
+	    if (leppt < 50) {trigSFB = 0.741; trigSFBunc = 0.079; trigSFCDEF = 1.051; trigSFCDEFunc = 0.018;}
+	    else if (leppt < 60) {trigSFB = 0.830; trigSFBunc = 0.075; trigSFCDEF = 1.029; trigSFCDEFunc = 0.016;}
+	    else if (leppt < 70) {trigSFB = 0.722; trigSFBunc = 0.092;  trigSFCDEF = 0.988; trigSFCDEFunc = 0.019;}
+	    else if (leppt < 100) {trigSFB = 0.718; trigSFBunc = 0.053;  trigSFCDEF = 0.972; trigSFCDEFunc = 0.012;}
+	    else if (leppt < 200) {trigSFB = 0.698; trigSFBunc = 0.050;  trigSFCDEF = 0.972; trigSFCDEFunc = 0.01;}
+	    else {trigSFB = 1.021; trigSFBunc = 0.01;  trigSFCDEF = 0.964; trigSFCDEFunc = 0.019;}
 	  }else if (fabs(lepeta) < 1.442){
-            if (leppt < 50) {trigSFB = 0.735; trigSFBunc = 0.149;  trigSFCDEF = 1.020; trigSFCDEFunc = 0.029}
-            else if (leppt < 60) {trigSFB = 0.772; trigSFBunc = 0.138;  trigSFCDEF = 1.063; trigSFCDEFunc = 0.024}
-            else if (leppt < 70) {trigSFB = 0.711; trigSFBunc = 0.122;  trigSFCDEF = 0.962; trigSFCDEFunc = 0.031}
-            else if (leppt < 100) {trigSFB = 0.739; trigSFBunc = 0.078;  trigSFCDEF = 0.923; trigSFCDEFunc = 0.020}
-            else if (leppt < 200) {trigSFB = 0.803; trigSFBunc = 0.063;  trigSFCDEF = 0.957; trigSFCDEFunc = 0.015}
-            else {trigSFB = 0.801; trigSFBunc = 0.143;  trigSFCDEF = 1.015; trigSFCDEFunc = 0.015}
+            if (leppt < 50) {trigSFB = 0.735; trigSFBunc = 0.149;  trigSFCDEF = 1.020; trigSFCDEFunc = 0.029;}
+            else if (leppt < 60) {trigSFB = 0.772; trigSFBunc = 0.138;  trigSFCDEF = 1.063; trigSFCDEFunc = 0.024;}
+            else if (leppt < 70) {trigSFB = 0.711; trigSFBunc = 0.122;  trigSFCDEF = 0.962; trigSFCDEFunc = 0.031;}
+            else if (leppt < 100) {trigSFB = 0.739; trigSFBunc = 0.078;  trigSFCDEF = 0.923; trigSFCDEFunc = 0.020;}
+            else if (leppt < 200) {trigSFB = 0.803; trigSFBunc = 0.063;  trigSFCDEF = 0.957; trigSFCDEFunc = 0.015;}
+            else {trigSFB = 0.801; trigSFBunc = 0.143;  trigSFCDEF = 1.015; trigSFCDEFunc = 0.015;}
 	  }else if (fabs(lepeta) < 1.566) {trigSFB = 1.0; trigSFCDEF = 1.0;}
 	  else if (fabs(lepeta) < 2.0){
-            if (leppt < 50) {trigSFB = 0.987; trigSFBunc = 0.205;  trigSFCDEF = 1.060; trigSFCDEFunc = 0.059}
-            else if (leppt < 60) {trigSFB = 0.241; trigSFBunc = 0.079;  trigSFCDEF = 1.109; trigSFCDEFunc = 0.045}
-            else if (leppt < 70) {trigSFB = 0.213; trigSFBunc = 0.079;  trigSFCDEF = 1.061; trigSFCDEFunc = 0.054}
-            else if (leppt < 100) {trigSFB = 0.133; trigSFBunc = 0.079;  trigSFCDEF = 0.996; trigSFCDEFunc = 0.035}
-            else if (leppt < 200) {trigSFB = 0.199; trigSFBunc = 0.079;  trigSFCDEF = 0.960; trigSFCDEFunc = 0.039}
-            else {trigSFB = 1.144; trigSFBunc = 0.026;  trigSFCDEF = 0.924; trigSFCDEFunc = 0.099}
+            if (leppt < 50) {trigSFB = 0.987; trigSFBunc = 0.205;  trigSFCDEF = 1.060; trigSFCDEFunc = 0.059;}
+            else if (leppt < 60) {trigSFB = 0.241; trigSFBunc = 0.079;  trigSFCDEF = 1.109; trigSFCDEFunc = 0.045;}
+            else if (leppt < 70) {trigSFB = 0.213; trigSFBunc = 0.079;  trigSFCDEF = 1.061; trigSFCDEFunc = 0.054;}
+            else if (leppt < 100) {trigSFB = 0.133; trigSFBunc = 0.079;  trigSFCDEF = 0.996; trigSFCDEFunc = 0.035;}
+            else if (leppt < 200) {trigSFB = 0.199; trigSFBunc = 0.079;  trigSFCDEF = 0.960; trigSFCDEFunc = 0.039;}
+            else {trigSFB = 1.144; trigSFBunc = 0.026;  trigSFCDEF = 0.924; trigSFCDEFunc = 0.099;}
 	  }else {
-            if (leppt < 50) {trigSFB = 1.098; trigSFBunc = 0.318;  trigSFCDEF = 1.007; trigSFCDEFunc = 0.087}
-            else if (leppt < 60) {trigSFB = 1.082; trigSFBunc = 0.199;  trigSFCDEF = 0.903; trigSFCDEFunc = 0.092}
-            else if (leppt < 70) {trigSFB = 1.0; trigSFBunc = 0.05;  trigSFCDEF = 1.037; trigSFCDEFunc = 0.077}
-            else if (leppt < 100) {trigSFB = 1.017; trigSFBunc = 0.158;  trigSFCDEF = 1.027; trigSFCDEFunc = 0.045}
-            else if (leppt < 200) {trigSFB = 1.0; trigSFBunc = 0.05;  trigSFCDEF = 0.910; trigSFCDEFunc = 0.071}
-            else {trigSFB = 1.0; trigSFBunc = 0.05;  trigSFCDEF = 0.910; trigSFCDEFunc = 0.071}
+            if (leppt < 50) {trigSFB = 1.098; trigSFBunc = 0.318;  trigSFCDEF = 1.007; trigSFCDEFunc = 0.087;}
+            else if (leppt < 60) {trigSFB = 1.082; trigSFBunc = 0.199;  trigSFCDEF = 0.903; trigSFCDEFunc = 0.092;}
+            else if (leppt < 70) {trigSFB = 1.0; trigSFBunc = 0.05;  trigSFCDEF = 1.037; trigSFCDEFunc = 0.077;}
+            else if (leppt < 100) {trigSFB = 1.017; trigSFBunc = 0.158;  trigSFCDEF = 1.027; trigSFCDEFunc = 0.045;}
+            else if (leppt < 200) {trigSFB = 1.0; trigSFBunc = 0.05;  trigSFCDEF = 0.910; trigSFCDEFunc = 0.071;}
+            else {trigSFB = 1.0; trigSFBunc = 0.05;  trigSFCDEF = 0.910; trigSFCDEFunc = 0.071;}
 	  }
 	  triggerSF = (4.823*trigSFB + 36.734*trigSFCDEF)/41.557;
-	  triggerSFUncert = sqrt( (4.823*trigSFBunc/41.557)^2 + (36.734*trigSFCDEF/41.557)^2 );
+	  triggerSFUncert = sqrt( pow(4.823*trigSFBunc/41.557,2) + pow(36.734*trigSFCDEFunc/41.557,2) );
 	}
 	if(isMuon){
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
@@ -1063,7 +1063,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    }
 	  }
 	  triggerSF = (4.823*triggerSFB+36.734*triggerSFCDEF)/41.557;
-	  triggerSFUncert = sqrt( (4.823*triggerSFBunc/41.557)^2 + (36.734*triggerSFCDEFunc/41.557)^2 );
+	  triggerSFUncert = sqrt( pow(4.823*triggerSFBunc/41.557,2) + pow(36.734*triggerSFCDEFunc/41.557,2) );
 	 
 	}
 	DataPastTrigger = 1;
