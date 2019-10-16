@@ -2,6 +2,6 @@
 
 echo "HADDING NOMINAL"
 
-python -u haddoutput.py <user>/FWLJMET102X_1lep201XDnn_070219_step1 <user>/FWLJMET102X_1lep201XDnn_070219_step1hadds
+python -u haddoutput.py escharni/FWLJMET102X_1lep2017Dnn_071519_step1 escharni/FWLJMET102X_1lep2017Dnn_071519_step1hadds
 
 echo "DONE"
