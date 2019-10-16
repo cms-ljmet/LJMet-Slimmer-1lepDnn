@@ -228,7 +228,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("allTopsPt_TTbarMassCalc",1);
    inputTree->SetBranchStatus("allTopsID_TTbarMassCalc",1);
    inputTree->SetBranchStatus("allTopsStatus_TTbarMassCalc",1);
-   inputTree->SetBranchStatus("isTau_MultiLepCalc",1);
 
    // ----------------------------------------------------------------------------
    // Create output tree and define branches
@@ -297,7 +296,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("genAntiTopPt",&genAntiTopPt,"genAntiTopPt/F");
 
    // leptons
-   outputTree->Branch("isTau_MultiLepCalc",&isTau_MultiLepCalc,"isTau_MultiLepCalc/O");
    outputTree->Branch("corr_met_MultiLepCalc",&corr_met_MultiLepCalc,"corr_met_MultiLepCalc/D");
    outputTree->Branch("corr_met_phi_MultiLepCalc",&corr_met_phi_MultiLepCalc,"corr_met_phi_MultiLepCalc/D");
    outputTree->Branch("corr_metmod_MultiLepCalc",&corr_metmod_MultiLepCalc,"corr_metmod_MultiLepCalc/D");
