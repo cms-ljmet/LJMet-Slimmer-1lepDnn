@@ -9,11 +9,9 @@ start_time = time.time()
 input  = sys.argv[1]
 output = sys.argv[2]
 
-inputDir='/eos/uscms/store/user/'+input+'/'
-outputDir='/eos/uscms/store/user/'+output+'/'
+inDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1/'
+outDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1hadds/'
 
-inDir=inputDir[10:]
-outDir=outputDir[10:]
 
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
 
@@ -52,7 +50,6 @@ dirList = [
     'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    'TTWH_TuneCP5_13TeV-madgraph-pythia8',
     'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
     'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
     'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
@@ -92,14 +89,13 @@ for sample in dirList:
         outsample = sample+'_'+outlabel
         if outlabel == 'none': outsample = sample
 
-        rootfiles = EOSlist_root_files(inputDir+'/'+outsample)
+        rootfiles = EOSlist_root_files(inDir+'/'+outsample)
 
         print "------------ hadding Sample:",outsample,"---------------"
         print 'N root files in',outsample,'=',len(rootfiles)
 
 
-        nFilesPerHadd = 400
-        if 'WJetsToLNu_HT'in sample: nFilesPerHadd = 100
+        nFilesPerHadd = 900
         onefile = ' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[-1]
         manyfiles = nFilesPerHadd*onefile
         lengthcheck = len('hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '+manyfiles)

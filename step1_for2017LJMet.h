@@ -77,6 +77,9 @@ public :
    Float_t dnn_WJets;
    Float_t dnn_ttbar;
    Float_t dnn_Tprime;
+   Float_t dnn_WJetsBB;
+   Float_t dnn_ttbarBB;
+   Float_t dnn_Bprime;
 
    vector<int>    theJetAK8Truth_JetSubCalc_PtOrdered;
    vector<double> deltaR_leptonicparticle_AK8_PtOrdered; 
@@ -197,6 +200,7 @@ public :
    Float_t         MuTrkSF;
    Float_t         EGammaGsfSF;
    Float_t         triggerSF;
+   Float_t         triggerSFUncert;
    Float_t         JetSF_80X;
    Float_t         JetSFup_80X;
    Float_t         JetSFdn_80X;
