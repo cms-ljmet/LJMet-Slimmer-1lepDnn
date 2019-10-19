@@ -71,6 +71,9 @@ public :
    Float_t dnn_WJets;
    Float_t dnn_ttbar;
    Float_t dnn_Tprime;
+   Float_t dnn_WJetsBB;
+   Float_t dnn_ttbarBB;
+   Float_t dnn_Bprime;
 
    vector<int>    theJetAK8Truth_JetSubCalc_PtOrdered;
    vector<double> deltaR_leptonicparticle_AK8_PtOrdered; 
@@ -187,6 +190,8 @@ public :
    Float_t         TrigEffWeight;
    Float_t         TrigEffWeightUncert;
    Float_t         isoSF;
+   Float_t         triggSF;
+   Float_t         triggSFUncert;
    Float_t         lepIdSF;
    Float_t         MuTrkSF;
    Float_t         EGammaGsfSF;
@@ -359,11 +364,8 @@ public :
    Bool_t          isTZBW_TpTpCalc;
    Bool_t          isTZTH_TpTpCalc;
    Bool_t          isTZTZ_TpTpCalc;
-   Bool_t          isTau_MultiLepCalc;
    Int_t           NLeptonDecays_TpTpCalc;
    Int_t           NPartonsfromHEPUEP_MultiLepCalc;
-   Int_t           dataE_MultiLepCalc;
-   Int_t           dataM_MultiLepCalc;
    Int_t           genTDLID_MultiLepCalc;
    Int_t           lumi_CommonCalc;
    Int_t           nAllJets_CommonCalc;
@@ -452,7 +454,6 @@ public :
    vector<int>     *elScPixCharge_MultiLepCalc;
    vector<int>     *elStatus_MultiLepCalc;
    vector<int>     *elVtxFitConv_MultiLepCalc;
-   vector<int>     *electron_1_hltmatched_MultiLepCalc;
    vector<int>     *genBSLID_MultiLepCalc;
    vector<int>     *genID_MultiLepCalc;
    vector<int>     *genIndex_MultiLepCalc;
@@ -487,7 +488,6 @@ public :
    vector<int>     *muNumberOfMothers_MultiLepCalc;
    vector<int>     *muPdgId_MultiLepCalc;
    vector<int>     *muStatus_MultiLepCalc;
-   vector<int>     *muon_1_hltmatched_MultiLepCalc;
    vector<int>     *quarkID_TpTpCalc;
    vector<int>     *tPrimeID_TpTpCalc;
    vector<int>     *tPrimeNDaughters_TpTpCalc;
@@ -527,7 +527,6 @@ public :
    vector<double>  *AK4JetEta_MultiLepCalc;
    vector<double>  *AK4JetPhi_MultiLepCalc;
    vector<double>  *AK4JetPt_MultiLepCalc;
-   vector<double>  *AK8JetCSV_BestCalc;
    vector<double>  *AK8JetCSV_MultiLepCalc;
    vector<double>  *AK8JetDoubleB_MultiLepCalc;
    vector<double>  *AK8JetEnergy_BestCalc;
@@ -763,8 +762,6 @@ public :
    vector<double>  *topbEta_TTbarMassCalc;
    vector<double>  *topbPhi_TTbarMassCalc;
    vector<double>  *topbPt_TTbarMassCalc;
-   vector<string>  *electron_hltfilters_MultiLepCalc;
-   vector<string>  *muon_hltfilters_MultiLepCalc;
    vector<string>  *vsSelMCTriggersEl_MultiLepCalc;
    vector<string>  *vsSelMCTriggersMu_MultiLepCalc;
    vector<string>  *vsSelTriggersEl_MultiLepCalc;
@@ -785,11 +782,8 @@ public :
    TBranch        *b_isTZBW_TpTpCalc;   //!
    TBranch        *b_isTZTH_TpTpCalc;   //!
    TBranch        *b_isTZTZ_TpTpCalc;   //!
-   TBranch        *b_isTau_MultiLepCalc;   //!
    TBranch        *b_NLeptonDecays_TpTpCalc;   //!
    TBranch        *b_NPartonsfromHEPUEP_MultiLepCalc;   //!
-   TBranch        *b_dataE_MultiLepCalc;   //!
-   TBranch        *b_dataM_MultiLepCalc;   //!
    TBranch        *b_genTDLID_MultiLepCalc;   //!
    TBranch        *b_lumi_CommonCalc;   //!
    TBranch        *b_nAllJets_CommonCalc;   //!
@@ -878,7 +872,6 @@ public :
    TBranch        *b_elScPixCharge_MultiLepCalc;   //!
    TBranch        *b_elStatus_MultiLepCalc;   //!
    TBranch        *b_elVtxFitConv_MultiLepCalc;   //!
-   TBranch        *b_electron_1_hltmatched_MultiLepCalc;   //!
    TBranch        *b_genBSLID_MultiLepCalc;   //!
    TBranch        *b_genID_MultiLepCalc;   //!
    TBranch        *b_genIndex_MultiLepCalc;   //!
@@ -913,7 +906,6 @@ public :
    TBranch        *b_muNumberOfMothers_MultiLepCalc;   //!
    TBranch        *b_muPdgId_MultiLepCalc;   //!
    TBranch        *b_muStatus_MultiLepCalc;   //!
-   TBranch        *b_muon_1_hltmatched_MultiLepCalc;   //!
    TBranch        *b_quarkID_TpTpCalc;   //!
    TBranch        *b_tPrimeID_TpTpCalc;   //!
    TBranch        *b_tPrimeNDaughters_TpTpCalc;   //!
@@ -953,7 +945,6 @@ public :
    TBranch        *b_AK4JetEta_MultiLepCalc;   //!
    TBranch        *b_AK4JetPhi_MultiLepCalc;   //!
    TBranch        *b_AK4JetPt_MultiLepCalc;   //!
-   TBranch        *b_AK8JetCSV_BestCalc;   //!
    TBranch        *b_AK8JetCSV_MultiLepCalc;   //!
    TBranch        *b_AK8JetDoubleB_MultiLepCalc;   //!
    TBranch        *b_AK8JetEnergy_BestCalc;   //!
@@ -1189,8 +1180,6 @@ public :
    TBranch        *b_topbEta_TTbarMassCalc;   //!
    TBranch        *b_topbPhi_TTbarMassCalc;   //!
    TBranch        *b_topbPt_TTbarMassCalc;   //!
-   TBranch        *b_electron_hltfilters_MultiLepCalc;   //!
-   TBranch        *b_muon_hltfilters_MultiLepCalc;   //!
    TBranch        *b_vsSelMCTriggersEl_MultiLepCalc;   //!
    TBranch        *b_vsSelMCTriggersMu_MultiLepCalc;   //!
    TBranch        *b_vsSelTriggersEl_MultiLepCalc;   //!
@@ -1382,7 +1371,6 @@ void step1::Init(TTree *tree)
    elScPixCharge_MultiLepCalc = 0;
    elStatus_MultiLepCalc = 0;
    elVtxFitConv_MultiLepCalc = 0;
-   electron_1_hltmatched_MultiLepCalc = 0;
    genBSLID_MultiLepCalc = 0;
    genID_MultiLepCalc = 0;
    genIndex_MultiLepCalc = 0;
@@ -1417,7 +1405,6 @@ void step1::Init(TTree *tree)
    muNumberOfMothers_MultiLepCalc = 0;
    muPdgId_MultiLepCalc = 0;
    muStatus_MultiLepCalc = 0;
-   muon_1_hltmatched_MultiLepCalc = 0;
    quarkID_TpTpCalc = 0;
    tPrimeID_TpTpCalc = 0;
    tPrimeNDaughters_TpTpCalc = 0;
@@ -1457,7 +1444,6 @@ void step1::Init(TTree *tree)
    AK4JetEta_MultiLepCalc = 0;
    AK4JetPhi_MultiLepCalc = 0;
    AK4JetPt_MultiLepCalc = 0;
-   AK8JetCSV_BestCalc = 0;
    AK8JetCSV_MultiLepCalc = 0;
    AK8JetDoubleB_MultiLepCalc = 0;
    AK8JetEnergy_BestCalc = 0;
@@ -1693,8 +1679,6 @@ void step1::Init(TTree *tree)
    topbEta_TTbarMassCalc = 0;
    topbPhi_TTbarMassCalc = 0;
    topbPt_TTbarMassCalc = 0;
-   electron_hltfilters_MultiLepCalc = 0;
-   muon_hltfilters_MultiLepCalc = 0;
    vsSelMCTriggersEl_MultiLepCalc = 0;
    vsSelMCTriggersMu_MultiLepCalc = 0;
    vsSelTriggersEl_MultiLepCalc = 0;
@@ -1720,11 +1704,8 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("isTZBW_TpTpCalc", &isTZBW_TpTpCalc, &b_isTZBW_TpTpCalc);
    inputTree->SetBranchAddress("isTZTH_TpTpCalc", &isTZTH_TpTpCalc, &b_isTZTH_TpTpCalc);
    inputTree->SetBranchAddress("isTZTZ_TpTpCalc", &isTZTZ_TpTpCalc, &b_isTZTZ_TpTpCalc);
-   inputTree->SetBranchAddress("isTau_MultiLepCalc", &isTau_MultiLepCalc, &b_isTau_MultiLepCalc);
    inputTree->SetBranchAddress("NLeptonDecays_TpTpCalc", &NLeptonDecays_TpTpCalc, &b_NLeptonDecays_TpTpCalc);
    inputTree->SetBranchAddress("NPartonsfromHEPUEP_MultiLepCalc", &NPartonsfromHEPUEP_MultiLepCalc, &b_NPartonsfromHEPUEP_MultiLepCalc);
-   inputTree->SetBranchAddress("dataE_MultiLepCalc", &dataE_MultiLepCalc, &b_dataE_MultiLepCalc);
-   inputTree->SetBranchAddress("dataM_MultiLepCalc", &dataM_MultiLepCalc, &b_dataM_MultiLepCalc);
    inputTree->SetBranchAddress("genTDLID_MultiLepCalc", &genTDLID_MultiLepCalc, &b_genTDLID_MultiLepCalc);
    inputTree->SetBranchAddress("lumi_CommonCalc", &lumi_CommonCalc, &b_lumi_CommonCalc);
    inputTree->SetBranchAddress("nAllJets_CommonCalc", &nAllJets_CommonCalc, &b_nAllJets_CommonCalc);
@@ -1813,7 +1794,6 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("elScPixCharge_MultiLepCalc", &elScPixCharge_MultiLepCalc, &b_elScPixCharge_MultiLepCalc);
    inputTree->SetBranchAddress("elStatus_MultiLepCalc", &elStatus_MultiLepCalc, &b_elStatus_MultiLepCalc);
    inputTree->SetBranchAddress("elVtxFitConv_MultiLepCalc", &elVtxFitConv_MultiLepCalc, &b_elVtxFitConv_MultiLepCalc);
-   inputTree->SetBranchAddress("electron_1_hltmatched_MultiLepCalc", &electron_1_hltmatched_MultiLepCalc, &b_electron_1_hltmatched_MultiLepCalc);
    inputTree->SetBranchAddress("genBSLID_MultiLepCalc", &genBSLID_MultiLepCalc, &b_genBSLID_MultiLepCalc);
    inputTree->SetBranchAddress("genID_MultiLepCalc", &genID_MultiLepCalc, &b_genID_MultiLepCalc);
    inputTree->SetBranchAddress("genIndex_MultiLepCalc", &genIndex_MultiLepCalc, &b_genIndex_MultiLepCalc);
@@ -1848,7 +1828,6 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("muNumberOfMothers_MultiLepCalc", &muNumberOfMothers_MultiLepCalc, &b_muNumberOfMothers_MultiLepCalc);
    inputTree->SetBranchAddress("muPdgId_MultiLepCalc", &muPdgId_MultiLepCalc, &b_muPdgId_MultiLepCalc);
    inputTree->SetBranchAddress("muStatus_MultiLepCalc", &muStatus_MultiLepCalc, &b_muStatus_MultiLepCalc);
-   inputTree->SetBranchAddress("muon_1_hltmatched_MultiLepCalc", &muon_1_hltmatched_MultiLepCalc, &b_muon_1_hltmatched_MultiLepCalc);
    inputTree->SetBranchAddress("quarkID_TpTpCalc", &quarkID_TpTpCalc, &b_quarkID_TpTpCalc);
    inputTree->SetBranchAddress("tPrimeID_TpTpCalc", &tPrimeID_TpTpCalc, &b_tPrimeID_TpTpCalc);
    inputTree->SetBranchAddress("tPrimeNDaughters_TpTpCalc", &tPrimeNDaughters_TpTpCalc, &b_tPrimeNDaughters_TpTpCalc);
@@ -1888,7 +1867,6 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("AK4JetEta_MultiLepCalc", &AK4JetEta_MultiLepCalc, &b_AK4JetEta_MultiLepCalc);
    inputTree->SetBranchAddress("AK4JetPhi_MultiLepCalc", &AK4JetPhi_MultiLepCalc, &b_AK4JetPhi_MultiLepCalc);
    inputTree->SetBranchAddress("AK4JetPt_MultiLepCalc", &AK4JetPt_MultiLepCalc, &b_AK4JetPt_MultiLepCalc);
-   inputTree->SetBranchAddress("AK8JetCSV_BestCalc", &AK8JetCSV_BestCalc, &b_AK8JetCSV_BestCalc);
    inputTree->SetBranchAddress("AK8JetCSV_MultiLepCalc", &AK8JetCSV_MultiLepCalc, &b_AK8JetCSV_MultiLepCalc);
    inputTree->SetBranchAddress("AK8JetDoubleB_MultiLepCalc", &AK8JetDoubleB_MultiLepCalc, &b_AK8JetDoubleB_MultiLepCalc);
    inputTree->SetBranchAddress("AK8JetEnergy_BestCalc", &AK8JetEnergy_BestCalc, &b_AK8JetEnergy_BestCalc);
@@ -2124,8 +2102,6 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("topbEta_TTbarMassCalc", &topbEta_TTbarMassCalc, &b_topbEta_TTbarMassCalc);
    inputTree->SetBranchAddress("topbPhi_TTbarMassCalc", &topbPhi_TTbarMassCalc, &b_topbPhi_TTbarMassCalc);
    inputTree->SetBranchAddress("topbPt_TTbarMassCalc", &topbPt_TTbarMassCalc, &b_topbPt_TTbarMassCalc);
-   inputTree->SetBranchAddress("electron_hltfilters_MultiLepCalc", &electron_hltfilters_MultiLepCalc, &b_electron_hltfilters_MultiLepCalc);
-   inputTree->SetBranchAddress("muon_hltfilters_MultiLepCalc", &muon_hltfilters_MultiLepCalc, &b_muon_hltfilters_MultiLepCalc);
    inputTree->SetBranchAddress("vsSelMCTriggersEl_MultiLepCalc", &vsSelMCTriggersEl_MultiLepCalc, &b_vsSelMCTriggersEl_MultiLepCalc);
    inputTree->SetBranchAddress("vsSelMCTriggersMu_MultiLepCalc", &vsSelMCTriggersMu_MultiLepCalc, &b_vsSelMCTriggersMu_MultiLepCalc);
    inputTree->SetBranchAddress("vsSelTriggersEl_MultiLepCalc", &vsSelTriggersEl_MultiLepCalc, &b_vsSelTriggersEl_MultiLepCalc);

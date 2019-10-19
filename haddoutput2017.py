@@ -5,66 +5,63 @@ execfile("/uscms_data/d3/jmanagan/EOSSafeUtils.py")
 start_time = time.time()
 
 #IO directories must be full paths
-input  = sys.argv[1]
-output = sys.argv[2]
+#input  = sys.argv[1]
+#output = sys.argv[2]
 
-inputDir='/eos/uscms/store/user/'+input+'/'
-outputDir='/eos/uscms/store/user/'+output+'/'
+inDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1/'
+outDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1hadds/'
 
-inDir=inputDir[10:]
-outDir=outputDir[10:]
 
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
 
 dirList = [
-#    'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
-#    'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
-#    'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'QCD_HT1000to1500_TuneCP5_13TeV-madgraph-pythia8',
-#    'QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8',
-#    'QCD_HT2000toInf_TuneCP5_13TeV-madgraph-pythia8',
-#    'QCD_HT200to300_TuneCP5_13TeV-madgraph-pythia8',
-#    'QCD_HT300to500_TuneCP5_13TeV-madgraph-pythia8',
-#    'QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8',
-#    'QCD_HT700to1000_TuneCP5_13TeV-madgraph-pythia8',
-#    'ST_s-channel_antitop_leptonDecays_13TeV-PSweights_powheg-pythia',
-#    'ST_s-channel_top_leptonDecays_13TeV-PSweights_powheg-pythia',
-#    'ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'ST_t-channel_top_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'ST_tW_top_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'SingleElectron',
-#    'SingleMuon',
-#    'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'TTWH_TuneCP5_13TeV-madgraph-pythia8',
-#    'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
-#    'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
-#    'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
-#    'TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#    'TprimeTprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
-#    'TprimeTprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
-#    'TprimeTprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
-#    'TprimeTprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
-#    'TprimeTprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
-#    'TprimeTprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
-#    'TprimeTprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
-#    'TprimeTprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
+    'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'DYJetsToLL_M-50_HT-800to1200_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'QCD_HT1000to1500_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT2000toInf_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT200to300_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT300to500_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8',
+    'QCD_HT700to1000_TuneCP5_13TeV-madgraph-pythia8',
+    'ST_s-channel_antitop_leptonDecays_13TeV-PSweights_powheg-pythia',
+    'ST_s-channel_top_leptonDecays_13TeV-PSweights_powheg-pythia',
+    'ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'ST_t-channel_top_4f_InclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'ST_tW_top_5f_inclusiveDecays_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'SingleElectron',
+    'SingleMuon',
+    'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
+    'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
+    'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
+    'TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    'TprimeTprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1100_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1200_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1300_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1400_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1500_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-700_TuneCP5_13TeV-madgraph-pythia8',
 #    'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
@@ -91,15 +88,13 @@ for sample in dirList:
         outsample = sample+'_'+outlabel
         if outlabel == 'none': outsample = sample
 
-        rootfiles = EOSlist_root_files(inputDir+'/'+outsample)
+        rootfiles = EOSlist_root_files(inDir+'/'+outsample)
 
         print "------------ hadding Sample:",outsample,"---------------"
         print 'N root files in',outsample,'=',len(rootfiles)
 
 
-        nFilesPerHadd = 400
-        if 'WJetsToLNu_HT' in sample: nFilesPerHadd = 100
-
+        nFilesPerHadd = 900
         onefile = ' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[-1]
         manyfiles = nFilesPerHadd*onefile
         lengthcheck = len('hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '+manyfiles)

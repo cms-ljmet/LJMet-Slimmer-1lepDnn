@@ -23,10 +23,15 @@ using namespace std;
 // DNN stuff
 // ----------------------------------------------------------------------------
 
-std::string dnnFile = "vlq_mlp_3by10_062819.json";
-std::ifstream input_cfg( dnnFile );
-lwt::JSONConfig cfg = lwt::parse_json(input_cfg);
-lwt::LightweightNeuralNetwork* lwtnn = new lwt::LightweightNeuralNetwork(cfg.inputs, cfg.layers, cfg.outputs);
+std::string dnnFileTT = "vlq_mlp_3by10_080719_TT2018.json";
+std::ifstream input_cfgTT( dnnFileTT );
+lwt::JSONConfig cfgTT = lwt::parse_json(input_cfgTT);
+lwt::LightweightNeuralNetwork* lwtnnTT = new lwt::LightweightNeuralNetwork(cfgTT.inputs, cfgTT.layers, cfgTT.outputs);
+
+std::string dnnFileBB = "vlq_mlp_3by10_080719_BB2018.json";
+std::ifstream input_cfgBB( dnnFileBB );
+lwt::JSONConfig cfgBB = lwt::parse_json(input_cfgBB);
+lwt::LightweightNeuralNetwork* lwtnnBB = new lwt::LightweightNeuralNetwork(cfgBB.inputs, cfgBB.layers, cfgBB.outputs);
 
 // ----------------------------------------------------------------------------
 // Define functions
@@ -71,12 +76,15 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
    if(outTreeName.Contains("BTAGup")) {isBUp = true; isBDn = false; isLUp = false; isLDn = false; isNominal = false;}
    else if(outTreeName.Contains("BTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = false; isNominal = false;}
-   else if(outTreeName.Contains("LTAGup")) {isBUp = false; isBDn = true; isLUp = true; isLDn = false; isNominal = false;}
-   else if(outTreeName.Contains("LTAGdown")) {isBUp = false; isBDn = true; isLUp = false; isLDn = true; isNominal = false;}
+   else if(outTreeName.Contains("LTAGup")) {isBUp = false; isBDn = false; isLUp = true; isLDn = false; isNominal = false;}
+   else if(outTreeName.Contains("LTAGdown")) {isBUp = false; isBDn = false; isLUp = false; isLDn = true; isNominal = false;}
    else {isBUp = false; isBDn = false; isLUp = false; isLDn = false; isNominal = true;}  
    
-   std::map<std::string,double> myMap;
-   std::map<std::string,double> varMap;
+   std::map<std::string,double> myMapTT;
+   std::map<std::string,double> varMapTT;
+   std::map<std::string,double> myMapBB;
+   std::map<std::string,double> varMapBB;
+
    inputTree->SetBranchStatus("*",0);
 
    //Event info
@@ -220,7 +228,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("allTopsPt_TTbarMassCalc",1);
    inputTree->SetBranchStatus("allTopsID_TTbarMassCalc",1);
    inputTree->SetBranchStatus("allTopsStatus_TTbarMassCalc",1);
-   inputTree->SetBranchStatus("isTau_MultiLepCalc",1);
 
    // ----------------------------------------------------------------------------
    // Create output tree and define branches
@@ -279,6 +286,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");
    outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
    outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
+   outputTree->Branch("isoSF",&isoSF,"isoSF/F");
+   outputTree->Branch("triggSF",&triggSF,"triggSF/F");
+   outputTree->Branch("triggSFUncert",&triggSFUncert,"triggSFUncert/F");
 
    // ttbar generator
    outputTree->Branch("ttbarMass_TTbarMassCalc",&ttbarMass_TTbarMassCalc,"ttbarMass_TTbarMassCalc/D");
@@ -286,7 +296,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("genAntiTopPt",&genAntiTopPt,"genAntiTopPt/F");
 
    // leptons
-   outputTree->Branch("isTau_MultiLepCalc",&isTau_MultiLepCalc,"isTau_MultiLepCalc/O");
    outputTree->Branch("corr_met_MultiLepCalc",&corr_met_MultiLepCalc,"corr_met_MultiLepCalc/D");
    outputTree->Branch("corr_met_phi_MultiLepCalc",&corr_met_phi_MultiLepCalc,"corr_met_phi_MultiLepCalc/D");
    outputTree->Branch("corr_metmod_MultiLepCalc",&corr_metmod_MultiLepCalc,"corr_metmod_MultiLepCalc/D");
@@ -319,7 +328,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("deltaR_lepMinMlb",&deltaR_lepMinMlb,"deltaR_lepMinMlb/F");
    outputTree->Branch("deltaR_lepMinMlj",&deltaR_lepMinMlj,"deltaR_lepMinMlj/F");
    outputTree->Branch("minMleppBjet",&minMleppBjet,"minMleppBjet/F");
-   outputTree->Branch("minMleppJet",&minMleppJet,"mixnMleppJet/F");
+   outputTree->Branch("minMleppJet",&minMleppJet,"minMleppJet/F");
    outputTree->Branch("minDR_lepJet",&minDR_lepJet,"minDR_lepJet/F");
    outputTree->Branch("ptRel_lepJet",&ptRel_lepJet,"ptRel_lepJet/F");
    outputTree->Branch("deltaR_lepJets",&deltaR_lepJets);
@@ -465,6 +474,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("dnn_WJets",&dnn_WJets,"dnn_WJets/F");
    outputTree->Branch("dnn_ttbar",&dnn_ttbar,"dnn_ttbar/F");
    outputTree->Branch("dnn_Tprime",&dnn_Tprime,"dnn_Tprime/F");
+   outputTree->Branch("dnn_WJetsBB",&dnn_WJetsBB,"dnn_WJetsBB/F");
+   outputTree->Branch("dnn_ttbarBB",&dnn_ttbarBB,"dnn_ttbarBB/F");
+   outputTree->Branch("dnn_Bprime",&dnn_Bprime,"dnn_Bprime/F");
 
    // ----------------------------------------------------------------------------
    // Define and initialize objects / cuts / efficiencies
@@ -523,7 +535,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 		    1.889e-02,  1.652e-02,  1.344e-02,  1.173e-02,  9.423e-03,  8.155e-03,  6.671e-03,  5.637e-03,  4.504e-03,  3.920e-03,  
 		    3.007e-03,  2.567e-03,  1.909e-03,  1.425e-03,  1.084e-03,  8.974e-04,  8.267e-04,  4.805e-04,  2.814e-04,  1.588e-04,  
 		    1.206e-04,  6.816e-05,  2.870e-05,  1.436e-05,  7.136e-06,  4.702e-06,  1.107e-06,  1.723e-06,  1.079e-06,  1.269e-07,  0.000e+00,  }; // TTToSemiLeptonic
-   pileupweightDown = { 0.000e+00,  1.447e+01,  5.931e+01,  2.226e+01,  1.397e+01,  1.063e+01,  7.865e+00,  5.773e+00,  4.367e+00,  3.362e+00,  
+   pileupweightDn = { 0.000e+00,  1.447e+01,  5.931e+01,  2.226e+01,  1.397e+01,  1.063e+01,  7.865e+00,  5.773e+00,  4.367e+00,  3.362e+00,  
 			2.793e+00,  2.408e+00,  2.153e+00,  1.999e+00,  1.907e+00,  1.857e+00,  1.824e+00,  1.805e+00,  1.789e+00,  1.761e+00,  
 			1.710e+00,  1.645e+00,  1.572e+00,  1.493e+00,  1.423e+00,  1.358e+00,  1.306e+00,  1.264e+00,  1.232e+00,  1.206e+00,  
 			1.185e+00,  1.166e+00,  1.148e+00,  1.131e+00,  1.111e+00,  1.085e+00,  1.054e+00,  1.014e+00,  9.643e-01,  9.065e-01,  
@@ -700,6 +712,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       MCPastTrigger = 0;
       EGammaGsfSF = 1.0;
       lepIdSF = 1.0;
+      triggSF = 1.0;
+      triggSFUncert = 0.0;
+      isoSF = 1.0;
 
       if(isMC){ //MC triggers check
 	if(isElectron){
@@ -839,50 +854,75 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (lepeta < 2.0) lepIdSF = 0.912;
 	    else lepIdSF = 0.885; }
 
-	  // mini isolation scale factors:  https://indico.cern.ch/event/820185/contributions/3427809/attachments/1845276/3027274/quick_update.pdf
-	  if (leppt < 30){
-	    if (fabs(lepeta) < 0.8) isoSF = 0.99458;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.99563;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.10598;
-            else if (fabs(lepeta) < 2) isoSF = 1.02508;
-            else isoSF = 1.03456;}
-          else if (leppt < 40){
-            if (fabs(lepeta) < 0.8) isoSF = 0.99690;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.99896;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.04486;
-            else if (fabs(lepeta) < 2) isoSF = 1.01042;
-            else isoSF = 1.01663;}
-          else if (leppt < 50){
-            if (fabs(lepeta) < 0.8) isoSF = 0.99797;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.99796;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.02402;
-            else if (fabs(lepeta) < 2) isoSF = 1.00510;
-            else isoSF = 1.00919;}
+	  // mini isolation scale factors: https://wiwong.web.cern.ch/wiwong/Ele_Eff_Plots/2018passingMiniIsoTight/egammaEffi.txt_egammaPlots.pdf
+	  if (leppt < 50){
+            if (fabs(lepeta) < 0.8) isoSF = 0.998;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.998;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.024;
+            else if (fabs(lepeta) < 2) isoSF = 1.005;
+            else isoSF = 1.009;}
           else if (leppt < 60){
-            if (fabs(lepeta) < 0.8) isoSF = 0.99798;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.99798;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.03159;
-            else if (fabs(lepeta) < 2) isoSF = 1.00304;
-            else isoSF = 1.00710;}
+            if (fabs(lepeta) < 0.8) isoSF = 0.998;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.998;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.032;
+            else if (fabs(lepeta) < 2) isoSF = 1.003;
+            else isoSF = 1.007;}
           else if (leppt < 100){
-            if (fabs(lepeta) < 0.8) isoSF = 0.99899;
-            else if (fabs(lepeta) < 1.442) isoSF = 1.00000;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.03282;
-            else if (fabs(lepeta) < 2) isoSF = 1.00101;
-            else isoSF = 1.00201;}
+            if (fabs(lepeta) < 0.8) isoSF = 0.999;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.000;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.033;
+            else if (fabs(lepeta) < 2) isoSF = 1.001;
+            else isoSF = 1.002;}
           else if (leppt < 200){
-            if (fabs(lepeta) < 0.8) isoSF = 1.00101;
-            else if (fabs(lepeta) < 1.442) isoSF = 1.00100;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.02058;
-            else if (fabs(lepeta) < 2) isoSF = 1.00100;
-            else isoSF = 1.00301;}
+            if (fabs(lepeta) < 0.8) isoSF = 1.001;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.001;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.021;
+            else if (fabs(lepeta) < 2) isoSF = 1.001;
+            else isoSF = 1.003;}
           else{
-            if (fabs(lepeta) < 0.8) isoSF = 1.00000;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.99800;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.00403;
-            else if (fabs(lepeta) < 2) isoSF = 1.00200;
-            else isoSF = 1.00301;}
-	}
+            if (fabs(lepeta) < 0.8) isoSF = 1.000;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.998;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.004;
+            else if (fabs(lepeta) < 2) isoSF = 1.002;
+            else isoSF = 1.003;}
+
+          //Trigger SF calculated by JHogan, HT > 430, ttbar tag/probe, Id+iso applied
+          if (fabs(lepeta) < 0.8){
+            if (leppt < 50) {triggSF = 1.033; triggSFUncert = 0.015;}
+            else if (leppt < 60) {triggSF = 1.029; triggSFUncert = 0.014;}
+            else if (leppt < 70) {triggSF = 1.001; triggSFUncert = 0.014;}
+            else if (leppt < 100) {triggSF = 1.001; triggSFUncert = 0.010;}
+            else if (leppt < 200) {triggSF = 0.980; triggSFUncert = 0.010;}
+            else {triggSF = 0.983; triggSFUncert = 0.013;}
+	  }
+          else if (fabs(lepeta) < 1.442){
+            if (leppt < 50) {triggSF = 1.076; triggSFUncert = 0.023;}
+            else if (leppt < 60) {triggSF = 1.035; triggSFUncert = 0.020;}
+            else if (leppt < 70) {triggSF = 1.023; triggSFUncert = 0.021;}
+            else if (leppt < 100) {triggSF = 1.010; triggSFUncert = 0.013;}
+            else if (leppt < 200) {triggSF = 1.002; triggSFUncert = 0.010;}
+            else {triggSF = 0.982; triggSFUncert = 0.021;}
+       	  }
+          else if (fabs(lepeta) < 1.556) {triggSF = 0.0; triggSFUncert = 0.0;}
+          
+          else if (fabs(lepeta) < 2.0){ 
+            if (leppt < 50) {triggSF = 1.114; triggSFUncert = 0.042;}
+            else if (leppt < 60) {triggSF = 1.099; triggSFUncert = 0.041;}
+            else if (leppt < 70) {triggSF = 1.030; triggSFUncert = 0.040;}
+            else if (leppt < 100) {triggSF = 0.990; triggSFUncert = 0.032;}
+            else if (leppt < 200) {triggSF = 1.028; triggSFUncert = 0.022;}
+            else {triggSF = 0.948; triggSFUncert = 0.058;}
+          }	  
+          else{ 
+           if (leppt < 50) {triggSF = 1.094; triggSFUncert = 0.061;}
+           else if (leppt < 60) {triggSF = 1.063; triggSFUncert = 0.060;}
+           else if (leppt < 70) {triggSF = 1.073; triggSFUncert = 0.058;}
+           else if (leppt < 100) {triggSF = 1.005; triggSFUncert = 0.039;}
+           else if (leppt < 200) {triggSF = 0.978; triggSFUncert = 0.041;}
+           else {triggSF = 1.103; triggSFUncert = 0.035;}
+         }
+        }	  
+          
 	if(isMuon){
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
 	  std::string string_b = "Mu15_IsoVVVL_PFHT450_PFMET50";
@@ -898,42 +938,43 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORc) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
-           //https://wiwong.web.cern.ch/wiwong/Muon_Eff_Plots/2018_Efficiency20_miniTight_Tight_abseta/20_miniTight_Tight_abseta_SF.json
+
+	  //Miniisolation SF, Jess Wong approved in MUO 8/26/19, slide 38 upper left
           if(leppt < 30){ // 25-30
-           if(fabs(lepeta) < 0.9) isoSF= 0.991502;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.990496;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.012578;
-            else isoSF= 1.016434;
+           if(fabs(lepeta) < 0.9) isoSF= 0.9925;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9932;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0124;
+            else isoSF= 1.0202;
           }
           else if(leppt < 40){
-            if(fabs(lepeta) < 0.9) isoSF= 0.995874;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.995758;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.007955;
-            else isoSF= 1.009848;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9959;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9957;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0076;
+            else isoSF= 1.0101;
           }
           else if(leppt < 50){
-            if(fabs(lepeta) < 0.9) isoSF= 0.997380;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.997219;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.003569;
-            else isoSF= 1.004825;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9981;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9978;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0040;
+            else isoSF= 1.0059;
           }
           else if(leppt < 60){
-            if(fabs(lepeta) < 0.9) isoSF= 0.998509;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.998332;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.001423;
-            else isoSF= 1.001671;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9989;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9982;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0019;
+            else isoSF= 1.0029;
           }
           else if(leppt < 120){
-            if(fabs(lepeta) < 0.9) isoSF= 0.999033;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.998499;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.999867;
-            else isoSF= 1.000000;
+            if(fabs(lepeta) < 0.9) isoSF= 0.9997;
+            else if(fabs(lepeta) <  1.2) isoSF= 0.9995;
+            else if(fabs(lepeta) <  2.1) isoSF= 1.0001;
+            else isoSF= 1.0003;
           }
-          else{ //120-200
-           if(fabs(lepeta) < 0.9) isoSF= 1.000047;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.998008;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.997934;
-            else isoSF= 1.0;
+          else{ //120-200, ignoring 200-300 for low stats
+           if(fabs(lepeta) < 0.9) isoSF= 1.0000;
+            else if(fabs(lepeta) <  1.2) isoSF= 1.0016;
+            else if(fabs(lepeta) <  2.1) isoSF= 0.9983;
+            else isoSF= 1.0000;
           }
             
           //cut based tight id: https://gitlab.cern.ch/cms-muonPOG/MuonReferenceEfficiencies/blob/master/EfficienciesStudies/2018/jsonfiles/RunABCD_SF_ID.json
@@ -969,6 +1010,40 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if (leppt > 50.00 && leppt < 60.00) lepIdSF = 0.9737076412350453;
             else {lepIdSF = 0.9677501192438909;}
           }
+          
+          if (fabs(lepeta) < 0.9){ 
+            if (leppt < 50) {triggSF = 1.051; triggSFUncert = 0.012;}
+            else if (leppt < 60) {triggSF = 1.021; triggSFUncert = 0.012;}
+            else if (leppt < 70) {triggSF = 1.049; triggSFUncert = 0.011;}
+            else if (leppt < 100) {triggSF = 0.994; triggSFUncert = 0.010;}
+            else if (leppt < 200) {triggSF = 0.985; triggSFUncert = 0.010;}
+            else {triggSF = 0.967; triggSFUncert = 0.022;}
+          }	  
+          else if (fabs(lepeta) < 1.2){ 
+            if (leppt < 50) {triggSF = 0.987; triggSFUncert = 0.024;}
+            else if (leppt < 60) {triggSF = 0.980; triggSFUncert = 0.024;}
+            else if (leppt < 70) {triggSF = 1.033; triggSFUncert = 0.020;}
+            else if (leppt < 100) {triggSF = 0.972; triggSFUncert = 0.018;}
+            else if (leppt < 200) {triggSF = 0.970; triggSFUncert = 0.017;}
+            else {triggSF = 1.012; triggSFUncert = 0.022;}
+          }
+          else if (fabs(lepeta) < 2.1){ 
+            if (leppt < 50) {triggSF = 1.050; triggSFUncert = 0.020;}
+            else if (leppt < 60) {triggSF = 1.042; triggSFUncert = 0.017;}
+            else if (leppt < 70) {triggSF = 0.969; triggSFUncert = 0.025;}
+            else if (leppt < 100) {triggSF = 0.996; triggSFUncert = 0.015;}
+            else if (leppt < 200) {triggSF = 0.986; triggSFUncert = 0.014;}
+            else {triggSF = 0.918; triggSFUncert = 0.051;}
+          }	  
+          else{
+            if (leppt < 50) {triggSF = 1.088; triggSFUncert = 0.053;}
+            else if (leppt < 60) {triggSF = 1.062; triggSFUncert = 0.067;}
+            else if (leppt < 70) {triggSF = 1.004; triggSFUncert = 0.078;}
+            else if (leppt < 100) {triggSF = 1.128; triggSFUncert = 0.032;}
+            else if (leppt < 200) {triggSF = 0.942; triggSFUncert = 0.077;}
+            else {triggSF = 1.066; triggSFUncert = 0.042;}
+         }	  
+          
 	}
 	DataPastTrigger = 1;
       }
@@ -1522,14 +1597,42 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       // Evaluate the VLQ / ttbar / WJets DNN
       // ----------------------------------------------------------------------------
       
-      myMap = {
+      myMapTT = {
 	{"Wjets",  -999},
 	{"ttbar",  -999},
 	{"Tprime",-999},
       };
+      
+      varMapTT = {
+	{"corr_met_MultiLepCalc", -999},
+	{"AK4HTpMETpLepPt", -999},
+	{"AK4HT", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
+	{"minDR_leadAK8otherAK8", -999},
+	{"nH_DeepAK8", -999},
+	{"nT_DeepAK8", -999},
+	{"jetPt_1", -999},
+	{"jetPt_2", -999},
+	{"jetPt_3", -999},
+	{"sdMass_1", -999},
+	{"sdMass_2", -999},
+	{"sdMass_3", -999},
+	{"dnnLargest_2", -999},
+	{"dnnLargest_3", -999},
+	{"dnnJ_1", -999},
+	{"dnnJ_2", -999},
+	{"dnnJ_3", -999},
+      };
 
-      varMap = {
-	{"corr_met_singleLepCalc", -999},
+      myMapBB = {
+	{"WjetsBB",  -999},
+	{"ttbarBB",  -999},
+	{"Bprime",-999},
+      };
+    
+      varMapBB = {
+	{"corr_met_MultiLepCalc", -999},
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
 	{"NJets_JetSubCalc", -999},
@@ -1541,10 +1644,13 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	{"dnnJ_2", -999},
 	{"dnnJ_3", -999},
       };
-
+  
       dnn_WJets = -1;
       dnn_ttbar = -1;
       dnn_Tprime = -1;
+      dnn_WJetsBB = -1;
+      dnn_ttbarBB = -1;
+      dnn_Bprime = -1;
 
       if(NJetsAK8_JetSubCalc > 1){
 	float jetPt_1, jetPt_2, jetPt_3;
@@ -1571,8 +1677,30 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	if(NJetsAK8_JetSubCalc > 2) dnnJ_3 = dnn_J_DeepAK8Calc_PtOrdered.at(2);
 	else dnnJ_3 = -9;
 
-	varMap = {
-	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
+	varMapTT = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
+	  {"AK4HT", AK4HT},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+	  {"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
+	  {"nH_DeepAK8", nH_DeepAK8},
+	  {"nT_DeepAK8", nT_DeepAK8},
+	  {"jetPt_1", jetPt_1},
+	  {"jetPt_2", jetPt_2},
+	  {"jetPt_3", jetPt_3},
+	  {"sdMass_1", sdMass_1},
+	  {"sdMass_2", sdMass_2},
+	  {"sdMass_3", sdMass_3},
+	  {"dnnLargest_2", dnnLargest_2},
+	  {"dnnLargest_3", dnnLargest_3},
+	  {"dnnJ_1", dnnJ_1},
+	  {"dnnJ_2", dnnJ_2},
+	  {"dnnJ_3", dnnJ_3},
+	};
+	
+	varMapBB = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
 	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
 	  {"AK4HT", AK4HT},
 	  {"NJets_JetSubCalc", NJets_JetSubCalc},
@@ -1585,11 +1713,16 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  {"dnnJ_3", dnnJ_3},
 	};
 	
-	myMap = lwtnn->compute(varMap);      
+	myMapTT = lwtnnTT->compute(varMapTT);      
+	myMapBB = lwtnnBB->compute(varMapBB);      
 
-	dnn_WJets = myMap["Wjets"];
-	dnn_ttbar = myMap["ttbar"];
-	dnn_Tprime = myMap["Tprime"];
+	dnn_WJets = myMapTT["Wjets"];
+	dnn_ttbar = myMapTT["ttbar"];
+	dnn_Tprime = myMapTT["Tprime"];
+	dnn_WJetsBB = myMapBB["WjetsBB"];
+	dnn_ttbarBB = myMapBB["ttbarBB"];
+	dnn_Bprime = myMapBB["Bprime"];
+
       }
 
       // ----------------------------------------------------------------------------
@@ -1726,28 +1859,28 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  // ------------------------------------------------------------------------------------------------------------------
 
 	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1){
-	    if(isTmatched) DeepAK8SF_TeffUp += 0.05;
-	    else DeepAK8SF_TmisUp += 0.05;
+	    if(isTmatched) DeepAK8SF_TeffUp += 0.10;
+	    else DeepAK8SF_TmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2){
-	    if(isHmatched) DeepAK8SF_HeffUp += 0.05;
-	    else DeepAK8SF_HmisUp += 0.05;
+	    if(isHmatched) DeepAK8SF_HeffUp += 0.10;
+	    else DeepAK8SF_HmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3){
-	    if(isZmatched) DeepAK8SF_ZeffUp += 0.05;
-	    else DeepAK8SF_ZmisUp += 0.05;
+	    if(isZmatched) DeepAK8SF_ZeffUp += 0.10;
+	    else DeepAK8SF_ZmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4){
-	    if(isWmatched) DeepAK8SF_WeffUp += 0.05;
-	    else DeepAK8SF_WmisUp += 0.05;
+	    if(isWmatched) DeepAK8SF_WeffUp += 0.10;
+	    else DeepAK8SF_WmisUp += 0.10;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 5){
-	    if(isBmatched) DeepAK8SF_BeffUp += 0.05;
-	    else DeepAK8SF_BmisUp += 0.05;
+	    if(isBmatched) DeepAK8SF_BeffUp += 0.10;
+	    else DeepAK8SF_BmisUp += 0.10;
 	  }
 	  else{
-	    if(isJmatched) DeepAK8SF_JeffUp += 0.05;
-	    else DeepAK8SF_JmisUp += 0.05;
+	    if(isJmatched) DeepAK8SF_JeffUp += 0.10;
+	    else DeepAK8SF_JmisUp += 0.10;
 	  }
 	}
       }
@@ -2431,8 +2564,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    delete TTconfusionN;
    delete BBconfusionD;
    delete BBconfusionN;
-   delete poly;
-   delete polyU;
-   delete polyD;
+   delete poly2;
+   delete poly2U;
+   delete poly2D;
 
 }
