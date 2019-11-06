@@ -854,36 +854,83 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (lepeta < 2.0) lepIdSF = 0.912;
 	    else lepIdSF = 0.885; }
 
-	  // mini isolation scale factors: https://wiwong.web.cern.ch/wiwong/Ele_Eff_Plots/2018passingMiniIsoTight/egammaEffi.txt_egammaPlots.pdf
-	  if (leppt < 50){
-            if (fabs(lepeta) < 0.8) isoSF = 0.998;
+	  // mini isolation scale factors: https://wiwong.web.cern.ch/wiwong/Ele_Eff_Plots/2018passingMiniIsoTight_updated/egammaEffi.txt_egammaPlots.pdf
+	  if (leppt < 20){
+            if (fabs(lepeta) < -2.0) isoSF = 1.039;
+            else if (fabs(lepeta) < -1.566) isoSF = 1.026;
+            else if (fabs(lepeta) < -1.442) isoSF = 1.115;
+            else if (fabs(lepeta) < -0.8) isoSF = 0.998;
+            else if (fabs(lepeta) < 0.0) isoSF = 0.996;
+            else if (fabs(lepeta) < 0.8) isoSF = 0.996
+            else if (fabs(lepeta) < 1.442) isoSF = 0.998;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.115;
+            else if (fabs(lepeta) < 2.0) isoSF = 1.026;
+            else isoSF = 1.039;}
+          else if (leppt < 40){
+            if (fabs(lepeta) < -2.0) isoSF = 1.019;
+            else if (fabs(lepeta) < -1.566) isoSF = 1.011;
+            else if (fabs(lepeta) < -1.442) isoSF = 1.045;
+            else if (fabs(lepeta) < -0.8) isoSF = 1.000;
+            else if (fabs(lepeta) < 0.0) isoSF = 0.997;
+            else if (fabs(lepeta) < 0.8) isoSF = 0.997;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.000;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.045;
+            else if (fabs(lepeta) < 2.0) isoSF = 1.011;
+            else isoSF = 1.019;}
+          else if (leppt < 50){
+            if (fabs(lepeta) < -2.0) isoSF = 1.010;
+            else if (fabs(lepeta) < -1.566) isoSF = 1.006;
+            else if (fabs(lepeta) < -1.442) isoSF = 1.024;
+            else if (fabs(lepeta) < -0.8) isoSF = 0.998;
+            else if (fabs(lepeta) < 0.0) isoSF = 0.998;
+            else if (fabs(lepeta) < 0.8) isoSF = 0.998;
             else if (fabs(lepeta) < 1.442) isoSF = 0.998;
             else if (fabs(lepeta) < 1.566) isoSF = 1.024;
-            else if (fabs(lepeta) < 2) isoSF = 1.005;
-            else isoSF = 1.009;}
+            else if (fabs(lepeta) < 2.0) isoSF = 1.006;
+            else isoSF = 1.010;}
           else if (leppt < 60){
-            if (fabs(lepeta) < 0.8) isoSF = 0.998;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.998;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.032;
-            else if (fabs(lepeta) < 2) isoSF = 1.003;
-            else isoSF = 1.007;}
+            if (fabs(lepeta) < -2.0) isoSF = 1.008;
+            else if (fabs(lepeta) < -1.566) isoSF = 1.003;
+            else if (fabs(lepeta) < -1.442) isoSF = 1.035;
+            else if (fabs(lepeta) < -0.8) isoSF = 0.999;
+            else if (fabs(lepeta) < 0.0) isoSF = 0.999;
+            else if (fabs(lepeta) < 0.8) isoSF = 0.999;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.999;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.035;
+            else if (fabs(lepeta) < 2.0) isoSF = 1.003;
+            else isoSF = 1.008;}
           else if (leppt < 100){
-            if (fabs(lepeta) < 0.8) isoSF = 0.999;
+            if (fabs(lepeta) < -2.0) isoSF = 1.001;
+            else if (fabs(lepeta) < -1.566) isoSF = 1.000;
+            else if (fabs(lepeta) < -1.442) isoSF = 1.032;
+            else if (fabs(lepeta) < -0.8) isoSF = 1.000;
+            else if (fabs(lepeta) < 0.0) isoSF = 1.000;
+            else if (fabs(lepeta) < 0.8) isoSF = 1.000;
             else if (fabs(lepeta) < 1.442) isoSF = 1.000;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.033;
-            else if (fabs(lepeta) < 2) isoSF = 1.001;
-            else isoSF = 1.002;}
-          else if (leppt < 200){
-            if (fabs(lepeta) < 0.8) isoSF = 1.001;
-            else if (fabs(lepeta) < 1.442) isoSF = 1.001;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.021;
-            else if (fabs(lepeta) < 2) isoSF = 1.001;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.032;
+            else if (fabs(lepeta) < 2.0) isoSF = 1.000;
+            else isoSF = 1.001;}
+           else if (leppt < 200){
+            if (fabs(lepeta) < -2.0) isoSF = 1.003;
+            else if (fabs(lepeta) < -1.566) isoSF = 1.001;
+            else if (fabs(lepeta) < -1.442) isoSF = 1.018;
+            else if (fabs(lepeta) < -0.8) isoSF = 1.002;
+            else if (fabs(lepeta) < 0.0) isoSF = 1.001;
+            else if (fabs(lepeta) < 0.8) isoSF = 1.001;
+            else if (fabs(lepeta) < 1.442) isoSF = 1.002;
+            else if (fabs(lepeta) < 1.566) isoSF = 1.018;
+            else if (fabs(lepeta) < 2.0) isoSF = 1.001;
             else isoSF = 1.003;}
           else{
-            if (fabs(lepeta) < 0.8) isoSF = 1.000;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.998;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.004;
-            else if (fabs(lepeta) < 2) isoSF = 1.002;
+            if (fabs(lepeta) < -2.0) isoSF = 1.003;
+            else if (fabs(lepeta) < -1.566) isoSF = 1.001;
+            else if (fabs(lepeta) < -1.442) isoSF = 0.999;
+            else if (fabs(lepeta) < -0.8) isoSF = 0.999;
+            else if (fabs(lepeta) < 0.0) isoSF = 1.000;
+            else if (fabs(lepeta) < 0.8) isoSF = 1.000;
+            else if (fabs(lepeta) < 1.442) isoSF = 0.999;
+            else if (fabs(lepeta) < 1.566) isoSF = 0.999;
+            else if (fabs(lepeta) < 2) isoSF = 1.001;
             else isoSF = 1.003;}
 
           //Trigger SF calculated by JHogan, HT > 430, ttbar tag/probe, Id+iso applied
