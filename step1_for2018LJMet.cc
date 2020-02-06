@@ -861,7 +861,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if (fabs(lepeta) < -1.442) isoSF = 1.115;
             else if (fabs(lepeta) < -0.8) isoSF = 0.998;
             else if (fabs(lepeta) < 0.0) isoSF = 0.996;
-            else if (fabs(lepeta) < 0.8) isoSF = 0.996
+            else if (fabs(lepeta) < 0.8) isoSF = 0.996;
             else if (fabs(lepeta) < 1.442) isoSF = 0.998;
             else if (fabs(lepeta) < 1.566) isoSF = 1.115;
             else if (fabs(lepeta) < 2.0) isoSF = 1.026;
@@ -1641,138 +1641,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       }
 
       // ----------------------------------------------------------------------------
-      // Evaluate the VLQ / ttbar / WJets DNN
-      // ----------------------------------------------------------------------------
-      
-      myMapTT = {
-	{"Wjets",  -999},
-	{"ttbar",  -999},
-	{"Tprime",-999},
-      };
-      
-      varMapTT = {
-	{"corr_met_MultiLepCalc", -999},
-	{"AK4HTpMETpLepPt", -999},
-	{"AK4HT", -999},
-	{"NJets_JetSubCalc", -999},
-	{"NJetsAK8_JetSubCalc", -999},
-	{"minDR_leadAK8otherAK8", -999},
-	{"nH_DeepAK8", -999},
-	{"nT_DeepAK8", -999},
-	{"jetPt_1", -999},
-	{"jetPt_2", -999},
-	{"jetPt_3", -999},
-	{"sdMass_1", -999},
-	{"sdMass_2", -999},
-	{"sdMass_3", -999},
-	{"dnnLargest_2", -999},
-	{"dnnLargest_3", -999},
-	{"dnnJ_1", -999},
-	{"dnnJ_2", -999},
-	{"dnnJ_3", -999},
-      };
-
-      myMapBB = {
-	{"WjetsBB",  -999},
-	{"ttbarBB",  -999},
-	{"Bprime",-999},
-      };
-    
-      varMapBB = {
-	{"corr_met_MultiLepCalc", -999},
-	{"AK4HTpMETpLepPt", -999},
-	{"AK4HT", -999},
-	{"NJets_JetSubCalc", -999},
-	{"NJetsAK8_JetSubCalc", -999},
-	{"jetPt_1", -999},
-	{"jetPt_2", -999},
-	{"jetPt_3", -999},
-	{"dnnJ_1", -999},
-	{"dnnJ_2", -999},
-	{"dnnJ_3", -999},
-      };
-  
-      dnn_WJets = -1;
-      dnn_ttbar = -1;
-      dnn_Tprime = -1;
-      dnn_WJetsBB = -1;
-      dnn_ttbarBB = -1;
-      dnn_Bprime = -1;
-
-      if(NJetsAK8_JetSubCalc > 1){
-	float jetPt_1, jetPt_2, jetPt_3;
-	float sdMass_1, sdMass_2, sdMass_3;
-	float dnnLargest_2, dnnLargest_3;
-	float dnnJ_1, dnnJ_2, dnnJ_3;
-
-	jetPt_1 = theJetAK8Pt_JetSubCalc_PtOrdered.at(0);
-	jetPt_2 = theJetAK8Pt_JetSubCalc_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) jetPt_3 = theJetAK8Pt_JetSubCalc_PtOrdered.at(2);
-	else jetPt_3 = 0;
-	
-	sdMass_1 = theJetAK8SoftDropCorr_PtOrdered.at(0);
-	sdMass_2 = theJetAK8SoftDropCorr_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) sdMass_3 = theJetAK8SoftDropCorr_PtOrdered.at(2);
-	else sdMass_3 = 0;
-	
-	dnnLargest_2 = dnn_largest_DeepAK8Calc_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) dnnLargest_3 = dnn_largest_DeepAK8Calc_PtOrdered.at(2);
-	else dnnLargest_3 = 10;
-	
-	dnnJ_1 = dnn_J_DeepAK8Calc_PtOrdered.at(0);
-	dnnJ_2 = dnn_J_DeepAK8Calc_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) dnnJ_3 = dnn_J_DeepAK8Calc_PtOrdered.at(2);
-	else dnnJ_3 = -9;
-
-	varMapTT = {
-	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
-	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
-	  {"AK4HT", AK4HT},
-	  {"NJets_JetSubCalc", NJets_JetSubCalc},
-	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
-	  {"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
-	  {"nH_DeepAK8", nH_DeepAK8},
-	  {"nT_DeepAK8", nT_DeepAK8},
-	  {"jetPt_1", jetPt_1},
-	  {"jetPt_2", jetPt_2},
-	  {"jetPt_3", jetPt_3},
-	  {"sdMass_1", sdMass_1},
-	  {"sdMass_2", sdMass_2},
-	  {"sdMass_3", sdMass_3},
-	  {"dnnLargest_2", dnnLargest_2},
-	  {"dnnLargest_3", dnnLargest_3},
-	  {"dnnJ_1", dnnJ_1},
-	  {"dnnJ_2", dnnJ_2},
-	  {"dnnJ_3", dnnJ_3},
-	};
-	
-	varMapBB = {
-	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
-	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
-	  {"AK4HT", AK4HT},
-	  {"NJets_JetSubCalc", NJets_JetSubCalc},
-	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
-	  {"jetPt_1", jetPt_1},
-	  {"jetPt_2", jetPt_2},
-	  {"jetPt_3", jetPt_3},
-	  {"dnnJ_1", dnnJ_1},
-	  {"dnnJ_2", dnnJ_2},
-	  {"dnnJ_3", dnnJ_3},
-	};
-	
-	myMapTT = lwtnnTT->compute(varMapTT);      
-	myMapBB = lwtnnBB->compute(varMapBB);      
-
-	dnn_WJets = myMapTT["Wjets"];
-	dnn_ttbar = myMapTT["ttbar"];
-	dnn_Tprime = myMapTT["Tprime"];
-	dnn_WJetsBB = myMapBB["WjetsBB"];
-	dnn_ttbarBB = myMapBB["ttbarBB"];
-	dnn_Bprime = myMapBB["Bprime"];
-
-      }
-
-      // ----------------------------------------------------------------------------
       // AK8 Jet - lepton associations and truth matching
       // ----------------------------------------------------------------------------
 
@@ -1947,6 +1815,139 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       DeepAK8SF_WmisDn = 1.0 - (DeepAK8SF_WmisUp - 1.0);
       DeepAK8SF_BmisDn = 1.0 - (DeepAK8SF_BmisUp - 1.0);
       DeepAK8SF_JmisDn = 1.0 - (DeepAK8SF_JmisUp - 1.0);
+
+
+      // ----------------------------------------------------------------------------
+      // Evaluate the VLQ / ttbar / WJets DNN
+      // ----------------------------------------------------------------------------
+      
+      myMapTT = {
+	{"Wjets",  -999},
+	{"ttbar",  -999},
+	{"Tprime",-999},
+      };
+      
+      varMapTT = {
+	{"corr_met_MultiLepCalc", -999},
+	{"AK4HTpMETpLepPt", -999},
+	{"AK4HT", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
+	{"minDR_leadAK8otherAK8", -999},
+	{"nH_DeepAK8", -999},
+	{"nT_DeepAK8", -999},
+	{"jetPt_1", -999},
+	{"jetPt_2", -999},
+	{"jetPt_3", -999},
+	{"sdMass_1", -999},
+	{"sdMass_2", -999},
+	{"sdMass_3", -999},
+	{"dnnLargest_2", -999},
+	{"dnnLargest_3", -999},
+	{"dnnJ_1", -999},
+	{"dnnJ_2", -999},
+	{"dnnJ_3", -999},
+      };
+
+      myMapBB = {
+	{"WjetsBB",  -999},
+	{"ttbarBB",  -999},
+	{"Bprime",-999},
+      };
+    
+      varMapBB = {
+	{"corr_met_MultiLepCalc", -999},
+	{"AK4HTpMETpLepPt", -999},
+	{"AK4HT", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
+	{"jetPt_1", -999},
+	{"jetPt_2", -999},
+	{"jetPt_3", -999},
+	{"dnnJ_1", -999},
+	{"dnnJ_2", -999},
+	{"dnnJ_3", -999},
+      };
+  
+      dnn_WJets = -1;
+      dnn_ttbar = -1;
+      dnn_Tprime = -1;
+      dnn_WJetsBB = -1;
+      dnn_ttbarBB = -1;
+      dnn_Bprime = -1;
+
+      if(NJetsAK8_JetSubCalc > 1){
+	float jetPt_1, jetPt_2, jetPt_3;
+	float sdMass_1, sdMass_2, sdMass_3;
+	float dnnLargest_2, dnnLargest_3;
+	float dnnJ_1, dnnJ_2, dnnJ_3;
+
+	jetPt_1 = theJetAK8Pt_JetSubCalc_PtOrdered.at(0);
+	jetPt_2 = theJetAK8Pt_JetSubCalc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) jetPt_3 = theJetAK8Pt_JetSubCalc_PtOrdered.at(2);
+	else jetPt_3 = 0;
+	
+	sdMass_1 = theJetAK8SoftDropCorr_PtOrdered.at(0);
+	sdMass_2 = theJetAK8SoftDropCorr_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) sdMass_3 = theJetAK8SoftDropCorr_PtOrdered.at(2);
+	else sdMass_3 = 0;
+	
+	dnnLargest_2 = dnn_largest_DeepAK8Calc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) dnnLargest_3 = dnn_largest_DeepAK8Calc_PtOrdered.at(2);
+	else dnnLargest_3 = 10;
+	
+	dnnJ_1 = dnn_J_DeepAK8Calc_PtOrdered.at(0);
+	dnnJ_2 = dnn_J_DeepAK8Calc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) dnnJ_3 = dnn_J_DeepAK8Calc_PtOrdered.at(2);
+	else dnnJ_3 = -9;
+
+	varMapTT = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
+	  {"AK4HT", AK4HT},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+	  {"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
+	  {"nH_DeepAK8", nH_DeepAK8},
+	  {"nT_DeepAK8", nT_DeepAK8},
+	  {"jetPt_1", jetPt_1},
+	  {"jetPt_2", jetPt_2},
+	  {"jetPt_3", jetPt_3},
+	  {"sdMass_1", sdMass_1},
+	  {"sdMass_2", sdMass_2},
+	  {"sdMass_3", sdMass_3},
+	  {"dnnLargest_2", dnnLargest_2},
+	  {"dnnLargest_3", dnnLargest_3},
+	  {"dnnJ_1", dnnJ_1},
+	  {"dnnJ_2", dnnJ_2},
+	  {"dnnJ_3", dnnJ_3},
+	};
+	
+	varMapBB = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
+	  {"AK4HT", AK4HT},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+	  {"jetPt_1", jetPt_1},
+	  {"jetPt_2", jetPt_2},
+	  {"jetPt_3", jetPt_3},
+	  {"dnnJ_1", dnnJ_1},
+	  {"dnnJ_2", dnnJ_2},
+	  {"dnnJ_3", dnnJ_3},
+	};
+	
+	myMapTT = lwtnnTT->compute(varMapTT);      
+	myMapBB = lwtnnBB->compute(varMapBB);      
+
+	dnn_WJets = myMapTT["Wjets"];
+	dnn_ttbar = myMapTT["ttbar"];
+	dnn_Tprime = myMapTT["Tprime"];
+	dnn_WJetsBB = myMapBB["WjetsBB"];
+	dnn_ttbarBB = myMapBB["ttbarBB"];
+	dnn_Bprime = myMapBB["Bprime"];
+
+      }
 
       // ----------------------------------------------------------------------------
       // W --> l nu with mass constraint
