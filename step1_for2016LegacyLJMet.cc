@@ -408,7 +408,7 @@ void step1::Loop()
 
    // basic cuts
    float metCut=50;
-   int   htCut=450;
+   int   htCut=510;
    int   nAK8jetsCut=0;
    float lepPtCut=50;
    float elEtaCut=2.5;
@@ -663,6 +663,9 @@ void step1::Loop()
 	    else EGammaGsfSF = 0.990; }
 
           //Scale Factor 2: https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2017_ElectronMVA90noiso_2D.pdf
+////////////////////////////
+// Will need update
+////////////////////////////
 	  if (leppt < 20) {
 	    if (lepeta < -2.0) lepIdSF = 0.943;
 	    else if (lepeta < -1.566) lepIdSF = 0.957;
