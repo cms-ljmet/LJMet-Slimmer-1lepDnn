@@ -935,7 +935,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
           //Trigger SF calculated by JHogan, HT > 430, ttbar tag/probe, Id+iso applied
           if (fabs(lepeta) < 0.8){
-            if (leppt < 50) {triggSF = 1.033; triggSFUncert = 0.015;}
+	    if (leppt < 30) {triggSF = 0.924; triggSFUncert = 0.025;}
+	    else if (leppt < 40) {triggSF = 1.030; triggSF Uncert = 0.018;}
+            else if (leppt < 50) {triggSF = 1.033; triggSFUncert = 0.015;}
             else if (leppt < 60) {triggSF = 1.029; triggSFUncert = 0.014;}
             else if (leppt < 70) {triggSF = 1.001; triggSFUncert = 0.014;}
             else if (leppt < 100) {triggSF = 1.001; triggSFUncert = 0.010;}
@@ -943,17 +945,29 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else {triggSF = 0.983; triggSFUncert = 0.013;}
 	  }
           else if (fabs(lepeta) < 1.442){
-            if (leppt < 50) {triggSF = 1.076; triggSFUncert = 0.023;}
+	    if (leppt < 30) {triggSF = 0.929; triggSFUncert = 0.037;}
+            else if (leppt < 40) {triggSF = 1.057; triggSF Uncert = 0.025;}
+            else if (leppt < 50) {triggSF = 1.076; triggSFUncert = 0.023;}
             else if (leppt < 60) {triggSF = 1.035; triggSFUncert = 0.020;}
             else if (leppt < 70) {triggSF = 1.023; triggSFUncert = 0.021;}
             else if (leppt < 100) {triggSF = 1.010; triggSFUncert = 0.013;}
             else if (leppt < 200) {triggSF = 1.002; triggSFUncert = 0.010;}
             else {triggSF = 0.982; triggSFUncert = 0.021;}
        	  }
-          else if (fabs(lepeta) < 1.556) {triggSF = 0.0; triggSFUncert = 0.0;}
-          
+          else if (fabs(lepeta) < 1.556) {
+ 	    if (leppt < 30) {triggSF = 0.673; triggSFUncert = 0.171;}
+            else if (leppt < 40) {triggSF = 1.197; triggSF Uncert = 0.116;}
+            else if (leppt < 50) {triggSF = 1.143; triggSFUncert = 0.087;}
+            else if (leppt < 60) {triggSF = 0.928; triggSFUncert = 0.092;}
+            else if (leppt < 70) {triggSF = 1.082; triggSFUncert = 0.076;}
+            else if (leppt < 100) {triggSF = 0.951; triggSFUncert = 0.054;}
+            else if (leppt < 200) {triggSF = 1.016; triggSFUncert = 0.029;}
+            else {triggSF = 0.978; triggSFUncert = 0.062;}
+	  }
           else if (fabs(lepeta) < 2.0){ 
-            if (leppt < 50) {triggSF = 1.114; triggSFUncert = 0.042;}
+	    if (leppt < 30) {triggSF = 0.827; triggSFUncert = 0.073;}
+            else if (leppt < 40) {triggSF = 0.976; triggSF Uncert = 0.052;}
+            else if (leppt < 50) {triggSF = 1.114; triggSFUncert = 0.042;}
             else if (leppt < 60) {triggSF = 1.099; triggSFUncert = 0.041;}
             else if (leppt < 70) {triggSF = 1.030; triggSFUncert = 0.040;}
             else if (leppt < 100) {triggSF = 0.990; triggSFUncert = 0.032;}
@@ -961,12 +975,14 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else {triggSF = 0.948; triggSFUncert = 0.058;}
           }	  
           else{ 
-           if (leppt < 50) {triggSF = 1.094; triggSFUncert = 0.061;}
-           else if (leppt < 60) {triggSF = 1.063; triggSFUncert = 0.060;}
-           else if (leppt < 70) {triggSF = 1.073; triggSFUncert = 0.058;}
-           else if (leppt < 100) {triggSF = 1.005; triggSFUncert = 0.039;}
-           else if (leppt < 200) {triggSF = 0.978; triggSFUncert = 0.041;}
-           else {triggSF = 1.103; triggSFUncert = 0.035;}
+            if (leppt < 30) {triggSF = 1.047; triggSFUncert = 0.093;}
+            else if (leppt < 40) {triggSF = 1.150; triggSF Uncert = 0.080;}
+            else if (leppt < 50) {triggSF = 1.094; triggSFUncert = 0.061;}
+            else if (leppt < 60) {triggSF = 1.063; triggSFUncert = 0.060;}
+            else if (leppt < 70) {triggSF = 1.073; triggSFUncert = 0.058;}
+            else if (leppt < 100) {triggSF = 1.005; triggSFUncert = 0.039;}
+            else if (leppt < 200) {triggSF = 0.978; triggSFUncert = 0.041;}
+            else {triggSF = 1.103; triggSFUncert = 0.035;}
          }
         }	  
           
@@ -1058,36 +1074,44 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else {lepIdSF = 0.9677501192438909;}
           }
           
-          if (fabs(lepeta) < 0.9){ 
-            if (leppt < 50) {triggSF = 1.051; triggSFUncert = 0.012;}
-            else if (leppt < 60) {triggSF = 1.021; triggSFUncert = 0.012;}
-            else if (leppt < 70) {triggSF = 1.049; triggSFUncert = 0.011;}
-            else if (leppt < 100) {triggSF = 0.994; triggSFUncert = 0.010;}
-            else if (leppt < 200) {triggSF = 0.985; triggSFUncert = 0.010;}
-            else {triggSF = 0.967; triggSFUncert = 0.022;}
+          if (fabs(lepeta) < 0.9){
+	    if (leppt < 30) {triggSF = 0.995; triggSFUncert = 0.014;}
+            else if (leppt < 40) {triggSF = 1.047; triggSF Uncert = 0.013;} 
+            else if (leppt < 50) {triggSF = 1.050; triggSFUncert = 0.012;}
+            else if (leppt < 60) {triggSF = 1.019; triggSFUncert = 0.009;}
+            else if (leppt < 70) {triggSF = 1.035; triggSFUncert = 0.007;}
+            else if (leppt < 100) {triggSF = 0.997; triggSFUncert = 0.007;}
+            else if (leppt < 200) {triggSF = 0.989; triggSFUncert = 0.007;}
+            else {triggSF = 0.960; triggSFUncert = 0.021;}
           }	  
           else if (fabs(lepeta) < 1.2){ 
-            if (leppt < 50) {triggSF = 0.987; triggSFUncert = 0.024;}
-            else if (leppt < 60) {triggSF = 0.980; triggSFUncert = 0.024;}
-            else if (leppt < 70) {triggSF = 1.033; triggSFUncert = 0.020;}
-            else if (leppt < 100) {triggSF = 0.972; triggSFUncert = 0.018;}
-            else if (leppt < 200) {triggSF = 0.970; triggSFUncert = 0.017;}
-            else {triggSF = 1.012; triggSFUncert = 0.022;}
+            if (leppt < 30) {triggSF = 0.944; triggSFUncert = 0.030;}
+            else if (leppt < 40) {triggSF = 1.017; triggSF Uncert = 0.022;}
+            else if (leppt < 50) {triggSF = 0.986; triggSFUncert = 0.024;}
+            else if (leppt < 60) {triggSF = 0.987; triggSFUncert = 0.016;}
+            else if (leppt < 70) {triggSF = 0.988; triggSFUncert = 0.018;}
+            else if (leppt < 100) {triggSF = 0.982; triggSFUncert = 0.013;}
+            else if (leppt < 200) {triggSF = 0.983; triggSFUncert = 0.012;}
+            else {triggSF = 0.997; triggSFUncert = 0.021;}
           }
           else if (fabs(lepeta) < 2.1){ 
-            if (leppt < 50) {triggSF = 1.050; triggSFUncert = 0.020;}
-            else if (leppt < 60) {triggSF = 1.042; triggSFUncert = 0.017;}
-            else if (leppt < 70) {triggSF = 0.969; triggSFUncert = 0.025;}
-            else if (leppt < 100) {triggSF = 0.996; triggSFUncert = 0.015;}
-            else if (leppt < 200) {triggSF = 0.986; triggSFUncert = 0.014;}
-            else {triggSF = 0.918; triggSFUncert = 0.051;}
+            if (leppt < 30) {triggSF = 0.989; triggSFUncert = 0.021;}
+            else if (leppt < 40) {triggSF = 1.041; triggSF Uncert = 0.018;}
+            else if (leppt < 50) {triggSF = 1.050; triggSFUncert = 0.020;}
+            else if (leppt < 60) {triggSF = 1.033; triggSFUncert = 0.012;}
+            else if (leppt < 70) {triggSF = 0.981; triggSFUncert = 0.018;}
+            else if (leppt < 100) {triggSF = 1.008; triggSFUncert = 0.009;}
+            else if (leppt < 200) {triggSF = 1.001; triggSFUncert = 0.010;}
+            else {triggSF = 0.938; triggSFUncert = 0.045;}
           }	  
           else{
-            if (leppt < 50) {triggSF = 1.088; triggSFUncert = 0.053;}
-            else if (leppt < 60) {triggSF = 1.062; triggSFUncert = 0.067;}
-            else if (leppt < 70) {triggSF = 1.004; triggSFUncert = 0.078;}
-            else if (leppt < 100) {triggSF = 1.128; triggSFUncert = 0.032;}
-            else if (leppt < 200) {triggSF = 0.942; triggSFUncert = 0.077;}
+            if (leppt < 30) {triggSF = 0.964; triggSFUncert = 0.078;}
+            else if (leppt < 40) {triggSF = 1.069; triggSF Uncert = 0.066;}
+            else if (leppt < 50) {triggSF = 1.088; triggSFUncert = 0.053;}
+            else if (leppt < 60) {triggSF = 1.067; triggSFUncert = 0.055;}
+            else if (leppt < 70) {triggSF = 1.017; triggSFUncert = 0.055;}
+            else if (leppt < 100) {triggSF = 1.128; triggSFUncert = 0.020;}
+            else if (leppt < 200) {triggSF = 0.958; triggSFUncert = 0.067;}
             else {triggSF = 1.066; triggSFUncert = 0.042;}
          }	  
           
