@@ -44,6 +44,141 @@ TRandom3 Rand;
 const double MTOP  = 173.5;
 const double MW    = 80.4; 
 
+bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
+  
+  bool newTag = isTagged;
+  if (tag_SF == 1) return newTag; //no correction needed 
+
+  throw die
+  float coin = Rand.Uniform(1.);    
+  
+  if(tag_SF > 1){  // use this if SF>1
+ 
+       if( !isTagged ) {
+  	
+           //fraction of jets that need to be upgraded
+           float mistagPercent = (1.0 - tag_SF) / (1.0 - (tag_SF/tag_eff) );
+   	
+           //upgrade to tagged
+           if( coin < mistagPercent ) {newTag = true;}
+       }
+  
+  }
+  else{  // use this if SF<1
+                                              
+       //downgrade tagged to untagged
+       if( isTagged && coin > tag_SF ) {newTag = false;}
+  
+  }
+  
+  return newTag;
+}
+
+enum shift:char{ central, uncert };
+
+double step1::GetBtagSF2018Medium_comb(shift Shift, double pt, double eta){
+    if(pt > 1000.) pt = 1000.;
+    if(fabs(eta) > 2.5 or pt<20.) return 1.0; 
+    switch(Shift){
+	case uncert:
+	    if(pt<30) return 0.062023099511861801;
+	    else if(pt<50) return 0.013962121680378914;
+	    else if(pt<70) return 0.013880428858101368;
+	    else if(pt<100) return 0.013638468459248543;
+	    else if(pt<140) return 0.011050660163164139;
+	    else if(pt<200) return 0.011366868391633034;
+	    else if(pt<300) return 0.011010468937456608;
+	    else if(pt<600) return 0.037737511098384857;
+	    else  return 0.069150865077972412;
+	case central:
+	default:
+	    return 0.917829+(0.00298278*(log(pt+19)*(log(pt+18)*(3-(0.422392*log(pt+18))))));
+    }//end switch on shift
+}
+
+//double step1::GetCtagSF2016Medium_comb(shift Shift, double pt, double eta){
+//  // SFs are identical with 3x uncertainty as B tag
+//  if(pt > 1000.) pt = 1000.;
+//  if(fabs(eta) > 2.4 or pt<20.) return 1.0; 
+//  switch(Shift){
+//  case uncert: return 3.0 * GetBtagSF2016Medium_comb(uncert, pt, eta);
+//  case central:
+//  default: return GetBtagSF2016Medium_comb(central, pt, eta);
+//  }//end switch on shift
+//}
+
+//double step1::GetLFSF2016Medium( shift Shift, double pt, double eta){
+//    if(pt > 1000.) pt = 1000.;
+//    if(fabs(eta) > 2.4 or pt<20.) return 1.;
+//    switch(Shift){
+//	case uncert:
+//	    return  (1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt)*((0.100485+3.95509e-05*pt+-4.90326e-08*pt*pt));
+//	case central:
+//	default:
+//	    return  1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt;
+//    }//end switch Shift
+//}//end GetLFSF2016
+
+double step1::GetBtagEfficiency(double pt){
+// Efficiencies from TT powheg sample for Moriond17.
+//See distribution in /uscms_data/d3/jmanagan/EffsAndNewWeights/TagEffsM17/BEff.png
+//Uses hadronFlavour() rather than partonFlavour() as recommended in BTV physics plenary CMS Week 10/2015
+
+  if(pt < 30)        return 0.403823;
+  else if(pt < 50)   return 0.618852;
+  else if(pt < 70)   return 0.679287;
+  else if(pt < 100)  return 0.706293;
+  else if(pt < 140)  return 0.717887;
+  else if(pt < 200)  return 0.713093;
+  else if(pt < 300)  return 0.670051;
+  else if(pt < 400)  return 0.59587; 
+  else if(pt < 500)  return 0.531372;
+  else if(pt < 600)  return 0.483849;
+  else if(pt < 800)  return 0.417429;
+  else if(pt < 1000) return 0.30052; 
+  else if(pt < 1200) return 0.20051; 
+  else return 0.124058;
+}
+
+double step1::GetCtagEfficiency(double pt){
+  if(pt < 30)        return 0.055637;
+  else if(pt < 50)   return 0.089934;
+  else if(pt < 70)   return 0.09309;
+  else if(pt < 100)  return 0.099994;
+  else if(pt < 140)  return 0.108785;
+  else if(pt < 200)  return 0.114926;
+  else if(pt < 300)  return 0.110015;
+  else if(pt < 400)  return 0.093696;
+  else if(pt < 500)  return 0.087263;
+  else if(pt < 600)  return 0.068838;
+  else if(pt < 800)  return 0.047241;
+  else if(pt < 1000) return 0.022655;
+  else if(pt < 1200) return 0.015532;
+  else return 0.008043;
+}
+
+double step1::GetMistagRate(double pt){
+  // Mistag rates from TT powheg sample for Moriond17.
+  //See distribution in /uscms_data/d3/jmanagan/EffsAndNewWeights/TagEffsM17/BEff.png
+  //Uses hadronFlavour() rather than partonFlavour() as recommended in BTV physics plenary CMS Week 10/2015
+
+  if(pt < 30)        return 0.00308;
+  else if(pt < 50)   return 0.007497;
+  else if(pt < 70)   return 0.006558;
+  else if(pt < 100)  return 0.006771;
+  else if(pt < 140)  return 0.00761;
+  else if(pt < 200)  return 0.008422;
+  else if(pt < 300)  return 0.009002;
+  else if(pt < 400)  return 0.00957;
+  else if(pt < 500)  return 0.010041;
+  else if(pt < 600)  return 0.00947;
+  else if(pt < 800)  return 0.007225;
+  else if(pt < 1000) return 0.00395;
+  else if(pt < 1200) return 0.002117;
+  else return 0.001617;
+
+}
+
 void step1::saveHistograms()
 {
   TH1D* numhist = (TH1D*)inputFile->Get("mcweightanalyzer/NumTrueHist");
