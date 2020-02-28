@@ -1,4 +1,5 @@
 #define step1_cxx
+
 #include "step1.h"
 #include <fstream>
 #include <iostream>     // std::cout
@@ -695,6 +696,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
 	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/Moriond17/approval/RECO/passingRECO/egammaEffi.txt_egammaPlots.pdf
+	  /*
 	  if (leppt < 45) {
 	    if (lepeta < -2.0) EGammaGsfSF = 0.977;
 	    else if (lepeta < -1.566) EGammaGsfSF = 0.982;
@@ -736,7 +738,48 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (lepeta < 1.442) EGammaGsfSF = 0.985;
 	    else if (lepeta < 1.566) EGammaGsfSF = 1.010;
 	    else EGammaGsfSF = 0.990; }
+	*/
+
+	// EGamma updates 
+	if (leppt < 45) 
+	{
+		if (fabs(lepeta) < 0.5) EGammaGsfSF = 0.984;
+		else if (fabs(lepeta) < 1) EGammaGsfSF = 0.987;
+		else if (fabs(lepeta) < 1.442) EGammaGsfSF = 0.992;
+		else if (fabs(lepeta) < 1.556) EGammaGsfSF = 0.991;
+		else if (fabs(lepeta) < 2) EGammaGsfSF = 0.998;
+		else EGammaGsfSF = 1.016;
+	}
+	  else if (leppt < 75) 
+	{
+	   if (fabs(lepeta) < 0.5) EGammaGsfSF = 0.987;
+		else if (fabs(lepeta) < 1) EGammaGsfSF = 0.998;
+		else if (fabs(lepeta) < 1.442) EGammaGsfSF = 0.992;
+		else if (fabs(lepeta) < 1.556) EGammaGsfSF = 0.962;
+		else if (fabs(lepeta) < 2) EGammaGsfSF = 0.997;
+		else EGammaGsfSF = 1.002;
+	}
+	  else if (leppt < 100) 
+	{
+	   if (fabs(lepeta) < 0.5) EGammaGsfSF = 0.997;
+		else if (fabs(lepeta) < 1) EGammaGsfSF = 1.005;
+		else if (fabs(lepeta) < 1.442) EGammaGsfSF = 1.008;
+		else if (fabs(lepeta) < 1.556) EGammaGsfSF = 1.033;
+		else if (fabs(lepeta) < 2) EGammaGsfSF = 1.015;
+		else EGammaGsfSF = 1.018; 
+	}
+	  else  
+	{
+	    if (fabs(lepeta) < 0.5) EGammaGsfSF = 0.986;
+		else if (fabs(lepeta) < 1) EGammaGsfSF = 0.994;
+		else if (fabs(lepeta) < 1.442) EGammaGsfSF = 0.987;
+		else if (fabs(lepeta) < 1.556) EGammaGsfSF = 1.002;
+		else if (fabs(lepeta) < 2) EGammaGsfSF = 1.000;
+		else EGammaGsfSF = 0.984;
+	}
+
           //Scale Factor 2: https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2017_ElectronMVA90noiso_2D.pdf
+	  /*	
 	  if (leppt < 20) {
 	    if (lepeta < -2.0) lepIdSF = 0.943;
 	    else if (lepeta < -1.566) lepIdSF = 0.957;
@@ -803,6 +846,86 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (lepeta < 1.566) lepIdSF = 1.000;
 	    else if (lepeta < 2.0) lepIdSF = 0.949;
 	    else lepIdSF = 1.057; }
+	*/
+	// updated to 2016 Egamma scale factors: https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2016LegacyReReco_ElectronMVA90noiso_Fall17V2.pdf
+	if (leppt < 20) 
+	{
+	    if (lepeta < -2.0) lepIdSF = 1.017;
+	    else if (lepeta < -1.566) lepIdSF =0.949 ;
+	    else if (lepeta < -1.442) lepIdSF = 1.000;
+	    else if (lepeta < -0.8) lepIdSF = 0.967;
+	    else if (lepeta < 0.0) lepIdSF = 0.955;
+	    else if (lepeta < 0.8) lepIdSF = 0.976;
+	    else if (lepeta < 1.442) lepIdSF = 0.945;
+	    else if (lepeta < 1.566) lepIdSF = 1.000;
+	    else if (lepeta < 2.0) lepIdSF = 0.959;
+	    else lepIdSF = 0.971; 
+	}
+	  else if (leppt < 35) 
+	{
+	    if (lepeta < -2.0) lepIdSF = 0.994;
+	    else if (lepeta < -1.566) lepIdSF = 0.950;
+	    else if (lepeta < -1.442) lepIdSF = 1.000;
+	    else if (lepeta < -0.8) lepIdSF = 0.940;
+	    else if (lepeta < 0.0) lepIdSF = 0.946;
+	    else if (lepeta < 0.8) lepIdSF = 0.976;
+	    else if (lepeta < 1.442) lepIdSF = 0.948;
+	    else if (lepeta < 1.566) lepIdSF = 1.000;
+	    else if (lepeta < 2.0) lepIdSF = 0.927;
+	    else lepIdSF = 0.951; 
+	}
+	  else if (leppt < 50) 
+	{
+	    if (lepeta < -2.0) lepIdSF = 0.996;
+	    else if (lepeta < -1.566) lepIdSF = 0.962;
+	    else if (lepeta < -1.442) lepIdSF = 1.00;
+	    else if (lepeta < -0.8) lepIdSF = 0.961;
+	    else if (lepeta < 0.0) lepIdSF = 0.958;
+	    else if (lepeta < 0.8) lepIdSF = 0.980;
+	    else if (lepeta < 1.442) lepIdSF = 0.966;
+	    else if (lepeta < 1.566) lepIdSF = 1.000;
+	    else if (lepeta < 2.0) lepIdSF = 0.953;
+	    else lepIdSF = 0.964; 
+	}
+	  else if (leppt < 100) 
+		{
+	    if (lepeta < -2.0) lepIdSF = 0.998;
+	    else if (lepeta < -1.566) lepIdSF = 0.971;
+	    else if (lepeta < -1.442) lepIdSF = 1.000;
+	    else if (lepeta < -0.8) lepIdSF = 0.964;
+	    else if (lepeta < 0.0) lepIdSF = 0.961;
+	    else if (lepeta < 0.8) lepIdSF = 0.982;
+	    else if (lepeta < 1.442) lepIdSF = 0.973;
+	    else if (lepeta < 1.566) lepIdSF = 1.000;
+	    else if (lepeta < 2.0) lepIdSF = 0.965;
+	    else lepIdSF = 0.969; 
+		}
+	  else if (leppt < 110) 
+	  {
+	    if (lepeta < -2.0) lepIdSF = 1.005;
+	    else if (lepeta < -1.566) lepIdSF = 0.988;
+	    else if (lepeta < -1.442) lepIdSF = 1.000;
+	    else if (lepeta < -0.8) lepIdSF = 0.979;
+	    else if (lepeta < 0.0) lepIdSF = 0.979;
+	    else if (lepeta < 0.8) lepIdSF = 0.991;
+	    else if (lepeta < 1.442) lepIdSF = 0.997;
+	    else if (lepeta < 1.566) lepIdSF = 1.000;
+	    else if (lepeta < 2.0) lepIdSF = 0.988;
+	    else lepIdSF = 0.990; 
+	}
+	  else 
+	  {
+	    if (lepeta < -2.0) lepIdSF = 0.941;
+	    else if (lepeta < -1.566) lepIdSF = 1.003;
+	    else if (lepeta < -1.442) lepIdSF = 1.000;
+	    else if (lepeta < -0.8) lepIdSF = 0.974;
+	    else if (lepeta < 0.0) lepIdSF = 0.978;
+	    else if (lepeta < 0.8) lepIdSF = 0.972;
+	    else if (lepeta < 1.442) lepIdSF = 0.971;
+	    else if (lepeta < 1.566) lepIdSF = 1.000;
+	    else if (lepeta < 2.0) lepIdSF = 0.953;
+	    else lepIdSF = 0.960; 
+	}
 
 	  // mini isolation scale factors: https://wiwong.web.cern.ch/wiwong/Ele_Eff_Plots/2017passingMiniIsoTight/
 	  if (leppt < 50){
