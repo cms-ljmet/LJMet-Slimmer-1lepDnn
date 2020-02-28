@@ -43,6 +43,214 @@ TRandom3 Rand;
 
 const double MTOP  = 173.5;
 const double MW    = 80.4; 
+bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
+
+  bool newTag = isTagged;
+
+  if (tag_SF == 1) return newTag; //no correction needed 
+
+  throw die
+
+  float coin = Rand.Uniform(1.);    
+
+  if(tag_SF > 1){  // use this if SF>1
+
+    if( !isTagged ) {
+
+      //fraction of jets that need to be upgraded
+      float mistagPercent = (1.0 - tag_SF) / (1.0 - (tag_SF/tag_eff) );
+    
+      //upgrade to tagged
+      if( coin < mistagPercent ) {newTag = true;}
+
+    }
+
+  }else{  // use this if SF<1
+
+    //downgrade tagged to untagged
+
+    if( isTagged && coin > tag_SF ) {newTag = false;}
+
+  }
+
+  return newTag;
+
+}
+
+double step1::GetBtagSF2017Medium_comb(shift Shift, double pt, double eta){
+
+    if(pt > 1000.) pt = 1000.;
+
+    if(fabs(eta) > 2.5 or pt<20.) return 1.0; 
+
+    switch(Shift){
+
+	case uncert:
+
+	    if(pt<30) return 0.038731977343559265;
+
+	    else if(pt<50) return 0.015137125737965107;
+
+	    else if(pt<70) return 0.013977443799376488;
+
+	    else if(pt<100) return 0.012607076205313206;
+
+	    else if(pt<140) return 0.013979751616716385;
+
+	    else if(pt<200) return 0.015011214651167393;
+
+	    else if(pt<300) return 0.034551065415143967;
+
+	    else if(pt<600) return 0.040168888866901398;
+
+	    else  return 0.054684814065694809;
+
+	case central:
+            
+
+	default:
+
+	    return    2.22144*((1.+(0.540134*pt))/(1.+(1.30246*pt)));
+
+    }  
+
+}
+
+double step1::GetCtagSF2017Medium_comb(shift Shift, double pt, double eta){
+
+  //SFs are identical with 3x uncertainty as B tag
+ 
+  if(pt > 1000.) pt = 1000.;
+ 
+  if(fabs(eta) > 2.4 or pt<20.) return 1.0; 
+ 
+  switch(Shift){
+ 
+  case uncert: return 3.0 * GetBtagSF2017Medium_comb(uncert, pt, eta);
+
+  case central:
+
+  default: return GetBtagSF2017Medium_comb(central, pt, eta);
+
+  }
+
+}
+
+
+double step1::GetLFSF2017Medium( shift Shift, double pt, double eta){
+
+  if(pt > 1000.) pt = 1000.;
+
+  if(fabs(eta) > 2.4 or pt<20.) return 1.;
+
+  switch(Shift){
+
+  case uncert:
+
+    return  (1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt)*((0.100485+3.95509e-05*pt+-4.90326e-08*pt*pt));
+
+  case central:
+
+  default:
+
+    return  1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt;
+
+  }
+
+}
+
+double step1::GetBtagEfficiency(double pt){
+
+  if(pt < 30)        return 0.447390;
+
+  else if(pt < 50)   return 0.652679;
+
+  else if(pt < 70)   return 0.704724;
+
+  else if(pt < 100)  return 0.727924;
+
+  else if(pt < 140)  return 0.737712;
+
+  else if(pt < 200)  return 0.731578;
+
+  else if(pt < 300)  return 0.689644;
+
+  else if(pt < 400)  return 0.615546;
+
+  else if(pt < 500)  return 0.552437;
+
+  else if(pt < 600)  return 0.501756;
+
+  else if(pt < 800)  return 0.433998;
+
+  else if(pt < 1000) return 0.318242;
+
+  else if(pt < 1200) return 0.220351;
+
+  else               return 0.140777;
+
+}
+
+double step1::GetCtagEfficiency(double pt){
+  if(pt < 30)        return 0.070384;
+
+  else if(pt < 50)   return 0.107334;
+
+  else if(pt < 70)   return 0.111125;
+
+  else if(pt < 100)  return 0.119346;
+
+  else if(pt < 140)  return 0.128583;
+
+  else if(pt < 200)  return 0.134354;
+
+  else if(pt < 300)  return 0.127251;
+
+  else if(pt < 400)  return 0.107927;
+
+  else if(pt < 500)  return 0.099135;
+
+  else if(pt < 600)  return 0.081601;
+
+  else if(pt < 800)  return 0.056054;
+
+  else if(pt < 1000) return 0.032320;
+
+  else if(pt < 1200) return 0.014388;
+
+  else               return 0.012887;
+}
+
+double step1::GetMistagRate(double pt){
+
+  if(pt < 30)        return 0.004377;
+
+  else if(pt < 50)   return 0.010659;
+
+  else if(pt < 70)   return 0.009622;
+
+  else if(pt < 100)  return 0.009726;
+
+  else if(pt < 140)  return 0.010565;
+
+  else if(pt < 200)  return 0.011395;
+
+  else if(pt < 300)  return 0.011618;
+
+  else if(pt < 400)  return 0.011412;
+
+  else if(pt < 500)  return 0.011566;
+
+  else if(pt < 600)  return 0.010326;
+
+  else if(pt < 800)  return 0.007474;
+
+  else if(pt < 1000) return 0.005215;
+
+  else if(pt < 1200) return 0.001746;
+
+  else               return 0.001182;
+}
 
 void step1::saveHistograms()
 {
