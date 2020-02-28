@@ -44,12 +44,13 @@ TRandom3 Rand;
 const double MTOP  = 173.5;
 const double MW    = 80.4; 
 
-bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
+bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff, float jet_phi){
   
   bool newTag = isTagged;
   if (tag_SF == 1) return newTag; //no correction needed 
 
-  throw die
+  //throw die
+  Rand.SetSeed(jet_phi*10e4);
   float coin = Rand.Uniform(1.);    
   
   if(tag_SF > 1){  // use this if SF>1
@@ -77,47 +78,47 @@ bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
 enum shift:char{ central, uncert };
 
 double step1::GetBtagSF2018Medium_comb(shift Shift, double pt, double eta){
-    if(pt > 1000.) pt = 1000.;
-    if(fabs(eta) > 2.5 or pt<20.) return 1.0; 
-    switch(Shift){
-	case uncert:
-	    if(pt<30) return 0.062023099511861801;
-	    else if(pt<50) return 0.013962121680378914;
-	    else if(pt<70) return 0.013880428858101368;
-	    else if(pt<100) return 0.013638468459248543;
-	    else if(pt<140) return 0.011050660163164139;
-	    else if(pt<200) return 0.011366868391633034;
-	    else if(pt<300) return 0.011010468937456608;
-	    else if(pt<600) return 0.037737511098384857;
-	    else  return 0.069150865077972412;
-	case central:
-	default:
-	    return 0.917829+(0.00298278*(log(pt+19)*(log(pt+18)*(3-(0.422392*log(pt+18))))));
-    }//end switch on shift
+  if(pt > 1000.) pt = 1000.;
+  if(fabs(eta) > 2.5 or pt<20.) return 1.0; 
+  switch(Shift){
+  case uncert:
+    if(pt<30)       return 0.065904870629310608;
+    else if(pt<50)  return 0.015055687166750431;
+    else if(pt<70)  return 0.013506759889423847;
+    else if(pt<100) return 0.015106724575161934;
+    else if(pt<140) return 0.014620178379118443;
+    else if(pt<200) return 0.012161554768681526;
+    else if(pt<300) return 0.016239689663052559;
+    else if(pt<600) return 0.039990410208702087;
+    else            return 0.068454340100288391;
+  case central:
+  default:
+    return 0.909339+(0.00354*(log(pt+19)*(log(pt+18)*(3-(0.471623*log(pt+18))))));
+  }//end switch on shift
 }
 
-//double step1::GetCtagSF2016Medium_comb(shift Shift, double pt, double eta){
-//  // SFs are identical with 3x uncertainty as B tag
-//  if(pt > 1000.) pt = 1000.;
-//  if(fabs(eta) > 2.4 or pt<20.) return 1.0; 
-//  switch(Shift){
-//  case uncert: return 3.0 * GetBtagSF2016Medium_comb(uncert, pt, eta);
-//  case central:
-//  default: return GetBtagSF2016Medium_comb(central, pt, eta);
-//  }//end switch on shift
-//}
+double step1::GetCtagSF2018Medium_comb(shift Shift, double pt, double eta){
+  // SFs are identical with 3x uncertainty as B tag, checked for '18
+  if(pt > 1000.) pt = 1000.;
+  if(fabs(eta) > 2.5 or pt<20.) return 1.0; 
+  switch(Shift){
+  case uncert: return 3.0 * GetBtagSF2018Medium_comb(uncert, pt, eta);
+  case central:
+  default: return GetBtagSF2018Medium_comb(central, pt, eta);
+  }//end switch on shift
+}
 
-//double step1::GetLFSF2016Medium( shift Shift, double pt, double eta){
-//    if(pt > 1000.) pt = 1000.;
-//    if(fabs(eta) > 2.4 or pt<20.) return 1.;
-//    switch(Shift){
-//	case uncert:
-//	    return  (1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt)*((0.100485+3.95509e-05*pt+-4.90326e-08*pt*pt));
-//	case central:
-//	default:
-//	    return  1.0589+0.000382569*pt+-2.4252e-07*pt*pt+2.20966e-10*pt*pt*pt;
-//    }//end switch Shift
-//}//end GetLFSF2016
+double step1::GetLFSF2018Medium( shift Shift, double pt, double eta){
+  if(pt > 1000.) pt = 1000.;
+  if(fabs(eta) > 2.4 or pt<20.) return 1.;
+  switch(Shift){
+  case uncert:
+    return  (1.6329+-0.00160255*pt+1.9899e-06*pt*pt+-6.72613e-10*pt*pt*pt)*(0.122811+0.000162564*pt+-1.66422e-07*pt*pt);
+  case central:
+  default:
+    return  1.6329+-0.00160255*pt+1.9899e-06*pt*pt+-6.72613e-10*pt*pt*pt;
+  }//end switch Shift
+}
 
 double step1::GetBtagEfficiency(double pt){
 // Efficiencies from TT powheg sample for Moriond17.
@@ -310,8 +311,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("theJetEta_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetPhi_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetEnergy_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetDeepCSVb_JetSubCalc",1);
-   inputTree->SetBranchStatus("theJetDeepCSVbb_JetSubCalc",1);
+   inputTree->SetBranchStatus("AK4JetDeepCSVb_MultiLepCalc",1);
+   inputTree->SetBranchStatus("AK4JetDeepCSVbb_MultiLepCalc",1);
+   inputTree->SetBranchStatus("AK4JetDeepFlavb_MultiLepCalc",1);
+   inputTree->SetBranchStatus("AK4JetDeepFlavbb_MultiLepCalc",1);
+   inputTree->SetBranchStatus("AK4JetDeepFlavlepb_MultiLepCalc",1);
    inputTree->SetBranchStatus("theJetAK8DoubleB_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetBTag_bSFup_JetSubCalc",1);
    inputTree->SetBranchStatus("theJetBTag_bSFdn_JetSubCalc",1);
@@ -450,16 +454,22 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("theJetEta_JetSubCalc_PtOrdered",&theJetEta_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetPhi_JetSubCalc_PtOrdered",&theJetPhi_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetEnergy_JetSubCalc_PtOrdered",&theJetEnergy_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetDeepCSVb_JetSubCalc_PtOrdered",&theJetDeepCSVb_JetSubCalc_PtOrdered);
-   outputTree->Branch("theJetDeepCSVbb_JetSubCalc_PtOrdered",&theJetDeepCSVbb_JetSubCalc_PtOrdered);
+   outputTree->Branch("AK4JetDeepCSVb_MultiLepCalc_PtOrdered",&AK4JetDeepCSVb_MultiLepCalc_PtOrdered);
+   outputTree->Branch("AK4JetDeepCSVbb_MultiLepCalc_PtOrdered",&AK4JetDeepCSVbb_MultiLepCalc_PtOrdered);
+   outputTree->Branch("AK4JetDeepFlavb_MultiLepCalc_PtOrdered",&AK4JetDeepFlavb_MultiLepCalc_PtOrdered);
+   outputTree->Branch("AK4JetDeepFlavbb_MultiLepCalc_PtOrdered",&AK4JetDeepFlavbb_MultiLepCalc_PtOrdered);
+   outputTree->Branch("AK4JetDeepFlavlepb_MultiLepCalc_PtOrdered",&AK4JetDeepFlavlepb_MultiLepCalc_PtOrdered);
    outputTree->Branch("theJetHFlav_JetSubCalc_PtOrdered",&theJetHFlav_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetPFlav_JetSubCalc_PtOrdered",&theJetPFlav_JetSubCalc_PtOrdered);
    outputTree->Branch("theJetBTag_JetSubCalc_PtOrdered",&theJetBTag_JetSubCalc_PtOrdered);
+   outputTree->Branch("theJetBTagDeepCSV_JetSubCalc_PtOrdered",&theJetBTagDeepCSV_JetSubCalc_PtOrdered);
    outputTree->Branch("AK4HTpMETpLepPt",&AK4HTpMETpLepPt,"AK4HTpMETpLepPt/F");
    outputTree->Branch("AK4HT",&AK4HT,"AK4HT/F");
    outputTree->Branch("NJets_JetSubCalc",&NJets_JetSubCalc,"NJets_JetSubCalc/I");
-   outputTree->Branch("NJetsCSV_JetSubCalc",&NJetsCSV_JetSubCalc,"NJetsCSV_JetSubCalc/I");
-   outputTree->Branch("NJetsCSVwithSF_JetSubCalc",&NJetsCSVwithSF_JetSubCalc,"NJetsCSVwithSF_JetSubCalc/I");
+   outputTree->Branch("NJetsDeepFlav_JetSubCalc",&NJetsDeepFlav_JetSubCalc,"NJetsDeepFlav_JetSubCalc/I");
+   outputTree->Branch("NJetsDeepCSV_JetSubCalc",&NJetsDeepCSV_JetSubCalc,"NJetsDeepCSV_JetSubCalc/I");
+   outputTree->Branch("NJetsDeepFlavwithSF_JetSubCalc",&NJetsDeepFlavwithSF_JetSubCalc,"NJetsDeepFlavwithSF_JetSubCalc/I");
+   outputTree->Branch("NJetsDeepCSVwithSF_JetSubCalc",&NJetsDeepCSVwithSF_JetSubCalc,"NJetsDeepCSVwithSF_JetSubCalc/I");
    outputTree->Branch("deltaR_lepMinMlb",&deltaR_lepMinMlb,"deltaR_lepMinMlb/F");
    outputTree->Branch("deltaR_lepMinMlj",&deltaR_lepMinMlj,"deltaR_lepMinMlj/F");
    outputTree->Branch("minMleppBjet",&minMleppBjet,"minMleppBjet/F");
@@ -1071,7 +1081,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           //Trigger SF calculated by JHogan, HT > 430, ttbar tag/probe, Id+iso applied
           if (fabs(lepeta) < 0.8){
 	    if (leppt < 30) {triggSF = 0.924; triggSFUncert = 0.025;}
-	    else if (leppt < 40) {triggSF = 1.030; triggSF Uncert = 0.018;}
+	    else if (leppt < 40) {triggSF = 1.030; triggSFUncert = 0.018;}
             else if (leppt < 50) {triggSF = 1.033; triggSFUncert = 0.015;}
             else if (leppt < 60) {triggSF = 1.029; triggSFUncert = 0.014;}
             else if (leppt < 70) {triggSF = 1.001; triggSFUncert = 0.014;}
@@ -1081,7 +1091,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  }
           else if (fabs(lepeta) < 1.442){
 	    if (leppt < 30) {triggSF = 0.929; triggSFUncert = 0.037;}
-            else if (leppt < 40) {triggSF = 1.057; triggSF Uncert = 0.025;}
+            else if (leppt < 40) {triggSF = 1.057; triggSFUncert = 0.025;}
             else if (leppt < 50) {triggSF = 1.076; triggSFUncert = 0.023;}
             else if (leppt < 60) {triggSF = 1.035; triggSFUncert = 0.020;}
             else if (leppt < 70) {triggSF = 1.023; triggSFUncert = 0.021;}
@@ -1091,7 +1101,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
        	  }
           else if (fabs(lepeta) < 1.556) {
  	    if (leppt < 30) {triggSF = 0.673; triggSFUncert = 0.171;}
-            else if (leppt < 40) {triggSF = 1.197; triggSF Uncert = 0.116;}
+            else if (leppt < 40) {triggSF = 1.197; triggSFUncert = 0.116;}
             else if (leppt < 50) {triggSF = 1.143; triggSFUncert = 0.087;}
             else if (leppt < 60) {triggSF = 0.928; triggSFUncert = 0.092;}
             else if (leppt < 70) {triggSF = 1.082; triggSFUncert = 0.076;}
@@ -1101,7 +1111,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  }
           else if (fabs(lepeta) < 2.0){ 
 	    if (leppt < 30) {triggSF = 0.827; triggSFUncert = 0.073;}
-            else if (leppt < 40) {triggSF = 0.976; triggSF Uncert = 0.052;}
+            else if (leppt < 40) {triggSF = 0.976; triggSFUncert = 0.052;}
             else if (leppt < 50) {triggSF = 1.114; triggSFUncert = 0.042;}
             else if (leppt < 60) {triggSF = 1.099; triggSFUncert = 0.041;}
             else if (leppt < 70) {triggSF = 1.030; triggSFUncert = 0.040;}
@@ -1111,7 +1121,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }	  
           else{ 
             if (leppt < 30) {triggSF = 1.047; triggSFUncert = 0.093;}
-            else if (leppt < 40) {triggSF = 1.150; triggSF Uncert = 0.080;}
+            else if (leppt < 40) {triggSF = 1.150; triggSFUncert = 0.080;}
             else if (leppt < 50) {triggSF = 1.094; triggSFUncert = 0.061;}
             else if (leppt < 60) {triggSF = 1.063; triggSFUncert = 0.060;}
             else if (leppt < 70) {triggSF = 1.073; triggSFUncert = 0.058;}
@@ -1211,7 +1221,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           
           if (fabs(lepeta) < 0.9){
 	    if (leppt < 30) {triggSF = 0.995; triggSFUncert = 0.014;}
-            else if (leppt < 40) {triggSF = 1.047; triggSF Uncert = 0.013;} 
+            else if (leppt < 40) {triggSF = 1.047; triggSFUncert = 0.013;} 
             else if (leppt < 50) {triggSF = 1.050; triggSFUncert = 0.012;}
             else if (leppt < 60) {triggSF = 1.019; triggSFUncert = 0.009;}
             else if (leppt < 70) {triggSF = 1.035; triggSFUncert = 0.007;}
@@ -1221,7 +1231,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }	  
           else if (fabs(lepeta) < 1.2){ 
             if (leppt < 30) {triggSF = 0.944; triggSFUncert = 0.030;}
-            else if (leppt < 40) {triggSF = 1.017; triggSF Uncert = 0.022;}
+            else if (leppt < 40) {triggSF = 1.017; triggSFUncert = 0.022;}
             else if (leppt < 50) {triggSF = 0.986; triggSFUncert = 0.024;}
             else if (leppt < 60) {triggSF = 0.987; triggSFUncert = 0.016;}
             else if (leppt < 70) {triggSF = 0.988; triggSFUncert = 0.018;}
@@ -1231,7 +1241,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }
           else if (fabs(lepeta) < 2.1){ 
             if (leppt < 30) {triggSF = 0.989; triggSFUncert = 0.021;}
-            else if (leppt < 40) {triggSF = 1.041; triggSF Uncert = 0.018;}
+            else if (leppt < 40) {triggSF = 1.041; triggSFUncert = 0.018;}
             else if (leppt < 50) {triggSF = 1.050; triggSFUncert = 0.020;}
             else if (leppt < 60) {triggSF = 1.033; triggSFUncert = 0.012;}
             else if (leppt < 70) {triggSF = 0.981; triggSFUncert = 0.018;}
@@ -1241,7 +1251,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }	  
           else{
             if (leppt < 30) {triggSF = 0.964; triggSFUncert = 0.078;}
-            else if (leppt < 40) {triggSF = 1.069; triggSF Uncert = 0.066;}
+            else if (leppt < 40) {triggSF = 1.069; triggSFUncert = 0.066;}
             else if (leppt < 50) {triggSF = 1.088; triggSFUncert = 0.053;}
             else if (leppt < 60) {triggSF = 1.067; triggSFUncert = 0.055;}
             else if (leppt < 70) {triggSF = 1.017; triggSFUncert = 0.055;}
@@ -1341,8 +1351,48 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       float ptRel1 = -1; float ptRel2 = -1;
       int ind1 = -1; int ind2 = -1;
       vector<pair<double,int>> jetptindpair;
+      std::vector<int> theJetBTagDeepCSV;
 
-      for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){
+      for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){	
+
+	// ----------------------------------------------------------------------------
+	// Apply DeepCSV scale factors -- DeepJet is the default from LJMet
+	// ----------------------------------------------------------------------------
+
+	// Set the initial tagged/untagged state
+	bool istagged = AK4JetDeepCSVb_MultiLepCalc->at(ijet) + AK4JetDeepCSVbb_MultiLepCalc->at(ijet) > 0.4184;
+
+	double ijetPt = theJetPt_JetSubCalc->at(ijet);
+	double ijetEta= theJetEta_JetSubCalc->at(ijet);
+	double ijetPhi= theJetPhi_JetSubCalc->at(ijet);
+   
+	float multiplier = 1;
+	if(ijetPt>1000) multiplier = 2;
+
+	if(theJetHFlav_JetSubCalc->at(ijet) == 5){//b-quarks
+	  double heavySF   = GetBtagSF2018Medium_comb(central, ijetPt, ijetEta);
+	  if(isBUp) heavySF += GetBtagSF2018Medium_comb(uncert, ijetPt, ijetEta);
+	  else if(isBDn) heavySF -= GetBtagSF2018Medium_comb(uncert, ijetPt, ijetEta);
+	  double heavyEff  = GetBtagEfficiency(ijetPt);
+
+	  theJetBTagDeepCSV.push_back(applySF(istagged,heavySF,heavyEff,ijetPhi));
+  
+	}else if(theJetHFlav_JetSubCalc->at(ijet) == 4){//c-quarks
+	  double heavySF   = GetCtagSF2018Medium_comb(central, ijetPt, ijetEta);
+	  if(isBUp) heavySF += GetCtagSF2018Medium_comb(uncert, ijetPt, ijetEta);
+	  else if(isBDn) heavySF -= GetCtagSF2018Medium_comb(uncert, ijetPt, ijetEta);
+	  double heavyEff  = GetCtagEfficiency(ijetPt);
+
+	  theJetBTagDeepCSV.push_back(applySF(istagged,heavySF,heavyEff,ijetPhi));
+
+	}else{//udsg-quarks
+	  double lightSF   = GetLFSF2018Medium(central, ijetPt, ijetEta);
+	  if(isLUp) lightSF += GetLFSF2018Medium(uncert, ijetPt, ijetEta);
+	  else if(isLUp) lightSF -= GetLFSF2018Medium(uncert, ijetPt, ijetEta);
+	  double lightEff  = GetMistagRate(ijetPt);
+  
+	  theJetBTagDeepCSV.push_back(applySF(istagged,lightSF,lightEff,ijetPhi));
+	}
 
 	// ----------------------------------------------------------------------------
 	// Basic cuts   NEW NEW NEW NEW 2D cut right here
@@ -1540,10 +1590,14 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       theJetEta_JetSubCalc_PtOrdered.clear();
       theJetPhi_JetSubCalc_PtOrdered.clear();
       theJetEnergy_JetSubCalc_PtOrdered.clear();
-      theJetDeepCSVb_JetSubCalc_PtOrdered.clear();
-      theJetDeepCSVbb_JetSubCalc_PtOrdered.clear();
+      AK4JetDeepCSVb_MultiLepCalc_PtOrdered.clear();
+      AK4JetDeepCSVbb_MultiLepCalc_PtOrdered.clear();
+      AK4JetDeepFlavb_MultiLepCalc_PtOrdered.clear();
+      AK4JetDeepFlavbb_MultiLepCalc_PtOrdered.clear();
+      AK4JetDeepFlavlepb_MultiLepCalc_PtOrdered.clear();
       theJetHFlav_JetSubCalc_PtOrdered.clear();
       theJetPFlav_JetSubCalc_PtOrdered.clear();
+      theJetBTagDeepCSV_JetSubCalc_PtOrdered.clear();
       theJetBTag_JetSubCalc_PtOrdered.clear();
       theJetBTag_bSFup_JetSubCalc_PtOrdered.clear();
       theJetBTag_bSFdn_JetSubCalc_PtOrdered.clear();
@@ -1554,10 +1608,14 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       	theJetEta_JetSubCalc_PtOrdered.push_back(theJetEta_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetPhi_JetSubCalc_PtOrdered.push_back(theJetPhi_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetEnergy_JetSubCalc_PtOrdered.push_back(theJetEnergy_JetSubCalc->at(jetptindpair[ijet].second));
-      	theJetDeepCSVb_JetSubCalc_PtOrdered.push_back(theJetDeepCSVb_JetSubCalc->at(jetptindpair[ijet].second));
-	theJetDeepCSVbb_JetSubCalc_PtOrdered.push_back(theJetDeepCSVbb_JetSubCalc->at(jetptindpair[ijet].second));
+      	AK4JetDeepCSVb_MultiLepCalc_PtOrdered.push_back(AK4JetDeepCSVb_MultiLepCalc->at(jetptindpair[ijet].second));
+	AK4JetDeepCSVbb_MultiLepCalc_PtOrdered.push_back(AK4JetDeepCSVbb_MultiLepCalc->at(jetptindpair[ijet].second));
+      	AK4JetDeepFlavb_MultiLepCalc_PtOrdered.push_back(AK4JetDeepFlavb_MultiLepCalc->at(jetptindpair[ijet].second));
+	AK4JetDeepFlavbb_MultiLepCalc_PtOrdered.push_back(AK4JetDeepFlavbb_MultiLepCalc->at(jetptindpair[ijet].second));
+	AK4JetDeepFlavlepb_MultiLepCalc_PtOrdered.push_back(AK4JetDeepFlavlepb_MultiLepCalc->at(jetptindpair[ijet].second));
       	theJetHFlav_JetSubCalc_PtOrdered.push_back(theJetHFlav_JetSubCalc->at(jetptindpair[ijet].second));
       	theJetPFlav_JetSubCalc_PtOrdered.push_back(theJetPFlav_JetSubCalc->at(jetptindpair[ijet].second));
+	theJetBTagDeepCSV_JetSubCalc_PtOrdered.push_back(theJetBTagDeepCSV.at(jetptindpair[ijet].second));
 	theJetBTag_JetSubCalc_PtOrdered.push_back(theJetBTag_JetSubCalc->at(jetptindpair[ijet].second));
 	theJetBTag_bSFup_JetSubCalc_PtOrdered.push_back(theJetBTag_bSFup_JetSubCalc->at(jetptindpair[ijet].second));
 	theJetBTag_bSFdn_JetSubCalc_PtOrdered.push_back(theJetBTag_bSFdn_JetSubCalc->at(jetptindpair[ijet].second));
@@ -1581,8 +1639,10 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       deltaR_lepBJets.clear();
       deltaR_lepMinMlb = 1e8;
       deltaR_lepMinMlj = 1e8;
-      NJetsCSV_JetSubCalc = 0;
-      NJetsCSVwithSF_JetSubCalc = 0;
+      NJetsDeepCSV_JetSubCalc = 0;
+      NJetsDeepFlav_JetSubCalc = 0;
+      NJetsDeepCSVwithSF_JetSubCalc = 0;
+      NJetsDeepFlavwithSF_JetSubCalc = 0;
       TLorentzVector nu;
       nu.SetPtEtaPhiE(corr_met_MultiLepCalc,0,corr_met_phi_MultiLepCalc,corr_met_MultiLepCalc);
 
@@ -1596,12 +1656,19 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
 	deltaR_lepJets.push_back(lepton_lv.DeltaR(jet_lv));
 
-   	if(theJetDeepCSVb_JetSubCalc_PtOrdered.at(ijet) + theJetDeepCSVbb_JetSubCalc_PtOrdered.at(ijet) > 0.4941){
-          NJetsCSV_JetSubCalc += 1;
+	// 2018 values for the Medium WPs
+   	if(AK4JetDeepCSVb_MultiLepCalc_PtOrdered.at(ijet) + AK4JetDeepCSVbb_MultiLepCalc_PtOrdered.at(ijet) > 0.4184){
+          NJetsDeepCSV_JetSubCalc += 1;
         }
+	if(AK4JetDeepFlavb_MultiLepCalc_PtOrdered.at(ijet) + AK4JetDeepFlavbb_MultiLepCalc_PtOrdered.at(ijet) +
+	   AK4JetDeepFlavlepb_MultiLepCalc_PtOrdered.at(ijet) > 0.2770) NJetsDeepFlav_JetSubCalc += 1;
 
+	// This one is already computed bSFup/dn, lSFup/dn as needed above.
+	if(theJetBTagDeepCSV_JetSubCalc_PtOrdered.at(ijet) == 1) NJetsDeepCSVwithSF_JetSubCalc += 1;
+
+	// 2/28: For now...banking on the idea that DeepFlav SFs are ok to 1-2 b's, should be enough for leptonic top
 	if(isNominal && theJetBTag_JetSubCalc_PtOrdered.at(ijet) == 1){
-	  NJetsCSVwithSF_JetSubCalc += 1;
+	  NJetsDeepFlavwithSF_JetSubCalc += 1;
           if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
           deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
 	  
@@ -1612,7 +1679,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }
 	}
 	else if(isBUp && theJetBTag_bSFup_JetSubCalc_PtOrdered.at(ijet) == 1){
-	  NJetsCSVwithSF_JetSubCalc += 1;
+	  NJetsDeepFlavwithSF_JetSubCalc += 1;
           if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
           deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
 	  
@@ -1623,7 +1690,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }
 	}
 	else if(isBDn && theJetBTag_bSFdn_JetSubCalc_PtOrdered.at(ijet) == 1){
-	  NJetsCSVwithSF_JetSubCalc += 1;
+	  NJetsDeepFlavwithSF_JetSubCalc += 1;
           if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
           deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
 	  
@@ -1634,7 +1701,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }
 	}
 	else if(isLUp && theJetBTag_lSFup_JetSubCalc_PtOrdered.at(ijet) == 1){
-	  NJetsCSVwithSF_JetSubCalc += 1;
+	  NJetsDeepFlavwithSF_JetSubCalc += 1;
           if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
           deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
 	  
@@ -1645,7 +1712,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
           }
 	}
 	else if(isLDn && theJetBTag_lSFdn_JetSubCalc_PtOrdered.at(ijet) == 1){
-	  NJetsCSVwithSF_JetSubCalc += 1;
+	  NJetsDeepFlavwithSF_JetSubCalc += 1;
           if(theJetPt_JetSubCalc_PtOrdered.at(ijet) > BJetLeadPt) BJetLeadPt = theJetPt_JetSubCalc_PtOrdered.at(ijet);
           deltaR_lepBJets.push_back(lepton_lv.DeltaR(jet_lv));
 	  
