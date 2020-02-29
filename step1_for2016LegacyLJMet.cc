@@ -54,6 +54,142 @@ void step1::saveHistograms()
   wgthist->Write();
 }
 
+bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
+  
+  bool newTag = isTagged;
+  if (tag_SF == 1) return newTag; //no correction needed 
+
+  //throw die
+  float coin = Rand.Uniform(1.);    
+
+  if(tag_SF > 1){  // use this if SF>1
+
+    if( !isTagged ) {
+
+      //fraction of jets that need to be upgraded
+      float mistagPercent = (1.0 - tag_SF) / (1.0 - (tag_SF/tag_eff) );
+
+      //upgrade to tagged
+      if( coin < mistagPercent ) {newTag = true;}
+    }
+
+  }else{  // use this if SF<1
+      
+    //downgrade tagged to untagged
+    if( isTagged && coin > tag_SF ) {newTag = false;}
+
+  }
+
+  return newTag;
+}
+
+enum shift:char{ central, uncert };
+
+double step1::GetBtagSF2016Medium_comb(shift Shift, double pt, double eta){
+	// updated with https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation2016Legacy
+    if(pt > 1000.) pt = 1000.;
+    if(fabs(eta) > 2.4 or pt<20.) return 1.0; 
+    switch(Shift){
+		case uncert:
+		    if(pt<30) return 0.043795019388198853;
+		    else if(pt<50) return 0.015845479443669319;
+		    else if(pt<70) return 0.014174085110425949;
+		    else if(pt<100) return 0.013200919143855572;
+		    else if(pt<140) return 0.012912030331790447;
+		    else if(pt<200) return 0.019475525245070457;
+		    else if(pt<300) return 0.01628459244966507;
+		    else if(pt<600) return 0.034840557724237442;
+		    else  return 0.049875054508447647;
+		case central:
+		default:
+		    return     0.653526*((1.+(0.220245*pt))/(1.+(0.14383*pt)));
+    }//end switch on shift
+}
+
+double step1::GetCtagSF2016Medium_comb(shift Shift, double pt, double eta){
+	// SFs are identical with 3x uncertainty as B tag
+	if(pt > 1000.) pt = 1000.;
+	if(fabs(eta) > 2.4 or pt<20.) return 1.0; 
+  	switch(Shift)
+	  {
+		case uncert: return 3.0 * GetBtagSF2016Medium_comb(uncert, pt, eta);
+  		case central:
+		default: return GetBtagSF2016Medium_comb(central, pt, eta);
+	}//end switch on shift
+}
+
+double step1::GetLFSF2016Medium( shift Shift, double pt, double eta){
+    if(pt > 1000.) pt = 1000.;
+    if(fabs(eta) > 2.4 or pt<20.) return 1.;
+    switch(Shift)
+	{
+		case uncert:
+	  		return  (1-(0.101915+0.000192134*pt+-1.94974e-07*pt*pt))
+		case central:
+		default:
+	   		return   1.09286+-0.00052597*pt+1.88225e-06*pt*pt+-1.27417e-09*pt*pt*pt
+    }//end switch Shift
+}//end GetLFSF2016
+
+double step1::GetBtagEfficiency(double pt){
+  // Efficiencies from TT powheg sample for Moriond17.
+  // See distribution in /uscms_data/d3/jmanagan/EffsAndNewWeights/TagEffsM17/BEff.png
+  // Uses hadronFlavour() rather than partonFlavour() as recommended in BTV physics plenary CMS Week 10/2015
+	
+	// UPDATED USING DeepCSVMEDIUM Btagging: https://github.com/cms-ljmet/FWLJMET/blob/10_2_X_fullRun2data/LJMet/plugins/BtagHardcodedConditions.cc
+  	if(pt < 30)        return 0.447390;
+	else if(pt < 50)   return 0.652679;
+    else if(pt < 70)   return 0.704724;
+	else if(pt < 100)  return 0.727924;
+    else if(pt < 140)  return 0.737712;
+    else if(pt < 200)  return 0.731578;
+    else if(pt < 300)  return 0.689644;
+    else if(pt < 400)  return 0.615546;
+    else if(pt < 500)  return 0.552437;
+    else if(pt < 600)  return 0.501756;
+    else if(pt < 800)  return 0.433998;
+    else if(pt < 1000) return 0.318242;
+    else if(pt < 1200) return 0.220351;
+    else               return 0.140777;
+}
+
+double step1::GetCtagEfficiency(double pt){
+	// UPDATED USING DeepCSVMEDIUM Ctagging: https://github.com/cms-ljmet/FWLJMET/blob/10_2_X_fullRun2data/LJMet/plugins/BtagHardcodedConditions.cc
+    if(pt < 30)        return 0.070384; //0.057985;
+	else if(pt < 50)   return 0.107334; //0.111536;
+	else if(pt < 70)   return 0.111125; //0.112216;
+	else if(pt < 100)  return 0.119346; //0.120075;
+	else if(pt < 140)  return 0.128583; //0.128499;
+	else if(pt < 200)  return 0.134354; //0.132918;
+	else if(pt < 300)  return 0.127251; //0.126724;
+    else if(pt < 400)  return 0.107927; //0.126281;
+    else if(pt < 500)  return 0.099135; //0.123026;
+    else if(pt < 600)  return 0.081601; //0.124840;
+    else if(pt < 800)  return 0.056054; //0.130060;
+    else if(pt < 1000) return 0.032320; //0.128022;
+    else if(pt < 1200) return 0.014388; //0.134100;
+    else               return 0.012887; //0.125348;
+}
+
+double step1::GetMistagRate(double pt){
+  // Mistag rates from TT powheg sample for Moriond17.
+  // See distribution in /uscms_data/d3/jmanagan/EffsAndNewWeights/TagEffsM17/BEff.png
+  // Uses hadronFlavour() rather than partonFlavour() as recommended in BTV physics plenary CMS Week 10/2015
+  if(pt < 30)    return 0.003385;
+  else if(pt < 50)   return 0.009673;
+  else if(pt < 70)   return 0.008316;
+  else if(pt < 100)  return 0.008524;
+  else if(pt < 140)  return 0.009092;
+  else if(pt < 200)  return 0.011431;
+  else if(pt < 300)  return 0.013666;
+  else if(pt < 400)  return 0.020405;
+  else if(pt < 500)  return 0.023609;
+  else if(pt < 600)  return 0.025348;
+  else if(pt < 800)  return 0.028858;
+  else if(pt < 1000) return 0.030427;
+  else if(pt < 1200) return 0.034091;
+  else return 0.047619;
+}
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
@@ -997,15 +1133,19 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  triggerSFUncert = sqrt( pow(4.823*trigSFBunc/41.557,2) + pow(36.734*trigSFCDEFunc/41.557,2) );
 	}
 	if(isMuon){
+	  std::string string_350 = "Mu15_IsoVVVL_PFHT350";
+	  std::string string_400 = "Mu15_IsoVVVL_PFHT400";
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
 	  std::string string_d = "Mu50_IsoVVVL_PFHT450";
 	  std::string string_e = "Mu15_IsoVVVL_PFHT600";
-	  //	  std::string string_ORb = "Mu50"; // not really saved in FWLJMET due to bug!
+	  std::string string_ORb = "Mu50"; // not really saved in FWLJMET due to bug!
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_MultiLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_e) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	    //if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+			if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_350) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+			if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_400) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
 
 	  // MiniIsoTight/Tight
@@ -1418,6 +1558,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       
       else{ //Data triggers check
 	if(isElectron){
+	  std::string string_350 = "Ele15_IsoVVVL_PFHT350";
+	  std::string string_400 = "Ele15_IsoVVVL_PFHT400";
 	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
 	  std::string string_c = "Ele50_IsoVVVL_PFHT450";
 	  std::string string_d = "Ele15_IsoVVVL_PFHT600";
@@ -1425,28 +1567,31 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_MultiLepCalc->size(); itrig++){
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-            if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-            if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+        if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+        if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+		if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_350) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+		if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_400) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	  }
 	}
 
 
-
+	//
 	if(isMuon){
+	  std::string string_350 = "Mu15_IsoVVVL_PFHT350";
+	  std::string string_400 = "Mu15_IsoVVVL_PFHT400";
 	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
 	  std::string string_d = "Mu50_IsoVVVL_PFHT450";
 	  std::string string_e = "Mu15_IsoVVVL_PFHT600";
 	  std::string string_ORb = "Mu50";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersMu_MultiLepCalc->size(); itrig++){
-	    if(run_CommonCalc > 299329){ // use ONLY these in 2017CDEF
 	      if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	      if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	      if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_e) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    }else{ // use ONLY this one in 2017B. MC scale factors assume the IsoVVVL's as the MC efficiency
+		  if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_350) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
+		  if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_400) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	      if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    }
 	  }
 	}
 	MCPastTrigger = 1;
