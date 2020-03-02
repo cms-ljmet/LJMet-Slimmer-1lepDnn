@@ -187,6 +187,7 @@ public :
    Float_t         pileupWeightUp;
    Float_t         pileupWeightDown;
    Float_t         isoSF;
+   Float_t         muPtSF;
    Float_t         triggerSF;
    Float_t         triggerSFUncert;
    Float_t         lepIdSF;
