@@ -418,7 +418,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    // weights
    outputTree->Branch("renormWeights",&renormWeights);
    outputTree->Branch("pdfWeights",&pdfWeights);
-   outputTree->Branch("pdfNewWeights",&pdfNewWeights);
+   //outputTree->Branch("pdfNewWeights",&pdfNewWeights);
    outputTree->Branch("pdfNewNominalWeight",&pdfNewNominalWeight,"pdfNewNominalWeight/F");
    outputTree->Branch("pileupWeight",&pileupWeight,"pileupWeight/F");
    outputTree->Branch("pileupWeightUp",&pileupWeightUp,"pileupWeightUp/F");
@@ -2929,13 +2929,13 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       std::vector<double> pdf;
       renormWeights.clear();
       pdfWeights.clear();
-      pdfNewWeights.clear();
+      //pdfNewWeights.clear();
       pdfNewNominalWeight = 1.0;
       if(isSig){
-	pdfNewNominalWeight = NewPDFweights_MultiLepCalc->at(0);
+	//pdfNewNominalWeight = NewPDFweights_MultiLepCalc->at(0);
 	// SEEMS TO APPLY TO ALL B2G MG+PYTHIA SIGNALS. NNLO 4-FLAVOR PDF
 	for(unsigned int i = 0; i < LHEweightids_MultiLepCalc->size(); i++){
-	  if(i > 0 && i < 101) pdfNewWeights.push_back(NewPDFweights_MultiLepCalc->at(i));
+	  //if(i > 0 && i < 101) pdfNewWeights.push_back(NewPDFweights_MultiLepCalc->at(i));
 	  if(LHEweightids_MultiLepCalc->at(i) > 1 && LHEweightids_MultiLepCalc->at(i) < 10){
 	    if(LHEweightids_MultiLepCalc->at(i) == 6 || LHEweightids_MultiLepCalc->at(i) == 8) continue;
 	    renormWeights.push_back(LHEweights_MultiLepCalc->at(i));

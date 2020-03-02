@@ -10,9 +10,9 @@ start_time = time.time()
 finalStateYear = 'singleLep2018' # or 2018
 relbase = '/uscms_data/d3/cholz/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/cholz/slimmerdnn.tar'
-inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2018_052219/' # or 2018
-outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018_101519_step1/' # or 2018
-condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018_101519_step1/' # or 2018
+inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2018_Oct2019/' # or 2018
+outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018_Mar2020_step1/' # or 2018
+condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018_Mar2020_step1/' # or 2018
 
 runDir=os.getcwd()
 inDir=inputDir[10:]
@@ -40,8 +40,8 @@ dirList = [
     'BprimeBprime_M-1600_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1700_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     'BprimeBprime_M-1800_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-900_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8',
-    'DYJetsToLL_M-50_HT-200to400_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-400to600_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-600to800_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8',
@@ -49,7 +49,6 @@ dirList = [
     'QCD_HT1000to1500_TuneCP5_13TeV-madgraphMLM-pythia8',
     'QCD_HT1500to2000_TuneCP5_13TeV-madgraphMLM-pythia8',
     'QCD_HT2000toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'QCD_HT200to300_TuneCP5_13TeV-madgraphMLM-pythia8',
     'QCD_HT300to500_TuneCP5_13TeV-madgraphMLM-pythia8',
     'QCD_HT500to700_TuneCP5_13TeV-madgraphMLM-pythia8',
     'QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8',
@@ -58,13 +57,14 @@ dirList = [
     'ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8',
     'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8',
     'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8',
-    'SingleElectron',
+    'EGamma',
     'SingleMuon',
     'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8',
     'TTToHadronic_TuneCP5_13TeV-powheg-pythia8',
     'TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8',
     'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
     'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8',
+    'TTZToLL_M-1to10_TuneCP5_13TeV-amcatnlo-pythia8',
     'TT_Mtt-1000toInf_TuneCP5_13TeV-powheg-pythia8',
     'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TprimeTprime_M-1000_TuneCP5_PSweights_13TeV-madgraph-pythia8',
@@ -76,8 +76,8 @@ dirList = [
     'TprimeTprime_M-1600_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1700_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1800_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-900_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
@@ -111,10 +111,8 @@ for sample in dirList:
         runlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/')
         print "Running",len(runlist),"crab directories"
 
-        runnamelist =['W','X','Y','Z','Q','V'] ## arbitrary run era labels, they mean nothing!
         runcounter = 0
         for run in runlist:
-            runletter = runnamelist[runcounter]
             runcounter += 1
             numlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/')
             
@@ -135,20 +133,14 @@ for sample in dirList:
                     #if tmpcount > 1: continue
 
                     segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1, 78
-                    segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C, cmsRun_FWLJMET_DATA_1Lep
+                    segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C
 
                     if isData:    # need unique IDs across eras
-                        if sample == 'SingleElectron':
-                            idlist = runletter+segment1+' '
-                            for j in range(i+1,i+20):
-                                if j >= len(rootfiles): continue
-                                idlist += runletter+(rootfiles[j].split('.')[0]).split('_')[-1]+' '
-                        else:
-                            idlist = segment2[-1]+segment1+' '
-                            for j in range(i+1,i+20):
-                                if j >= len(rootfiles): continue
-                                idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
-                                idlist += idparts[0][-1]+idparts[1]+' '
+                        idlist = segment2[-1]+segment1+' '
+                        for j in range(i+1,i+20):
+                            if j >= len(rootfiles): continue
+                            idparts = (rootfiles[j].split('.')[0]).split('_')[-2:]
+                            idlist += idparts[0][-1]+idparts[1]+' '
                     elif 'ext' in segment2:     # WON'T WORK in FWLJMET 052219, but ok since no samples need it
                         idlist = segment2[-4:]+segment1+' '
                         for j in range(i+1,i+20):
