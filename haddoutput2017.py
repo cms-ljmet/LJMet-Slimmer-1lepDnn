@@ -9,8 +9,8 @@ start_time = time.time()
 input  = sys.argv[1]
 output = sys.argv[2]
 
-inDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1/'
-outDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1hadds/'
+inDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_Mar2020_step1/'
+outDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_Mar2020_step1hadds/'
 
 
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
@@ -27,7 +27,6 @@ dirList = [
     'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
     'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
@@ -35,7 +34,6 @@ dirList = [
     'QCD_HT1000to1500_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT2000toInf_TuneCP5_13TeV-madgraph-pythia8',
-    'QCD_HT200to300_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT300to500_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT700to1000_TuneCP5_13TeV-madgraph-pythia8',
@@ -51,8 +49,8 @@ dirList = [
     'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
-    'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
     'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
+    'TTZToLL_M-1to10_TuneCP5_13TeV-amcatnlo-pythia8',
     'TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TprimeTprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
@@ -64,18 +62,16 @@ dirList = [
     'TprimeTprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-700_TuneCP5_13TeV-madgraph-pythia8',
-#    'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
-#    'WW_TuneCP5_13TeV-pythia8',
-#    'WZ_TuneCP5_13TeV-pythia8',
-#    'ZZ_TuneCP5_13TeV-pythia8',
-#    'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
-#    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
+    'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'WW_TuneCP5_13TeV-pythia8',
+    'WZ_TuneCP5_13TeV-pythia8',
+    'ZZ_TuneCP5_13TeV-pythia8',
+    'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
+    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
 ]
 
 for sample in dirList:
