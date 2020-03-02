@@ -10,7 +10,9 @@ output = sys.argv[2]
 
 inDir='/store/user/cholz/FWLJMET102X_1lep2018Dnn_Mar2020_step1/'
 outDir='/store/user/cholz/FWLJMET102X_1lep2018Dnn_Mar2020_step1hadds/'
+scratchDir='/uscmst1b_scratch/lpc1/3DayLifetime/cholz/'
 
+if not os.path.exists(scratchDir): os.system('mkdir '+scratchDir)
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
 
 dirList = [
@@ -101,17 +103,20 @@ for sample in dirList:
             print 'Length estimate reduced from',lengthcheck,'by',toolong,'via removing',num2remove,'files for nFilesPerHadd of',nFilesPerHadd
 
         if len(rootfiles) < nFilesPerHadd:
-            haddcommand = 'hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '
+            haddcommand = 'hadd -f '+scratchDir+'/'+outsample+'_hadd.root '
             for file in rootfiles:
                 haddcommand+=' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+file
             print 'Length of hadd command =',len(haddcommand)
             subprocess.call(haddcommand,shell=True)
+            
+            xrdcpcommand = 'xrdcp '+scratchDir+'/'+outsample+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root'
+            subprocess.call(xrdcpcommand,shell=True)
 
             if bool(EOSisfile(outDir+'/'+outsample+'_hadd.root')) != True:
-                print haddcommand
+                print haddcommand                
         else:
             for i in range(int(math.ceil(len(rootfiles)/float(nFilesPerHadd)))):
-                haddcommand = 'hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root '
+                haddcommand = 'hadd -f '+scratchDir+'/'+outsample+'_'+str(i+1)+'_hadd.root '
 
                 begin=i*nFilesPerHadd
                 end=begin+nFilesPerHadd
@@ -122,6 +127,9 @@ for sample in dirList:
                     haddcommand+=' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[j]
                 print 'Length of hadd command =',len(haddcommand)
                 subprocess.call(haddcommand,shell=True)
+
+                xrdcpcommand = 'xrdcp '+scratchDir+'/'+outsample+'_'+str(i+1)+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root'
+                subprocess.call(xrdcpcommand,shell=True)
 
                 if bool(EOSisfile(outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root')) != True:
                     print haddcommand
