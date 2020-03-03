@@ -10,9 +10,9 @@ start_time = time.time()
 finalStateYear = 'singleLep2016'
 relbase = '/uscms_data/d3/bburgsta/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/bburgsta/slimmerdnn.tar'
-inputDir='/store/group/bruxljm/FWLJMET102X_1lep2016_Feb2020/' # or 2018
-outputDir='/eos/uscms/store/user/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_step1/' # or 2018
-condorDir='/uscms_data/d3/escharni/FWLJMET102X_1lep2017Dnn_trainMVA_step1/' # or 2018
+inputDir='/store/group/bruxljm/FWLJMET102X_1lep2016_Feb2020/'
+outputDir='/eos/uscms/store/user/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_step1/'
+condorDir='/uscms_data/d3/escharni/FWLJMET102X_1lep2017Dnn_trainMVA_step1/'
 
 runDir=os.getcwd()
 inDir=inputDir
@@ -67,18 +67,18 @@ for sample in dirList:
         os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+outsample)
         os.system('mkdir -p '+condorDir+outsample)
 
-        runlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/','eos root://brux11.hep.brown.edu:1094/')
+        runlist = BRUXlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/')
         print "Running",len(runlist),"crab directories"
 
         for run in runlist:
-            numlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/','eos root://brux11.hep.brown.edu:1094/')
+            numlist = BRUXlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/')
             
             for num in numlist:
                 numpath = inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/'+num
                 pathsuffix = numpath.split('/')[-3:]
                 pathsuffix = '/'.join(pathsuffix)
 
-                rootfiles = EOSlist_root_files(numpath,'eos root://brux11.hep.brown.edu:1094/')            
+                rootfiles = BRUXlist_root_files(numpath)            
                 basefilename = (rootfiles[0].split('.')[0]).split('_')[:-1]
                 basefilename = '_'.join(basefilename)
                 print "Running path:",pathsuffix,"\tBase filenames:",basefilename
