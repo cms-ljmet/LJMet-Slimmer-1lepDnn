@@ -5,10 +5,10 @@ execfile("/uscms_data/d3/jmanagan/EOSSafeUtils.py")
 start_time = time.time()
 
 #IO directories must be full paths
-input  = sys.argv[1]
-output = sys.argv[2]
+#input  = sys.argv[1]
+#output = sys.argv[2]
 
-inDir='/store/user/cholz/FWLJMET102X_1lep2018Dnn_101519_step1/'
+inDir='/store/user/cholz/FWLJMET102X_1lep2018_101519_step1/'
 outDir='/store/user/cholz/FWLJMET102X_1lep2018Dnn_101519_step1hadds/'
 
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
