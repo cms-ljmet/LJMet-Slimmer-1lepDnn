@@ -8,11 +8,11 @@ start_time = time.time()
 #IO directories must be full paths
 
 finalStateYear = 'singleLep2016'
-relbase = '/uscms_data/d3/bburgsta/CMSSW_10_2_10/'
+relbase = '/uscms_data/d3/bburgsta/CMSSW_10_2_16/'
 tarfile = '/uscms_data/d3/bburgsta/slimmerdnn.tar'
 inputDir='/store/group/bruxljm/FWLJMET102X_1lep2016_Feb2020/'
-outputDir='/eos/uscms/store/user/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_step1/'
-condorDir='/uscms_data/d3/escharni/FWLJMET102X_1lep2017Dnn_trainMVA_step1/'
+outputDir='/eos/uscms/store/user/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_testing04232020/'
+condorDir='/uscms_data/d3/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_testing04232020/'
 
 runDir=os.getcwd()
 inDir=inputDir
@@ -31,19 +31,20 @@ print 'Starting submission'
 count=0
 
 dirList = [
-    '/TprimeTprime_M-900_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    '/TprimeTprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    '/TprimeTprime_M-1800_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    '/BprimeBprime_M-900_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    '/BprimeBprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    '/BprimeBprime_M-1800_TuneCUETP8M1_13TeV-madgraph-pythia8',
-    '/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    '/WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    '/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    '/WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    '/WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    '/TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-    '/TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',    
+    'TprimeTprime_M-900_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'TprimeTprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8',    
+	 'TprimeTprime_M-1800_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-900_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'BprimeBprime_M-1800_TuneCUETP8M1_13TeV-madgraph-pythia8',
+    'WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    'TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+    'TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',    
+    'TT_TuneCUETP8M2T4_13TeV-powheg-pythia8',
 ]
 
 
@@ -57,7 +58,8 @@ for sample in dirList:
 
     isData = False
     if 'Single' in sample or 'EGamma' in sample: isData = True
-
+    if 'SingleLeptFromT' in sample: isData = False
+    
     for outlabel in outList:
         tmpcount = 0
 
@@ -87,7 +89,7 @@ for sample in dirList:
                     count+=1
                     tmpcount += 1
 
-                    # if tmpcount > 1: continue
+                    if tmpcount > 3: continue
 
                     segment1 = (rootfiles[i].split('.')[0]).split('_')[-1] ## 1-1
                     segment2 = (rootfiles[i].split('.')[0]).split('_')[-2] ## SingleElectronRun2017C

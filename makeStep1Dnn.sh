@@ -28,15 +28,16 @@ echo "setting macroDir to PWD"
 macroDir=${PWD}
 export PATH=$PATH:$macroDir
 
-XRDpath=root://cmseos.fnal.gov/$inputDir
+XRDpath=root://brux11.hep.brown.edu:1094//isilon/hadoop/$inputDir
+
 
 echo "Running step1 over list: ${idlist}"
 for iFile in $idlist; do
     inFile=${iFile}
-    if [[ $iFile == ext* ]] ;
+    if [[ $iFile == *ext* ]] ;
     then
 	inFile=${iFile:4}
-    elif [[ $iFile == [ABCDEFWXYZ]* ]] ;
+    elif [[ $iFile == [ABCDEFGHWXYZ]* ]] ;
     then
 	inFile=${iFile:1}
     fi
