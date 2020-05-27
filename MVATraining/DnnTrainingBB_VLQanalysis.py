@@ -34,16 +34,17 @@ if len(sys.argv) == 1:
    outdir = 'Train3J_BBMar2020'
    arch = '3x10'
    vararray = 1
-   maxtest = 17000
-   maxpersample = 60000
+   maxtest = 15000
+   #maxpersample = 60000
    testnum = 0
 else:
    outdir = sys.argv[1]
    arch = sys.argv[2]
    vararray = int(sys.argv[3])
    maxtest = int(sys.argv[4])
-   maxpersample = int(sys.argv[5])
-   testnum = int(sys.argv[6])
+   #maxpersample = int(sys.argv[5])
+   #testnum = int(sys.argv[6])
+   testnum = int(sys.argv[5])
 outdir = outdir + '/'
 if testnum == 1:
    ofile = open("BB_output.txt","a+")
@@ -58,19 +59,11 @@ Bprime = 1.0
 Bprime2 = 1.8
 test1100 = False #use if Bprime = 1800
 WithBprimeVars = False
-train2J = False
 
 
-outStr = '_M'+str(Bprime).replace('.','p')+'_'+str(arch)+'_'+ str(millify(int(maxpersample))) + 'train3J_' + str(millify(maxtest)) +'test_vars'+str(vararray)+'_Test'+str(testnum)
+#outStr = '_M'+str(Bprime).replace('.','p')+'_'+str(arch)+'_'+ str(millify(int(maxpersample))) + 'train3J_' + str(millify(maxtest)) +'test_vars'+str(vararray)+'_Test'+str(testnum)
+outStr = '_M'+str(Bprime).replace('.','p')+'_'+str(arch)+'_train3J_' + str(millify(maxtest)) +'test_vars'+str(vararray)+'_Test'+str(testnum)
 
-'''
-if test1100: outStr += 'sig1100'
-if WithBprimeVars: outStr += '_WithBprimeVars'
-if train2J: 
-    outStr = outStr.replace('45ktrain3J','67ktrain2J')
-    outStr = outStr.replace('14ktest','22ktest')
-    outdir = outdir.replace('Train3J','Train2J')
-'''
 print 'Outstr:',outStr,'Outdir:',outdir
 
 
@@ -93,14 +86,12 @@ else:
    ## assign default vars array
    ######################
    vars = ['corr_met_MultiLepCalc']
-#print 'Vars:',vars
 
 
 arrayTTToSemiLepT = []
 arrayTTToSemiLepTb = []
 arrayBprime    = []
 arrayBprime2   = []
-#arrayWJets    = []
 arrayWJets400    = []
 arrayWJets600    = []
 arrayWJets800    = []
@@ -111,7 +102,6 @@ testTTToSemiLepT = []
 testTTToSemiLepTb = []
 testBprime      = []
 testBprime2   = []
-#testWJets    = []
 testWJets400    = []
 testWJets600    = []
 testWJets800    = []
@@ -123,17 +113,12 @@ testWJets2500    = []
 print 'Opening files...'
 eosdir = "root://cmseos.fnal.gov//store/user/bburgsta/training_20200326/"
 
-sel = "Tprime2_DeepAK8_Mass < 0"
-if not train2J: sel = "Tprime2_DeepAK8_Mass < 0 && NJetsAK8_JetSubCalc > 2"
-#if not train2J: sel = "NJetsAK8_JetSubCalc > 2 && corr_met_MultiLepCalc > 75"
+#sel = "Bprime2_DeepAK8_Mass < 0"
+sel = "Bprime2_DeepAK8_Mass < 0 && NJetsAK8_JetSubCalc > 2"
 treeVars = vars
 print 'getting trees...','Making training arrays...','Making testing arrays...'
 
-seltest = "Tprime2_DeepAK8_Mass >= 0"
-#======process=====
-#open file
-#get tree
-#Convert the ntuple branches to numpy arrays
+seltest = "Bprime2_DeepAK8_Mass >= 0"
 
 for i in range(1,7):
    fileTTToSemiLepT  = TFile.Open(eosdir + "TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_"+ str(i)+"_hadd.root", "READ")
@@ -154,10 +139,6 @@ for i in range(1,3):
    else:
       arrayTTToSemiLepTb = np.concatenate([arrayTTToSemiLepTb,tree2array(treeTTToSemiLepTb, treeVars, sel)])
       testTTToSemiLepTb  = np.concatenate([testTTToSemiLepTb,tree2array(treeTTToSemiLepTb, treeVars, seltest)])
-
-#fileBprime  = TFile.Open(eosdir + "BprimeBprime_M-1800_TuneCUETP8M1_13TeV-madgraph-pythia8_ALL_hadd.root", "READ")
-#treeBprime      = fileBprime.Get("ljmet")
-#testBprime      = tree2array(treeBprime, treeVars, seltest)
 
 for i in range(1,5):
    fileBprime  = TFile.Open(eosdir + "BprimeBprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8_"+ str(i)+"_hadd.root", "READ")
@@ -217,16 +198,15 @@ arrayWJets2500= tree2array(treeWJets2500, treeVars, sel)
 testWJets2500= tree2array(treeWJets2500, treeVars, seltest)
 
 #print testWJets800
-# print "N 400",len(testWJets400),"max multiplier",len(testWJets400)/1256.89
-# print "N 600",len(testWJets600),"max multiplier",len(testWJets600)/309.66
-# print "N 800",len(testWJets800),"max multiplier",len(testWJets800)/141.36
-# print "N 1200",len(testWJets1200),"max multiplier",len(testWJets1200)/34.15
-# print "N 2500",len(testWJets2500),"max multiplier",len(testWJets2500)
+#print "N 400",len(testWJets400),"max multiplier",len(testWJets400)/1256.89
+#print "N 600",len(testWJets600),"max multiplier",len(testWJets600)/309.66
+#print "N 800",len(testWJets800),"max multiplier",len(testWJets800)/141.36
+#print "N 1200",len(testWJets1200),"max multiplier",len(testWJets1200)/34.15
+#print "N 2500",len(testWJets2500),"max multiplier",len(testWJets2500)
 
 print 'Weighting WJets...'
-multiplier = 350000./1743.  ## where numerator is the total we want (400 and 600 don't have enough, but 800/1200/2500 do)
-multipliertest = 100. ## based on number of 600 sample
-if train2J: multiplier = 67500./1743.
+multiplier = 250000./1743.  ## where numerator is the total we want (400 and 600 don't have enough, but 800/1200/2500 do)
+multipliertest = 90. ## based on number of 600 sample
 max2500 = int(round(multiplier*1.))
 max1200 = int(round(multiplier*34.15))
 max800 = int(round(multiplier*141.36))
@@ -257,6 +237,8 @@ testTTToSemiLep = np.concatenate([testTTToSemiLepT,testTTToSemiLepTb])
 np.random.shuffle(arrayTTToSemiLep)
 np.random.shuffle(testTTToSemiLep)
 
+ofile.write(str(len(arrayTTToSemiLep)) + ", " + str(len(arrayBprime)) + ", " +str(len(arrayBprime2)) + ", " +str(len(arrayWJets)) + ", " +str(len(testTTToSemiLep)) + ", " +str(len(testBprime)) + ", " +str(len(testBprime2)) + ", " +str(len(testWJets)) + ", ")
+
 print "-------Before Concatenate---------"
 print "number of TTToSemiLep events: ", len(arrayTTToSemiLep)
 print "number of Bprime " + str(Bprime) + " events: ", len(arrayBprime)
@@ -266,39 +248,55 @@ print "number of Bprime " + str(Bprime) + " testing events: ", len(testBprime)
 print "number of Bprime " + str(Bprime2) + " testing events: ", len(testBprime2)
 print "number of WJets testing events: ", len(testWJets)
 
-#maxtest = 17000
-arrayBprime = np.concatenate([arrayBprime,testBprime[maxtest:]])
-testBprime = testBprime[:maxtest]
-arrayBprime2 = np.concatenate([arrayBprime2,testBprime2[maxtest:]])
-testBprime2 = testBprime2[:maxtest]
+maxpersample = int(round(1,2*min(len(arrayTTToSemiLep) + len(testTTToSemiLep[maxtest:]), len(arrayBprime) + len(testBprime[maxtest:]))))
+print 'MAX TRAINING = ',maxpersample
 
-trainboost = 22000
-arrayTTToSemiLep = np.concatenate([arrayTTToSemiLep[:trainboost],testTTToSemiLep[maxtest:]])
+arrayBprime = np.concatenate([testBprime[maxtest:],arrayBprime]) #put the better events first
+arrayBprime2 = np.concatenate([testBprime2[maxtest:],arrayBprime2])
+arrayTTToSemiLep = np.concatenate([testTTToSemiLep[maxtest:],arrayTTToSemiLep])
+
+#trainboost = 22000
+#arrayTTToSemiLep = np.concatenate([testTTToSemiLep[maxtest:],arrayTTToSemiLep[:trainboost]])
+
+testBprime = testBprime[:maxtest]
+testBprime2 = testBprime2[:maxtest]
+testWJets = testWJets[:maxtest]
 testTTToSemiLep = testTTToSemiLep[:maxtest]
 
-
-np.random.shuffle(arrayTTToSemiLep)
-np.random.shuffle(arrayBprime)
-np.random.shuffle(arrayWJets)
-np.random.shuffle(testTTToSemiLep)
-np.random.shuffle(testWJets)
-np.random.shuffle(testBprime)
-np.random.shuffle(testBprime2)
-np.random.shuffle(testBprime)
-
-print "-------After Caoncatenate-------"
+print "-------After Concatenate-------"
 print "number of TTToSemiLep events: ", len(arrayTTToSemiLep)
 print "number of Bprime " + str(Bprime) + " events: ", len(arrayBprime)
+print "number of Bprime " + str(Bprime2) + " events: ", len(arrayBprime2)
 print "number of WJets events: ", len(arrayWJets)
 print "number of TTToSemiLep testing events: ", len(testTTToSemiLep)
 print "number of Bprime " + str(Bprime) + " testing events: ", len(testBprime)
 print "number of Bprime " + str(Bprime2) + " testing events: ", len(testBprime2)
 print "number of WJets testing events: ", len(testWJets)
 
+arrayBprime = arrayBprime[:maxpersample]
+arrayBprime2 = arrayBprime2[:maxpersample]
+arrayWJets = arrayWJets[:maxpersample]
+arrayTTToSemiLep = arrayTTToSemiLep[:maxpersample]
+
+np.random.shuffle(arrayTTToSemiLep)
+np.random.shuffle(arrayBprime)
+np.random.shuffle(arrayBprime2)
+np.random.shuffle(arrayWJets)
+np.random.shuffle(testTTToSemiLep)
+np.random.shuffle(testWJets)
+np.random.shuffle(testBprime)
+np.random.shuffle(testBprime2)
+
+print 'Training ttbar',len(arrayTTToSemiLep)
+print 'Training Bprime',len(arrayBprime)
+print 'Training WJets',len(arrayWJets)
+print 'Testing ttbar',len(testTTToSemiLep)
+print 'Testing Bprime',len(testBprime)
+print 'Testing WJets',len(testWJets)
 
 ofile.write(str(len(arrayTTToSemiLep)) + ", " + str(len(arrayBprime)) + ", " +str(len(arrayBprime2)) + ", " +str(len(arrayWJets)) + ", " +str(len(testTTToSemiLep)) + ", " +str(len(testBprime)) + ", " +str(len(testBprime2)) + ", " +str(len(testWJets)) + ", ")
 
-## Keep the first N events from each array, build arrays where each
+## build arrays where each
 ## entry is a list of all training variables
 newArrayTTToSemiLep = []
 newArrayBprime = []
@@ -307,27 +305,26 @@ newTestTTToSemiLep = []
 newTestBprime = []
 newTestBprime2 = []
 newTestWJets = []
-#maxpersample = 34000
 
-for entry in arrayTTToSemiLep[:maxpersample]:
+for entry in arrayTTToSemiLep:
     a = list(entry)
     newArrayTTToSemiLep.append(a)
-for entry in arrayBprime[:maxpersample]:
+for entry in arrayBprime:
     a = list(entry)
     newArrayBprime.append(a)
-for entry in arrayWJets[:maxpersample]:
+for entry in arrayWJets:
     a = list(entry)
     newArrayWJets.append(a)
-for entry in testTTToSemiLep: #no max for testing
+for entry in testTTToSemiLep:
     a = list(entry)
     newTestTTToSemiLep.append(a)
-for entry in testBprime: #no max for testing
+for entry in testBprime:
     a = list(entry)
     newTestBprime.append(a)
-for entry in testBprime2: #no max for testing on this non-training sample
+for entry in testBprime2:
     a = list(entry)
     newTestBprime2.append(a)
-for entry in testWJets: #no max for testing
+for entry in testWJets:
     a = list(entry)
     newTestWJets.append(a)
 arrayTTToSemiLep = copy.copy(newArrayTTToSemiLep)
@@ -338,42 +335,32 @@ testBprime = copy.copy(newTestBprime)
 testBprime2 = copy.copy(newTestBprime2)
 testWJets = copy.copy(newTestWJets)
 
-print 'Training ttbar',len(arrayTTToSemiLep)
-print 'Training Bprime',len(arrayBprime)
-print 'Training WJets',len(arrayWJets)
-print 'Testing ttbar',len(testTTToSemiLep)
-print 'Testing Bprime',len(testBprime)
-print 'Testing WJets',len(testWJets)
-
-ofile.write(str(len(arrayTTToSemiLep)) + ", " +str(len(arrayBprime)) + ", " +str(len(arrayBprime2)) + ", " +str(len(arrayWJets)) + ", " +str(len(testTTToSemiLep)) + ", " +str(len(testBprime)) + ", " +str(len(testBprime2)) + ", " +str(len(testWJets)) + ", ")
-
 
 ## Transpose these arrays to get arrays for plotting
 ## Each entry is one variable for all the events
-numPerSample = min(len(arrayTTToSemiLep),len(arrayBprime),len(arrayBprime2),len(arrayWJets),len(testTTToSemiLep),len(testBprime),len(testWJets),len(testBprime2))
-#numPerSample = 60000
-#if train2J: numPerSample = 79500
+numPerSample = min(len(arrayTTToSemiLep),len(arrayBprime),len(arrayBprime2),len(arrayWJets))
+
 histsTTToSemiLep = np.array(arrayTTToSemiLep[:numPerSample]).T
 histsBprime = np.array(arrayBprime[:numPerSample]).T
-histsBprime2 = np.array(testBprime2[:numPerSample]).T
+histsBprime2 = np.array(arrayBprime2[:numPerSample]).T
 histsWJets = np.array(arrayWJets[:numPerSample]).T
 
 ## Plot the input variables and save files
 
 for index, hist in enumerate(histsWJets):
-    plt.figure()
-    plt.hist(hist, bins=50, color='g', label=r'$\mathrm{W+jets}$', histtype='step', normed=True)
-    plt.hist(histsBprime[index], bins=50, color='y', label=r'$\mathrm{B\overline{B}\,('+str(Bprime)+'\,TeV)}$', histtype='step', normed=True)
-    plt.hist(histsBprime2[index], bins=50, color='c', label=r'$\mathrm{B\overline{B}\,('+str(Bprime2)+'\,TeV)}$', histtype='step', normed=True)
-    plt.hist(histsTTToSemiLep[index], bins=50, color='r', label=r'$\mathrm{t\bar{t}}$', histtype='step', normed=True)
-    plt.title('CMS Simulation',loc='left',size=18)
-    plt.title('Work in progress',loc='right',size=14,style='italic')
-    plt.ylabel('Events per bin',horizontalalignment='right',y=1.0,size=14)
-    plt.xlabel(vars[index],horizontalalignment='right',x=1.0,size=14)
-    plt.legend(loc='best',fontsize=14)
-    if not WithBprimeVars: plt.savefig(outdir+'plots_'+str(vars[index])+outStr)
-    if WithBprimeVars: plt.savefig(outdir+'plots_'+str(vars[index])+outStr)
-    plt.close()
+   plt.figure()
+   plt.hist(hist, bins=50, color='g', label=r'$\mathrm{W+jets}$', histtype='step', normed=True)
+   plt.hist(histsBprime[index], bins=50, color='y', label=r'$\mathrm{B\overline{B}\,('+str(Bprime)+'\,TeV)}$', histtype='step', normed=True)
+   #plt.hist(histsBprime2[index], bins=50, color='c', label=r'$\mathrm{B\overline{B}\,('+str(Bprime2)+'\,TeV)}$', histtype='step', normed=True)
+   plt.hist(histsTTToSemiLep[index], bins=50, color='r', label=r'$\mathrm{t\bar{t}}$', histtype='step', normed=True)
+   plt.title('CMS Simulation',loc='left',size=18)
+   plt.title('Work in progress',loc='right',size=14,style='italic')
+   plt.ylabel('Events per bin',horizontalalignment='right',y=1.0,size=14)
+   plt.xlabel(vars[index],horizontalalignment='right',x=1.0,size=14)
+   plt.legend(loc='best',fontsize=14)
+   if not WithBprimeVars: plt.savefig(outdir+'plots_'+str(vars[index])+outStr)
+   if WithBprimeVars: plt.savefig(outdir+'plots_'+str(vars[index])+outStr)
+   plt.close()
 
 
 ## Make arrays of "train" and "target" data with samples mixed randomly
@@ -483,10 +470,9 @@ testWJets = scaler.transform(testWJets)
 #print 'Train Labels scaled:'
 #print targetData[:10]
 
-numTrain = trainboost*3
-if train2J: numTrain = 64500*3
-print 'NumTrain',numTrain
-print 'Training length',len(trainData[:numTrain])
+#numTrain = trainboost*3
+#print 'NumTrain',numTrain
+#print 'Training length',len(trainData[:numTrain])
 
 ## import the neural networks we will use
 from sklearn import neural_network
@@ -497,8 +483,10 @@ from sklearn import tree
 ## rectified-linear unit activation function. Do all the work in the mlp.fit command
 print 'Training...'
 mlp = neural_network.MLPClassifier(hidden_layer_sizes=arch2tuple(arch), verbose=True, activation='relu',early_stopping=True)
-mlp.fit(trainData[:numTrain], targetData[:numTrain])
+#mlp.fit(trainData[:numTrain], targetData[:numTrain])
+mlp.fit(trainData, targetData)
 
+## options for getting the validation loss too... metrics.log_loss? warm_start + max_iter = 1? somehow tell it which validation sample to use?
 losscurve = mlp.loss_curve_
 plt.figure()
 plt.xlabel('iterations')
@@ -516,7 +504,6 @@ plt.savefig(outdir+'valscore'+outStr+'.png')
 plt.close()
 
 ## Plot a confusion matrix
-#cm = metrics.confusion_matrix(mlp.predict(trainData[numTrain:]), targetData[numTrain:])
 cm = metrics.confusion_matrix(mlp.predict(testData), testLabel)
 plt.figure()
 targetNames = [r'$\mathrm{W+jets}$',r'$\mathrm{t\bar{t}}$',r'$\mathrm{B\overline{B}}$']
@@ -526,7 +513,6 @@ if not WithBprimeVars: plt.savefig(outdir+'confusion'+outStr+'.png')
 #plt.show()
 
 ## Print the overall score from the non-training events
-#print mlp.score(trainData[numTrain:], targetData[numTrain:])
 print 'Test data score =',mlp.score(testData, testLabel)
 print 'Train data score =',mlp.score(trainData, targetData)
 
@@ -534,7 +520,6 @@ ofile.write(str(mlp.score(testData, testLabel)) + ", ")
 
 
 ## Predict the scores for non-training events
-#probsWJets = mlp.predict_proba(arrayWJets[numPerSample:])
 probsWJets = mlp.predict_proba(testWJets)
 probsTTToSemiLep = mlp.predict_proba(testTTToSemiLep)
 probsBprime = mlp.predict_proba(testBprime)
@@ -668,7 +653,7 @@ joblib.dump(scaler, outdir+'Dnn_scaler_3bin'+outStr+'.pkl')
 classRep = open('ClassificationReportsBB.txt', 'a+')
 
 from sklearn.metrics import classification_report, f1_score, recall_score, precision_score,accuracy_score
-cRep = classification_report(testLabel,mlp.predict(testData),target_names=['Wjets', 'tbar', 'BBbar'], digits = 6)
+cRep = classification_report(testLabel,mlp.predict(testData),target_names=['Wjets', 'tbar', 'TTbar'], digits = 6)
 print cRep
 classRep.write('\n================================\n     Test #:' + str(testnum) +'\n================================\n' + cRep)
 classRep.close()
