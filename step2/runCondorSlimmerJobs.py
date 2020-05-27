@@ -8,9 +8,9 @@ start_time = time.time()
 #IO directories must be full paths
 
 relbase = '/uscms_data/d3/bburgsta/CMSSW_10_2_16/'
-inputDir='/eos/uscms/store/user/bburgsta/FWLJMET102X_1lep2016Dnn_042720_step1hadds/'
-outputDir='/eos/uscms/store/user/bburgsta/FWLJMET102X_1lep2016Dnn_May2020_step2hadds/' 
-condorDir='/uscms_data/d3/bburgsta/FWLJMET102X_1lep2016Dnn_May2020_step2hadds'
+inputDir='/eos/uscms/store/user/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_step1hadds/' ## your step1hadds
+outputDir='/eos/uscms/store/user/bburgsta/training_20200326/' ## if for MVA training, keep 'training' in name to trigger a setting in the .sh
+condorDir='/uscms_data/d3/bburgsta/step2Jobs/'
 
 runDir=os.getcwd()
 
