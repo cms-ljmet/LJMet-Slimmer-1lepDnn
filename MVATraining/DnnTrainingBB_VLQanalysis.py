@@ -114,11 +114,11 @@ print 'Opening files...'
 eosdir = "root://cmseos.fnal.gov//store/user/bburgsta/training_20200326/"
 
 #sel = "Bprime2_DeepAK8_Mass < 0"
-sel = "Bprime2_DeepAK8_Mass < 0 && NJetsAK8_JetSubCalc > 2"
+sel = "isValidBBDecayMode_DeepAK8 == 0 && Bprime2_DeepAK8_Mass < 0 && NJetsAK8_JetSubCalc > 2"
 treeVars = vars
 print 'getting trees...','Making training arrays...','Making testing arrays...'
 
-seltest = "Bprime2_DeepAK8_Mass >= 0"
+seltest = "isValidBBDecayMode_DeepAK8 == 0 && Bprime2_DeepAK8_Mass >= 0"
 
 for i in range(1,7):
    fileTTToSemiLepT  = TFile.Open(eosdir + "TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_"+ str(i)+"_hadd.root", "READ")
