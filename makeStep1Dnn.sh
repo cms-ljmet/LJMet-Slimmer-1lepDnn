@@ -9,6 +9,7 @@ inputDir=${3}
 outputDir=${4}
 idlist=${5}
 scratch=${PWD}
+url=${6}
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc700
@@ -28,7 +29,7 @@ echo "setting macroDir to PWD"
 macroDir=${PWD}
 export PATH=$PATH:$macroDir
 
-XRDpath=root://brux11.hep.brown.edu:1094//isilon/hadoop/$inputDir
+XRDpath=$url/$inputDir
 
 
 echo "Running step1 over list: ${idlist}"
