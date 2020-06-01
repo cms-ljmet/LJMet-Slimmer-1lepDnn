@@ -9,10 +9,11 @@ start_time = time.time()
 input  = sys.argv[1]
 output = sys.argv[2]
 
-inDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1/'
-outDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_101519_step1hadds/'
+inDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_Mar2020_step1/'
+outDir='/store/user/escharni/FWLJMET102X_1lep2017Dnn_Mar2020_step1hadds/'
+scratchDir='/uscmst1b_scratch/lpc1/3DayLifetime/escharni/'
 
-
+if not os.path.exists(scratchDir): os.system('mkdir '+scratchDir)
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
 
 dirList = [
@@ -27,7 +28,6 @@ dirList = [
     'BprimeBprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
     'BprimeBprime_M-900_TuneCP5_13TeV-madgraph-pythia8',
     'DYJetsToLL_M-50_HT-1200to2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'DYJetsToLL_M-50_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-2500toInf_TuneCP5_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8',
     'DYJetsToLL_M-50_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8',
@@ -35,7 +35,6 @@ dirList = [
     'QCD_HT1000to1500_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT2000toInf_TuneCP5_13TeV-madgraph-pythia8',
-    'QCD_HT200to300_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT300to500_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8',
     'QCD_HT700to1000_TuneCP5_13TeV-madgraph-pythia8',
@@ -51,8 +50,8 @@ dirList = [
     'TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8',
-    'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
     'TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',
+    'TTZToLL_M-1to10_TuneCP5_13TeV-amcatnlo-pythia8',
     'TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
     'TprimeTprime_M-1000_TuneCP5_13TeV-madgraph-pythia8',
@@ -64,9 +63,7 @@ dirList = [
     'TprimeTprime_M-1600_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1700_TuneCP5_13TeV-madgraph-pythia8',
     'TprimeTprime_M-1800_TuneCP5_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-700_TuneCP5_13TeV-madgraph-pythia8',
     'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
     'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
@@ -106,17 +103,20 @@ for sample in dirList:
             print 'Length estimate reduced from',lengthcheck,'by',toolong,'via removing',num2remove,'files for nFilesPerHadd of',nFilesPerHadd
 
         if len(rootfiles) < nFilesPerHadd:
-            haddcommand = 'hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root '
+            haddcommand = 'hadd -f '+scratchDir+'/'+outsample+'_hadd.root '
             for file in rootfiles:
                 haddcommand+=' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+file
             print 'Length of hadd command =',len(haddcommand)
             subprocess.call(haddcommand,shell=True)
+            
+            xrdcpcommand = 'xrdcp '+scratchDir+'/'+outsample+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root'
+            subprocess.call(xrdcpcommand,shell=True)
 
             if bool(EOSisfile(outDir+'/'+outsample+'_hadd.root')) != True:
-                print haddcommand
+                print haddcommand                
         else:
             for i in range(int(math.ceil(len(rootfiles)/float(nFilesPerHadd)))):
-                haddcommand = 'hadd -f root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root '
+                haddcommand = 'hadd -f '+scratchDir+'/'+outsample+'_'+str(i+1)+'_hadd.root '
 
                 begin=i*nFilesPerHadd
                 end=begin+nFilesPerHadd
@@ -127,6 +127,9 @@ for sample in dirList:
                     haddcommand+=' root://cmseos.fnal.gov/'+inDir+'/'+outsample+'/'+rootfiles[j]
                 print 'Length of hadd command =',len(haddcommand)
                 subprocess.call(haddcommand,shell=True)
+
+                xrdcpcommand = 'xrdcp '+scratchDir+'/'+outsample+'_'+str(i+1)+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root'
+                subprocess.call(xrdcpcommand,shell=True)
 
                 if bool(EOSisfile(outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root')) != True:
                     print haddcommand
