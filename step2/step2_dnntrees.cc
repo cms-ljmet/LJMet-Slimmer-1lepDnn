@@ -47,9 +47,15 @@ void step2::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("Tprime2_DeepAK8_Pt",1);
    inputTree->SetBranchStatus("Tprime2_DeepAK8_Eta",1);
    inputTree->SetBranchStatus("Tprime2_DeepAK8_deltaR",1);
+   inputTree->SetBranchStatus("Bprime2_DeepAK8_Mass",1);
+   inputTree->SetBranchStatus("Bprime2_DeepAK8_Pt",1);
+   inputTree->SetBranchStatus("Bprime2_DeepAK8_Eta",1);
+   inputTree->SetBranchStatus("Bprime2_DeepAK8_deltaR",1);
    inputTree->SetBranchStatus("leptonPt_MultiLepCalc",1);
    inputTree->SetBranchStatus("minDR_leadAK8otherAK8",1);
    inputTree->SetBranchStatus("minDR_lepAK8",1);
+   inputTree->SetBranchStatus("isValidTTDecayMode_DeepAK8",1);
+   inputTree->SetBranchStatus("isValidBBDecayMode_DeepAK8",1);
 
    // Makes a copy of the branches with status 1
    outputFile->cd();
@@ -76,7 +82,6 @@ void step2::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("isTZTZ_TpTpCalc",1);
    inputTree->SetBranchStatus("isTZTH_TpTpCalc",1);
    inputTree->SetBranchStatus("isTHTH_TpTpCalc",1);
-   inputTree->SetBranchStatus("isValidTTDecayMode_DeepAK8",1);
    inputTree->SetBranchStatus("isTWTW_TpTpCalc",1);
    inputTree->SetBranchStatus("isBHTW_TpTpCalc",1);
    inputTree->SetBranchStatus("isBZTW_TpTpCalc",1);
@@ -184,8 +189,8 @@ void step2::Loop(TString inTreeName, TString outTreeName)
       
       if(jentry % 10000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
 
-      if(MCPastTrigger < 1 || NJetsAK8_JetSubCalc < 2 || AK4HT < 500. || corr_met_MultiLepCalc < 50. || leptonPt_MultiLepCalc < 55) continue;
-      if(isValidTTDecayMode_DeepAK8 > 0) continue;
+      if(MCPastTrigger < 1 || NJetsAK8_JetSubCalc < 2 || AK4HT < 510. || corr_met_MultiLepCalc < 50. || leptonPt_MultiLepCalc < 55) continue;
+      if(isValidTTDecayMode_DeepAK8 > 0 && isValidBBDecayMode_DeepAK8 > 0) continue;
       // do the below cut as a "sel" in the dnn training for more flexibility
       //if(!isSig && Tprime2_DeepAK8_Mass > -9) continue; // trying the scenario where TT can't be reconstructed for backgrounds, loosening to 2+ AK8 jets
       npassed_all++;

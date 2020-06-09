@@ -59,11 +59,17 @@ public :
    Bool_t          outBZBZ;
    Bool_t          outBHBH;
    Int_t           SigMass;
+   Int_t           pileupIndex;
    Bool_t          isNominal;
    Bool_t          isBUp;
    Bool_t          isBDn;
    Bool_t          isLUp;
    Bool_t          isLDn;
+
+   // Pileup distributions -- 31Mar2018 Data vs RunIIFall17MC
+   std::vector<std::vector<float>> pileupweight;
+   std::vector<std::vector<float>> pileupweightUp;
+   std::vector<std::vector<float>> pileupweightDn;
    
    // Fixed size dimensions of array or collections stored in the TTree if any.
 
@@ -180,10 +186,10 @@ public :
    Float_t         pileupWeight;
    Float_t         pileupWeightUp;
    Float_t         pileupWeightDown;
-   Float_t         muPtSF;
    Float_t         isoSF;
-   Float_t         triggSF;
-   Float_t         triggSFUncert;
+   Float_t         muPtSF;
+   Float_t         triggerSF;
+   Float_t         triggerSFUncert;
    Float_t         lepIdSF;
    Float_t         MuTrkSF;
    Float_t         EGammaGsfSF;
@@ -1224,23 +1230,25 @@ public :
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
    virtual void     saveHistograms();
-   bool             applySF(bool& isTagged, float tag_SF, float tag_eff, float jet_phi);
-   double           GetBtagSF2018Medium_comb(shift Shift, double pt, double eta);
-   double           GetCtagSF2018Medium_comb(shift Shift, double pt, double eta);
-   double           GetLFSF2018Medium(shift Shift, double pt, double eta);
+   bool             applySF(bool& isTagged, float tag_SF, float tag_eff, float jet_phi);   
+   double           GetBtagSF2016Medium_comb(shift Shift, double pt, double eta);
+   double           GetCtagSF2016Medium_comb(shift Shift, double pt, double eta);
+   double           GetLFSF2016Medium(shift Shift, double pt, double eta);
    double           GetBtagEfficiency(double pt);
    double           GetCtagEfficiency(double pt);
    double           GetMistagRate(double pt);
+   void             InitPileup();
 };
 
 #endif
 
 #ifdef step1_cxx
-step1::step1(TString inputFileName, TString outputFileName, TString outputDir) : inputTree(0), inputFile(0), outputFile(0) 
+step1::step1(TString inputFileName, TString outputFileName, TString outputDir) : inputTree(0), inputFile(0), outputFile(0)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
 
+  pileupIndex = -1;
 
   isSig  = (inputFileName.Contains("prime") || inputFileName.Contains("X53") || inputFileName.Contains("ChargedHiggs_Hplus"));
   if(isSig){
@@ -1248,19 +1256,16 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
     else if(inputFileName.Contains("Bprime")) isBpBp = true;
     else if(inputFileName.Contains("X53")) isXX = true;
 
-    if(inputFileName.Contains("_M-700")) SigMass = 0; 
-    else if(inputFileName.Contains("_M-800")) SigMass = 1;
-    else if(inputFileName.Contains("_M-900")) SigMass = 2;
-    else if(inputFileName.Contains("_M-1000")) SigMass = 3;
-    else if(inputFileName.Contains("_M-1100")) SigMass = 4;
-    else if(inputFileName.Contains("_M-1200")) SigMass = 5;
-    else if(inputFileName.Contains("_M-1300")) SigMass = 6;
-    else if(inputFileName.Contains("_M-1400")) SigMass = 7;
-    else if(inputFileName.Contains("_M-1500")) SigMass = 8;
-    else if(inputFileName.Contains("_M-1600")) SigMass = 9;
-    else if(inputFileName.Contains("_M-1700")) SigMass = 10;
-    else if(inputFileName.Contains("_M-1800")) SigMass = 11;
-    else SigMass = -1;
+    if(inputFileName.Contains("_M-900")) {SigMass = 2;}
+    else if(inputFileName.Contains("_M-1000")) {SigMass = 3;}
+    else if(inputFileName.Contains("_M-1100")) {SigMass = 4;}
+    else if(inputFileName.Contains("_M-1200")) {SigMass = 5;}
+    else if(inputFileName.Contains("_M-1300")) {SigMass = 6;}
+    else if(inputFileName.Contains("_M-1400")) {SigMass = 7;}
+    else if(inputFileName.Contains("_M-1500")) {SigMass = 8;}
+    else if(inputFileName.Contains("_M-1600")) {SigMass = 9;}
+    else if(inputFileName.Contains("_M-1700")) {SigMass = 10;}
+    else if(inputFileName.Contains("_M-1800")) {SigMass = 11;}
   }  
   else SigMass = -1;
 
@@ -1274,12 +1279,12 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
   isMC = !(inputFileName.Contains("Single") || inputFileName.Contains("Data18"));
   isSM = inputFileName.Contains("SingleMuon");
   isSE = (inputFileName.Contains("SingleElectron") || inputFileName.Contains("EGamma"));
-  
+
   std::cout << "output = " << outputDir << "/" << outputFileName << std::endl;
 
   isBUp = false; // these will now get changed in makeStep1Dnn.C
   isBDn = false;
-  isLUp = false; 
+  isLUp = false;
   isLDn = false;
   isNominal = true;
   isTTincMtt0to700    = outputFileName.Contains("Mtt0to700");
@@ -1311,6 +1316,8 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
   /*   exit(1); */
   /* } */
 
+  //InitPileup();
+  
   outputFile=new TFile(outputFileName,"RECREATE");   
   
   //  Init(inputTree);
@@ -2232,4 +2239,9 @@ Int_t step1::Cut(Long64_t entry)
 // returns -1 otherwise.
    return 1;
 }
+
+void step1::InitPileup()
+{
+}
+
 #endif // #ifdef step1_cxx

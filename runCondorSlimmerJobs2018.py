@@ -7,12 +7,14 @@ start_time = time.time()
 
 #IO directories must be full paths
 
-finalStateYear = 'singleLep2018' # or 2018
+#url = 'root://brux11.hep.brown.edu:1094//isilon/hadoop/' # input stored at brux
+url = 'root://cmseos.fnal.gov/' # input stored on LPC EOS
+finalStateYear = 'singleLep2018' 
 relbase = '/uscms_data/d3/cholz/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/cholz/slimmerdnn.tar'
-inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2018_Oct2019/' # or 2018
-outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018_Mar2020_step1/' # or 2018
-condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018_Mar2020_step1/' # or 2018
+inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2018_Oct2019/'
+outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018_Mar2020_step1/'
+condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018_Mar2020_step1/'
 
 runDir=os.getcwd()
 inDir=inputDir[10:]
@@ -97,7 +99,7 @@ for sample in dirList:
     elif 'TTTo' in sample: outList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
 
     isData = False
-    if 'SingleMuon' in sample or 'SingleElectron' in sample or 'EGamma' in sample: isData = True
+    if 'Single' in sample or 'EGamma' in sample and 'SingleLepFrom' not in sample: isData = True
 
     for outlabel in outList:
         tmpcount = 0
@@ -156,7 +158,7 @@ for sample in dirList:
                     idlist = idlist.strip()
                     print "Running IDs",idlist
                 
-                    dict={'RUNDIR':runDir, 'SAMPLE':sample, 'INPATHSUFFIX':pathsuffix, 'INPUTDIR':inDir, 'FILENAME':basefilename, 'OUTFILENAME':outsample, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount, 'TARBALL':tarfile}
+                    dict={'RUNDIR':runDir, 'SAMPLE':sample, 'INPATHSUFFIX':pathsuffix, 'INPUTDIR':inDir, 'FILENAME':basefilename, 'OUTFILENAME':outsample, 'OUTPUTDIR':outDir, 'LIST':idlist, 'ID':tmpcount, 'TARBALL':tarfile, 'URL':url}
                     jdfName=condorDir+'/%(OUTFILENAME)s/%(OUTFILENAME)s_%(ID)s.job'%dict
                     print jdfName
                     jdf=open(jdfName,'w')
@@ -171,7 +173,7 @@ Output = %(OUTFILENAME)s_%(ID)s.out
 Error = %(OUTFILENAME)s_%(ID)s.err
 Log = %(OUTFILENAME)s_%(ID)s.log
 Notification = Never
-Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s'"
+Arguments = "%(FILENAME)s %(OUTFILENAME)s %(INPUTDIR)s/%(SAMPLE)s/%(INPATHSUFFIX)s %(OUTPUTDIR)s/%(OUTFILENAME)s '%(LIST)s' %(URL)s"
 
 Queue 1"""%dict)
                     jdf.close()
