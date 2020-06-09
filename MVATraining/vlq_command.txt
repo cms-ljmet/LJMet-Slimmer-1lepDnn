@@ -1,0 +1,7 @@
+python ~jmanagan/nobackup/CMSSW_10_2_10/src/lwtnn/lwtnn/converters/sklearn2json.py -m ~cholz/nobackup/DnnTrainingJupyter/CMSSW_9_2_8/src/SplitTestTrain/Train3JTT_Aug7vars3/Dnn_mlp_3bin_M1p0_3by10_62ktrain3JnoVLQ_17ktestSR_20bestNoDRi_vars3_Test4.pkl -o vlq_mlp_August_07_19_TT.json -s ~cholz/nobackup/DnnTrainingJupyter/CMSSW_9_2_8/src/SplitTestTrain/Train3JTT_Aug7vars3/Dnn_scaler_3bin_M1p0_3by10_62ktrain3JnoVLQ_17ktestSR_20bestNoDRi_vars3_Test4.pkl -c Wjets,ttbar,Tprime -l vlq_vars.txt -mv
+
+## point to your chosen Dnn_mlp_...stuff.pkl and chosen Dnn_scaler_...stuff.pkl
+
+## put the output choices in the order corresponding to label 0, 1, 2. For Bprime: WjetsBB, ttbarBB, Bprime
+
+## make sure vlq_vars.txt has your variables in the right order. 
