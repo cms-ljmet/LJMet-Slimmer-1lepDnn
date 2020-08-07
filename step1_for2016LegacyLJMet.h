@@ -732,10 +732,6 @@ public :
    vector<double>  *theJetPhi_JetSubCalc;
    vector<double>  *theJetPileupJetId_JetSubCalc;
    vector<double>  *theJetPt_JetSubCalc;
-   vector<double>  *topBestGenEnergy_HOTTaggerCalc;
-   vector<double>  *topBestGenEta_HOTTaggerCalc;
-   vector<double>  *topBestGenPhi_HOTTaggerCalc;
-   vector<double>  *topBestGenPt_HOTTaggerCalc;
    vector<double>  *topDRmax_HOTTaggerCalc;
    vector<double>  *topDThetaMax_HOTTaggerCalc;
    vector<double>  *topDThetaMin_HOTTaggerCalc;
@@ -1186,10 +1182,6 @@ public :
    TBranch        *b_theJetPhi_JetSubCalc;   //!
    TBranch        *b_theJetPileupJetId_JetSubCalc;   //!
    TBranch        *b_theJetPt_JetSubCalc;   //!
-   TBranch        *b_topBestGenEnergy_HOTTaggerCalc;   //!
-   TBranch        *b_topBestGenEta_HOTTaggerCalc;   //!
-   TBranch        *b_topBestGenPhi_HOTTaggerCalc;   //!
-   TBranch        *b_topBestGenPt_HOTTaggerCalc;   //!
    TBranch        *b_topDRmax_HOTTaggerCalc;   //!
    TBranch        *b_topDThetaMax_HOTTaggerCalc;   //!
    TBranch        *b_topDThetaMin_HOTTaggerCalc;   //!
@@ -1219,7 +1211,7 @@ public :
    TBranch        *b_vsSelTriggersEl_MultiLepCalc;   //!
    TBranch        *b_vsSelTriggersHad_MultiLepCalc;   //!
    TBranch        *b_vsSelTriggersMu_MultiLepCalc;   //!
- 
+
    step1(TString inputFileName, TString outputFileName, TString outputDir);
    virtual ~step1();
    virtual Int_t    Cut(Long64_t entry);
@@ -1719,10 +1711,6 @@ void step1::Init(TTree *tree)
    theJetPhi_JetSubCalc = 0;
    theJetPileupJetId_JetSubCalc = 0;
    theJetPt_JetSubCalc = 0;
-   topBestGenEnergy_HOTTaggerCalc = 0;
-   topBestGenEta_HOTTaggerCalc = 0;
-   topBestGenPhi_HOTTaggerCalc = 0;
-   topBestGenPt_HOTTaggerCalc = 0;
    topDRmax_HOTTaggerCalc = 0;
    topDThetaMax_HOTTaggerCalc = 0;
    topDThetaMin_HOTTaggerCalc = 0;
@@ -2178,10 +2166,6 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("theJetPhi_JetSubCalc", &theJetPhi_JetSubCalc, &b_theJetPhi_JetSubCalc);
    inputTree->SetBranchAddress("theJetPileupJetId_JetSubCalc", &theJetPileupJetId_JetSubCalc, &b_theJetPileupJetId_JetSubCalc);
    inputTree->SetBranchAddress("theJetPt_JetSubCalc", &theJetPt_JetSubCalc, &b_theJetPt_JetSubCalc);
-   inputTree->SetBranchAddress("topBestGenEnergy_HOTTaggerCalc", &topBestGenEnergy_HOTTaggerCalc, &b_topBestGenEnergy_HOTTaggerCalc);
-   inputTree->SetBranchAddress("topBestGenEta_HOTTaggerCalc", &topBestGenEta_HOTTaggerCalc, &b_topBestGenEta_HOTTaggerCalc);
-   inputTree->SetBranchAddress("topBestGenPhi_HOTTaggerCalc", &topBestGenPhi_HOTTaggerCalc, &b_topBestGenPhi_HOTTaggerCalc);
-   inputTree->SetBranchAddress("topBestGenPt_HOTTaggerCalc", &topBestGenPt_HOTTaggerCalc, &b_topBestGenPt_HOTTaggerCalc);
    inputTree->SetBranchAddress("topDRmax_HOTTaggerCalc", &topDRmax_HOTTaggerCalc, &b_topDRmax_HOTTaggerCalc);
    inputTree->SetBranchAddress("topDThetaMax_HOTTaggerCalc", &topDThetaMax_HOTTaggerCalc, &b_topDThetaMax_HOTTaggerCalc);
    inputTree->SetBranchAddress("topDThetaMin_HOTTaggerCalc", &topDThetaMin_HOTTaggerCalc, &b_topDThetaMin_HOTTaggerCalc);
@@ -2211,6 +2195,7 @@ void step1::Init(TTree *tree)
    inputTree->SetBranchAddress("vsSelTriggersEl_MultiLepCalc", &vsSelTriggersEl_MultiLepCalc, &b_vsSelTriggersEl_MultiLepCalc);
    inputTree->SetBranchAddress("vsSelTriggersHad_MultiLepCalc", &vsSelTriggersHad_MultiLepCalc, &b_vsSelTriggersHad_MultiLepCalc);
    inputTree->SetBranchAddress("vsSelTriggersMu_MultiLepCalc", &vsSelTriggersMu_MultiLepCalc, &b_vsSelTriggersMu_MultiLepCalc);
+   
    Notify();
 }
 

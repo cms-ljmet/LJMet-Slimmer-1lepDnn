@@ -54,6 +54,9 @@ else:
    ofile = open("BB_output.txt","a+")
    ofile.write('\n')
 ofile.write(str(testnum)+", ")
+ofile.write(str(vararray)+", ")
+ofile.write(arch+", ")
+
 
 Bprime = 1.0
 Bprime2 = 1.8
@@ -70,23 +73,37 @@ print 'Outstr:',outStr,'Outdir:',outdir
 if not os.path.exists(outdir): os.system('mkdir '+outdir)
 
 if vararray == 1:
-   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8', 
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8',
+#elif vararray == 11:
+#   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'minDR_leadAK8otherAK8', 'nH_DeepAK8','nT_DeepAK8', 'tau21_3','dnnT_1','dnnT_2'] 
 elif vararray == 2:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_2', 'sdMass_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8', 
+#elif vararray == 21:
+#    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_2', 'sdMass_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'minDR_leadAK8otherAK8', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 3:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8', 
+#elif vararray == 31:
+#    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 4:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8',  Bprime2_DeepAK8_Pt and Bprime2_DeepAK8_Mass removed 
+#elif vararray == 41:
+#   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 5:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnH_2', 'dnnH_3', 'dnnT_1']#'minDR_lepAK8', 
+#elif vararray == 51:
+#   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnH_2', 'dnnH_3', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 6:
-   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'nW_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'tau21_3', 'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnH_1', 'dnnH_2', 'dnnH_3', 'dnnT_1', 'dnnT_2']#'minDR_lepAK8', 
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'nW_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'tau21_3', 'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnH_1', 'dnnH_2', 'dnnH_3', 'dnnT_1', 'dnnT_2']#'minDR_lepAK8',
+elif vararray == 7:
+   vars = ['corr_met_MultiLepCalc', 'leptonPt_MultiLepCalc','AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'minDR_lepAK8', 'nB_DeepAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'nW_DeepAK8', 'nZ_DeepAK8', 'Bprime2_DeepAK8_Mass', 'Bprime2_DeepAK8_Pt', 'Bprime2_DeepAK8_Eta', 'Bprime2_DeepAK8_deltaR', 'isValidBBDecayMode_DeepAK8', 'targetLabel', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'tau21_1', 'tau21_2', 'tau21_3', 'tau32_1', 'tau32_2', 'tau32_3',  'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnB_1', 'dnnB_2', 'dnnB_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnW_1', 'dnnW_2', 'dnnW_3', 'dnnZ_1', 'dnnZ_2', 'dnnZ_3', 'dnnH_1', 'dnnH_2', 'dnnH_3', 'dnnT_1', 'dnnT_2', 'dnnT_3']#'minDR_lepAK8',
+ 
 else:
    ######################
    ## assign default vars array
    ######################
    vars = ['corr_met_MultiLepCalc']
 
+print 'vars list: ',vars
 
 arrayTTToSemiLepT = []
 arrayTTToSemiLepTb = []
@@ -111,7 +128,7 @@ testWJets2500    = []
 
 ## Open ROOT files
 print 'Opening files...'
-eosdir = "root://cmseos.fnal.gov//store/user/bburgsta/training_20200326/"
+eosdir = "root://cmseos.fnal.gov//store/user/cholz/Step2MVAtraining_0432020/"
 
 #sel = "Bprime2_DeepAK8_Mass < 0"
 sel = "isValidBBDecayMode_DeepAK8 == 0 && Bprime2_DeepAK8_Mass < 0 && NJetsAK8_JetSubCalc > 2"
@@ -236,6 +253,8 @@ testTTToSemiLep = np.concatenate([testTTToSemiLepT,testTTToSemiLepTb])
 
 np.random.shuffle(arrayTTToSemiLep)
 np.random.shuffle(testTTToSemiLep)
+np.random.shuffle(arrayWJets)
+np.random.shuffle(testWJets)
 
 ofile.write(str(len(arrayTTToSemiLep)) + ", " + str(len(arrayBprime)) + ", " +str(len(arrayBprime2)) + ", " +str(len(arrayWJets)) + ", " +str(len(testTTToSemiLep)) + ", " +str(len(testBprime)) + ", " +str(len(testBprime2)) + ", " +str(len(testWJets)) + ", ")
 
@@ -248,7 +267,7 @@ print "number of Bprime " + str(Bprime) + " testing events: ", len(testBprime)
 print "number of Bprime " + str(Bprime2) + " testing events: ", len(testBprime2)
 print "number of WJets testing events: ", len(testWJets)
 
-maxpersample = int(round(1,2*min(len(arrayTTToSemiLep) + len(testTTToSemiLep[maxtest:]), len(arrayBprime) + len(testBprime[maxtest:]))))
+maxpersample = int(round(1.2*min(len(arrayTTToSemiLep) + len(testTTToSemiLep[maxtest:]), len(arrayBprime) + len(testBprime[maxtest:]))))
 print 'MAX TRAINING = ',maxpersample
 
 arrayBprime = np.concatenate([testBprime[maxtest:],arrayBprime]) #put the better events first
