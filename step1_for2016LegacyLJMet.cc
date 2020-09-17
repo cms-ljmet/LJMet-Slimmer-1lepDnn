@@ -24,12 +24,13 @@ using namespace std;
 // DNN stuff
 // ----------------------------------------------------------------------------
 
-std::string dnnFileTT = "vlq_mlp_3by10_062819_TT2017.json";
+std::string dnnFileTT = "vlq_mlp_TTMar2020_Test105.json";
 std::ifstream input_cfgTT( dnnFileTT );
 lwt::JSONConfig cfgTT = lwt::parse_json(input_cfgTT);
 lwt::LightweightNeuralNetwork* lwtnnTT = new lwt::LightweightNeuralNetwork(cfgTT.inputs, cfgTT.layers, cfgTT.outputs);
 
-std::string dnnFileBB = "vlq_mlp_3by10_072519_BB2017.json";
+
+std::string dnnFileBB = "vlq_mlp_BBMar2020_Test40.json";
 std::ifstream input_cfgBB( dnnFileBB );
 lwt::JSONConfig cfgBB = lwt::parse_json(input_cfgBB);
 lwt::LightweightNeuralNetwork* lwtnnBB = new lwt::LightweightNeuralNetwork(cfgBB.inputs, cfgBB.layers, cfgBB.outputs);
@@ -2080,7 +2081,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       };
 
       varMapTT = {
-	{"corr_met_singleLepCalc", -999},
+	{"corr_met_MultiLepCalc", -999},
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
 	{"NJets_JetSubCalc", -999},
@@ -2100,13 +2101,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       };
 
       varMapBB = {
-	{"corr_met_singleLepCalc", -999},
+	{"corr_met_MultiLepCalc", -999},
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
 	{"NJets_JetSubCalc", -999},
 	{"NJetsAK8_JetSubCalc", -999},
-	{"nH_DeepAK8", -999},
-	{"nT_DeepAK8", -999},
 	{"jetPt_1", -999},
 	{"jetPt_2", -999},
 	{"jetPt_3", -999},
@@ -2150,7 +2149,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	else dnnJ_3 = -9;
 
 	varMapTT = {
-	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
 	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
 	  {"AK4HT", AK4HT},
 	  {"NJets_JetSubCalc", NJets_JetSubCalc},
@@ -2164,21 +2163,18 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	};
 
 	varMapBB = {
-	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
-	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
-	  {"AK4HT", AK4HT},
-	  {"NJets_JetSubCalc", NJets_JetSubCalc},
-	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
-	  {"nH_DeepAK8", nH_DeepAK8},
-	  {"nT_DeepAK8", nT_DeepAK8},
-	  {"jetPt_1", jetPt_1},
-	  {"jetPt_2", jetPt_2},
-	  {"jetPt_3", jetPt_3},
-	  {"sdMass_2", sdMass_1},
-	  {"sdMass_3", sdMass_2},
-	  {"dnnJ_1", dnnJ_1},
-	  {"dnnJ_2", dnnJ_2},
-	  {"dnnJ_3", dnnJ_3},
+		// Last updated 22 APR 2020 array var 1 (Test105)
+		{"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+		{"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
+		{"AK4HT", AK4HT},
+		{"NJets_JetSubCalc", NJets_JetSubCalc},
+		{"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+		{"jetPt_1", jetPt_1},
+		{"jetPt_2", jetPt_2},
+		{"jetPt_3", jetPt_3},
+		{"dnnJ_1", dnnJ_1},
+		{"dnnJ_2", dnnJ_2},
+		{"dnnJ_3", dnnJ_3}
 	};
 	
 	myMapTT = lwtnnTT->compute(varMapTT);      
@@ -2940,7 +2936,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(LHEweightids_MultiLepCalc->at(i) == 6 || LHEweightids_MultiLepCalc->at(i) == 8) continue;
 	    renormWeights.push_back(LHEweights_MultiLepCalc->at(i));
 	  }
-	  if(LHEweightids_MultiLepCalc->at(i) > 474 && LHEweightids_MultiLepCalc->at(i) < 575){
+	  if(LHEweightids_MultiLepCalc->at(i) > 111 && LHEweightids_MultiLepCalc->at(i) < 212){
 	    pdfWeights.push_back(LHEweights_MultiLepCalc->at(i));
 	  }
 	}

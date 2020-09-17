@@ -34,7 +34,11 @@ void step2::Loop(TString inTreeName, TString outTreeName)
    // Only branches you want to use or copy into the new tree with "clone" below
    inputTree->SetBranchStatus("AK4HT",1);
    inputTree->SetBranchStatus("AK4HTpMETpLepPt",1);
+<<<<<<< HEAD
    inputTree->SetBranchStatus("corr_met_singleLepCalc",1);
+=======
+   inputTree->SetBranchStatus("corr_met_MultiLepCalc",1);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    inputTree->SetBranchStatus("NJetsCSVwithSF_JetSubCalc",1);
    inputTree->SetBranchStatus("NJets_JetSubCalc",1);
    inputTree->SetBranchStatus("NJetsAK8_JetSubCalc",1);
@@ -43,13 +47,28 @@ void step2::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("nW_DeepAK8",1);
    inputTree->SetBranchStatus("nZ_DeepAK8",1);
    inputTree->SetBranchStatus("nT_DeepAK8",1);
+<<<<<<< HEAD
+=======
+   inputTree->SetBranchStatus("Tprime2_DeepAK8_Mass",1);
+   inputTree->SetBranchStatus("Tprime2_DeepAK8_Pt",1);
+   inputTree->SetBranchStatus("Tprime2_DeepAK8_Eta",1);
+   inputTree->SetBranchStatus("Tprime2_DeepAK8_deltaR",1);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    inputTree->SetBranchStatus("Bprime2_DeepAK8_Mass",1);
    inputTree->SetBranchStatus("Bprime2_DeepAK8_Pt",1);
    inputTree->SetBranchStatus("Bprime2_DeepAK8_Eta",1);
    inputTree->SetBranchStatus("Bprime2_DeepAK8_deltaR",1);
+<<<<<<< HEAD
    inputTree->SetBranchStatus("leptonPt_singleLepCalc",1);
    inputTree->SetBranchStatus("minDR_leadAK8otherAK8",1);
    inputTree->SetBranchStatus("minDR_lepAK8",1);
+=======
+   inputTree->SetBranchStatus("leptonPt_MultiLepCalc",1);
+   inputTree->SetBranchStatus("minDR_leadAK8otherAK8",1);
+   inputTree->SetBranchStatus("minDR_lepAK8",1);
+   inputTree->SetBranchStatus("isValidTTDecayMode_DeepAK8",1);
+   inputTree->SetBranchStatus("isValidBBDecayMode_DeepAK8",1);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
 
    // Makes a copy of the branches with status 1
    outputFile->cd();
@@ -76,6 +95,7 @@ void step2::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("isTZTZ_TpTpCalc",1);
    inputTree->SetBranchStatus("isTZTH_TpTpCalc",1);
    inputTree->SetBranchStatus("isTHTH_TpTpCalc",1);
+<<<<<<< HEAD
    inputTree->SetBranchStatus("isValidBBDecayMode_DeepAK8",1);
    inputTree->SetBranchStatus("isTWTW_BpBpCalc",1);
    inputTree->SetBranchStatus("isBHTW_BpBpCalc",1);
@@ -83,6 +103,14 @@ void step2::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("isBZBZ_BpBpCalc",1);
    inputTree->SetBranchStatus("isBZBH_BpBpCalc",1);
    inputTree->SetBranchStatus("isBHBH_BpBpCalc",1);
+=======
+   inputTree->SetBranchStatus("isTWTW_TpTpCalc",1);
+   inputTree->SetBranchStatus("isBHTW_TpTpCalc",1);
+   inputTree->SetBranchStatus("isBZTW_TpTpCalc",1);
+   inputTree->SetBranchStatus("isBZBZ_TpTpCalc",1);
+   inputTree->SetBranchStatus("isBZBH_TpTpCalc",1);
+   inputTree->SetBranchStatus("isBHBH_TpTpCalc",1);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
 
    // Add some new branches as needed
    int targetLabel;
@@ -184,10 +212,17 @@ void step2::Loop(TString inTreeName, TString outTreeName)
       
       if(jentry % 10000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
 
+<<<<<<< HEAD
       if(MCPastTrigger < 1 || NJetsAK8_JetSubCalc < 2 || AK4HT < 500. || corr_met_singleLepCalc < 50. || leptonPt_singleLepCalc < 55) continue;
       if(isValidBBDecayMode_DeepAK8 > 0) continue;
       // do the below cut as a "sel" in the dnn training for more flexibility
       //if(!isSig && Bprime2_DeepAK8_Mass > -9) continue; // trying the scenario where BB can't be reconstructed for backgrounds, loosening to 2+ AK8 jets
+=======
+      if(MCPastTrigger < 1 || NJetsAK8_JetSubCalc < 2 || AK4HT < 510. || corr_met_MultiLepCalc < 50. || leptonPt_MultiLepCalc < 55) continue;
+      if(isValidTTDecayMode_DeepAK8 > 0 && isValidBBDecayMode_DeepAK8 > 0) continue;
+      // do the below cut as a "sel" in the dnn training for more flexibility
+      //if(!isSig && Tprime2_DeepAK8_Mass > -9) continue; // trying the scenario where TT can't be reconstructed for backgrounds, loosening to 2+ AK8 jets
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
       npassed_all++;
 
       jetPt_1 = theJetAK8Pt_JetSubCalc_PtOrdered->at(0);
