@@ -5,12 +5,10 @@ execfile("/uscms_data/d3/jmanagan/EOSSafeUtils.py")
 start_time = time.time()
 
 #IO directories must be full paths
-input  = sys.argv[1]
-output = sys.argv[2]
 
-inDir='/store/user/cholz/FWLJMET102X_1lep2018Dnn_Mar2020_step1/'
-outDir='/store/user/cholz/FWLJMET102X_1lep2018Dnn_Mar2020_step1hadds/'
-scratchDir='/uscmst1b_scratch/lpc1/3DayLifetime/cholz/'
+inDir='/store/user/jmoberg/FWLJMET102X_1lep2018_Jun2020_step1/'
+outDir='/store/user/jmoberg/FWLJMET102X_1lep2018Dnn_Jun2020_step1hadds/'
+scratchDir='/uscmst1b_scratch/lpc1/3DayLifetime/jmoberg/'
 
 if not os.path.exists(scratchDir): os.system('mkdir '+scratchDir)
 os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir)
@@ -44,41 +42,45 @@ dirList = [
     'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8',
     'EGamma',
     'SingleMuon',
-    'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8',
-    'TTToHadronic_TuneCP5_13TeV-powheg-pythia8',
-    'TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8',
-    'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
-    'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8',
-    'TTZToLL_M-1to10_TuneCP5_13TeV-amcatnlo-pythia8',
-    'TT_Mtt-1000toInf_TuneCP5_13TeV-powheg-pythia8',
-    'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
-    'TprimeTprime_M-1000_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1100_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1200_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1300_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1400_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1500_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1600_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1700_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-1800_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'TprimeTprime_M-900_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
-    'WW_TuneCP5_PSweights_13TeV-pythia8',
-    'WZ_TuneCP5_PSweights_13TeV-pythia8',
-    'ZZ_TuneCP5_13TeV-pythia8',
-    'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
-    'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
+    # 'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8',
+    # 'TTToHadronic_TuneCP5_13TeV-powheg-pythia8',
+    # 'TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8',
+    # 'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',
+    # 'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8',
+    # 'TTZToLL_M-1to10_TuneCP5_13TeV-amcatnlo-pythia8',
+    # 'TT_Mtt-1000toInf_TuneCP5_13TeV-powheg-pythia8',
+    # 'TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8',
+    # 'TprimeTprime_M-1000_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1100_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1200_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1300_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1400_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1500_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1600_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1700_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-1800_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'TprimeTprime_M-900_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    # 'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8',
+    # 'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
+    # 'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8',
+    # 'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8',
+    # 'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
+    # 'WW_TuneCP5_PSweights_13TeV-pythia8',
+    # 'WZ_TuneCP5_PSweights_13TeV-pythia8',
+    # 'ZZ_TuneCP5_13TeV-pythia8',
+    # 'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
+    # 'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
+    # 'TTJets_SingleLeptFromTbar_TuneCP5_13TeV-madgraphMLM-pythia8',
+    #'TTJets_SingleLeptFromT_TuneCP5_13TeV-madgraphMLM-pythia8',
 ]
 
 for sample in dirList:
     outList = ['none']
     if 'Tprime' in sample: outList = ['BWBW','TZBW','THBW','TZTH','TZTZ','THTH']
     elif 'Bprime' in sample: outList = ['TWTW','BZTW','BHTW','BZBH','BZBZ','BHBH']
-    elif 'TTTo' in sample: outList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
+#    elif 'TTTo' in sample: outList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
+    elif 'TTTo' in sample: outList = ['Mtt1000toInf']
+
 
     for outlabel in outList:
 
@@ -109,11 +111,11 @@ for sample in dirList:
             print 'Length of hadd command =',len(haddcommand)
             subprocess.call(haddcommand,shell=True)
             
-            xrdcpcommand = 'xrdcp '+scratchDir+'/'+outsample+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root'
+            xrdcpcommand = 'xrdcp -f '+scratchDir+'/'+outsample+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_hadd.root'
             subprocess.call(xrdcpcommand,shell=True)
 
             if bool(EOSisfile(outDir+'/'+outsample+'_hadd.root')) != True:
-                print haddcommand                
+                print 'COPY ME LATER'        
         else:
             for i in range(int(math.ceil(len(rootfiles)/float(nFilesPerHadd)))):
                 haddcommand = 'hadd -f '+scratchDir+'/'+outsample+'_'+str(i+1)+'_hadd.root '
@@ -128,11 +130,11 @@ for sample in dirList:
                 print 'Length of hadd command =',len(haddcommand)
                 subprocess.call(haddcommand,shell=True)
 
-                xrdcpcommand = 'xrdcp '+scratchDir+'/'+outsample+'_'+str(i+1)+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root'
+                xrdcpcommand = 'xrdcp -f '+scratchDir+'/'+outsample+'_'+str(i+1)+'_hadd.root root://cmseos.fnal.gov/'+outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root'
                 subprocess.call(xrdcpcommand,shell=True)
 
                 if bool(EOSisfile(outDir+'/'+outsample+'_'+str(i+1)+'_hadd.root')) != True:
-                    print haddcommand
+                    print 'COPY ME LATER'
 
 print("--- %s minutes ---" % (round(time.time() - start_time, 2)/60))
 
