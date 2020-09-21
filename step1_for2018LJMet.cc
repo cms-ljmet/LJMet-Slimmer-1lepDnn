@@ -23,12 +23,12 @@ using namespace std;
 // DNN stuff
 // ----------------------------------------------------------------------------
 
-std::string dnnFileTT = "vlq_mlp_3by10_080719_TT2018.json";
+std::string dnnFileTT = "vlq_mlp_3by10_060920_TT2018_test90.json"; //change to TT file X
 std::ifstream input_cfgTT( dnnFileTT );
 lwt::JSONConfig cfgTT = lwt::parse_json(input_cfgTT);
 lwt::LightweightNeuralNetwork* lwtnnTT = new lwt::LightweightNeuralNetwork(cfgTT.inputs, cfgTT.layers, cfgTT.outputs);
 
-std::string dnnFileBB = "vlq_mlp_3by10_080719_BB2018.json";
+std::string dnnFileBB = "vlq_mlp_3by10_060920_BB2018_test67.json"; //change to BB file X
 std::ifstream input_cfgBB( dnnFileBB );
 lwt::JSONConfig cfgBB = lwt::parse_json(input_cfgBB);
 lwt::LightweightNeuralNetwork* lwtnnBB = new lwt::LightweightNeuralNetwork(cfgBB.inputs, cfgBB.layers, cfgBB.outputs);
@@ -228,7 +228,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("event_CommonCalc",1);
    inputTree->SetBranchStatus("run_CommonCalc",1);
    inputTree->SetBranchStatus("lumi_CommonCalc",1);
-   //   inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
+   inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
    inputTree->SetBranchStatus("nTrueInteractions_MultiLepCalc",1);
    inputTree->SetBranchStatus("MCWeight_MultiLepCalc",1);
    inputTree->SetBranchStatus("LHEweightids_MultiLepCalc",1);
@@ -384,7 +384,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
    outputTree->Branch("run_CommonCalc",&run_CommonCalc,"run_CommonCalc/I");
    outputTree->Branch("lumi_CommonCalc",&lumi_CommonCalc,"lumi_CommonCalc/I");
-   //   outputTree->Branch("nPV_MultiLepCalc",&nPV_MultiLepCalc,"nPV_MultiLepCalc/I");
+   outputTree->Branch("nPV_MultiLepCalc",&nPV_MultiLepCalc,"nPV_MultiLepCalc/I");
    outputTree->Branch("nTrueInteractions_MultiLepCalc",&nTrueInteractions_MultiLepCalc,"nTrueInteractions_MultiLepCalc/I");
    outputTree->Branch("isElectron",&isElectron,"isElectron/I");
    outputTree->Branch("isMuon",&isMuon,"isMuon/I");
@@ -2052,7 +2052,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       // ----------------------------------------------------------------------------
       // Evaluate the VLQ / ttbar / WJets DNN
       // ----------------------------------------------------------------------------
-      
+
+
       myMapTT = {
 	{"Wjets",  -999},
 	{"ttbar",  -999},
@@ -2060,7 +2061,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       };
       
       varMapTT = {
-	{"corr_met_MultiLepCalc", -999},
+	{"corr_met_MultiLepCalc", -999}, //update with TT variables X
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
 	{"NJets_JetSubCalc", -999},
@@ -2088,17 +2089,33 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       };
     
       varMapBB = {
-	{"corr_met_MultiLepCalc", -999},
+	{"corr_met_MultiLepCalc", -999}, //update with BB variables X
 	{"AK4HTpMETpLepPt", -999},
 	{"AK4HT", -999},
 	{"NJets_JetSubCalc", -999},
 	{"NJetsAK8_JetSubCalc", -999},
+	{"minDR_leadAK8otherAK8", -999},
+	{"nH_DeepAK8", -999},
+	{"nT_DeepAK8", -999},
+	{"nW_DeepAK8", -999},
 	{"jetPt_1", -999},
 	{"jetPt_2", -999},
 	{"jetPt_3", -999},
+        {"sdMass_1", -999},
+        {"sdMass_2", -999},
+        {"sdMass_3", -999},
+        {"tau21_3", -999},
+	{"dnnLargest_1", -999},
+	{"dnnLargest_2", -999},
+	{"dnnLargest_3", -999},
 	{"dnnJ_1", -999},
 	{"dnnJ_2", -999},
 	{"dnnJ_3", -999},
+        {"dnnH_1", -999},
+        {"dnnH_2", -999},
+        {"dnnH_3", -999},
+        {"dnnT_1", -999},
+        {"dnnT_2", -999},
       };
   
       dnn_WJets = -1;
@@ -2111,8 +2128,12 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       if(NJetsAK8_JetSubCalc > 1){
 	float jetPt_1, jetPt_2, jetPt_3;
 	float sdMass_1, sdMass_2, sdMass_3;
-	float dnnLargest_2, dnnLargest_3;
+	float dnnLargest_1, dnnLargest_2, dnnLargest_3;
 	float dnnJ_1, dnnJ_2, dnnJ_3;
+	float dnnT_1, dnnT_2, dnnT_3;
+        float dnnH_1, dnnH_2, dnnH_3;
+	float tau21_3;
+
 
 	jetPt_1 = theJetAK8Pt_JetSubCalc_PtOrdered.at(0);
 	jetPt_2 = theJetAK8Pt_JetSubCalc_PtOrdered.at(1);
@@ -2132,9 +2153,29 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	dnnJ_2 = dnn_J_DeepAK8Calc_PtOrdered.at(1);
 	if(NJetsAK8_JetSubCalc > 2) dnnJ_3 = dnn_J_DeepAK8Calc_PtOrdered.at(2);
 	else dnnJ_3 = -9;
+	
+	dnnH_1 = dnn_H_DeepAK8Calc_PtOrdered.at(0);
+	dnnH_2 = dnn_H_DeepAK8Calc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) dnnH_3 = dnn_H_DeepAK8Calc_PtOrdered.at(2);
+	else dnnH_3 = -9;
 
-	varMapTT = {
-	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	dnnT_1 = dnn_T_DeepAK8Calc_PtOrdered.at(0);
+	dnnT_2 = dnn_T_DeepAK8Calc_PtOrdered.at(1);
+	//if(NJetsAK8_JetSubCalc > 2) dnnT_3 = dnn_T_DeepAK8Calc_PtOrdered.at(2);
+	//else dnnT_3 = -9;
+	
+	//tau21_1 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(0)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(0);
+	//tau21_2 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(1)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) tau21_3 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(2)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(2);
+	else tau21_3 = 1;
+
+	dnnLargest_1 = dnn_largest_DeepAK8Calc_PtOrdered.at(0);
+	//dnnLargest_2 = dnn_largest_DeepAK8Calc_PtOrdered.at(1);
+	//if(NJetsAK8_JetSubCalc > 2) dnnLargest_3 = dnn_largest_DeepAK8Calc_PtOrdered.at(2);
+	//else dnnLargest_3 = 10;
+
+	varMapTT = { //update with TT vars
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc}, //update with TT variables X
 	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
 	  {"AK4HT", AK4HT},
 	  {"NJets_JetSubCalc", NJets_JetSubCalc},
@@ -2155,18 +2196,35 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  {"dnnJ_3", dnnJ_3},
 	};
 	
-	varMapBB = {
-	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	varMapBB = { //update with BB vars
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc}, //update with BB variables X
 	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
 	  {"AK4HT", AK4HT},
 	  {"NJets_JetSubCalc", NJets_JetSubCalc},
 	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+	  {"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
+	  {"nH_DeepAK8", nH_DeepAK8},
+	  {"nT_DeepAK8", nT_DeepAK8},
+	  {"nW_DeepAK8", nW_DeepAK8},
 	  {"jetPt_1", jetPt_1},
 	  {"jetPt_2", jetPt_2},
 	  {"jetPt_3", jetPt_3},
+	  {"sdMass_1", sdMass_1},
+	  {"sdMass_2", sdMass_2},
+	  {"sdMass_3", sdMass_3},
+	  {"tau21_3", tau21_3},
+	  {"dnnLargest_1", dnnLargest_1},
+	  {"dnnLargest_2", dnnLargest_2},
+	  {"dnnLargest_3", dnnLargest_3},
 	  {"dnnJ_1", dnnJ_1},
 	  {"dnnJ_2", dnnJ_2},
 	  {"dnnJ_3", dnnJ_3},
+	  {"dnnH_1", dnnH_1},
+	  {"dnnH_2", dnnH_2},
+	  {"dnnH_3", dnnH_3},
+	  {"dnnT_1", dnnT_1},
+	  {"dnnT_2", dnnT_2},
+
 	};
 	
 	myMapTT = lwtnnTT->compute(varMapTT);      
