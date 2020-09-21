@@ -10,15 +10,15 @@ start_time = time.time()
 #url = 'root://brux11.hep.brown.edu:1094//isilon/hadoop/' # input stored at brux
 url = 'root://cmseos.fnal.gov/' # input stored on LPC EOS
 finalStateYear = 'singleLep2018' 
-relbase = '/uscms_data/d3/cholz/CMSSW_10_2_10/'
-tarfile = '/uscms_data/d3/cholz/slimmerdnn.tar'
-inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2018_Oct2019/'
-outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018_Mar2020_step1/'
-condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018_Mar2020_step1/'
+relbase = '/uscms_data/d3/jmoberg/CMSSW_10_2_16/'
+tarfile = '/uscms_data/d3/jmoberg/slimmerdnn.tar'
+inputDir='/store/user/lpcljm/FWLJMET102X_1lep2018_Oct2019/'
+outputDir='/store/user/jmoberg/FWLJMET102X_1lep2018_Jun2020_step1/'
+condorDir='/uscms_data/d3/jmoberg/FWLJMET102X_1lep2018_Mar2020_step1/'
 
 runDir=os.getcwd()
-inDir=inputDir[10:]
-outDir=outputDir[10:]
+inDir=inputDir
+outDir=outputDir
 
 print 'Making tar:'
 if os.path.exists(tarfile): print '*********** tar already exists! I ASSUME YOU WANT TO MAKE A NEW ONE! *************'
@@ -26,7 +26,7 @@ if os.path.exists(tarfile): print '*********** tar already exists! I ASSUME YOU 
 os.chdir(relbase)
 # YOU NEED TO EXCLUDE ANYTHING ELSE THAT MIGHT LIVE IN THE SAME CMSSW RELEASE, MY LIST IS SUPER LONG
 print 'tar --exclude="src/.git" --exclude="tmp/" --exclude="src/PhysicsTools" --exclude="src/FWLJMET" --exclude="src/RecoEgamma" --exclude="src/RecoMET" --exclude="src/TopTagger" --exclude="src/RecoJets" --exclude=".SCRAM" --exclude="src/singleLepAnalyzer" --exclude="src/tptp_2017" --exclude="src/tptp_2018" --exclude="src/LJMet-Slimmer-1lepDnn/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/*.png" --exclude="src/LJMet-Slimmer-1lepDnn/*.log" --exclude="src/LJMet-Slimmer-1lepDnn/*/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/.git" -zcf '+tarfile+' ./*'
-os.system('tar --exclude="src/.git" --exclude="tmp/" --exclude="src/PhysicsTools" --exclude="src/FWLJMET" --exclude="src/RecoEgamma" --exclude="src/RecoMET" --exclude="src/TopTagger" --exclude="src/RecoJets" --exclude=".SCRAM" --exclude="src/singleLepAnalyzer" --exclude="src/tptp_2017" --exclude="src/tptp_2018" --exclude="src/LJMet-Slimmer-1lepDnn/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/*.png" --exclude="src/LJMet-Slimmer-1lepDnn/*.log" --exclude="src/LJMet-Slimmer-1lepDnn/*/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/.git" -zcf '+tarfile+' ./*')
+os.system('tar --exclude="src/.git" --exclude="tmp/" --exclude="src/PhysicsTools" --exclude="src/FWLJMET" --exclude="src/RecoEgamma" --exclude="src/RecoMET" --exclude="src/TopTagger" --exclude="src/RecoJets" --exclude=".SCRAM" --exclude="src/singleLepAnalyzer" --exclude="src/tptp_2017" --exclude="src/tptp_2018" --exclude="src/LJMet-Slimmer-1lepDnn/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/*.png" --exclude="src/LJMet-Slimmer-1lepDnn/*.log" --exclude="src/LJMet-Slimmer-1lepDnn/*/*.root" --exclude="src/LJMet-Slimmer-1lepDnn/.git" --exclude="src/LJMet-Slimmer-1lepDnn/MVATraining" -zcf '+tarfile+' ./*')
 os.chdir(runDir)
 
 print 'Starting submission'
@@ -89,6 +89,9 @@ dirList = [
     'ZZ_TuneCP5_13TeV-pythia8',
     'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
     'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
+    'TTJets_SingleLeptFromTbar_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'TTJets_SingleLeptFromT_TuneCP5_13TeV-madgraphMLM-pythia8',
+
 ]
 
 for sample in dirList:
@@ -99,7 +102,7 @@ for sample in dirList:
     elif 'TTTo' in sample: outList = ['Mtt0to700','Mtt700to1000','Mtt1000toInf']
 
     isData = False
-    if 'Single' in sample or 'EGamma' in sample and 'SingleLepFrom' not in sample: isData = True
+    if ('Single' in sample or 'EGamma' in sample) and 'SingleLeptFrom' not in sample: isData = True
 
     for outlabel in outList:
         tmpcount = 0
@@ -110,20 +113,22 @@ for sample in dirList:
         os.system('eos root://cmseos.fnal.gov/ mkdir -p '+outDir+outsample)
         os.system('mkdir -p '+condorDir+outsample)
 
-        runlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/')
+        if 'brux' not in url: runlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/')
+        if 'brux' in url: runlist = BRUXlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/')
         print "Running",len(runlist),"crab directories"
 
         runcounter = 0
         for run in runlist:
             runcounter += 1
-            numlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/')
-            
+            if 'brux' not in url: numlist = EOSlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/')
+            if 'brux' in url: numlist = BRUXlistdir(inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/')
             for num in numlist:
                 numpath = inputDir+'/'+sample+'/'+finalStateYear+'/'+run+'/'+num
                 pathsuffix = numpath.split('/')[-3:]
                 pathsuffix = '/'.join(pathsuffix)
 
-                rootfiles = EOSlist_root_files(numpath)            
+                if 'brux' not in url: rootfiles = EOSlist_root_files(numpath)
+                if 'brux' in url: rootfiles = BRUXlist_root_files(numpath)
                 basefilename = (rootfiles[0].split('.')[0]).split('_')[:-1]
                 basefilename = '_'.join(basefilename)
                 print "Running path:",pathsuffix,"\tBase filenames:",basefilename

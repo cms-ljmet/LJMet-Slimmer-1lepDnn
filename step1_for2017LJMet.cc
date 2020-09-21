@@ -23,12 +23,12 @@ using namespace std;
 // DNN stuff
 // ----------------------------------------------------------------------------
 
-std::string dnnFileTT = "vlq_mlp_3by10_062819_TT2017.json";
+std::string dnnFileTT = "vlq_mlp_June_08_20_TT.json";
 std::ifstream input_cfgTT( dnnFileTT );
 lwt::JSONConfig cfgTT = lwt::parse_json(input_cfgTT);
 lwt::LightweightNeuralNetwork* lwtnnTT = new lwt::LightweightNeuralNetwork(cfgTT.inputs, cfgTT.layers, cfgTT.outputs);
 
-std::string dnnFileBB = "vlq_mlp_3by10_072519_BB2017.json";
+std::string dnnFileBB = "vlq_mlp_June_08_20_BB_3arch.json";
 std::ifstream input_cfgBB( dnnFileBB );
 lwt::JSONConfig cfgBB = lwt::parse_json(input_cfgBB);
 lwt::LightweightNeuralNetwork* lwtnnBB = new lwt::LightweightNeuralNetwork(cfgBB.inputs, cfgBB.layers, cfgBB.outputs);
@@ -1814,129 +1814,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       }
 
       // ----------------------------------------------------------------------------
-      // Evaluate the VLQ / ttbar / WJets DNN
-      // ----------------------------------------------------------------------------
-      
-      myMapTT = {
-	{"Wjets",  -999},
-	{"ttbar",  -999},
-	{"Tprime",-999},
-      };
-
-      varMapTT = {
-	{"corr_met_singleLepCalc", -999},
-	{"AK4HTpMETpLepPt", -999},
-	{"AK4HT", -999},
-	{"NJets_JetSubCalc", -999},
-	{"NJetsAK8_JetSubCalc", -999},
-	{"jetPt_1", -999},
-	{"jetPt_2", -999},
-	{"jetPt_3", -999},
-	{"dnnJ_1", -999},
-	{"dnnJ_2", -999},
-	{"dnnJ_3", -999},
-      };
-
-      myMapBB = {
-	{"Wjets",  -999},
-	{"ttbar",  -999},
-	{"Bprime",-999},
-      };
-
-      varMapBB = {
-	{"corr_met_singleLepCalc", -999},
-	{"AK4HTpMETpLepPt", -999},
-	{"AK4HT", -999},
-	{"NJets_JetSubCalc", -999},
-	{"NJetsAK8_JetSubCalc", -999},
-	{"nH_DeepAK8", -999},
-	{"nT_DeepAK8", -999},
-	{"jetPt_1", -999},
-	{"jetPt_2", -999},
-	{"jetPt_3", -999},
-	{"sdMass_2", -999},
-	{"sdMass_3", -999},
-	{"dnnJ_1", -999},
-	{"dnnJ_2", -999},
-	{"dnnJ_3", -999},
-      };
-
-      dnn_WJets = -1;
-      dnn_ttbar = -1;
-      dnn_Tprime = -1;
-      dnn_WJetsBB = -1;
-      dnn_ttbarBB = -1;
-      dnn_Bprime = -1;
-
-      if(NJetsAK8_JetSubCalc > 1){
-	float jetPt_1, jetPt_2, jetPt_3;
-	float sdMass_1, sdMass_2, sdMass_3;
-	float dnnLargest_2, dnnLargest_3;
-	float dnnJ_1, dnnJ_2, dnnJ_3;
-
-	jetPt_1 = theJetAK8Pt_JetSubCalc_PtOrdered.at(0);
-	jetPt_2 = theJetAK8Pt_JetSubCalc_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) jetPt_3 = theJetAK8Pt_JetSubCalc_PtOrdered.at(2);
-	else jetPt_3 = 0;
-	
-	sdMass_1 = theJetAK8SoftDropCorr_PtOrdered.at(0);
-	sdMass_2 = theJetAK8SoftDropCorr_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) sdMass_3 = theJetAK8SoftDropCorr_PtOrdered.at(2);
-	else sdMass_3 = 0;
-	
-	dnnLargest_2 = dnn_largest_DeepAK8Calc_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) dnnLargest_3 = dnn_largest_DeepAK8Calc_PtOrdered.at(2);
-	else dnnLargest_3 = 10;
-	
-	dnnJ_1 = dnn_J_DeepAK8Calc_PtOrdered.at(0);
-	dnnJ_2 = dnn_J_DeepAK8Calc_PtOrdered.at(1);
-	if(NJetsAK8_JetSubCalc > 2) dnnJ_3 = dnn_J_DeepAK8Calc_PtOrdered.at(2);
-	else dnnJ_3 = -9;
-
-	varMapTT = {
-	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
-	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
-	  {"AK4HT", AK4HT},
-	  {"NJets_JetSubCalc", NJets_JetSubCalc},
-	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
-	  {"jetPt_1", jetPt_1},
-	  {"jetPt_2", jetPt_2},
-	  {"jetPt_3", jetPt_3},
-	  {"dnnJ_1", dnnJ_1},
-	  {"dnnJ_2", dnnJ_2},
-	  {"dnnJ_3", dnnJ_3},
-	};
-
-	varMapBB = {
-	  {"corr_met_singleLepCalc", corr_met_MultiLepCalc},
-	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
-	  {"AK4HT", AK4HT},
-	  {"NJets_JetSubCalc", NJets_JetSubCalc},
-	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
-	  {"nH_DeepAK8", nH_DeepAK8},
-	  {"nT_DeepAK8", nT_DeepAK8},
-	  {"jetPt_1", jetPt_1},
-	  {"jetPt_2", jetPt_2},
-	  {"jetPt_3", jetPt_3},
-	  {"sdMass_2", sdMass_1},
-	  {"sdMass_3", sdMass_2},
-	  {"dnnJ_1", dnnJ_1},
-	  {"dnnJ_2", dnnJ_2},
-	  {"dnnJ_3", dnnJ_3},
-	};
-	
-	myMapTT = lwtnnTT->compute(varMapTT);      
-	myMapBB = lwtnnBB->compute(varMapBB);      
-
-	dnn_WJets = myMapTT["Wjets"];
-	dnn_ttbar = myMapTT["ttbar"];
-	dnn_Tprime = myMapTT["Tprime"];
-	dnn_WJetsBB = myMapBB["Wjets"];
-	dnn_ttbarBB = myMapBB["ttbar"];
-	dnn_Bprime = myMapBB["Bprime"];
-      }
-
-      // ----------------------------------------------------------------------------
       // AK8 Jet - lepton associations and truth matching
       // ----------------------------------------------------------------------------
 
@@ -2111,6 +1988,199 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       DeepAK8SF_WmisDn = 1.0 - (DeepAK8SF_WmisUp - 1.0);
       DeepAK8SF_BmisDn = 1.0 - (DeepAK8SF_BmisUp - 1.0);
       DeepAK8SF_JmisDn = 1.0 - (DeepAK8SF_JmisUp - 1.0);
+
+
+      // ----------------------------------------------------------------------------
+      // Evaluate the VLQ / ttbar / WJets DNN
+      // ----------------------------------------------------------------------------
+      
+      myMapTT = {
+	{"Wjets",  -999},
+	{"ttbar",  -999},
+	{"Tprime",-999},
+      };
+
+      varMapTT = {
+	{"corr_met_MultiLepCalc", -999},
+	{"AK4HTpMETpLepPt", -999},
+	{"AK4HT", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
+	{"minDR_leadAK8otherAK8", -999},
+	{"nH_DeepAK8", -999},
+	{"nT_DeepAK8", -999},
+	{"nW_DeepAK8", -999},
+	{"jetPt_1", -999},
+	{"jetPt_2", -999},
+	{"jetPt_3", -999},
+	{"sdMass_1", -999},
+	{"sdMass_2", -999},
+	{"sdMass_3", -999},
+	{"tau21_3", -999},
+	{"dnnLargest_1", -999},
+	{"dnnLargest_2", -999},
+	{"dnnLargest_3", -999},
+	{"dnnJ_1", -999},
+	{"dnnJ_2", -999},
+	{"dnnJ_3", -999},
+	{"dnnH_1", -999},
+	{"dnnH_2", -999},
+	{"dnnH_3", -999},
+	{"dnnT_1", -999},
+	{"dnnT_2", -999},
+      };
+
+      myMapBB = {
+	{"WjetsBB",  -999},
+	{"ttbarBB",  -999},
+	{"Bprime",-999},
+      };
+
+      varMapBB = {
+	{"corr_met_MultiLepCalc", -999},
+	{"AK4HTpMETpLepPt", -999},
+	{"AK4HT", -999},
+	{"NJets_JetSubCalc", -999},
+	{"NJetsAK8_JetSubCalc", -999},
+	{"minDR_leadAK8otherAK8", -999},
+	{"nH_DeepAK8", -999},
+	{"nT_DeepAK8", -999},
+	{"jetPt_1", -999},
+	{"jetPt_2", -999},
+	{"jetPt_3", -999},
+	{"sdMass_1", -999},
+	{"sdMass_2", -999},
+	{"sdMass_3", -999},
+        {"dnnLargest_1", -999},
+        {"dnnLargest_2", -999},
+        {"dnnLargest_3", -999},
+	{"dnnJ_1", -999},
+	{"dnnJ_2", -999},
+	{"dnnJ_3", -999},
+	{"dnnH_2", -999},
+	{"dnnH_3", -999},
+	{"dnnT_1", -999},
+      };
+
+      dnn_WJets = -1;
+      dnn_ttbar = -1;
+      dnn_Tprime = -1;
+      dnn_WJetsBB = -1;
+      dnn_ttbarBB = -1;
+      dnn_Bprime = -1;
+
+      if(NJetsAK8_JetSubCalc > 1){
+	float jetPt_1, jetPt_2, jetPt_3;
+	float sdMass_1, sdMass_2, sdMass_3;
+	float dnnLargest_1, dnnLargest_2, dnnLargest_3;
+	float dnnJ_1, dnnJ_2, dnnJ_3;
+	float tau21_3;
+	float dnnH_1, dnnH_2, dnnH_3;
+	float dnnT_1, dnnT_2;
+
+	jetPt_1 = theJetAK8Pt_JetSubCalc_PtOrdered.at(0);
+	jetPt_2 = theJetAK8Pt_JetSubCalc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) jetPt_3 = theJetAK8Pt_JetSubCalc_PtOrdered.at(2);
+	else jetPt_3 = 0;
+	
+	sdMass_1 = theJetAK8SoftDropCorr_PtOrdered.at(0);
+	sdMass_2 = theJetAK8SoftDropCorr_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) sdMass_3 = theJetAK8SoftDropCorr_PtOrdered.at(2);
+	else sdMass_3 = 0;
+	
+	dnnLargest_1 = dnn_largest_DeepAK8Calc_PtOrdered.at(0);
+	dnnLargest_2 = dnn_largest_DeepAK8Calc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) dnnLargest_3 = dnn_largest_DeepAK8Calc_PtOrdered.at(2);
+	else dnnLargest_3 = 10;
+	
+	dnnJ_1 = dnn_J_DeepAK8Calc_PtOrdered.at(0);
+	dnnJ_2 = dnn_J_DeepAK8Calc_PtOrdered.at(1);
+	if(NJetsAK8_JetSubCalc > 2) dnnJ_3 = dnn_J_DeepAK8Calc_PtOrdered.at(2);
+	else dnnJ_3 = -9;
+
+        dnnH_1 = dnn_H_DeepAK8Calc_PtOrdered.at(0);
+        dnnH_2 = dnn_H_DeepAK8Calc_PtOrdered.at(1);
+        if(NJetsAK8_JetSubCalc > 2) dnnH_3 = dnn_H_DeepAK8Calc_PtOrdered.at(2);
+        else dnnH_3 = -9;
+
+        dnnT_1 = dnn_T_DeepAK8Calc_PtOrdered.at(0);
+        dnnT_2 = dnn_T_DeepAK8Calc_PtOrdered.at(1);
+        //if(NJetsAK8_JetSubCalc > 2) dnnT_3 = dnn_T_DeepAK8Calc_PtOrdered.at(2);
+        //else dnnT_3 = -9;
+ 
+        //tau21_1 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(0)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(0);
+        //tau21_2 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(1)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(1);
+        if(NJetsAK8_JetSubCalc > 2) tau21_3 = theJetAK8NjettinessTau2_JetSubCalc_PtOrdered.at(2)/theJetAK8NjettinessTau1_JetSubCalc_PtOrdered.at(2);
+        else tau21_3 = 1;
+
+
+
+	varMapTT = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
+	  {"AK4HT", AK4HT},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+	  {"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
+          {"nH_DeepAK8", nH_DeepAK8},
+          {"nT_DeepAK8", nT_DeepAK8},
+          {"nW_DeepAK8", nW_DeepAK8}, 
+	  {"jetPt_1", jetPt_1},
+	  {"jetPt_2", jetPt_2},
+	  {"jetPt_3", jetPt_3},
+	  {"sdMass_1", sdMass_1},
+          {"sdMass_2", sdMass_2},
+          {"sdMass_3", sdMass_3},
+          {"tau21_3", tau21_3},
+          {"dnnLargest_1", dnnLargest_1},
+          {"dnnLargest_2", dnnLargest_2},
+          {"dnnLargest_3", dnnLargest_3},
+	  {"dnnJ_1", dnnJ_1},
+	  {"dnnJ_2", dnnJ_2},
+	  {"dnnJ_3", dnnJ_3},
+	  {"dnnH_1", dnnH_1},
+          {"dnnH_2", dnnH_2},
+          {"dnnH_3", dnnH_3},
+          {"dnnT_1", dnnT_1},
+          {"dnnT_2", dnnT_2},
+	};
+
+	varMapBB = {
+	  {"corr_met_MultiLepCalc", corr_met_MultiLepCalc},
+	  {"AK4HTpMETpLepPt", AK4HTpMETpLepPt},
+	  {"AK4HT", AK4HT},
+	  {"NJets_JetSubCalc", NJets_JetSubCalc},
+	  {"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
+	  {"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
+	  {"nH_DeepAK8", nH_DeepAK8},
+	  {"nT_DeepAK8", nT_DeepAK8},
+	  {"jetPt_1", jetPt_1},
+	  {"jetPt_2", jetPt_2},
+	  {"jetPt_3", jetPt_3},
+	  {"sdMass_1", sdMass_1},
+	  {"sdMass_2", sdMass_2},
+	  {"sdMass_3", sdMass_3},
+	  {"dnnLargest_1", dnnLargest_1},
+          {"dnnLargest_2", dnnLargest_2},
+          {"dnnLargest_3", dnnLargest_3},
+	  {"dnnJ_1", dnnJ_1},
+	  {"dnnJ_2", dnnJ_2},
+	  {"dnnJ_3", dnnJ_3},
+          {"dnnH_2", dnnH_2},
+          {"dnnH_3", dnnH_3},
+          {"dnnT_1", dnnT_1},
+	};
+	
+	myMapTT = lwtnnTT->compute(varMapTT);      
+	myMapBB = lwtnnBB->compute(varMapBB);      
+
+	dnn_WJets = myMapTT["Wjets"];
+	dnn_ttbar = myMapTT["ttbar"];
+	dnn_Tprime = myMapTT["Tprime"];
+	dnn_WJetsBB = myMapBB["WjetsBB"];
+	dnn_ttbarBB = myMapBB["ttbarBB"];
+	dnn_Bprime = myMapBB["Bprime"];
+      }
 
       // ----------------------------------------------------------------------------
       // W --> l nu with mass constraint

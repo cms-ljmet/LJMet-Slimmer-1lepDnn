@@ -29,11 +29,6 @@ public :
    Bool_t          isSig;
    Bool_t          isTT;
    Int_t           SigMass;
-   //vector<double>  AK8JetsPt_Exclude_Hole;
-   //vector<double>  AK4JetsPt_Exclude_Hole;
-   //Double_t        AK4Ht_Exclude_Hole;
-   //Double_t        AK8Ht_Exclude_Hole;
-   //Double_t        AK8Ht;
 
    // Declaration of leaf types
    Long64_t        event_CommonCalc;
