@@ -7,12 +7,12 @@ start_time = time.time()
 
 #IO directories must be full paths
 
-#url = 'root://brux11.hep.brown.edu:1094//isilon/hadoop/' # input stored at brux
-url = 'root://cmseos.fnal.gov/' # input stored on LPC EOS
+url = 'root://brux11.hep.brown.edu:1094//isilon/hadoop/' # input stored at brux
+#url = 'root://cmseos.fnal.gov/' # input stored on LPC EOS
 finalStateYear = 'singleLep2018' 
 relbase = '/uscms_data/d3/cholz/CMSSW_10_2_10/'
 tarfile = '/uscms_data/d3/cholz/slimmerdnn.tar'
-inputDir='/eos/uscms/store/user/lpcljm/FWLJMET102X_1lep2018_Oct2019/'
+inputDir='/store/group/bruxljm/FWLJMET102X_1lep2018_Oct2019/'
 outputDir='/eos/uscms/store/user/cholz/FWLJMET102X_1lep2018_Mar2020_step1/'
 condorDir='/uscms_data/d3/cholz/FWLJMET102X_1lep2018_Mar2020_step1/'
 
@@ -33,8 +33,8 @@ print 'Starting submission'
 count=0
 
 dirList = [
-    'BprimeBprime_M-1000_TuneCP5_PSweights_13TeV-madgraph-pythia8',
-    'BprimeBprime_M-1100_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    #'BprimeBprime_M-1000_TuneCP5_PSweights_13TeV-madgraph-pythia8',
+    #'BprimeBprime_M-1100_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     #'BprimeBprime_M-1200_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     #'BprimeBprime_M-1300_TuneCP5_PSweights_13TeV-madgraph-pythia8',
     #'BprimeBprime_M-1400_TuneCP5_PSweights_13TeV-madgraph-pythia8',
@@ -89,6 +89,8 @@ dirList = [
     #'ZZ_TuneCP5_13TeV-pythia8',
     #'ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8',
     #'ttHTobb_M125_TuneCP5_13TeV-powheg-pythia8',
+    'TTJets_SingleLeptFromTbar_TuneCP5_13TeV-madgraphMLM-pythia8',
+    'TTJets_SingleLeptFromT_TuneCP5_13TeV-madgraphMLM-pythia8',
 ]
 
 for sample in dirList:
