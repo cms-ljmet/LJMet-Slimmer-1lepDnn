@@ -30,7 +30,7 @@ lwt::JSONConfig cfgTT = lwt::parse_json(input_cfgTT);
 lwt::LightweightNeuralNetwork* lwtnnTT = new lwt::LightweightNeuralNetwork(cfgTT.inputs, cfgTT.layers, cfgTT.outputs);
 
 
-std::string dnnFileBB = "vlq_mlp_June_09_20_BB_Test48.json";
+std::string dnnFileBB = "vlq_mlp_BBMar2020_Test40.json";
 std::ifstream input_cfgBB( dnnFileBB );
 lwt::JSONConfig cfgBB = lwt::parse_json(input_cfgBB);
 lwt::LightweightNeuralNetwork* lwtnnBB = new lwt::LightweightNeuralNetwork(cfgBB.inputs, cfgBB.layers, cfgBB.outputs);
@@ -389,7 +389,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
    outputTree->Branch("run_CommonCalc",&run_CommonCalc,"run_CommonCalc/I");
    outputTree->Branch("lumi_CommonCalc",&lumi_CommonCalc,"lumi_CommonCalc/I");
-   outputTree->Branch("nPV_MultiLepCalc",&nPV_MultiLepCalc,"nPV_MultiLepCalc/I");
+   //   outputTree->Branch("nPV_MultiLepCalc",&nPV_MultiLepCalc,"nPV_MultiLepCalc/I");
    outputTree->Branch("nTrueInteractions_MultiLepCalc",&nTrueInteractions_MultiLepCalc,"nTrueInteractions_MultiLepCalc/I");
    outputTree->Branch("isElectron",&isElectron,"isElectron/I");
    outputTree->Branch("isMuon",&isMuon,"isMuon/I");
@@ -2095,8 +2095,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       };
 
       myMapBB = {
-	{"WjetsBB",  -999},
-	{"ttbarBB",  -999},
+	{"Wjets",  -999},
+	{"ttbar",  -999},
 	{"Bprime",-999},
       };
 
@@ -2106,17 +2106,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	{"AK4HT", -999},
 	{"NJets_JetSubCalc", -999},
 	{"NJetsAK8_JetSubCalc", -999},
-        {"minDR_leadAK8otherAK8", -999},
-	{"nH_DeepAK8", -999},
-	{"nT_DeepAK8", -999},
 	{"jetPt_1", -999},
 	{"jetPt_2", -999},
 	{"jetPt_3", -999},
-	{"sdMass_1", -999},
 	{"sdMass_2", -999},
 	{"sdMass_3", -999},
-	{"dnnLargest_2", -999},
-	{"dnnLargest_3", -999},
 	{"dnnJ_1", -999},
 	{"dnnJ_2", -999},
 	{"dnnJ_3", -999},
@@ -2175,20 +2169,12 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 		{"AK4HT", AK4HT},
 		{"NJets_JetSubCalc", NJets_JetSubCalc},
 		{"NJetsAK8_JetSubCalc", NJetsAK8_JetSubCalc},
- 		{"minDR_leadAK8otherAK8", minDR_leadAK8otherAK8},
-		{"nH_DeepAK8", nH_DeepAK8},
-		{"nT_DeepAK8", nT_DeepAK8},
 		{"jetPt_1", jetPt_1},
 		{"jetPt_2", jetPt_2},
 		{"jetPt_3", jetPt_3},
-		{"sdMass_1", sdMass_1},
-		{"sdMass_2", sdMass_2},
-		{"sdMass_3", sdMass_3},
-		{"dnnLargest_2", dnnLargest_2},
-		{"dnnLargest_3", dnnLargest_3},
 		{"dnnJ_1", dnnJ_1},
 		{"dnnJ_2", dnnJ_2},
-		{"dnnJ_3", dnnJ_3},
+		{"dnnJ_3", dnnJ_3}
 	};
 	
 	myMapTT = lwtnnTT->compute(varMapTT);      
@@ -2197,8 +2183,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	dnn_WJets = myMapTT["Wjets"];
 	dnn_ttbar = myMapTT["ttbar"];
 	dnn_Tprime = myMapTT["Tprime"];
-	dnn_WJetsBB = myMapBB["WjetsBB"];
-	dnn_ttbarBB = myMapBB["ttbarBB"];
+	dnn_WJetsBB = myMapBB["Wjets"];
+	dnn_ttbarBB = myMapBB["ttbar"];
 	dnn_Bprime = myMapBB["Bprime"];
       }
 
