@@ -70,22 +70,32 @@ print 'Outstr:',outStr,'Outdir:',outdir
 if not os.path.exists(outdir): os.system('mkdir '+outdir)
 
 if vararray == 1:
-   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8', 
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8',
+if vararray == 11:
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'minDR_leadAK8otherAK8', 'nH_DeepAK8','nT_DeepAK8', 'tau21_3','dnnT_1','dnnT_2']
 elif vararray == 2:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_2', 'sdMass_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8', 
+elif vararray == 21:
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_2', 'sdMass_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'minDR_leadAK8otherAK8', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 3:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8', 
+elif vararray == 31:
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 4:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3']#'minDR_lepAK8',  Tprime2_DeepAK8_Pt and Tprime2_DeepAK8_Mass removed 
+elif vararray == 41:
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 5:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnH_2', 'dnnH_3', 'dnnT_1']#'minDR_lepAK8', 
+elif vararray == 51:
+   vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnH_2', 'dnnH_3', 'tau21_3', 'dnnT_1', 'dnnT_2']
 elif vararray == 6:
    vars = ['corr_met_MultiLepCalc', 'AK4HTpMETpLepPt', 'AK4HT', 'NJets_JetSubCalc', 'NJetsAK8_JetSubCalc', 'minDR_leadAK8otherAK8', 'nH_DeepAK8', 'nT_DeepAK8', 'nW_DeepAK8', 'jetPt_1', 'jetPt_2', 'jetPt_3', 'sdMass_1', 'sdMass_2', 'sdMass_3', 'tau21_3', 'dnnLargest_1', 'dnnLargest_2', 'dnnLargest_3', 'dnnJ_1', 'dnnJ_2', 'dnnJ_3', 'dnnH_1', 'dnnH_2', 'dnnH_3', 'dnnT_1', 'dnnT_2']#'minDR_lepAK8', 
-else:
+#else:
    ######################
    ## assign default vars array
    ######################
-   vars = ['corr_met_MultiLepCalc']
+#   vars = ['corr_met_MultiLepCalc']
 
 
 arrayTTToSemiLepT = []
@@ -111,7 +121,7 @@ testWJets2500    = []
 
 ## Open ROOT files
 print 'Opening files...'
-eosdir = "root://cmseos.fnal.gov//store/user/bburgsta/training_20200326/"
+eosdir = "root://cmseos.fnal.gov//store/user/cholz/Step2MVAtraining_0432020/"
 
 #sel = "Tprime2_DeepAK8_Mass < 0"
 sel = "isValidTTDecayMode_DeepAK8 == 0 && Tprime2_DeepAK8_Mass < 0 && NJetsAK8_JetSubCalc > 2"
@@ -121,7 +131,7 @@ print 'getting trees...','Making training arrays...','Making testing arrays...'
 seltest = "isValidTTDecayMode_DeepAK8 == 0 && Tprime2_DeepAK8_Mass >= 0"
 
 for i in range(1,7):
-   fileTTToSemiLepT  = TFile.Open(eosdir + "TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_"+ str(i)+"_hadd.root", "READ")
+   fileTTToSemiLepT  = TFile.Open(eosdir + "TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_"+ str(i)+"_hadd.root", "READ") #Uncomment this and adjust others if there is _1_hadd.root in file name
    treeTTToSemiLepT  = fileTTToSemiLepT.Get("ljmet")
    if i == 1:
       arrayTTToSemiLepT = tree2array(treeTTToSemiLepT, treeVars, sel)
@@ -205,7 +215,7 @@ testWJets2500= tree2array(treeWJets2500, treeVars, seltest)
 #print "N 2500",len(testWJets2500),"max multiplier",len(testWJets2500)
 
 print 'Weighting WJets...'
-multiplier = 350000./1743.  ## where numerator is the total we want (400 and 600 don't have enough, but 800/1200/2500 do)
+multiplier = 650000./1743.  ## where numerator is the total we want (400 and 600 don't have enough, but 800/1200/2500 do)
 multipliertest = 90. ## based on number of 600 sample
 max2500 = int(round(multiplier*1.))
 max1200 = int(round(multiplier*34.15))
@@ -236,6 +246,8 @@ testTTToSemiLep = np.concatenate([testTTToSemiLepT,testTTToSemiLepTb])
 
 np.random.shuffle(arrayTTToSemiLep)
 np.random.shuffle(testTTToSemiLep)
+#np.random.shuffle(arrayWJets)
+np.random.shuffle(testWJets)
 
 ofile.write(str(len(arrayTTToSemiLep)) + ", " + str(len(arrayTprime)) + ", " +str(len(arrayTprime2)) + ", " +str(len(arrayWJets)) + ", " +str(len(testTTToSemiLep)) + ", " +str(len(testTprime)) + ", " +str(len(testTprime2)) + ", " +str(len(testWJets)) + ", ")
 
@@ -260,7 +272,7 @@ arrayTTToSemiLep = np.concatenate([testTTToSemiLep[maxtest:],arrayTTToSemiLep])
 
 testTprime = testTprime[:maxtest]
 testTprime2 = testTprime2[:maxtest]
-testWJets = testWJets[:maxtest]
+#testWJets = testWJets[:maxtest]
 testTTToSemiLep = testTTToSemiLep[:maxtest]
 
 print "-------After Concatenate-------"
@@ -272,6 +284,8 @@ print "number of TTToSemiLep testing events: ", len(testTTToSemiLep)
 print "number of Tprime " + str(Tprime) + " testing events: ", len(testTprime)
 print "number of Tprime " + str(Tprime2) + " testing events: ", len(testTprime2)
 print "number of WJets testing events: ", len(testWJets)
+
+maxpersample=60500
 
 arrayTprime = arrayTprime[:maxpersample]
 arrayTprime2 = arrayTprime2[:maxpersample]
@@ -350,7 +364,7 @@ histsWJets = np.array(arrayWJets[:numPerSample]).T
 for index, hist in enumerate(histsWJets):
    plt.figure()
    plt.hist(hist, bins=50, color='g', label=r'$\mathrm{W+jets}$', histtype='step', normed=True)
-   plt.hist(histsTprime[index], bins=50, color='y', label=r'$\mathrm{B\overline{B}\,('+str(Tprime)+'\,TeV)}$', histtype='step', normed=True)
+   plt.hist(histsTprime[index], bins=50, color='y', label=r'$\mathrm{T\overline{T}\,('+str(Tprime)+'\,TeV)}$', histtype='step', normed=True)
    #plt.hist(histsTprime2[index], bins=50, color='c', label=r'$\mathrm{B\overline{B}\,('+str(Tprime2)+'\,TeV)}$', histtype='step', normed=True)
    plt.hist(histsTTToSemiLep[index], bins=50, color='r', label=r'$\mathrm{t\bar{t}}$', histtype='step', normed=True)
    plt.title('CMS Simulation',loc='left',size=18)
@@ -506,7 +520,7 @@ plt.close()
 ## Plot a confusion matrix
 cm = metrics.confusion_matrix(mlp.predict(testData), testLabel)
 plt.figure()
-targetNames = [r'$\mathrm{W+jets}$',r'$\mathrm{t\bar{t}}$',r'$\mathrm{B\overline{B}}$']
+targetNames = [r'$\mathrm{W+jets}$',r'$\mathrm{t\bar{t}}$',r'$\mathrm{T\overline{T}}$']
 plot_confusion_matrix(cm.T, targetNames, normalize=True)
 if WithTprimeVars: plt.savefig(outdir+'confusion'+outStr+'.png')
 if not WithTprimeVars: plt.savefig(outdir+'confusion'+outStr+'.png')
@@ -537,8 +551,8 @@ plt.title('Work in progress',loc='right',size=14,style='italic')
 plt.ylim([0.01,10.**4])
 plt.hist(probsWJets.T[0], bins=20, range=(0,1), label=r'$\mathrm{W+jets}$', color='g', histtype='step',normed=True, log=True)
 plt.hist(probsTTToSemiLep.T[0], bins=20, range=(0,1), label=r'$\mathrm{t\bar{t}}$', color='y', histtype='step',normed=True, log=True)
-plt.hist(probsTprime.T[0], bins=20, range=(0,1), label=r'$\mathrm{B\overline{B}\,('+str(Tprime)+'\,TeV)}$', color='m', histtype='step',normed=True, log=True)
-plt.hist(probsTprime2.T[0], bins=20, range=(0,1), label=r'$\mathrm{B\overline{B}\,('+str(Tprime2)+'\,TeV)}$', color='c', histtype='step',normed=True, log=True)
+plt.hist(probsTprime.T[0], bins=20, range=(0,1), label=r'$\mathrm{T\overline{T}\,('+str(Tprime)+'\,TeV)}$', color='m', histtype='step',normed=True, log=True)
+plt.hist(probsTprime2.T[0], bins=20, range=(0,1), label=r'$\mathrm{T\overline{T}\,('+str(Tprime2)+'\,TeV)}$', color='c', histtype='step',normed=True, log=True)
 plt.legend(loc='best')
 #plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=6, mode="expand", borderaxespad=0.)
 plt.savefig(outdir+'score_WJet'+outStr+'.png')
@@ -553,8 +567,8 @@ plt.title('Work in progress',loc='right',size=14,style='italic')
 plt.ylim([0.01,10.**4])
 plt.hist(probsWJets.T[1], bins=20, range=(0,1), label=r'$\mathrm{W+jets}$', color='g', histtype='step',normed=True, log=True)
 plt.hist(probsTTToSemiLep.T[1], bins=20, range=(0,1), label=r'$\mathrm{t\bar{t}}$', color='y', histtype='step',normed=True, log=True)
-plt.hist(probsTprime.T[1], bins=20, range=(0,1), label=r'$\mathrm{B\overline{B}\,('+str(Tprime)+'\,TeV)}$', color='m', histtype='step',normed=True, log=True)
-plt.hist(probsTprime2.T[1], bins=20, range=(0,1), label=r'$\mathrm{B\overline{B}\,('+str(Tprime2)+'\,TeV)}$', color='c', histtype='step',normed=True, log=True)
+plt.hist(probsTprime.T[1], bins=20, range=(0,1), label=r'$\mathrm{T\overline{T}\,('+str(Tprime)+'\,TeV)}$', color='m', histtype='step',normed=True, log=True)
+plt.hist(probsTprime2.T[1], bins=20, range=(0,1), label=r'$\mathrm{T\overline{T}\,('+str(Tprime2)+'\,TeV)}$', color='c', histtype='step',normed=True, log=True)
 plt.legend(loc='best')
 #plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=6, mode="expand", borderaxespad=0.)
 plt.savefig(outdir+'score_TTToSemiLep'+outStr+'.png')
@@ -562,15 +576,15 @@ plt.savefig(outdir+'score_TTToSemiLep'+outStr+'.png')
 
 plt.close()
 plt.figure()
-plt.xlabel('Predicted B quark score',horizontalalignment='right',x=1.0,size=14)
+plt.xlabel('Predicted T quark score',horizontalalignment='right',x=1.0,size=14)
 plt.ylabel('Events per bin',horizontalalignment='right',y=1.0,size=14)
 plt.title('CMS Simulation',loc='left',size=18)
 plt.title('Work in progress',loc='right',size=14,style='italic')
 plt.ylim([0.01,10.**4])
 plt.hist(probsWJets.T[2], bins=20, range=(0,1), label=r'$\mathrm{W+jets}$', color='g', histtype='step',normed=True, log=True)
 plt.hist(probsTTToSemiLep.T[2], bins=20, range=(0,1), label=r'$\mathrm{t\bar{t}}$', color='y', histtype='step',normed=True, log=True)
-plt.hist(probsTprime.T[2], bins=20, range=(0,1), label=r'$\mathrm{B\overline{B}\,('+str(Tprime)+'\,TeV)}$', color='m', histtype='step',normed=True, log=True)
-plt.hist(probsTprime2.T[2], bins=20, range=(0,1), label=r'$\mathrm{B\overline{B}\,('+str(Tprime2)+'\,TeV)}$', color='c', histtype='step',normed=True, log=True)
+plt.hist(probsTprime.T[2], bins=20, range=(0,1), label=r'$\mathrm{T\overline{T}\,('+str(Tprime)+'\,TeV)}$', color='m', histtype='step',normed=True, log=True)
+plt.hist(probsTprime2.T[2], bins=20, range=(0,1), label=r'$\mathrm{T\overline{T}\,('+str(Tprime2)+'\,TeV)}$', color='c', histtype='step',normed=True, log=True)
 plt.legend(loc='best')
 #plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=6, mode="expand", borderaxespad=0.)
 plt.savefig(outdir+'score_Tprime'+outStr+'.png')

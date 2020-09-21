@@ -29,6 +29,11 @@ public :
    Bool_t          isSig;
    Bool_t          isTT;
    Int_t           SigMass;
+   //vector<double>  AK8JetsPt_Exclude_Hole;
+   //vector<double>  AK4JetsPt_Exclude_Hole;
+   //Double_t        AK4Ht_Exclude_Hole;
+   //Double_t        AK8Ht_Exclude_Hole;
+   //Double_t        AK8Ht;
 
    // Declaration of leaf types
    Long64_t        event_CommonCalc;
@@ -71,8 +76,8 @@ public :
    Float_t         EGammaGsfSF;
    Float_t         lepIdSF;
    Float_t         isoSF;
-   Float_t         triggSF;
-   Float_t         triggSFUncert;
+   Float_t         triggerSF;
+   Float_t         triggerSFUncert;
    Float_t         muPtSF;
    Double_t        ttbarMass_TTbarMassCalc;
    Float_t         genTopPt;
@@ -291,8 +296,8 @@ public :
    TBranch        *b_EGammaGsfSF;   //!
    TBranch        *b_lepIdSF;   //!
    TBranch        *b_isoSF;   //!
-   TBranch        *b_triggSF;   //!
-   TBranch        *b_triggSFUncert;   //!
+   TBranch        *b_triggerSF;   //!
+   TBranch        *b_triggerSFUncert;   //!
    TBranch        *b_muPtSF;   //!
    TBranch        *b_ttbarMass_TTbarMassCalc;   //!
    TBranch        *b_genTopPt;   //!
@@ -659,8 +664,8 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("EGammaGsfSF", &EGammaGsfSF, &b_EGammaGsfSF);
    inputTree->SetBranchAddress("lepIdSF", &lepIdSF, &b_lepIdSF);
    inputTree->SetBranchAddress("isoSF", &isoSF, &b_isoSF);
-   inputTree->SetBranchAddress("triggSF", &triggSF, &b_triggSF);
-   inputTree->SetBranchAddress("triggSFUncert", &triggSFUncert, &b_triggSFUncert);
+   inputTree->SetBranchAddress("triggerSF", &triggerSF, &b_triggerSF);
+   inputTree->SetBranchAddress("triggerSFUncert", &triggerSFUncert, &b_triggerSFUncert);
    inputTree->SetBranchAddress("muPtSF", &muPtSF, &b_muPtSF);
    inputTree->SetBranchAddress("ttbarMass_TTbarMassCalc", &ttbarMass_TTbarMassCalc, &b_ttbarMass_TTbarMassCalc);
    inputTree->SetBranchAddress("genTopPt", &genTopPt, &b_genTopPt);
