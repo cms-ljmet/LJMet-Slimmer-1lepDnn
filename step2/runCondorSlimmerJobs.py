@@ -32,7 +32,9 @@ os.system('mkdir -p '+condorDir)
 for file in rootfiles:
 
     # can turn some files of/off, but right now don't need to.
-    #if 'BprimeBprime_M-1800' not in file and 'WJetsToLNu_HT' not in file: continue 
+    ## Do WJets, TprimeTprime AND BprimeBprime M-1000, M-1800
+    if 'M-1800' not in file and 'M-1000' not in file and 'WJetsToLNu_HT' not in file: continue 
+
     rawname = file[:-5]
     print file
     print "rawname: ",rawname

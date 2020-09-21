@@ -2,8 +2,9 @@
 
 void testStep2(){ //TString inputFile, TString outputFile){
 
-  TString inputFile="root://cmseos.fnal.gov//store/user/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_step1hadds/TprimeTprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8_1_hadd.root";
-  TString outputFile="test.root";
+  TString inputFile="tptp1800_step2.root";
+  //TString inputFile="root://cmseos.fnal.gov//store/user/bburgsta/FWLJMET102X_1lep2016Dnn_trainMVA_step1hadds/TprimeTprime_M-1000_TuneCUETP8M1_13TeV-madgraph-pythia8_1_hadd.root";
+  TString outputFile="test1800.root";
 
   gSystem->AddIncludePath("-I$CMSSW_BASE/src/");
 
