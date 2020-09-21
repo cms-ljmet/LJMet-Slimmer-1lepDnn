@@ -224,7 +224,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("event_CommonCalc",1);
    inputTree->SetBranchStatus("run_CommonCalc",1);
    inputTree->SetBranchStatus("lumi_CommonCalc",1);
-   //   inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
+   inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
    inputTree->SetBranchStatus("nTrueInteractions_MultiLepCalc",1);
    inputTree->SetBranchStatus("MCWeight_MultiLepCalc",1);
    inputTree->SetBranchStatus("LHEweightids_MultiLepCalc",1);
@@ -380,7 +380,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("event_CommonCalc",&event_CommonCalc,"event_CommonCalc/L");
    outputTree->Branch("run_CommonCalc",&run_CommonCalc,"run_CommonCalc/I");
    outputTree->Branch("lumi_CommonCalc",&lumi_CommonCalc,"lumi_CommonCalc/I");
-   //   outputTree->Branch("nPV_MultiLepCalc",&nPV_MultiLepCalc,"nPV_MultiLepCalc/I");
+   outputTree->Branch("nPV_MultiLepCalc",&nPV_MultiLepCalc,"nPV_MultiLepCalc/I");
    outputTree->Branch("nTrueInteractions_MultiLepCalc",&nTrueInteractions_MultiLepCalc,"nTrueInteractions_MultiLepCalc/I");
    outputTree->Branch("isElectron",&isElectron,"isElectron/I");
    outputTree->Branch("isMuon",&isMuon,"isMuon/I");
@@ -410,6 +410,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    // weights
    outputTree->Branch("renormWeights",&renormWeights);
    outputTree->Branch("pdfWeights",&pdfWeights);
+   outputTree->Branch("pdfWeights4LHC",&pdfWeights4LHC);
+   outputTree->Branch("pdfWeightsMSTW",&pdfWeightsMSTW);
    outputTree->Branch("pdfNewWeights",&pdfNewWeights);
    outputTree->Branch("pdfNewNominalWeight",&pdfNewNominalWeight,"pdfNewNominalWeight/F");
    outputTree->Branch("pileupWeight",&pileupWeight,"pileupWeight/F");
@@ -1945,28 +1947,28 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  // ------------------------------------------------------------------------------------------------------------------
 
 	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1){
-	    if(isTmatched) DeepAK8SF_TeffUp += 0.10;
-	    else DeepAK8SF_TmisUp += 0.10;
+	    if(isTmatched) DeepAK8SF_TeffUp += 0.25;
+	    else DeepAK8SF_TmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2){
-	    if(isHmatched) DeepAK8SF_HeffUp += 0.10;
-	    else DeepAK8SF_HmisUp += 0.10;
+	    if(isHmatched) DeepAK8SF_HeffUp += 0.25;
+	    else DeepAK8SF_HmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3){
-	    if(isZmatched) DeepAK8SF_ZeffUp += 0.10;
-	    else DeepAK8SF_ZmisUp += 0.10;
+	    if(isZmatched) DeepAK8SF_ZeffUp += 0.25;
+	    else DeepAK8SF_ZmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4){
-	    if(isWmatched) DeepAK8SF_WeffUp += 0.10;
-	    else DeepAK8SF_WmisUp += 0.10;
+	    if(isWmatched) DeepAK8SF_WeffUp += 0.25;
+	    else DeepAK8SF_WmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 5){
-	    if(isBmatched) DeepAK8SF_BeffUp += 0.10;
-	    else DeepAK8SF_BmisUp += 0.10;
+	    if(isBmatched) DeepAK8SF_BeffUp += 0.25;
+	    else DeepAK8SF_BmisUp += 0.25;
 	  }
 	  else{
-	    if(isJmatched) DeepAK8SF_JeffUp += 0.10;
-	    else DeepAK8SF_JmisUp += 0.10;
+	    if(isJmatched) DeepAK8SF_JeffUp += 0.25;
+	    else DeepAK8SF_JmisUp += 0.25;
 	  }
 	}
       }
@@ -2742,6 +2744,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       renormWeights.clear();
       pdfWeights.clear();
       pdfNewWeights.clear();
+      pdfWeights4LHC.clear();
+      pdfWeightsMSTW.clear();
       pdfNewNominalWeight = 1.0;
       if(isSig){
 	pdfNewNominalWeight = NewPDFweights_MultiLepCalc->at(0);
@@ -2754,6 +2758,12 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  }
 	  if(LHEweightids_MultiLepCalc->at(i) > 474 && LHEweightids_MultiLepCalc->at(i) < 575){
 	    pdfWeights.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
+	  if(LHEweightids_MultiLepCalc->at(i) > 442 && LHEweightids_MultiLepCalc->at(i) < 474){
+	    pdfWeights4LHC.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
+	  if(LHEweightids_MultiLepCalc->at(i) > 205 && LHEweightids_MultiLepCalc->at(i) < 247){
+	    pdfWeightsMSTW.push_back(LHEweights_MultiLepCalc->at(i));
 	  }
 	}
       }

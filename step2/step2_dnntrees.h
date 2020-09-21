@@ -32,8 +32,13 @@ public :
    Long64_t        event_CommonCalc;
    Int_t           run_CommonCalc;
    Int_t           lumi_CommonCalc;
+<<<<<<< HEAD
+   Int_t           nPV_singleLepCalc;
+   Int_t           nTrueInteractions_singleLepCalc;
+=======
    Int_t           nPV_MultiLepCalc;
    Int_t           nTrueInteractions_MultiLepCalc;
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    Int_t           isElectron;
    Int_t           isMuon;
    Int_t           MCPastTrigger;
@@ -55,7 +60,11 @@ public :
    Bool_t          isBZBZ_TpTpCalc;
    Bool_t          tPrimePt_TpTpCalc;
    Int_t           NLeptonDecays_TpTpCalc;
+<<<<<<< HEAD
+   Double_t        MCWeight_singleLepCalc;
+=======
    Double_t        MCWeight_MultiLepCalc;
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    vector<double>  *renormWeights;
    vector<double>  *pdfWeights;
    vector<double>  *pdfNewWeights;
@@ -72,6 +81,19 @@ public :
    Double_t        ttbarMass_TTbarMassCalc;
    Float_t         genTopPt;
    Float_t         genAntiTopPt;
+<<<<<<< HEAD
+   Bool_t          isTau_singleLepCalc;
+   Double_t        corr_met_singleLepCalc;
+   Double_t        corr_met_phi_singleLepCalc;
+   Double_t        corr_metmod_singleLepCalc;
+   Double_t        corr_metmod_phi_singleLepCalc;
+   Float_t         leptonPt_singleLepCalc;
+   Float_t         leptonEta_singleLepCalc;
+   Float_t         leptonPhi_singleLepCalc;
+   Float_t         leptonEnergy_singleLepCalc;
+   Float_t         leptonMVAValue_singleLepCalc;
+   Float_t         leptonMiniIso_singleLepCalc;
+=======
    Bool_t          isTau_MultiLepCalc;
    Double_t        corr_met_MultiLepCalc;
    Double_t        corr_met_phi_MultiLepCalc;
@@ -83,6 +105,7 @@ public :
    Float_t         leptonEnergy_MultiLepCalc;
    Float_t         leptonMVAValue_MultiLepCalc;
    Float_t         leptonMiniIso_MultiLepCalc;
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    Float_t         MT_lepMet;
    Float_t         MT_lepMetmod;
    Float_t         minDPhi_MetJet;
@@ -217,8 +240,13 @@ public :
    TBranch        *b_event_CommonCalc;   //!
    TBranch        *b_run_CommonCalc;   //!
    TBranch        *b_lumi_CommonCalc;   //!
+<<<<<<< HEAD
+   TBranch        *b_nPV_singleLepCalc;   //!
+   TBranch        *b_nTrueInteractions_singleLepCalc;   //!
+=======
    TBranch        *b_nPV_MultiLepCalc;   //!
    TBranch        *b_nTrueInteractions_MultiLepCalc;   //!
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    TBranch        *b_isElectron;   //!
    TBranch        *b_isMuon;   //!
    TBranch        *b_MCPastTrigger;   //!
@@ -240,7 +268,11 @@ public :
    TBranch        *b_isBZBZ_TpTpCalc;   //!
    TBranch        *b_tPrimePt_TpTpCalc;   //!
    TBranch        *b_NLeptonDecays_TpTpCalc;   //!
+<<<<<<< HEAD
+   TBranch        *b_MCWeight_singleLepCalc;   //!
+=======
    TBranch        *b_MCWeight_MultiLepCalc;   //!
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    TBranch        *b_renormWeights;   //!
    TBranch        *b_pdfWeights;   //!
    TBranch        *b_pdfNewWeights;   //!
@@ -257,6 +289,19 @@ public :
    TBranch        *b_ttbarMass_TTbarMassCalc;   //!
    TBranch        *b_genTopPt;   //!
    TBranch        *b_genAntiTopPt;   //!
+<<<<<<< HEAD
+   TBranch        *b_isTau_singleLepCalc;   //!
+   TBranch        *b_corr_met_singleLepCalc;   //!
+   TBranch        *b_corr_met_phi_singleLepCalc;   //!
+   TBranch        *b_corr_metmod_singleLepCalc;   //!
+   TBranch        *b_corr_metmod_phi_singleLepCalc;   //!
+   TBranch        *b_leptonPt_singleLepCalc;   //!
+   TBranch        *b_leptonEta_singleLepCalc;   //!
+   TBranch        *b_leptonPhi_singleLepCalc;   //!
+   TBranch        *b_leptonEnergy_singleLepCalc;   //!
+   TBranch        *b_leptonMVAValue_singleLepCalc;   //!
+   TBranch        *b_leptonMiniIso_singleLepCalc;   //!
+=======
    TBranch        *b_isTau_MultiLepCalc;   //!
    TBranch        *b_corr_met_MultiLepCalc;   //!
    TBranch        *b_corr_met_phi_MultiLepCalc;   //!
@@ -268,6 +313,7 @@ public :
    TBranch        *b_leptonEnergy_MultiLepCalc;   //!
    TBranch        *b_leptonMVAValue_MultiLepCalc;   //!
    TBranch        *b_leptonMiniIso_MultiLepCalc;   //!
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    TBranch        *b_MT_lepMet;   //!
    TBranch        *b_MT_lepMetmod;   //!
    TBranch        *b_minDPhi_MetJet;   //!
@@ -426,7 +472,11 @@ step2::step2(TString inputFileName, TString outputFileName) : inputTree(0), inpu
     else if(inputFileName.Contains("_M-1800")) SigMass = 18;
     else SigMass = -1;
   }
+<<<<<<< HEAD
+  isTT = (inputFileName.Contains("TTTo") || inputFileName.Contains("Mtt"));
+=======
   isTT = (inputFileName.Contains("TTTo") || inputFileName.Contains("Mtt"));  
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
 
   inputFile=TFile::Open(inputFileName);
   inputTree=(TTree*)inputFile->Get("ljmet");
@@ -542,8 +592,13 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("event_CommonCalc", &event_CommonCalc, &b_event_CommonCalc);
    inputTree->SetBranchAddress("run_CommonCalc", &run_CommonCalc, &b_run_CommonCalc);
    inputTree->SetBranchAddress("lumi_CommonCalc", &lumi_CommonCalc, &b_lumi_CommonCalc);
+<<<<<<< HEAD
+   inputTree->SetBranchAddress("nPV_singleLepCalc", &nPV_singleLepCalc, &b_nPV_singleLepCalc);
+   inputTree->SetBranchAddress("nTrueInteractions_singleLepCalc", &nTrueInteractions_singleLepCalc, &b_nTrueInteractions_singleLepCalc);
+=======
    inputTree->SetBranchAddress("nPV_MultiLepCalc", &nPV_MultiLepCalc, &b_nPV_MultiLepCalc);
    inputTree->SetBranchAddress("nTrueInteractions_MultiLepCalc", &nTrueInteractions_MultiLepCalc, &b_nTrueInteractions_MultiLepCalc);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    inputTree->SetBranchAddress("isElectron", &isElectron, &b_isElectron);
    inputTree->SetBranchAddress("isMuon", &isMuon, &b_isMuon);
    inputTree->SetBranchAddress("MCPastTrigger", &MCPastTrigger, &b_MCPastTrigger);
@@ -565,7 +620,11 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("isBZBZ_TpTpCalc", &isBZBZ_TpTpCalc, &b_isBZBZ_TpTpCalc);
    inputTree->SetBranchAddress("tPrimePt_TpTpCalc", &tPrimePt_TpTpCalc, &b_tPrimePt_TpTpCalc);
    inputTree->SetBranchAddress("NLeptonDecays_TpTpCalc", &NLeptonDecays_TpTpCalc, &b_NLeptonDecays_TpTpCalc);
+<<<<<<< HEAD
+   inputTree->SetBranchAddress("MCWeight_singleLepCalc", &MCWeight_singleLepCalc, &b_MCWeight_singleLepCalc);
+=======
    inputTree->SetBranchAddress("MCWeight_MultiLepCalc", &MCWeight_MultiLepCalc, &b_MCWeight_MultiLepCalc);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    inputTree->SetBranchAddress("renormWeights", &renormWeights, &b_renormWeights);
    inputTree->SetBranchAddress("pdfWeights", &pdfWeights, &b_pdfWeights);
    inputTree->SetBranchAddress("pdfNewWeights", &pdfNewWeights, &b_pdfNewWeights);
@@ -582,6 +641,19 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("ttbarMass_TTbarMassCalc", &ttbarMass_TTbarMassCalc, &b_ttbarMass_TTbarMassCalc);
    inputTree->SetBranchAddress("genTopPt", &genTopPt, &b_genTopPt);
    inputTree->SetBranchAddress("genAntiTopPt", &genAntiTopPt, &b_genAntiTopPt);
+<<<<<<< HEAD
+   inputTree->SetBranchAddress("isTau_singleLepCalc", &isTau_singleLepCalc, &b_isTau_singleLepCalc);
+   inputTree->SetBranchAddress("corr_met_singleLepCalc", &corr_met_singleLepCalc, &b_corr_met_singleLepCalc);
+   inputTree->SetBranchAddress("corr_met_phi_singleLepCalc", &corr_met_phi_singleLepCalc, &b_corr_met_phi_singleLepCalc);
+   inputTree->SetBranchAddress("corr_metmod_singleLepCalc", &corr_metmod_singleLepCalc, &b_corr_metmod_singleLepCalc);
+   inputTree->SetBranchAddress("corr_metmod_phi_singleLepCalc", &corr_metmod_phi_singleLepCalc, &b_corr_metmod_phi_singleLepCalc);
+   inputTree->SetBranchAddress("leptonPt_singleLepCalc", &leptonPt_singleLepCalc, &b_leptonPt_singleLepCalc);
+   inputTree->SetBranchAddress("leptonEta_singleLepCalc", &leptonEta_singleLepCalc, &b_leptonEta_singleLepCalc);
+   inputTree->SetBranchAddress("leptonPhi_singleLepCalc", &leptonPhi_singleLepCalc, &b_leptonPhi_singleLepCalc);
+   inputTree->SetBranchAddress("leptonEnergy_singleLepCalc", &leptonEnergy_singleLepCalc, &b_leptonEnergy_singleLepCalc);
+   inputTree->SetBranchAddress("leptonMVAValue_singleLepCalc", &leptonMVAValue_singleLepCalc, &b_leptonMVAValue_singleLepCalc);
+   inputTree->SetBranchAddress("leptonMiniIso_singleLepCalc", &leptonMiniIso_singleLepCalc, &b_leptonMiniIso_singleLepCalc);
+=======
    inputTree->SetBranchAddress("isTau_MultiLepCalc", &isTau_MultiLepCalc, &b_isTau_MultiLepCalc);
    inputTree->SetBranchAddress("corr_met_MultiLepCalc", &corr_met_MultiLepCalc, &b_corr_met_MultiLepCalc);
    inputTree->SetBranchAddress("corr_met_phi_MultiLepCalc", &corr_met_phi_MultiLepCalc, &b_corr_met_phi_MultiLepCalc);
@@ -593,6 +665,7 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("leptonEnergy_MultiLepCalc", &leptonEnergy_MultiLepCalc, &b_leptonEnergy_MultiLepCalc);
    inputTree->SetBranchAddress("leptonMVAValue_MultiLepCalc", &leptonMVAValue_MultiLepCalc, &b_leptonMVAValue_MultiLepCalc);
    inputTree->SetBranchAddress("leptonMiniIso_MultiLepCalc", &leptonMiniIso_MultiLepCalc, &b_leptonMiniIso_MultiLepCalc);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    inputTree->SetBranchAddress("MT_lepMet", &MT_lepMet, &b_MT_lepMet);
    inputTree->SetBranchAddress("MT_lepMetmod", &MT_lepMetmod, &b_MT_lepMetmod);
    inputTree->SetBranchAddress("minDPhi_MetJet", &minDPhi_MetJet, &b_minDPhi_MetJet);
@@ -711,8 +784,13 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("Bprime2_DeepAK8_Eta", &Bprime2_DeepAK8_Eta, &b_Bprime2_DeepAK8_Eta);
    inputTree->SetBranchAddress("Bprime1_DeepAK8_Phi", &Bprime1_DeepAK8_Phi, &b_Bprime1_DeepAK8_Phi);
    inputTree->SetBranchAddress("Bprime2_DeepAK8_Phi", &Bprime2_DeepAK8_Phi, &b_Bprime2_DeepAK8_Phi);
+<<<<<<< HEAD
+   inputTree->SetBranchAddress("Bprime1_DeepAK8_deltaR", &Bprime1_DeepAK8_deltaR, &b_Bprime1_DeepAK8_deltaR);
+   inputTree->SetBranchAddress("Bprime2_DeepAK8_deltaR", &Bprime2_DeepAK8_deltaR, &b_Bprime2_DeepAK8_deltaR);
+=======
    inputTree->SetBranchAddress("Bprime1_DeepAK8_deltaR", &Tprime1_DeepAK8_deltaR, &b_Tprime1_DeepAK8_deltaR);
    inputTree->SetBranchAddress("Bprime2_DeepAK8_deltaR", &Tprime2_DeepAK8_deltaR, &b_Tprime2_DeepAK8_deltaR);
+>>>>>>> ce2542b0dfe71b9bb8bf62be7ffd9c6fef3d5ca4
    inputTree->SetBranchAddress("isValidBBDecayMode_DeepAK8", &isValidBBDecayMode_DeepAK8, &b_validBDecay_DeepAK8);
    inputTree->SetBranchAddress("taggedTWTW_DeepAK8", &taggedTWTW_DeepAK8, &b_taggedTWTW_DeepAK8);
    inputTree->SetBranchAddress("taggedBHTW_DeepAK8", &taggedBHTW_DeepAK8, &b_taggedBZTW_DeepAK8);
