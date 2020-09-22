@@ -18,7 +18,7 @@ void makeStep2(TString macroDir, TString inputFile, TString outputFile, bool run
  
   if(isData or not runShifts) t.Loop("ljmet","ljmet");
   else{
-    t.saveHistograms();
+    //t.saveHistograms();
     vector<TString> shifts = {"ljmet","ljmet_JECup","ljmet_JECdown","ljmet_JERup","ljmet_JERdown","ljmet_BTAGup","ljmet_BTAGdown","ljmet_LTAGup","ljmet_LTAGdown"};
     for(size_t i = 0; i < shifts.size(); i++){
       cout << "\nRunning shift " << shifts[i] << endl;

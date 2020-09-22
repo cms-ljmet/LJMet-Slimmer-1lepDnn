@@ -233,7 +233,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("event_CommonCalc",1);
    inputTree->SetBranchStatus("run_CommonCalc",1);
    inputTree->SetBranchStatus("lumi_CommonCalc",1);
-   //   inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
+   inputTree->SetBranchStatus("nPV_MultiLepCalc",1);
    inputTree->SetBranchStatus("nTrueInteractions_MultiLepCalc",1);
    inputTree->SetBranchStatus("MCWeight_MultiLepCalc",1);
    inputTree->SetBranchStatus("LHEweightids_MultiLepCalc",1);
@@ -2336,28 +2336,28 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  // ------------------------------------------------------------------------------------------------------------------
 
 	  if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 1){
-	    if(isTmatched) DeepAK8SF_TeffUp += 0.10;
-	    else DeepAK8SF_TmisUp += 0.10;
+	    if(isTmatched) DeepAK8SF_TeffUp += 0.25;
+	    else DeepAK8SF_TmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 2){
-	    if(isHmatched) DeepAK8SF_HeffUp += 0.10;
-	    else DeepAK8SF_HmisUp += 0.10;
+	    if(isHmatched) DeepAK8SF_HeffUp += 0.25;
+	    else DeepAK8SF_HmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 3){
-	    if(isZmatched) DeepAK8SF_ZeffUp += 0.10;
-	    else DeepAK8SF_ZmisUp += 0.10;
+	    if(isZmatched) DeepAK8SF_ZeffUp += 0.25;
+	    else DeepAK8SF_ZmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 4){
-	    if(isWmatched) DeepAK8SF_WeffUp += 0.10;
-	    else DeepAK8SF_WmisUp += 0.10;
+	    if(isWmatched) DeepAK8SF_WeffUp += 0.25;
+	    else DeepAK8SF_WmisUp += 0.25;
 	  }
 	  else if (dnn_largest_DeepAK8Calc_PtOrdered.at(ijet) == 5){
-	    if(isBmatched) DeepAK8SF_BeffUp += 0.10;
-	    else DeepAK8SF_BmisUp += 0.10;
+	    if(isBmatched) DeepAK8SF_BeffUp += 0.25;
+	    else DeepAK8SF_BmisUp += 0.25;
 	  }
 	  else{
-	    if(isJmatched) DeepAK8SF_JeffUp += 0.10;
-	    else DeepAK8SF_JmisUp += 0.10;
+	    if(isJmatched) DeepAK8SF_JeffUp += 0.25;
+	    else DeepAK8SF_JmisUp += 0.25;
 	  }
 	}
       }
