@@ -81,7 +81,7 @@ void step2::Loop(TString inTreeName, TString outTreeName)
 	  {
 	    TLorentzVector jet4; 
 	    jet4.SetPtEtaPhiE (theJetPt_JetSubCalc_PtOrdered->at(jjet4), theJetEta_JetSubCalc_PtOrdered->at(jjet4), theJetPhi_JetSubCalc_PtOrdered->at(jjet4), theJetEnergy_JetSubCalc_PtOrdered->at(jjet4));
-	    jet4=jet4*0.8;
+	    jet4=jet4*1.2;
 	    if(jet4.Pt()>30)
 	      {
 		AK4JetsPt_Exclude_Hole.push_back(jet4.Pt());
@@ -93,7 +93,7 @@ void step2::Loop(TString inTreeName, TString outTreeName)
 	  {
 	    TLorentzVector jet4; 
 	    jet4.SetPtEtaPhiE (theJetPt_JetSubCalc_PtOrdered->at(jjet4), theJetEta_JetSubCalc_PtOrdered->at(jjet4), theJetPhi_JetSubCalc_PtOrdered->at(jjet4), theJetEnergy_JetSubCalc_PtOrdered->at(jjet4));
-	    jet4=jet4*0.65;
+	    jet4=jet4*1.35;
 	    if(jet4.Pt()>30)
 	      {
 		AK4JetsPt_Exclude_Hole.push_back(jet4.Pt());
