@@ -82,12 +82,12 @@ void step2::Loop(TString inTreeName, TString outTreeName)
    inputTree->SetBranchStatus("isTZTZ_TpTpCalc",1);
    inputTree->SetBranchStatus("isTZTH_TpTpCalc",1);
    inputTree->SetBranchStatus("isTHTH_TpTpCalc",1);
-   inputTree->SetBranchStatus("isTWTW_TpTpCalc",1);
-   inputTree->SetBranchStatus("isBHTW_TpTpCalc",1);
-   inputTree->SetBranchStatus("isBZTW_TpTpCalc",1);
-   inputTree->SetBranchStatus("isBZBZ_TpTpCalc",1);
-   inputTree->SetBranchStatus("isBZBH_TpTpCalc",1);
-   inputTree->SetBranchStatus("isBHBH_TpTpCalc",1);
+   inputTree->SetBranchStatus("isTWTW_BpBpCalc",1);
+   inputTree->SetBranchStatus("isBHTW_BpBpCalc",1);
+   inputTree->SetBranchStatus("isBZTW_BpBpCalc",1);
+   inputTree->SetBranchStatus("isBZBZ_BpBpCalc",1);
+   inputTree->SetBranchStatus("isBZBH_BpBpCalc",1);
+   inputTree->SetBranchStatus("isBHBH_BpBpCalc",1);
 
    // Add some new branches as needed
    int targetLabel;

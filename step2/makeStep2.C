@@ -1,5 +1,6 @@
 #include "step2.cc"
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ void makeStep2(TString macroDir, TString inputFile, TString outputFile, bool run
 
   step2 t(inputFile,outputFile);
   bool isData = (inputFile.Contains("Single") || inputFile.Contains("EGamma"));
+  std::cout << "Data/MC decision: isData = " << isData << std::endl;
  
   if(isData or not runShifts) t.Loop("ljmet","ljmet");
   else{
