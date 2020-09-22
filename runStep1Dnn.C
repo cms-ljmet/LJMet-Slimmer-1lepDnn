@@ -1,6 +1,6 @@
 void runStep1Dnn(TString macroDir, TString inputFile, TString outputFile, TString outputDir){
 
-  gSystem->Load("liblwtnnlwtnn.so");
+  gSystem->Load("../../lib/slc6_amd64_gcc700/liblwtnnlwtnn.so");
   gSystem->AddIncludePath("-I$CMSSW_BASE/src/");
 
   gROOT->SetMacroPath(macroDir);
