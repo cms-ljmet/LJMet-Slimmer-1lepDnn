@@ -13,8 +13,8 @@ url=${6}
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc700
-scramv1 project CMSSW CMSSW_10_2_10
-cd CMSSW_10_2_10
+scramv1 project CMSSW CMSSW_10_2_16_UL
+cd CMSSW_10_2_16_UL
 
 echo "unpacking tar"
 tar -xf ${scratch}/slimmerdnn.tar
