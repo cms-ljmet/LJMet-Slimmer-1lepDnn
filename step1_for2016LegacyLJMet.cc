@@ -1119,41 +1119,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
             else if(fabs(lepeta) <  2.4) isoSF= 0.9964;
 	  }
 	  
-	  // Cut based tight id
-	  // Scale Factor 3: https://twiki.cern.ch/twiki/pub/CMS/MuonReferenceEffs2017/RunBCDEF_SF_ID.json
-	  if (fabs(lepeta) < 0.90) {
-	    if (leppt < 25.0) lepIdSF = 0.9910777627756951;
-	    else if (leppt < 30.0) lepIdSF = 0.987410468262084;
-	    else if (leppt < 40.0) lepIdSF = 0.9907753279135898;
-	    else if (leppt < 50.0) lepIdSF = 0.9892483588952047;
-	    else if (leppt < 60.0) lepIdSF = 0.9855545160334763;
-	    else lepIdSF = 0.9898057377093389; 
-	  }
-	  else if (fabs(lepeta) < 1.20) {
-	    if (leppt < 25.0) lepIdSF = 0.9927389275515244;
-	    else if (leppt < 30.0) lepIdSF = 0.985063939762512;
-	    else if (leppt < 40.0) lepIdSF = 0.9865359464182247;
-	    else if (leppt < 50.0) lepIdSF = 0.984913093101493;
-	    else if (leppt < 60.0) lepIdSF = 0.9839056384760008;
-	    else lepIdSF = 0.984060403143468; 
-	  }  
-	  else if (fabs(lepeta) < 2.10) {
-	    if (leppt < 25.0) lepIdSF = 0.9924252719877384;
-	    else if (leppt < 30.0) lepIdSF = 0.9890884461284933;
-	    else if (leppt < 40.0) lepIdSF = 0.9946469069883841;
-	    else if (leppt < 50.0) lepIdSF = 0.9926528825155183;
-	    else if (leppt < 60.0) lepIdSF = 0.9906364222943529;
-	    else lepIdSF = 0.9920464322143979; 
-	  }
-	  else {
-	    if (leppt < 25.0) lepIdSF = 0.9758095839531763;
-	    else if (leppt < 30.0) lepIdSF = 0.9745153594179884;
-	    else if (leppt < 40.0) lepIdSF = 0.9787410500158746;
-	    else if (leppt < 50.0) lepIdSF = 0.978189122919501;
-	    else if (leppt < 60.0) lepIdSF = 0.9673568416097894;
-	    else lepIdSF = 0.9766311856731202; 
-	  }
-
 	// Updated by Blake Burgstahler
 	// 2016 Legacy BCDEF -- https://gitlab.cern.ch/cms-muonPOG/MuonReferenceEfficiencies/blob/master/EfficienciesStudies/2016_legacy_rereco/systematic/RunBCDEF_SF_ID.json
 	// NUM_TightID_Den_genTracks ~ line 2570	
