@@ -990,37 +990,53 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else lepIdSF = 0.960; 
 	}
 
-	  // mini isolation scale factors: https://wiwong.web.cern.ch/wiwong/Ele_Eff_Plots/2017passingMiniIsoTight/
-	  if (leppt < 50){
-            if (fabs(lepeta) < 0.8) isoSF = 0.997;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.999;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.009;
-            else if (fabs(lepeta) < 2) isoSF = 0.998;
-            else isoSF = 0.997;}
-	  else if (leppt < 60){
-            if (fabs(lepeta) < 0.8) isoSF = 0.998;
-            else if (fabs(lepeta) < 1.442) isoSF = 0.999;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.022;
-            else if (fabs(lepeta) < 2) isoSF = 0.999;
-            else isoSF = 1.000;}
-	  else if (leppt < 100){
-            if (fabs(lepeta) < 0.8) isoSF = 0.998;
-            else if (fabs(lepeta) < 1.442) isoSF = 1.001;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.024;
-            else if (fabs(lepeta) < 2) isoSF = 1.001;
-            else isoSF = 1.001;}
-	  else if (leppt < 200){
-            if (fabs(lepeta) < 0.8) isoSF = 0.999;
-            else if (fabs(lepeta) < 1.442) isoSF = 1.001;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.021;
-            else if (fabs(lepeta) < 2) isoSF = 1.003;
-            else isoSF = 1.000;}
-	  else{
-            if (fabs(lepeta) < 0.8) isoSF = 1.000;
-            else if (fabs(lepeta) < 1.442) isoSF = 1.001;
-            else if (fabs(lepeta) < 1.566) isoSF = 1.008;
-            else if (fabs(lepeta) < 2) isoSF = 1.000;
-            else isoSF = 0.999;}
+	  //miniIso < 0.1 scale factors -- Moriond17 -- from Julie - 22Jan17
+	  if(fabs(lepeta) < 0.8){
+	    if(leppt < 30) isoSF = 0.999;
+	    else if(leppt < 40) isoSF = 0.999;
+	    else if(leppt < 50) isoSF = 0.999;
+	    else if(leppt < 60) isoSF = 0.998;
+	    else if(leppt < 100) isoSF = 0.999;
+	    else if(leppt < 200) isoSF = 1.002;
+	    else isoSF = 1.001;
+	  }
+	  else if(fabs(lepeta) < 1.4442){
+	    if(leppt < 30) isoSF = 1.005;
+	    else if(leppt < 40) isoSF = 1.000;
+	    else if(leppt < 50) isoSF = 1.000;
+	    else if(leppt < 60) isoSF = 1.000;
+	    else if(leppt < 100) isoSF = 1.000;
+	    else if(leppt < 200) isoSF = 1.002;
+	    else isoSF = 0.999;
+	  }
+	  else if(fabs(lepeta) < 1.566){
+	    if(leppt < 30) isoSF = 1.000;
+	    else if(leppt < 40) isoSF = 1.000;
+	    else if(leppt < 50) isoSF = 1.000;
+	    else if(leppt < 60) isoSF = 1.000;
+	    else if(leppt < 100) isoSF = 1.000;
+	    else if(leppt < 200) isoSF = 1.000;
+	    else isoSF = 1.000;
+	  }
+	  else if(fabs(lepeta) < 2.0){
+	    if(leppt < 30) isoSF = 0.992;
+	    else if(leppt < 40) isoSF = 0.998;
+	    else if(leppt < 50) isoSF = 0.997;
+	    else if(leppt < 60) isoSF = 0.999;
+	    else if(leppt < 100) isoSF = 0.999;
+	    else if(leppt < 200) isoSF = 1.000;
+	    else isoSF = 0.998;
+	  }
+	  else {
+	    if(leppt < 30) isoSF = 0.978;
+	    else if(leppt < 40) isoSF = 0.987;
+	    else if(leppt < 50) isoSF = 0.993;
+	    else if(leppt < 60) isoSF = 0.998;
+	    else if(leppt < 100) isoSF = 1.001;
+	    else if(leppt < 200) isoSF = 1.000;
+	    else isoSF = 0.997;
+	  }
+	  
 
 	  // Trigger Scale Factors, SF2017B_Bkg_LepPtEta_EOR.png & SF2017CDEF_Bkg_LepPtEta_EOR.png
 	  float trigSFB = 1.0;
@@ -1080,43 +1096,36 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  if(lepton_lv.P() > 100 && fabs(lepeta) < 1.6) muPtSF = (0.9828 - 1.947e-5*lepton_lv.P())/(0.989 - 2.399e-6*lepton_lv.P());
 	  else if(lepton_lv.P() > 275 && fabs(lepeta) > 1.6) muPtSF = (0.9893 - 3.666e-5*lepton_lv.P())/(0.9974 - 1.721e-5*lepton_lv.Pt());
 
-	  // MiniIsoTight/Tight
-	  // Jess Wong, approved in MUO 8/26/19, slide 37 upper left
-	  if(leppt < 30){
-            if(fabs(lepeta) < 0.9) isoSF= 0.9961;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.9921;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.9973;
-            else if(fabs(lepeta) <  2.4) isoSF= 0.9990;
-          }
-          else if(leppt < 40){
-            if(fabs(lepeta) < 0.9) isoSF= 0.9968;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.9962;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.9978;
-            else if(fabs(lepeta) <  2.4) isoSF= 0.9988;
-          }
-          else if(leppt < 50){
-            if(fabs(lepeta) < 0.9) isoSF= 0.9984;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.9976;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.9984;
-            else if(fabs(lepeta) <  2.4) isoSF= 0.9996;
-          }
-          else if(leppt < 60){
-            if(fabs(lepeta) < 0.9) isoSF= 0.9992;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.9989;
-            else if(fabs(lepeta) <  2.1) isoSF= 0.9993;
-            else if(fabs(lepeta) <  2.4) isoSF= 0.9988;
-          }
-          else if(leppt < 120){
-            if(fabs(lepeta) < 0.9) isoSF= 0.9996;
-            else if(fabs(lepeta) <  1.2) isoSF= 1.0000;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.0004;
-            else if(fabs(lepeta) <  2.4) isoSF= 0.9987;
-          }
-	  else{ // ignoring the 200-300, low stats, using 120+
-	    if(fabs(lepeta) < 0.9) isoSF= 0.9999;
-            else if(fabs(lepeta) <  1.2) isoSF= 0.9992;
-            else if(fabs(lepeta) <  2.1) isoSF= 1.0005;
-            else if(fabs(lepeta) <  2.4) isoSF= 0.9964;
+	  //Mini-iso < 0.1 scale factors for ReReco B-H / Spring16MC from Clint's Jan 18th talk: https://indico.cern.ch/event/605620/                                                                                                              
+	  if(leppt < 40){
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999708;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999764;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999537;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999363;
+	  }
+	  else if(leppt < 50){
+	    if(fabs(lepeta) < 0.9) isoSF= 0.998914;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999142;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999084;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999475;
+	  }
+	  else if(leppt < 60){
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999181;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999393;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999276;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999611;
+	  }
+	  else if(leppt < 100){
+	    if(fabs(lepeta) < 0.9) isoSF= 0.999594;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999992;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.999704;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.99999;
+	  }
+	  else{
+	    if(fabs(lepeta) < 0.9) isoSF= 1.00003;
+	    else if(fabs(lepeta) <  1.2) isoSF= 0.999797;
+	    else if(fabs(lepeta) <  2.1) isoSF= 0.99981;
+	    else if(fabs(lepeta) <  2.4) isoSF= 0.999982;
 	  }
 	  
 	// Updated by Blake Burgstahler
