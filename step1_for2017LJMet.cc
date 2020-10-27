@@ -852,7 +852,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
-	  // Gsf Tracking scale factor: http://fcouderc.web.cern.ch/fcouderc/EGamma/scaleFactors/Moriond17/approval/RECO/passingRECO/egammaEffi.txt_egammaPlots.pdf
+	  // JH checked (OK) 10/27/2020: Gsf Tracking scale factor https://twiki.cern.ch/twiki/pub/CMS/Egamma2017DataRecommendations/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root
 	  if (leppt < 45) {
 	    if (lepeta < -2.0) EGammaGsfSF = 0.977;
 	    else if (lepeta < -1.566) EGammaGsfSF = 0.982;
@@ -894,30 +894,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else if (lepeta < 1.442) EGammaGsfSF = 0.985;
 	    else if (lepeta < 1.566) EGammaGsfSF = 1.010;
 	    else EGammaGsfSF = 0.990; }
-          //Scale Factor 2: https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2017_ElectronMVA90noiso_2D.pdf
-	  if (leppt < 20) {
-	    if (lepeta < -2.0) lepIdSF = 0.943;
-	    else if (lepeta < -1.566) lepIdSF = 0.957;
-	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 1.008;
-	    else if (lepeta < 0.0) lepIdSF = 0.993;
-	    else if (lepeta < 0.8) lepIdSF = 0.992;
-	    else if (lepeta < 1.442) lepIdSF = 0.999;
-	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.978;
-	    else lepIdSF = 0.930; }
-	  else if (leppt < 35) {
-	    if (lepeta < -2.0) lepIdSF = 0.926;
-	    else if (lepeta < -1.566) lepIdSF = 0.937;
-	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 0.964;
-	    else if (lepeta < 0.0) lepIdSF = 0.981;
-	    else if (lepeta < 0.8) lepIdSF = 0.981;
-	    else if (lepeta < 1.442) lepIdSF = 0.963;
-	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.943;
-	    else lepIdSF = 0.918; }
-	  else if (leppt < 50) {
+
+          // JH checked (OK) 10/27/2020: Scale Factor 2 https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2017_ElectronMVA90noiso_2D.pdf
+	  if (leppt < 50) {
 	    if (lepeta < -2.0) lepIdSF = 0.941;
 	    else if (lepeta < -1.566) lepIdSF = 0.953;
 	    else if (lepeta < -1.442) lepIdSF = 1.000;
