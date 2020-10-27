@@ -2814,6 +2814,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    renorm.push_back(LHEweights_MultiLepCalc->at(i));
 	    renormWeights.push_back(LHEweights_MultiLepCalc->at(i));
 	  }
+	  if(LHEweightids_MultiLepCalc->at(i) > 714 && LHEweightids_MultiLepCalc->at(i) < 746){
+	    pdfWeights4LHC.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
 	  if(LHEweightids_MultiLepCalc->at(i) > 10 && LHEweightids_MultiLepCalc->at(i) < 111){
 	    pdf.push_back(LHEweights_MultiLepCalc->at(i));
 	    pdfWeights.push_back(LHEweights_MultiLepCalc->at(i));
@@ -2830,6 +2833,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(LHEweightids_MultiLepCalc->at(i) == 1006 || LHEweightids_MultiLepCalc->at(i) == 1008) continue;
 	    renorm.push_back(LHEweights_MultiLepCalc->at(i));
 	    renormWeights.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
+	  if(LHEweightids_MultiLepCalc->at(i) > 10999 && LHEweightids_MultiLepCalc->at(i) < 11031){
+	    pdfWeights4LHC.push_back(LHEweights_MultiLepCalc->at(i));
 	  }
 	  if(LHEweightids_MultiLepCalc->at(i) > 2000 && LHEweightids_MultiLepCalc->at(i) < 2101){
 	    pdf.push_back(LHEweights_MultiLepCalc->at(i));
