@@ -901,127 +901,106 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
-	  // Gsf Tracking scale factor: https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/egammaEffi.txt_egammaPlots.pdf
-	  if (leppt < 45) {
-	    if (lepeta < -2.0) EGammaGsfSF = 0.989;
-	    else if (lepeta < -1.566) EGammaGsfSF = 0.991;
-	    else if (lepeta < -1.442) EGammaGsfSF = 0.982;
-	    else if (lepeta < -1.0) EGammaGsfSF = 0.988;
-	    else if (lepeta < -0.5) EGammaGsfSF = 0.990;
-            else if (lepeta < 0.0) EGammaGsfSF = 0.986;
-	    else if (lepeta < 0.5) EGammaGsfSF = 0.983;
-	    else if (lepeta < 1.0) EGammaGsfSF = 0.987;
-	    else if (lepeta < 1.442) EGammaGsfSF = 0.984;
-	    else if (lepeta < 1.556) EGammaGsfSF = 0.985;
-	    else if (lepeta < 2.0) EGammaGsfSF = 0.989;
-	    else EGammaGsfSF = 0.992; }
-	  else if (leppt < 75) {
-	    if (lepeta < -2.0) EGammaGsfSF = 0.985;
-	    else if (lepeta < -1.556) EGammaGsfSF = 0.991;
-	    else if (lepeta < -1.442) EGammaGsfSF = 0.959;
-	    else if (lepeta < -1.0) EGammaGsfSF = 0.989;
-            else if (lepeta < -0.5) EGammaGsfSF = 0.991;
-	    else if (lepeta < 0.0) EGammaGsfSF = 0.989;
-	    else if (lepeta < 0.5) EGammaGsfSF = 0.987;
-	    else if (lepeta < 1.0) EGammaGsfSF = 0.989;
-	    else if (lepeta < 1.442) EGammaGsfSF = 0.982;
-	    else if (lepeta < 1.566) EGammaGsfSF = 0.973;
-	    else if (lepeta < 2.0) EGammaGsfSF = 0.991;
-	    else EGammaGsfSF = 0.986; }
-	  else if (leppt < 100) {
-            if (lepeta < -2.0) EGammaGsfSF = 1.001;
-	    else if (lepeta < -1.566) EGammaGsfSF = 1.006;
-	    else if (lepeta < -1.442) EGammaGsfSF = 1.047;
-	    else if (lepeta < -1.0) EGammaGsfSF = 1.005;
-            else if (lepeta < -0.5) EGammaGsfSF = 1.002;
-            else if (lepeta < 0.0) EGammaGsfSF = 1.006;
-            else if (lepeta < 0.5) EGammaGsfSF = 1.006;
-	    else if (lepeta < 1.0) EGammaGsfSF = 1.002;
-	    else if (lepeta < 1.442) EGammaGsfSF = 1.005;
-	    else if (lepeta < 1.566) EGammaGsfSF = 1.047;
-            else if (lepeta < 2.0) EGammaGsfSF = 1.006;
-	    else EGammaGsfSF = 1.001; }
-	  else {
-            if (lepeta < -2.0) EGammaGsfSF = 1.007;
-	    else if (lepeta < -1.566) EGammaGsfSF = 0.992;
-	    else if (lepeta < -1.442) EGammaGsfSF = 0.984;
-	    else if (lepeta < -1.0) EGammaGsfSF = 1.001;
-	    else if (lepeta < -0.5) EGammaGsfSF = 1.001;
-            else if (lepeta < 0.0) EGammaGsfSF = 0.987;
-	    else if (lepeta < 0.5) EGammaGsfSF = 0.987;
-	    else if (lepeta < 1.0) EGammaGsfSF = 1.001;
-	    else if (lepeta < 1.442) EGammaGsfSF = 1.001;
-	    else if (lepeta < 1.566) EGammaGsfSF = 0.984;
-	    else if (lepeta < 2.0) EGammaGsfSF = 0.992;
-	    else EGammaGsfSF = 1.007; }
 
-          //Scale factor 2: https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2018_ElectronMVA90noiso_2D.pdf 
-	  if (leppt < 20) {
-	    if (lepeta < -2.0) lepIdSF = 1.000;
-	    else if (lepeta < -1.566) lepIdSF = 0.973;
+	  // JH update 10/27/20: Gsf Tracking scale factor https://indico.cern.ch/event/794628/contributions/3303043/attachments/1791305/2923400/RECOSFs_0208_update.pdf
+	  if (leppt < 45) {
+	    if (lepeta < -2.0) EGammaGsfSF = 0.987;
+	    else if (lepeta < -1.566) EGammaGsfSF = 0.987;
+	    else if (lepeta < -1.442) EGammaGsfSF = 0.986;
+	    else if (lepeta < -1.0) EGammaGsfSF = 0.988;
+	    else if (lepeta < -0.5) EGammaGsfSF = 0.992;
+            else if (lepeta < 0.0) EGammaGsfSF = 0.990;
+	    else if (lepeta < 0.5) EGammaGsfSF = 0.997;
+	    else if (lepeta < 1.0) EGammaGsfSF = 0.999;
+	    else if (lepeta < 1.442) EGammaGsfSF = 0.988;
+	    else if (lepeta < 1.556) EGammaGsfSF = 0.973;
+	    else if (lepeta < 2.0) EGammaGsfSF = 0.988;
+	    else EGammaGsfSF = 0.984; }
+	  else if (leppt < 75) {
+	    if (lepeta < -2.0) EGammaGsfSF = 0.988;
+	    else if (lepeta < -1.556) EGammaGsfSF = 0.989;
+	    else if (lepeta < -1.442) EGammaGsfSF = 0.968;
+	    else if (lepeta < -1.0) EGammaGsfSF = 0.990;
+            else if (lepeta < -0.5) EGammaGsfSF = 0.990;
+	    else if (lepeta < 0.0) EGammaGsfSF = 0.990;
+	    else if (lepeta < 0.5) EGammaGsfSF = 0.997;
+	    else if (lepeta < 1.0) EGammaGsfSF = 0.998;
+	    else if (lepeta < 1.442) EGammaGsfSF = 0.990;
+	    else if (lepeta < 1.566) EGammaGsfSF = 0.980;
+	    else if (lepeta < 2.0) EGammaGsfSF = 0.991;
+	    else EGammaGsfSF = 0.988; }
+	  else if (leppt < 100) {
+            if (lepeta < -2.0) EGammaGsfSF = 1.002;
+	    else if (lepeta < -1.566) EGammaGsfSF = 1.018;
+	    else if (lepeta < -1.442) EGammaGsfSF = 1.044;
+	    else if (lepeta < -1.0) EGammaGsfSF = 1.008;
+            else if (lepeta < -0.5) EGammaGsfSF = 1.008;
+            else if (lepeta < 0.0) EGammaGsfSF = 1.003;
+            else if (lepeta < 0.5) EGammaGsfSF = 1.022;
+	    else if (lepeta < 1.0) EGammaGsfSF = 1.019;
+	    else if (lepeta < 1.442) EGammaGsfSF = 1.010;
+	    else if (lepeta < 1.566) EGammaGsfSF = 1.035;
+            else if (lepeta < 2.0) EGammaGsfSF = 1.010;
+	    else EGammaGsfSF = 1.007; }
+	  else {
+            if (lepeta < -2.0) EGammaGsfSF = 0.984;
+	    else if (lepeta < -1.566) EGammaGsfSF = 0.998;
+	    else if (lepeta < -1.442) EGammaGsfSF = 1.037;
+	    else if (lepeta < -1.0) EGammaGsfSF = 1.007;
+	    else if (lepeta < -0.5) EGammaGsfSF = 1.006;
+            else if (lepeta < 0.0) EGammaGsfSF = 1.003;
+	    else if (lepeta < 0.5) EGammaGsfSF = 1.003;
+	    else if (lepeta < 1.0) EGammaGsfSF = 1.006;
+	    else if (lepeta < 1.442) EGammaGsfSF = 1.007;
+	    else if (lepeta < 1.566) EGammaGsfSF = 1.037;
+	    else if (lepeta < 2.0) EGammaGsfSF = 0.998;
+	    else EGammaGsfSF = 0.984; }
+
+          //JH update 10/27/2020: Electron ID SF https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/2018_ElectronMVA90noiso_2D_r1.pdf  (_r1 not there before!) 
+	  if (leppt < 50) {
+	    if (lepeta < -2.0) lepIdSF = 0.994;
+	    else if (lepeta < -1.566) lepIdSF = 0.969;
 	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 1.016;
-	    else if (lepeta < 0.0) lepIdSF = 0.958;
-	    else if (lepeta < 0.8) lepIdSF = 0.990;
-	    else if (lepeta < 1.442) lepIdSF = 1.012;
+	    else if (lepeta < -0.8) lepIdSF = 0.978;
+	    else if (lepeta < 0.0) lepIdSF = 0.979;
+	    else if (lepeta < 0.8) lepIdSF = 0.978;
+	    else if (lepeta < 1.442) lepIdSF = 0.978;
 	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.978;
-	    else lepIdSF = 0.995; }
-	  else if (leppt < 35) {
-	    if (lepeta < -2.0) lepIdSF = 0.973;
-	    else if (lepeta < -1.566) lepIdSF = 0.951;
+	    else if (lepeta < 2.0) lepIdSF = 0.969;
+	    else lepIdSF = 0.993; }
+	  else if (leppt < 100) {
+	    if (lepeta < -2.0) lepIdSF = 0.989;
+	    else if (lepeta < -1.566) lepIdSF = 0.976;
 	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 0.965;
-	    else if (lepeta < 0.0) lepIdSF = 0.970;
-	    else if (lepeta < 0.8) lepIdSF = 0.973;
-	    else if (lepeta < 1.442) lepIdSF = 0.965;
+	    else if (lepeta < -0.8) lepIdSF = 0.977;
+	    else if (lepeta < 0.0) lepIdSF = 0.978;
+	    else if (lepeta < 0.8) lepIdSF = 0.979;
+	    else if (lepeta < 1.442) lepIdSF = 0.975;
 	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.948;
-	    else lepIdSF = 0.963; }
-	  else if (leppt < 50) {
-	    if (lepeta < -2.0) lepIdSF = 0.975;
+	    else if (lepeta < 2.0) lepIdSF = 0.977;
+	    else lepIdSF = 0.975; }
+	  else if (leppt < 200) {
+	    if (lepeta < -2.0) lepIdSF = 0.983;
+	    else if (lepeta < -1.566) lepIdSF = 0.982;
+	    else if (lepeta < -1.442) lepIdSF = 1.000;
+	    else if (lepeta < -0.8) lepIdSF = 0.985;
+	    else if (lepeta < 0.0) lepIdSF = 0.985;
+	    else if (lepeta < 0.8) lepIdSF = 0.977;
+	    else if (lepeta < 1.442) lepIdSF = 1.000;
+	    else if (lepeta < 1.566) lepIdSF = 1.000;
+	    else if (lepeta < 2.0) lepIdSF = 0.972;
+	    else lepIdSF = 0.988; }
+	  else {
+	    if (lepeta < -2.0) lepIdSF = 0.953;
 	    else if (lepeta < -1.566) lepIdSF = 0.966;
 	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 0.972;
-	    else if (lepeta < 0.0) lepIdSF = 0.977;
-	    else if (lepeta < 0.8) lepIdSF = 0.977;
-	    else if (lepeta < 1.442) lepIdSF = 0.972;
+	    else if (lepeta < -0.8) lepIdSF = 0.998;
+	    else if (lepeta < 0.0) lepIdSF = 1.007;
+	    else if (lepeta < 0.8) lepIdSF = 0.966;
+	    else if (lepeta < 1.442) lepIdSF = 0.966;
 	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.963;
-	    else lepIdSF = 0.968; }
-	  else if (leppt < 100) {
-	    if (lepeta < -2.0) lepIdSF = 0.978;
-	    else if (lepeta < -1.566) lepIdSF = 0.978;
-	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 0.974;
-	    else if (lepeta < 0.0) lepIdSF = 0.978;
-	    else if (lepeta < 0.8) lepIdSF = 0.982;
-	    else if (lepeta < 1.442) lepIdSF = 0.976;
-	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.976;
-	    else lepIdSF = 0.953; }
-	  else if (leppt < 200) {
-	    if (lepeta < -2.0) lepIdSF = 0.974;
-	    else if (lepeta < -1.566) lepIdSF = 0.997;
-	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 0.981;
-	    else if (lepeta < 0.0) lepIdSF = 0.980;
-	    else if (lepeta < 0.8) lepIdSF = 0.991;
-	    else if (lepeta < 1.442) lepIdSF = 0.987;
-	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.962;
-	    else lepIdSF = 0.956; }
-	  else {
-	    if (lepeta < -2.0) lepIdSF = 1.071;
-	    else if (lepeta < -1.566) lepIdSF = 1.046;
-	    else if (lepeta < -1.442) lepIdSF = 1.000;
-	    else if (lepeta < -0.8) lepIdSF = 0.979;
-	    else if (lepeta < 0.0) lepIdSF = 0.999;
-	    else if (lepeta < 0.8) lepIdSF = 0.960;
-	    else if (lepeta < 1.442) lepIdSF = 0.979;
-	    else if (lepeta < 1.566) lepIdSF = 1.000;
-	    else if (lepeta < 2.0) lepIdSF = 0.912;
-	    else lepIdSF = 0.885; }
+	    else if (lepeta < 2.0) lepIdSF = 0.974;
+	    else lepIdSF = 1.014; }
 
 	  // mini isolation scale factors: https://wiwong.web.cern.ch/wiwong/Ele_Eff_Plots/2018passingMiniIsoTight_updated/egammaEffi.txt_egammaPlots.pdf
 	  if (leppt < 20){
@@ -2835,6 +2814,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    renorm.push_back(LHEweights_MultiLepCalc->at(i));
 	    renormWeights.push_back(LHEweights_MultiLepCalc->at(i));
 	  }
+	  if(LHEweightids_MultiLepCalc->at(i) > 714 && LHEweightids_MultiLepCalc->at(i) < 746){
+	    pdfWeights4LHC.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
 	  if(LHEweightids_MultiLepCalc->at(i) > 10 && LHEweightids_MultiLepCalc->at(i) < 111){
 	    pdf.push_back(LHEweights_MultiLepCalc->at(i));
 	    pdfWeights.push_back(LHEweights_MultiLepCalc->at(i));
@@ -2851,6 +2833,9 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(LHEweightids_MultiLepCalc->at(i) == 1006 || LHEweightids_MultiLepCalc->at(i) == 1008) continue;
 	    renorm.push_back(LHEweights_MultiLepCalc->at(i));
 	    renormWeights.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
+	  if(LHEweightids_MultiLepCalc->at(i) > 10999 && LHEweightids_MultiLepCalc->at(i) < 11031){
+	    pdfWeights4LHC.push_back(LHEweights_MultiLepCalc->at(i));
 	  }
 	  if(LHEweightids_MultiLepCalc->at(i) > 2000 && LHEweightids_MultiLepCalc->at(i) < 2101){
 	    pdf.push_back(LHEweights_MultiLepCalc->at(i));
