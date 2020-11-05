@@ -199,6 +199,12 @@ public :
    Float_t         HTSF_Pol;
    Float_t         HTSF_PolUp;
    Float_t         HTSF_PolDn;
+   Float_t         HT_Corr;
+   Float_t         HT_CorrUp;
+   Float_t         HT_CorrDn;
+   Float_t         tpt_Corr;
+   Float_t         tpt_CorrUp;
+   Float_t         tpt_CorrDn;
    vector<double>  renormWeights;
    vector<double>  alphaSWeights;
    vector<double>  pdfWeights;
