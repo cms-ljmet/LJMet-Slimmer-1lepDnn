@@ -740,26 +740,28 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 
 
    // Polynomials for corrections from HT and tpt
-   TF1 *polyHT = new TF1("polyHT","min(1,max([0] + [1]*x,[2]))",700,5000);
+   TF1 *polyHT = new TF1("polyHT","min(1.0,max([0] + [1]*x,[2]))",700,5000);
    polyHT->SetParameter(0,     1.09245);
    polyHT->SetParameter(1,-0.000220375);
    polyHT->SetParameter(2,    0.607311);
 
-   float HTvar0 = 0.000531601867638;
-   float HTvar1 = -3.99715493598e-07;
-   float HTvar2 = 3.19837014767e-10;
-   float HTvar3 = 0.000541831713766;
-   TF1 *polyHTU = new TF1("polyHTU","min(1,max([0] + [1]*x + [2]*x*x,[3]))",700,5000);
-   polyHTU->SetParameter(0,     1.09245 +   HTvar0);
-   polyHTU->SetParameter(1,-0.000220375 + 2*HTvar1);
-   polyHTU->SetParameter(2,         0.0 +   HTvar2);
-   polyHTU->SetParameter(3,    0.607311 +   HTvar3);
+   TF1 *polyHTU = new TF1("polyHTU","min(1.0,max([0] + [1]*x + sqrt([3] + 2*x*[4] + x*x*[5]),[2] + [6]))",700,5000);
+   polyHTU->SetParameter(0,     1.09245);
+   polyHTU->SetParameter(1,-0.000220375);
+   polyHTU->SetParameter(2,    0.607311);
+   polyHTU->SetParameter(3, 0.000531602);
+   polyHTU->SetParameter(4,-3.99715e-07);
+   polyHTU->SetParameter(5, 3.19837e-10);
+   polyHTU->SetParameter(6, 0.000541832);
 
-   TF1 *polyHTD = new TF1("polyHTD","min(1,max([0] + [1]*x + [2]*x*x,[3]))",700,5000);
-   polyHTD->SetParameter(0,     1.09245 -   HTvar0);
-   polyHTD->SetParameter(1,-0.000220375 - 2*HTvar1);
-   polyHTD->SetParameter(2,         0.0 -   HTvar2);
-   polyHTD->SetParameter(3,    0.607311 -   HTvar3);
+   TF1 *polyHTD = new TF1("polyHTD","min(1.0,max([0] + [1]*x - sqrt([3] + 2*x*[4] + x*x*[5]),[2] - [6]))",700,5000);
+   polyHTD->SetParameter(0,     1.09245);
+   polyHTD->SetParameter(1,-0.000220375);
+   polyHTD->SetParameter(2,    0.607311);
+   polyHTD->SetParameter(3, 0.000531602);
+   polyHTD->SetParameter(4,-3.99715e-07);
+   polyHTD->SetParameter(5, 3.19837e-10);
+   polyHTD->SetParameter(6, 0.000541832);
 
    TF1 *polytpt = new TF1("polytpt","min([0] + [1]*x,[2] + [3]*x)",20,1000);
    polytpt->SetParameter(0,      1.0887);
@@ -767,28 +769,29 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    polytpt->SetParameter(2,     1.28807);
    polytpt->SetParameter(3,-0.000872673);
 
-   float tptvar0 = 0.000313783233835;
-   float tptvar1 = -1.11005713026e-06;
-   float tptvar2 = 4.52345126741e-09;
-   float tptvar3 = 0.000412212698845;
-   float tptvar4 = -6.84715092184e-07;
-   float tptvar5 = 1.23875537083e-09;
-   TF1 *polytptU = new TF1("polytptU","min([0] + [1]*x + [2]*x*x,[3] + [4]*x + [5]*x*x)",20,1000);
-   polytptU->SetParameter(0,      1.0887 +   tptvar0);
-   polytptU->SetParameter(1,-0.000283915 + 2*tptvar1);
-   polytptU->SetParameter(2,         0.0 +   tptvar2);
-   polytptU->SetParameter(3,     1.28807 +   tptvar3);
-   polytptU->SetParameter(4,-0.000872673 + 2*tptvar4);
-   polytptU->SetParameter(5,         0.0 +   tptvar5);
-   
+   TF1 *polytptU = new TF1("polytptU","min([0] + [1]*x + sqrt([4] + 2*x*[5] + x*x*[6]),[2] + [3]*x + sqrt([7] + 2*x*[8] + x*x*[9]))",20,1000);
+   polytptU->SetParameter(0,      1.0887);
+   polytptU->SetParameter(1,-0.000283915);
+   polytptU->SetParameter(2,     1.28807);
+   polytptU->SetParameter(3,-0.000872673);
+   polytptU->SetParameter(4, 0.000313783);
+   polytptU->SetParameter(5,-1.11006e-06);
+   polytptU->SetParameter(6, 4.52345e-09);
+   polytptU->SetParameter(7, 0.000412213);
+   polytptU->SetParameter(8,-6.84715e-07);
+   polytptU->SetParameter(9, 1.23876e-09);   
 
-   TF1 *polytptD = new TF1("polytptD","min([0] + [1]*x + [2]*x*x,[3] + [4]*x + [5]*x*x)",20,1000);
-   polytptD->SetParameter(0,      1.0887 -   tptvar0);
-   polytptD->SetParameter(1,-0.000283915 - 2*tptvar1);
-   polytptD->SetParameter(2,         0.0 -   tptvar2);
-   polytptD->SetParameter(3,     1.28807 -   tptvar3);
-   polytptD->SetParameter(4,-0.000872673 - 2*tptvar4);
-   polytptD->SetParameter(5,         0.0 -   tptvar5);
+   TF1 *polytptD = new TF1("polytptD","min([0] + [1]*x - sqrt([4] + 2*x*[5] + x*x*[6]),[2] + [3]*x - sqrt([7] + 2*x*[8] + x*x*[9]))",20,1000);
+   polytptD->SetParameter(0,      1.0887);
+   polytptD->SetParameter(1,-0.000283915);
+   polytptD->SetParameter(2,     1.28807);
+   polytptD->SetParameter(3,-0.000872673);
+   polytptD->SetParameter(4, 0.000313783);
+   polytptD->SetParameter(5,-1.11006e-06);
+   polytptD->SetParameter(6, 4.52345e-09);
+   polytptD->SetParameter(7, 0.000412213);
+   polytptD->SetParameter(8,-6.84715e-07);
+   polytptD->SetParameter(9, 1.23876e-09);
 
    
   // ----------------------------------------------------------------------------
@@ -1814,6 +1817,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	}
       }
 
+
       // ----------------------------------------------------------------------------
       // Apply pt ordering to AK8 vectors 
       // ----------------------------------------------------------------------------
@@ -2327,7 +2331,7 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       W_dRLep = Wlv.DeltaR(lepton_lv);
 
       // ----------------------------------------------------------------------------
-      // VLQ decay
+      // Leptonic top quark decay
       // ----------------------------------------------------------------------------                                                                                                           
       // Find closest b-tagged AK4 to the W vector
       float deltaRbW = 999;
@@ -2349,6 +2353,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       // Form a leptonic top candidate if the b is close enough
       TLorentzVector top_lv;
       t_mass = -999;
+      t_pt = -999;
+      t_dRWb = 999;
       isLeptonic_W = false;
       isLeptonic_t = false;
       if(minMleppJet > 150){  // best combo of W vs t truth match with this
@@ -2381,6 +2387,33 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	if(jet_lv.DeltaR(top_lv) > 0.8 and isLeptonic_t) jets_lv.push_back(std::make_pair(jet_lv,ijet));
 	if(jet_lv.DeltaR(Wlv) > 0.8 and isLeptonic_W) jets_lv.push_back(std::make_pair(jet_lv,ijet));
       }
+
+      // ----------------------------------------------------------------------------
+      // TTbar CR modeling corrections -- HT and top pT
+      // ----------------------------------------------------------------------------      
+
+      HT_Corr = 1;
+      HT_CorrUp = 1;
+      HT_CorrDn = 1;
+      tpt_Corr = 1;
+      tpt_CorrUp = 1;
+      tpt_CorrDn = 1;
+
+      // Piece-wise splice with a flat line. Uncertainty from covariance matrix
+      // Evaluate for all samples, plan to apply only to ttbar
+      // HT fit computed using TTbar CR, top pT fit computed in full CR
+      HT_Corr = polyHT->Eval(AK4HT);
+      HT_CorrUp = polyHTU->Eval(AK4HT);
+      HT_CorrDn = polyHTD->Eval(AK4HT);
+      if (t_mass > -999){
+	tpt_Corr = polytpt->Eval(t_pt);
+	tpt_CorrUp = polytptU->Eval(t_pt);
+	tpt_CorrDn = polytptD->Eval(t_pt);
+      }
+      
+      // ----------------------------------------------------------------------------
+      // VLQ decay
+      // ----------------------------------------------------------------------------                                                                                                       
 
       highPtAK8Jet1_SoftDropCorrectedMass = -999;
       highPtAK8Jet2_SoftDropCorrectedMass = -999;
