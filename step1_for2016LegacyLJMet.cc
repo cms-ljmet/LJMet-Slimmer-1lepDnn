@@ -1073,10 +1073,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  
 
 	  // Trigger Scale Factors, SF2017B_Bkg_LepPtEta_EOR.png & SF2017CDEF_Bkg_LepPtEta_EOR.png
-	  float trigSFB = 1.0;
-	  float trigSFCDEF = 1.0;
-	  float trigSFBunc = 0.0;
-	  float trigSFCDEFunc = 0.0;
+	  float runBCDEFG = 1.0;
+          float runH = 1.0;
+          float runBCDEFGunc = 0.0;
+          float runHunc = 0.0;
+	  
 	  if (fabs(lepeta) < 0.8){
                if (leppt < 60) {runBCDEFG = 1.026; runBCDEFGunc = 0.018; runH = 1.007; runHunc = 0.035;}
                else if (leppt < 70) {runBCDEFG = 0.986; runBCDEFGunc = 0.018;  runH = 0.982; runHunc = 0.036;}
