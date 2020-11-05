@@ -424,6 +424,12 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    outputTree->Branch("HTSF_Pol",&HTSF_Pol,"HTSF_Pol/F");
    outputTree->Branch("HTSF_PolUp",&HTSF_PolUp,"HTSF_PolUp/F");
    outputTree->Branch("HTSF_PolDn",&HTSF_PolDn,"HTSF_PolDn/F");
+   outputTree->Branch("HT_Corr",&HT_Corr,"HT_Corr/F");
+   outputTree->Branch("HT_CorrUp",&HT_CorrUp,"HT_CorrUp/F");
+   outputTree->Branch("HT_CorrDn",&HT_CorrDn,"HT_CorrDn/F");
+   outputTree->Branch("tpt_Corr",&tpt_Corr,"tpt_Corr/F");
+   outputTree->Branch("tpt_CorrUp",&tpt_CorrUp,"tpt_CorrUp/F");
+   outputTree->Branch("tpt_CorrDn",&tpt_CorrDn,"tpt_CorrDn/F");
    outputTree->Branch("topPtWeight13TeV",&topPtWeight13TeV,"topPtWeight13TeV/F");
    outputTree->Branch("EGammaGsfSF",&EGammaGsfSF,"EGammaGsfSF/F");
    outputTree->Branch("lepIdSF",&lepIdSF,"lepIdSF/F");
@@ -731,6 +737,58 @@ void step1::Loop(TString inTreeName, TString outTreeName)
    poly2D->SetParameter(4,-9.42671e-14); 
    poly2D->SetParameter(5, 7.51924e-18); 
    poly2D->SetParameter(6,0.351156);
+
+
+   // Polynomials for corrections from HT and tpt
+   TF1 *polyHT = new TF1("polyHT","min(1,max([0] + [1]*x,[2]))",700,5000);
+   polyHT->SetParameter(0,     1.09245);
+   polyHT->SetParameter(1,-0.000220375);
+   polyHT->SetParameter(2,    0.607311);
+
+   float HTvar0 = 0.000531601867638;
+   float HTvar1 = -3.99715493598e-07;
+   float HTvar2 = 3.19837014767e-10;
+   float HTvar3 = 0.000541831713766;
+   TF1 *polyHTU = new TF1("polyHTU","min(1,max([0] + [1]*x + [2]*x*x,[3]))",700,5000);
+   polyHTU->SetParameter(0,     1.09245 +   HTvar0);
+   polyHTU->SetParameter(1,-0.000220375 + 2*HTvar1);
+   polyHTU->SetParameter(2,         0.0 +   HTvar2);
+   polyHTU->SetParameter(3,    0.607311 +   HTvar3);
+
+   TF1 *polyHTD = new TF1("polyHTD","min(1,max([0] + [1]*x + [2]*x*x,[3]))",700,5000);
+   polyHTD->SetParameter(0,     1.09245 -   HTvar0);
+   polyHTD->SetParameter(1,-0.000220375 - 2*HTvar1);
+   polyHTD->SetParameter(2,         0.0 -   HTvar2);
+   polyHTD->SetParameter(3,    0.607311 -   HTvar3);
+
+   TF1 *polytpt = new TF1("polytpt","min([0] + [1]*x,[2] + [3]*x)",20,1000);
+   polytpt->SetParameter(0,      1.0887);
+   polytpt->SetParameter(1,-0.000283915);
+   polytpt->SetParameter(2,     1.28807);
+   polytpt->SetParameter(3,-0.000872673);
+
+   float tptvar0 = 0.000313783233835;
+   float tptvar1 = -1.11005713026e-06;
+   float tptvar2 = 4.52345126741e-09;
+   float tptvar3 = 0.000412212698845;
+   float tptvar4 = -6.84715092184e-07;
+   float tptvar5 = 1.23875537083e-09;
+   TF1 *polytptU = new TF1("polytptU","min([0] + [1]*x + [2]*x*x,[3] + [4]*x + [5]*x*x)",20,1000);
+   polytptU->SetParameter(0,      1.0887 +   tptvar0);
+   polytptU->SetParameter(1,-0.000283915 + 2*tptvar1);
+   polytptU->SetParameter(2,         0.0 +   tptvar2);
+   polytptU->SetParameter(3,     1.28807 +   tptvar3);
+   polytptU->SetParameter(4,-0.000872673 + 2*tptvar4);
+   polytptU->SetParameter(5,         0.0 +   tptvar5);
+   
+
+   TF1 *polytptD = new TF1("polytptD","min([0] + [1]*x + [2]*x*x,[3] + [4]*x + [5]*x*x)",20,1000);
+   polytptD->SetParameter(0,      1.0887 -   tptvar0);
+   polytptD->SetParameter(1,-0.000283915 - 2*tptvar1);
+   polytptD->SetParameter(2,         0.0 -   tptvar2);
+   polytptD->SetParameter(3,     1.28807 -   tptvar3);
+   polytptD->SetParameter(4,-0.000872673 - 2*tptvar4);
+   polytptD->SetParameter(5,         0.0 -   tptvar5);
 
    
   // ----------------------------------------------------------------------------
