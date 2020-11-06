@@ -209,6 +209,8 @@ public :
    vector<double>  alphaSWeights;
    vector<double>  pdfWeights;
    vector<double>  pdfNewWeights;
+   vector<double>  pdfWeights4LHC;
+   vector<double>  pdfWeightsMSTW;
    float_t         pdfNewNominalWeight;
 
    Float_t         leptonPt_MultiLepCalc;
