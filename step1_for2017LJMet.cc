@@ -776,6 +776,10 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       
       if(jentry % 1000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
 
+      // Filter out bad lumis from rereco json
+      if ((run_CommonCalc == 299480 && lumi_CommonCalc == 7) || (run_CommonCalc == 301397 && lumi_CommonCalc == 518) 
+	  || (run_CommonCalc == 305366 && lumi_CommonCalc == 395)) continue;
+
       // ----------------------------------------------------------------------------
       // Filter input file by mass or decay
       // ----------------------------------------------------------------------------
