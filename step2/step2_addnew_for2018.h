@@ -29,11 +29,7 @@ public :
    Bool_t          isSig;
    Bool_t          isTT;
    Int_t           SigMass;
-   vector<double>        AK8JetsPt_Exclude_Hole;
-   vector<double>        AK4JetsPt_Exclude_Hole;
-   Double_t        AK4HT_Exclude_Hole;
-   Double_t        AK8HT_Exclude_Hole;
-   Double_t        AK8HT;
+
    // Declaration of leaf types
    Long64_t        event_CommonCalc;
    Int_t           run_CommonCalc;
@@ -261,6 +257,11 @@ public :
    Float_t         dnn_WJetsBB;
    Float_t         dnn_ttbarBB;
    Float_t         dnn_Bprime;
+   Double_t        AK8HT;
+   vector<double>  *AK8JetsPt_Exclude_Hole;
+   vector<double>  *AK4JetsPt_Exclude_Hole;
+   Double_t        AK8HT_Exclude_Hole;
+   Double_t        AK4HT_Exclude_Hole;
 
    // List of branches
    TBranch        *b_event_CommonCalc;   //!
@@ -489,6 +490,11 @@ public :
    TBranch        *b_dnn_WJetsBB;   //!
    TBranch        *b_dnn_ttbarBB;   //!
    TBranch        *b_dnn_Bprime;   //!
+   TBranch        *b_AK8HT;   //!
+   TBranch        *b_AK8JetsPt_Exclude_Hole;   //!
+   TBranch        *b_AK4JetsPt_Exclude_Hole;   //!
+   TBranch        *b_AK8HT_Exclude_Hole;   //!
+   TBranch        *b_AK4HT_Exclude_Hole;   //!
 
    step2(TString inputFileName, TString outputFileName);
    virtual ~step2();
@@ -635,6 +641,8 @@ void step2::Init(TTree *tree)
    hadronicTprimeJetIDs_DeepAK8 = 0;
    leptonicBprimeJetIDs_DeepAK8 = 0;
    hadronicBprimeJetIDs_DeepAK8 = 0;
+   AK8JetsPt_Exclude_Hole = 0;
+   AK4JetsPt_Exclude_Hole = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    inputTree = tree;
@@ -867,6 +875,11 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("dnn_WJetsBB", &dnn_WJetsBB, &b_dnn_WJetsBB);
    inputTree->SetBranchAddress("dnn_ttbarBB", &dnn_ttbarBB, &b_dnn_ttbarBB);
    inputTree->SetBranchAddress("dnn_Bprime", &dnn_Bprime, &b_dnn_Bprime);
+   inputTree->SetBranchAddress("AK8HT", &AK8HT, &b_AK8HT);
+   inputTree->SetBranchAddress("AK8JetsPt_Exclude_Hole", &AK8JetsPt_Exclude_Hole, &b_AK8JetsPt_Exclude_Hole);
+   inputTree->SetBranchAddress("AK4JetsPt_Exclude_Hole", &AK4JetsPt_Exclude_Hole, &b_AK4JetsPt_Exclude_Hole);
+   inputTree->SetBranchAddress("AK8HT_Exclude_Hole", &AK8HT_Exclude_Hole, &b_AK8HT_Exclude_Hole);
+   inputTree->SetBranchAddress("AK4HT_Exclude_Hole", &AK4HT_Exclude_Hole, &b_AK4HT_Exclude_Hole);
    Notify();
 }
 

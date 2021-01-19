@@ -72,6 +72,12 @@ public :
    Float_t         HTSF_Pol;
    Float_t         HTSF_PolUp;
    Float_t         HTSF_PolDn;
+   Float_t         HT_Corr;
+   Float_t         HT_CorrUp;
+   Float_t         HT_CorrDn;
+   Float_t         tpt_Corr;
+   Float_t         tpt_CorrUp;
+   Float_t         tpt_CorrDn;
    Float_t         topPtWeight13TeV;
    Float_t         EGammaGsfSF;
    Float_t         lepIdSF;
@@ -294,6 +300,12 @@ public :
    TBranch        *b_HTSF_Pol;   //!
    TBranch        *b_HTSF_PolUp;   //!
    TBranch        *b_HTSF_PolDn;   //!
+   TBranch        *b_HT_Corr;   //!
+   TBranch        *b_HT_CorrUp;   //!
+   TBranch        *b_HT_CorrDn;   //!
+   TBranch        *b_tpt_Corr;   //!
+   TBranch        *b_tpt_CorrUp;   //!
+   TBranch        *b_tpt_CorrDn;   //!
    TBranch        *b_topPtWeight13TeV;   //!
    TBranch        *b_EGammaGsfSF;   //!
    TBranch        *b_lepIdSF;   //!
@@ -666,6 +678,12 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("HTSF_Pol", &HTSF_Pol, &b_HTSF_Pol);
    inputTree->SetBranchAddress("HTSF_PolUp", &HTSF_PolUp, &b_HTSF_PolUp);
    inputTree->SetBranchAddress("HTSF_PolDn", &HTSF_PolDn, &b_HTSF_PolDn);
+   inputTree->SetBranchAddress("HT_Corr", &HT_Corr, &b_HT_Corr);
+   inputTree->SetBranchAddress("HT_CorrUp", &HT_CorrUp, &b_HT_CorrUp);
+   inputTree->SetBranchAddress("HT_CorrDn", &HT_CorrDn, &b_HT_CorrDn);
+   inputTree->SetBranchAddress("tpt_Corr", &tpt_Corr, &b_tpt_Corr);
+   inputTree->SetBranchAddress("tpt_CorrUp", &tpt_CorrUp, &b_tpt_CorrUp);
+   inputTree->SetBranchAddress("tpt_CorrDn", &tpt_CorrDn, &b_tpt_CorrDn);
    inputTree->SetBranchAddress("topPtWeight13TeV", &topPtWeight13TeV, &b_topPtWeight13TeV);
    inputTree->SetBranchAddress("EGammaGsfSF", &EGammaGsfSF, &b_EGammaGsfSF);
    inputTree->SetBranchAddress("lepIdSF", &lepIdSF, &b_lepIdSF);
