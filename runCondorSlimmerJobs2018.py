@@ -7,8 +7,8 @@ start_time = time.time()
 
 #IO directories must be full paths
 
-#url = 'root://brux11.hep.brown.edu:1094//isilon/hadoop/' # input stored at brux
-url = 'root://cmseos.fnal.gov/' # input stored on LPC EOS
+url = 'root://brux11.hep.brown.edu:1094//isilon/hadoop/' # input stored at brux
+#url = 'root://cmseos.fnal.gov/' # input stored on LPC EOS
 finalStateYear = 'singleLep2018' 
 relbase = '/uscms_data/d3/jmoberg/CMSSW_10_2_16/'
 tarfile = '/uscms_data/d3/jmoberg/slimmerdnn.tar'

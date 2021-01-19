@@ -1071,7 +1071,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    else isoSF = 0.997;
 	  }
 	  
-
 	  // Trigger Scale Factors, SF2016BCDEFG_Bkg_LepPtEta_EOR.png & SF2016H_Bkg_LepPtEta_EOR.png
 	  float runBCDEFG = 1.0;
 	  float runH = 1.0;
@@ -1113,6 +1112,12 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  triggerSF = (27.957*runBCDEFG + 8.857*runH)/36.814;
 	  triggerSFUncert = sqrt(pow(triggerSFUncertBCDEF, 2) + pow(triggerSFUncertH, 2));
 	}
+	float triggerSFUncertBCDEF = 29.957*runBCDEFGunc/36.814;
+        float triggerSFUncertH = 8.857*runHunc/36.814;
+        triggerSF = (27.957*runBCDEFG + 8.857*runH)/36.814;
+        triggerSFUncert = sqrt(pow(triggerSFUncertBCDEF, 2) + pow(triggerSFUncertH, 2));
+//             cout << "After math Electron triggerSF: " << triggerSF << endl;                        
+          }     
 	if(isMuon){
 	  std::string string_350 = "Mu15_IsoVVVL_PFHT350";
 	  std::string string_400 = "Mu15_IsoVVVL_PFHT400";
