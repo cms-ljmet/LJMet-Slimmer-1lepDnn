@@ -915,11 +915,11 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       isoSF = 1.0;
       if(isMC){ //MC triggers check
 	if(isElectron){
-	  std::string string_350 = "Ele15_IsoVVVL_PFHT350";
-	  std::string string_400 = "Ele15_IsoVVVL_PFHT400";
-	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
-	  std::string string_c = "Ele50_IsoVVVL_PFHT450";
-	  std::string string_d = "Ele15_IsoVVVL_PFHT600";
+	  std::string string_350 = "Ele15_IsoVVVL_PFHT350"; // workhorse
+	  std::string string_400 = "Ele15_IsoVVVL_PFHT400"; // backup
+	  std::string string_a = "Ele15_IsoVVVL_PFHT450";   // backup
+	  std::string string_c = "Ele50_IsoVVVL_PFHT450";   // backup
+	  std::string string_d = "Ele15_IsoVVVL_PFHT600";   // backup
 	  // The OR triggers below don't exist in 2016, they do nothing! 
 	  // This is fine. The OR is for HT inefficiency in 2016H data
 	  std::string string_ORa = "Ele35_WPTight_Gsf";
@@ -930,8 +930,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_350) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_400) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
-	    if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	    //if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
+	    //if(vsSelMCTriggersEl_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelMCTriggersEl_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
 	  }
 
 	  // JH checked (OK) 10/27/2020: EGamma Reco SF https://twiki.cern.ch/twiki/pub/CMS/EgammaIDRecipesRun2/egammaPlots_BtoH_RecoSF_Legacy2016.pdf
@@ -1123,12 +1123,12 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 //             cout << "After math Electron triggerSF: " << triggerSF << endl;                        
           }     
 	if(isMuon){
-	  std::string string_350 = "Mu15_IsoVVVL_PFHT350";
-	  std::string string_400 = "Mu15_IsoVVVL_PFHT400";
-	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
-	  std::string string_d = "Mu50_IsoVVVL_PFHT450";
-	  std::string string_e = "Mu15_IsoVVVL_PFHT600";
-	  std::string string_ORb = "Mu50"; // not really saved in FWLJMET due to bug!
+	  std::string string_350 = "Mu15_IsoVVVL_PFHT350"; // workhorse
+	  std::string string_400 = "Mu15_IsoVVVL_PFHT400"; // backup
+	  std::string string_a = "Mu15_IsoVVVL_PFHT450";   // backup
+	  std::string string_d = "Mu50_IsoVVVL_PFHT450";   // backup
+	  std::string string_e = "Mu15_IsoVVVL_PFHT600";   // backup
+	  std::string string_ORb = "Mu50";                 // OR to recover the HT inefficiency in Run2016H
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_MultiLepCalc->size(); itrig++){
 	    if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
             if(vsSelMCTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelMCTriggersMu_MultiLepCalc->at(itrig) > 0) MCPastTrigger = 1;
@@ -1494,15 +1494,14 @@ void step1::Loop(TString inTreeName, TString outTreeName)
       
       else{ //Data triggers check
 	if(isElectron){
-	  std::string string_350 = "Ele15_IsoVVVL_PFHT350";
-	  std::string string_400 = "Ele15_IsoVVVL_PFHT400";
-	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
-	  std::string string_c = "Ele50_IsoVVVL_PFHT450";
-	  std::string string_d = "Ele15_IsoVVVL_PFHT600";
+	  std::string string_350 = "Ele15_IsoVVVL_PFHT350"; // workhorse
+	  std::string string_400 = "Ele15_IsoVVVL_PFHT400"; // backup
+	  std::string string_a = "Ele15_IsoVVVL_PFHT450";   // backup
+	  std::string string_c = "Ele50_IsoVVVL_PFHT450";   // backup
+	  std::string string_d = "Ele15_IsoVVVL_PFHT600";   // backup
 	  // The OR triggers below generally don't exist in data! Ele32 only appears in Run 2016H
 	  // We need it to recover the HT inefficiency in that era only
-	  std::string string_ORa = "Ele32_WPTight_Gsf"; 
-	  std::string string_ORb = "Ele35_WPTight_Gsf";
+	  std::string string_ORa = "Ele32_WPTight_Gsf"; // Exists in Run2016H for HT inefficiency OR
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_MultiLepCalc->size(); itrig++){
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
@@ -1510,19 +1509,18 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_350) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_400) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_ORa) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
-	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_ORb) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	  }
 	}
 
 
 	//
 	if(isMuon){
-	  std::string string_350 = "Mu15_IsoVVVL_PFHT350";
-	  std::string string_400 = "Mu15_IsoVVVL_PFHT400";
-	  std::string string_a = "Mu15_IsoVVVL_PFHT450";
-	  std::string string_d = "Mu50_IsoVVVL_PFHT450";
-	  std::string string_e = "Mu15_IsoVVVL_PFHT600";
-	  std::string string_ORb = "Mu50";
+	  std::string string_350 = "Mu15_IsoVVVL_PFHT350"; // workhorse
+	  std::string string_400 = "Mu15_IsoVVVL_PFHT400"; // backup
+	  std::string string_a = "Mu15_IsoVVVL_PFHT450";   // backup
+	  std::string string_d = "Mu50_IsoVVVL_PFHT450";   // backup
+	  std::string string_e = "Mu15_IsoVVVL_PFHT600";   // backup
+	  std::string string_ORb = "Mu50";                 // OR for HT inefficiency in Run2016H
 	  for(unsigned int itrig=0; itrig < vsSelTriggersMu_MultiLepCalc->size(); itrig++){
 	      if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	      if(vsSelTriggersMu_MultiLepCalc->at(itrig).find(string_d) != std::string::npos && viSelTriggersMu_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
