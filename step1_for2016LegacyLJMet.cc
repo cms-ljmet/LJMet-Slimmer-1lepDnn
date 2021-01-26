@@ -920,6 +920,8 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
 	  std::string string_c = "Ele50_IsoVVVL_PFHT450";
 	  std::string string_d = "Ele15_IsoVVVL_PFHT600";
+	  // The OR triggers below don't exist in 2016, they do nothing! 
+	  // This is fine. The OR is for HT inefficiency in 2016H data
 	  std::string string_ORa = "Ele35_WPTight_Gsf";
 	  std::string string_ORb = "Ele38_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_MultiLepCalc->size(); itrig++){
@@ -1073,40 +1075,42 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  
 
 	  // Trigger Scale Factors, SF2016BCDEFG_Bkg_LepPtEta_EOR.png & SF2016H_Bkg_LepPtEta_EOR.png
+	  // REDONE 1/25/21 for Run2016H using Ele32_WPTight. Earlier eras not affected by HT inefficiency.
+	  // MC in these SFs applies no OR trigger
 	  float runBCDEFG = 1.0;
 	  float runH = 1.0;
 	  float runBCDEFGunc = 0.0;
 	  float runHunc = 0.0;
 	  if (fabs(lepeta) < 0.8){
-	    if (leppt < 60) {runBCDEFG = 1.026; runBCDEFGunc = 0.018; runH = 1.007; runHunc = 0.035;}
-	    else if (leppt < 70) {runBCDEFG = 0.986; runBCDEFGunc = 0.018;  runH = 0.982; runHunc = 0.036;}
-	    else if (leppt < 100) {runBCDEFG = 1.009; runBCDEFGunc = 0.009;  runH = 0.972; runHunc = 0.020;}
-	    else if (leppt < 200) {runBCDEFG = 0.985; runBCDEFGunc = 0.008;  runH = 0.766; runHunc = 0.029;}
-	    else {runBCDEFG = 0.902; runBCDEFGunc = 0.026;  runH = 0.477; runHunc = 0.078;}
+	    if (leppt < 60) {runBCDEFG = 1.026; runBCDEFGunc = 0.018; runH = 1.018; runHunc = 0.034;}
+	    else if (leppt < 70) {runBCDEFG = 0.986; runBCDEFGunc = 0.018;  runH = 1.022; runHunc = 0.029;}
+	    else if (leppt < 100) {runBCDEFG = 1.009; runBCDEFGunc = 0.009;  runH = 0.995; runHunc = 0.017;}
+	    else if (leppt < 200) {runBCDEFG = 0.985; runBCDEFGunc = 0.008;  runH = 0.938; runHunc = 0.020;}
+	    else {runBCDEFG = 0.902; runBCDEFGunc = 0.026;  runH = 0.931; runHunc = 0.046;}
 	  }else if (fabs(lepeta) < 1.442){
 	    if (leppt < 60) {runBCDEFG = 1.026; runBCDEFGunc = 0.023;  runH = 1.029; runHunc = 0.045;}
-	    else if (leppt < 70) {runBCDEFG = 1.070; runBCDEFGunc = 0.020;  runH = 0.863; runHunc = 0.069;}
-	    else if (leppt < 100) {runBCDEFG = 1.039; runBCDEFGunc = 0.011;  runH = 1.007; runHunc = 0.027;}
-	    else if (leppt < 200) {runBCDEFG = 0.994; runBCDEFGunc = 0.011;  runH = 0.800; runHunc = 0.037;}
-	    else {runBCDEFG = 1.024; runBCDEFGunc = 0.004;  runH = 0.546; runHunc = 0.0132;}
+	    else if (leppt < 70) {runBCDEFG = 1.070; runBCDEFGunc = 0.020;  runH = 0.886; runHunc = 0.067;}
+	    else if (leppt < 100) {runBCDEFG = 1.039; runBCDEFGunc = 0.011;  runH = 1.028; runHunc = 0.023;}
+	    else if (leppt < 200) {runBCDEFG = 0.994; runBCDEFGunc = 0.011;  runH = 0.944; runHunc = 0.026;}
+	    else {runBCDEFG = 1.024; runBCDEFGunc = 0.004;  runH = 0.955; runHunc = 0.066;}
 	  }else if (fabs(lepeta) < 1.566){
 	    if (leppt < 60) {runBCDEFG = 1.282; runBCDEFGunc = 0.044;  runH = 1.282; runHunc = 0.044;}
-	    else if (leppt < 70) {runBCDEFG = 1.205; runBCDEFGunc = 0.036;  runH = 0.603; runHunc = 0.247;}
+	    else if (leppt < 70) {runBCDEFG = 1.205; runBCDEFGunc = 0.036;  runH = 1.004; runHunc = 0.186;}
 	    else if (leppt < 100) {runBCDEFG = 0.870; runBCDEFGunc = 0.097;  runH = 0.977; runHunc = 0.111;}
 	    else if (leppt < 200) {runBCDEFG = 1.035; runBCDEFGunc = 0.058;  runH = 0.894; runHunc = 0.142;}
-	    else {runBCDEFG = 1.048; runBCDEFGunc = 0.022;  runH = 0.524; runHunc = 0.262;}
+	    else {runBCDEFG = 1.048; runBCDEFGunc = 0.022;  runH = 0.766; runHunc = 0.227;}
 	  }else if (fabs(lepeta) < 2.0){
 	    if (leppt < 60) {runBCDEFG = 1.182; runBCDEFGunc = 0.044;  runH = 1.165; runHunc = 0.093;}
 	    else if (leppt < 70) {runBCDEFG = 1.231; runBCDEFGunc = 0.036;  runH = 1.185; runHunc = 0.090;}
-	    else if (leppt < 100) {runBCDEFG = 1.011; runBCDEFGunc = 0.038;  runH = 1.136; runHunc = 0.045;}
-	    else if (leppt < 200) {runBCDEFG = 1.061; runBCDEFGunc = 0.032;  runH = 0.921; runHunc = 0.081;}
+	    else if (leppt < 100) {runBCDEFG = 1.011; runBCDEFGunc = 0.038;  runH = 1.168; runHunc = 0.033;}
+	    else if (leppt < 200) {runBCDEFG = 1.061; runBCDEFGunc = 0.032;  runH = 1.091; runHunc = 0.048;}
 	    else {runBCDEFG = 0.894; runBCDEFGunc = 0.086;  runH = 0.572; runHunc = 0.286;}
 	  }else {
 	    if (leppt < 60) {runBCDEFG = 1.091; runBCDEFGunc = 0.056;  runH = 0.802; runHunc = 0.328;}
 	    else if (leppt < 70) {runBCDEFG = 0.950; runBCDEFGunc = 0.096;  runH = 1.188; runHunc = 0.020;}
 	    else if (leppt < 100) {runBCDEFG = 1.069; runBCDEFGunc = 0.031;  runH = 0.940; runHunc = 0.172;}
-	    else if (leppt < 200) {runBCDEFG = 1.079; runBCDEFGunc = 0.032;  runH = 0.793; runHunc = 0.134;}
-	    else {runBCDEFG = 1.110; runBCDEFGunc = 0.036;  runH = 1.0; runHunc = 0.0;}
+	    else if (leppt < 200) {runBCDEFG = 1.079; runBCDEFGunc = 0.032;  runH = 0.872; runHunc = 0.122;}
+	    else {runBCDEFG = 1.110; runBCDEFGunc = 0.036;  runH = 1.0; runHunc = 0.10;}
 	  }
 	  float triggerSFUncertBCDEF = 29.957*runBCDEFGunc/36.814;
 	  float triggerSFUncertH = 8.857*runHunc/36.814;
@@ -1490,8 +1494,10 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  std::string string_a = "Ele15_IsoVVVL_PFHT450";
 	  std::string string_c = "Ele50_IsoVVVL_PFHT450";
 	  std::string string_d = "Ele15_IsoVVVL_PFHT600";
-	  std::string string_ORa = "Ele35_WPTight_Gsf";
-	  std::string string_ORb = "Ele38_WPTight_Gsf";
+	  // The OR triggers below generally don't exist in data! Ele32 only appears in Run 2016H
+	  // We need it to recover the HT inefficiency in that era only
+	  std::string string_ORa = "Ele32_WPTight_Gsf"; 
+	  std::string string_ORb = "Ele35_WPTight_Gsf";
 	  for(unsigned int itrig=0; itrig < vsSelTriggersEl_MultiLepCalc->size(); itrig++){
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_a) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
 	    if(vsSelTriggersEl_MultiLepCalc->at(itrig).find(string_c) != std::string::npos && viSelTriggersEl_MultiLepCalc->at(itrig) > 0) DataPastTrigger = 1;
