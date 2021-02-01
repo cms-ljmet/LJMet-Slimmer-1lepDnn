@@ -64,7 +64,6 @@ public :
    Double_t        MCWeight_MultiLepCalc;
    vector<double>  *renormWeights;
    vector<double>  *pdfWeights;
-   vector<double>  *pdfNewWeights;
    Float_t         pdfNewNominalWeight;
    Float_t         pileupWeight;
    Float_t         pileupWeightUp;
@@ -290,9 +289,6 @@ public :
    TBranch        *b_MCWeight_MultiLepCalc;   //!
    TBranch        *b_renormWeights;   //!
    TBranch        *b_pdfWeights;   //!
-   TBranch        *b_pdfWeights4LHC;   //!
-   TBranch        *b_pdfWeightsMSTW;   //!
-   TBranch        *b_pdfNewWeights;   //!
    TBranch        *b_pdfNewNominalWeight;   //!
    TBranch        *b_pileupWeight;   //!
    TBranch        *b_pileupWeightUp;   //!
@@ -570,9 +566,6 @@ void step2::Init(TTree *tree)
    // Set object pointer
    renormWeights = 0;
    pdfWeights = 0;
-   pdfWeights4LHC = 0;
-   pdfWeightsMSTW = 0;
-   pdfNewWeights = 0;
    theJetPt_JetSubCalc_PtOrdered = 0;
    theJetEta_JetSubCalc_PtOrdered = 0;
    theJetPhi_JetSubCalc_PtOrdered = 0;
@@ -668,9 +661,6 @@ void step2::Init(TTree *tree)
    inputTree->SetBranchAddress("MCWeight_MultiLepCalc", &MCWeight_MultiLepCalc, &b_MCWeight_MultiLepCalc);
    inputTree->SetBranchAddress("renormWeights", &renormWeights, &b_renormWeights);
    inputTree->SetBranchAddress("pdfWeights", &pdfWeights, &b_pdfWeights);
-   inputTree->SetBranchAddress("pdfWeights4LHC", &pdfWeights4LHC, &b_pdfWeights4LHC);
-   inputTree->SetBranchAddress("pdfWeightsMSTW", &pdfWeightsMSTW, &b_pdfWeightsMSTW);
-   inputTree->SetBranchAddress("pdfNewWeights", &pdfNewWeights, &b_pdfNewWeights);
    inputTree->SetBranchAddress("pdfNewNominalWeight", &pdfNewNominalWeight, &b_pdfNewNominalWeight);
    inputTree->SetBranchAddress("pileupWeight", &pileupWeight, &b_pileupWeight);
    inputTree->SetBranchAddress("pileupWeightUp", &pileupWeightUp, &b_pileupWeightUp);

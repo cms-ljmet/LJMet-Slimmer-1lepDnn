@@ -115,7 +115,7 @@ void step2::Loop(TString inTreeName, TString outTreeName)
 	  {
 	    TLorentzVector jet8; 
 	    jet8.SetPtEtaPhiE (theJetAK8Pt_JetSubCalc_PtOrdered->at(jjet8), theJetAK8Eta_JetSubCalc_PtOrdered->at(jjet8), theJetAK8Phi_JetSubCalc_PtOrdered->at(jjet8), theJetAK8Energy_JetSubCalc_PtOrdered->at(jjet8));
-	    jet8=jet8*0.8;
+	    jet8=jet8*1.2;
 	    if(jet8.Pt()>200)
 	      {
 		AK8JetsPt_Exclude_Hole.push_back(jet8.Pt());
@@ -126,7 +126,7 @@ void step2::Loop(TString inTreeName, TString outTreeName)
 	  {
 	    TLorentzVector jet8; 
 	    jet8.SetPtEtaPhiE (theJetAK8Pt_JetSubCalc_PtOrdered->at(jjet8), theJetAK8Eta_JetSubCalc_PtOrdered->at(jjet8), theJetAK8Phi_JetSubCalc_PtOrdered->at(jjet8), theJetAK8Energy_JetSubCalc_PtOrdered->at(jjet8));
-	    jet8=jet8*0.65;
+	    jet8=jet8*1.35;
 	    if(jet8.Pt()>200)
 	      {
 		AK8JetsPt_Exclude_Hole.push_back(jet8.Pt());

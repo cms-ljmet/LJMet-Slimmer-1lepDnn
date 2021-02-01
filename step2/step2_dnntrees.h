@@ -26,7 +26,8 @@ public :
 
    Bool_t          isSig;
    Bool_t          isTT;
-   Int_t           SigMass;
+   Int_t           year;
+   Int_t           sampleindex;
 
    // Declaration of leaf types
    Long64_t        event_CommonCalc;
@@ -420,14 +421,26 @@ step2::step2(TString inputFileName, TString outputFileName) : inputTree(0), inpu
  
   //  cout << "Opening file: " << inputFileName << endl;
 
+  // samples: W4, W6, W8, W12, W25, tt, TT, BB
+
   isSig  = inputFileName.Contains("prime");
-  if(isSig){
-    if(inputFileName.Contains("_M-1100")) SigMass = 11;
-    else if(inputFileName.Contains("_M-1800")) SigMass = 18;
-    else SigMass = -1;
-  }
   isTT = (inputFileName.Contains("TTTo") || inputFileName.Contains("Mtt"));  
 
+  if(inputFileName.Contains("Tprime")) sampleindex = 6;
+  else if(inputFileName.Contains("Bprime")) sampleindex = 7;
+  else if(inputFileName.Contains("TTJets")) sampleindex = 5;
+  else if(inputFileName.Contains("WJetsToLNu_HT-400")) sampleindex = 0;
+  else if(inputFileName.Contains("WJetsToLNu_HT-600")) sampleindex = 1;
+  else if(inputFileName.Contains("WJetsToLNu_HT-800")) sampleindex = 2;
+  else if(inputFileName.Contains("WJetsToLNu_HT-1200")) sampleindex = 3;
+  else if(inputFileName.Contains("WJetsToLNu_HT-2500")) sampleindex = 4;
+  else sampleindex = -1;
+
+  if(inputFileName.Contains("2016")) year = 2016;
+  else if(inputFileName.Contains("2017")) year = 2017;
+  else if(inputFileName.Contains("2018")) year = 2018;
+  else year = -1;
+  
   inputFile=TFile::Open(inputFileName);
   inputTree=(TTree*)inputFile->Get("ljmet");
   //  if(inputTree->GetEntries()==0) cout << "WARNING! Found 0 events in the tree!!!!" << endl;
