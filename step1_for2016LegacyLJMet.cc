@@ -1116,12 +1116,6 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  triggerSF = (27.957*runBCDEFG + 8.857*runH)/36.814;
 	  triggerSFUncert = sqrt(pow(triggerSFUncertBCDEF, 2) + pow(triggerSFUncertH, 2));
 	}
-	float triggerSFUncertBCDEF = 29.957*runBCDEFGunc/36.814;
-        float triggerSFUncertH = 8.857*runHunc/36.814;
-        triggerSF = (27.957*runBCDEFG + 8.857*runH)/36.814;
-        triggerSFUncert = sqrt(pow(triggerSFUncertBCDEF, 2) + pow(triggerSFUncertH, 2));
-//             cout << "After math Electron triggerSF: " << triggerSF << endl;                        
-          }     
 	if(isMuon){
 	  std::string string_350 = "Mu15_IsoVVVL_PFHT350"; // workhorse
 	  std::string string_400 = "Mu15_IsoVVVL_PFHT400"; // backup
