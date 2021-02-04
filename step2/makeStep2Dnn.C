@@ -16,8 +16,7 @@ void makeStep2Dnn(TString inputFile, TString outputFile){
     for(size_t i = 0; i < shifts.size(); i++){
       cout << "\nRunning shift " << shifts[i] << endl;
 
-      if(shifts[i].Contains("BTAG") || shifts[i].Contains("LTAG")) t.Loop(shifts[0],shifts[i]);
-      else t.Loop(shifts[i],shifts[i]);
+      t.Loop(shifts[i],shifts[i]);
     }
   }
 }
