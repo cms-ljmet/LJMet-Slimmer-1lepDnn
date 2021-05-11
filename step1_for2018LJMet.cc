@@ -2917,6 +2917,22 @@ void step1::Loop(TString inTreeName, TString outTreeName)
 	  }
 	}
       }
+      else if(isTTV || isSTs){
+	for(unsigned int i = 0; i < LHEweightids_MultiLepCalc->size(); i++){
+	  if(LHEweightids_MultiLepCalc->at(i) > 1001 && LHEweightids_MultiLepCalc->at(i) < 1010){
+	    if(LHEweightids_MultiLepCalc->at(i) == 1006 || LHEweightids_MultiLepCalc->at(i) == 1008) continue;
+	    renorm.push_back(LHEweights_MultiLepCalc->at(i));
+	    renormWeights.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
+	  if(LHEweightids_MultiLepCalc->at(i) > 1009 && LHEweightids_MultiLepCalc->at(i) < 1111){
+	    pdf.push_back(LHEweights_MultiLepCalc->at(i));
+	    pdfWeights.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
+	  if(LHEweightids_MultiLepCalc->at(i) == 1111 || LHEweightids_MultiLepCalc->at(i) == 1112){
+	    if(isTTV) alphaSWeights.push_back(LHEweights_MultiLepCalc->at(i));
+	  }
+	}
+      }
       else{
 	// SEEMS TO APPLY TO ALL POWHEG AND MC@NLO BACKGROUNDS. NLO PDFs
 	for(unsigned int i = 0; i < LHEweightids_MultiLepCalc->size(); i++){

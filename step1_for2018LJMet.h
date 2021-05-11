@@ -40,6 +40,7 @@ public :
    Bool_t          isTT;
    Bool_t          isTTV;
    Bool_t          isVV;
+   Bool_t          isSTs;
    Bool_t          isSTt;
    Bool_t          isSTtW;
    Bool_t          isTTincMtt0to1000;
@@ -1277,7 +1278,8 @@ step1::step1(TString inputFileName, TString outputFileName, TString outputDir) :
   isTT = (inputFileName.Contains("TT_Tune") || inputFileName.Contains("Mtt") || inputFileName.Contains("TTTo"));
   isSTt = inputFileName.Contains("ST_t-channel");
   isSTtW = inputFileName.Contains("ST_tW");
-  isTTV = (inputFileName.Contains("ttZ") || inputFileName.Contains("ttW") || inputFileName.Contains("ttH"));
+  isSTs = inputFileName.Contains("ST_s-channel");
+  isTTV = (inputFileName.Contains("ttZ") || inputFileName.Contains("ttW") || inputFileName.Contains("TTZ") || inputFileName.Contains("TTW"));
   isVV = (inputFileName.Contains("WW_") || inputFileName.Contains("WZ_") || inputFileName.Contains("ZZ_"));
   isMC = !(inputFileName.Contains("Single") || inputFileName.Contains("Data18"));
   isSM = inputFileName.Contains("SingleMuon");
